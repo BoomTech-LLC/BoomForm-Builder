@@ -1,7 +1,7 @@
 {
   "name": "boomform-builder",
   "version": "1.0.0",
-  "description": "Build Your Form only passing an object",
+  "description": "Simple Form Builder",
   "author": "TikoNazaryan",
   "license": "MIT",
   "repository": "TikoNazaryan/boomform-builder",
@@ -49,5 +49,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "boomform": "^1.3.6"
+  }
 }

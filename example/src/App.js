@@ -1,10 +1,13 @@
 import React from 'react'
-
-import { ExampleComponent } from 'boomform-builder'
-import 'boomform-builder/dist/index.css'
+import Builder from 'boomform-builder'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return (
+    <Builder
+      global={{ name: 'Form', description: 'Description' }}
+      fields={[{ id: 1, type: 'text' }]}
+    />
+  )
 }
 
 export default App
