@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BoomForm } from 'boomform'
+import { BoomForm, Context } from 'boomform'
 import Header from './Header'
 import StandardFooter from './Footer'
 import PaginationFooter from './Pagination/Footer/Footer'
@@ -84,4 +84,4 @@ const Builder = ({
   )
 }
 
-export default Builder
+export { Builder, Context }
