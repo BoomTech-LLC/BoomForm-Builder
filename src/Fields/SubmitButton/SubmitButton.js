@@ -1,23 +1,9 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Context } from 'boomform'
-import { getHiddenIds } from './../../Helpers/logic'
 
-const SubmitButton = ({
-  onSubmit,
-  button,
-  isLogicOn,
-  logic,
-  setLogicIds,
-  hide
-}) => {
+const SubmitButton = ({ onSubmit, button, hide }) => {
   const { state, actions } = useContext(Context)
-  const { values } = state
-
   const { text, prefix, suffix } = button || { text: 'Submit' }
-
-  useEffect(() => {
-    setLogicIds(isLogicOn ? getHiddenIds({ logic, values }) : [])
-  }, [logic, isLogicOn, values])
 
   if (hide) return null
 

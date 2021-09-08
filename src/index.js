@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { BoomForm, Context } from 'boomform'
+import { BoomForm } from 'boomform'
 import Header from './Header'
 import StandardFooter from './Footer'
 import PaginationFooter from './Pagination/Footer/Footer'
 import Fields from './Fields'
+import StateHandler from './StateHandler'
 
 const Builder = ({
   global = {},
@@ -17,7 +18,8 @@ const Builder = ({
     description,
     onSubmit,
     pagination: isPaginationOn = false,
-    logic: isLogicOn = false
+    logic: isLogicOn = false,
+    innerComponent = () => {}
   } = global
 
   const {
@@ -79,9 +81,10 @@ const Builder = ({
             setLogicIds={setLogicIds}
           />
         )}
+        <StateHandler innerComponent={innerComponent} />
       </form>
     </BoomForm>
   )
 }
 
-export { Builder, Context }
+export default Builder
