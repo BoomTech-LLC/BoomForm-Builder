@@ -13,7 +13,10 @@ const App = () => {
         description: 'Description',
         innerComponent: innerComponent
       }}
-      fields={[{ id: 1, type: 'name' }]}
+      fields={[
+        { id: 1, type: 'name' },
+        { id: 2, type: 'textarea' }
+      ]}
     />
   )
 }

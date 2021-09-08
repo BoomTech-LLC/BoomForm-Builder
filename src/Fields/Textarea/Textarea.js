@@ -1,9 +1,8 @@
 import React from 'react'
-// import { TextareaInput } from 'boomform'
+import { Textarea as TextareaInput } from 'boomform'
 
 const Textarea = (props) => {
-  return null
-  // return <TextareaInput {...props} />
+  return <TextareaInput {...props} />
 }
 
 export default Textarea
