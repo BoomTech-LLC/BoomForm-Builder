@@ -15,7 +15,13 @@ const App = () => {
       }}
       fields={[
         { id: 1, type: 'name' },
-        { id: 2, type: 'custom' }
+        {
+          id: 2,
+          type: 'custom',
+          component: () => {
+            return 123
+          }
+        }
       ]}
     />
   )

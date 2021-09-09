@@ -1,5 +1,5 @@
 import React from 'react'
-import Custom from 'boomform'
+import { Custom } from 'boomform'
 
 const Routine = ({ component, ...props }) => {
   return (
