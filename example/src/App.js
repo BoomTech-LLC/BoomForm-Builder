@@ -15,7 +15,7 @@ const App = () => {
       }}
       fields={[
         { id: 1, type: 'name' },
-        { id: 2, type: 'textarea' }
+        { id: 2, type: 'custom' }
       ]}
     />
   )
