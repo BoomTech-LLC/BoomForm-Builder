@@ -13,7 +13,7 @@ import Phone from './Fields/Phone/Phone'
 import Password from './Fields/Password/Password'
 import Number from './Fields/Number/Number'
 import Routine from './Fields/Routine/Routine'
-import Select from './Fields/Select/Select'
+import DropDown from './Fields/DropDown/DropDown'
 import Price from './Fields/Price/Price'
 import Time from './Fields/Time/Time'
 import StarRating from './Fields/StarRating/StarRating'
@@ -47,7 +47,7 @@ const FieldByType = ({ type, ...props }) => {
     case 'custom':
       return <Routine {...props} />
     case 'select':
-      return <Select {...props} />
+      return <DropDown {...props} />
     case 'price':
       return <Price {...props} />
     case 'time':

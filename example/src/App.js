@@ -16,12 +16,12 @@ const App = () => {
       fields={[
         {
           id: 1,
-          type: 'singleChoice',
+          type: 'select',
           options: [
-            { key: 1, label: 'gag', value: 'yes' },
-            { key: 2, label: 'ars', value: 'yes' },
-            { key: 3, label: 'ars', value: 'yes' },
-            { key: 'other', placeholder: 'Other' }
+            { key: 1, value: 'yes' },
+            { key: 2, value: 'yes' },
+            { key: 3, value: 'yes' },
+            { key: 'other', value: 'Other' }
           ],
           name: 'radio',
           quantity: {
