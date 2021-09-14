@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import Quantity from '../Quantity/Quantity'
-import { Select, Input } from 'boomform'
+import { Select as PrimarySelect, Input } from 'boomform'
 
 const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
   const [value, setValue] = useState(null)
@@ -8,7 +8,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
 
   return (
     <>
-      <Select
+      <PrimarySelect
         id={`${id}.selected`}
         onChange={({ value }) => setValue(value)}
         {...props}
