@@ -16,14 +16,14 @@ const App = () => {
       fields={[
         {
           id: 1,
-          type: 'singleChoice',
+          type: 'multipleChoice',
           options: [
             { key: 1, label: 'gag', value: 'yes' },
             { key: 2, label: 'ars', value: 'yes' },
             { key: 3, label: 'ars', value: 'yes' },
             { key: 'other', placeholder: 'Other' }
           ],
-          name: 'radio',
+          name: 'checkbox',
           quantity: {
             enabled: true,
             label: 'Quantity',
