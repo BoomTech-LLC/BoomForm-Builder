@@ -39,6 +39,14 @@ const MultipleChoice = ({
                 placeholder={placeholder}
                 onBlur={() => otherRef.current.click()}
               />
+              {enabled && (
+                <Quantity
+                  id={`${id}.quantitys.${key}`}
+                  label={quantityLabel}
+                  value={quantityValue}
+                  classnameprefix={classnameprefix}
+                />
+              )}
             </label>
           )
         else
@@ -57,17 +65,17 @@ const MultipleChoice = ({
                 value={value}
                 initial={checked}
               />
+              {enabled && (
+                <Quantity
+                  id={`${id}.quantitys.${key}`}
+                  label={quantityLabel}
+                  value={quantityValue}
+                  classnameprefix={classnameprefix}
+                />
+              )}
             </label>
           )
       })}
-      {enabled && (
-        <Quantity
-          id={id}
-          label={quantityLabel}
-          value={quantityValue}
-          classnameprefix={classnameprefix}
-        />
-      )}
     </>
   )
 }
