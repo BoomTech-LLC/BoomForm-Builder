@@ -14,12 +14,20 @@ const App = () => {
         innerComponent: innerComponent
       }}
       fields={[
-        { id: 1, type: 'name' },
         {
-          id: 2,
-          type: 'custom',
-          component: () => {
-            return 123
+          id: 1,
+          type: 'singleChoice',
+          options: [
+            { key: 1, label: 'gag', value: 'yes' },
+            { key: 2, label: 'ars', value: 'yes' },
+            { key: 3, label: 'ars', value: 'yes' },
+            { key: 'other', placeholder: 'Other' }
+          ],
+          name: 'radio',
+          quantity: {
+            enabled: true,
+            label: 'Quantity',
+            value: 1
           }
         }
       ]}
