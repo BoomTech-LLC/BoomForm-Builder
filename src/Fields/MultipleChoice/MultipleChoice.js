@@ -37,7 +37,20 @@ const MultipleChoice = ({
                 id={`${id}.otherValue`}
                 type='text'
                 placeholder={placeholder}
-                onBlur={() => otherRef.current.click()}
+                onClick={({ handleChange }) => {
+                  handleChange({
+                    id: `${id}.other`,
+                    value: {
+                      checked: true,
+                      value: null
+                    },
+                    e: null,
+                    field: {
+                      id: `${id}.other`,
+                      type: 'checkbox'
+                    }
+                  })
+                }}
               />
               {enabled && (
                 <Quantity
