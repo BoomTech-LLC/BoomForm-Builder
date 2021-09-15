@@ -11,7 +11,7 @@ const SingleChoice = ({
   quantity,
   ...props
 }) => {
-  const { value: quantityValue, label: quantityLabel, enabled } = quantity
+  const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
   const otherRef = useRef(null)
   return (
     <>

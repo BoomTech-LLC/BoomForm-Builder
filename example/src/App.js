@@ -15,20 +15,21 @@ const App = () => {
       }}
       fields={[
         {
-          id: 1,
-          type: 'singleChoice',
-          options: [
-            { key: 1, label: 'gag', value: 'yes' },
-            { key: 2, label: 'ars', value: 'yes' },
-            { key: 3, label: 'ars', value: 'yes' },
-            { key: 'other', placeholder: 'Other' }
+          id: 3,
+          apiKey: 'AIzaSyAnaT_v4wuB2p_9M2sbriWcIGD2gclaqAs',
+          type: 'map',
+          label: 'Map',
+          lat: -21.8926266,
+          lng: -41.3909684,
+          markers: [
+            {
+              id: 1,
+              description: 'Dream City',
+              position: { lat: -22.908333, lng: -43.196388 },
+              value: 'Rio'
+            }
           ],
-          name: 'radio',
-          quantity: {
-            enabled: true,
-            label: 'Quantity',
-            value: 1
-          }
+          zoom: 4
         }
       ]}
     />
