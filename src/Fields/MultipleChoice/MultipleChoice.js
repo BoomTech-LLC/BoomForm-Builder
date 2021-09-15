@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
 import Quantity from '../Quantity/Quantity'
 import { Checkbox, Input } from 'boomform'
@@ -12,14 +12,13 @@ const MultipleChoice = ({
   ...props
 }) => {
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
-  const otherRef = useRef(null)
+
   return (
     <>
       {options.map(({ key, label, placeholder, value, checked }) => {
         if (key === 'other')
           return (
             <label
-              ref={otherRef}
               className={classNames('boomForm-singleChoice__item', {
                 [`${classnameprefix}-singleChoice__item`]: classnameprefix
               })}
