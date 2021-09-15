@@ -12,14 +12,13 @@ const SingleChoice = ({
   ...props
 }) => {
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
-  const otherRef = useRef(null)
+
   return (
     <>
       {options.map(({ key, label, placeholder, value, checked }) => {
         if (key === 'other')
           return (
             <label
-              ref={otherRef}
               className={classNames('boomForm-singleChoice__item', {
                 [`${classnameprefix}-singleChoice__item`]: classnameprefix
               })}
@@ -29,7 +28,7 @@ const SingleChoice = ({
                 {...props}
                 id={`${id}.${key}`}
                 name={id}
-                value={value || null}
+                value={value || 'other'}
                 initial={checked}
               />
               <Input
@@ -37,7 +36,21 @@ const SingleChoice = ({
                 id={`${id}.otherValue`}
                 type='text'
                 placeholder={placeholder}
-                onBlur={() => otherRef.current.click()}
+                onClick={({ handleChange }) => {
+                  handleChange({
+                    id: `${id}.other`,
+                    value: {
+                      checked: true,
+                      value: 'other'
+                    },
+                    e: null,
+                    field: {
+                      id: `${id}.other`,
+                      type: 'radio',
+                      name: id
+                    }
+                  })
+                }}
               />
             </label>
           )
