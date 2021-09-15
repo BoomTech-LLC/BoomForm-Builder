@@ -12,6 +12,7 @@ const SingleChoice = ({
   ...props
 }) => {
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
+
   return (
     <>
       {options.map(({ key, label, placeholder, value, checked }) => {
