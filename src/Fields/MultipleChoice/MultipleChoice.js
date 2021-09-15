@@ -28,7 +28,7 @@ const MultipleChoice = ({
                 {...props}
                 id={`${id}.${key}`}
                 name={id}
-                value={value || null}
+                value={value || 'other'}
                 initial={checked}
               />
               <Input
@@ -41,7 +41,7 @@ const MultipleChoice = ({
                     id: `${id}.other`,
                     value: {
                       checked: true,
-                      value: null
+                      value: 'other'
                     },
                     e: null,
                     field: {
