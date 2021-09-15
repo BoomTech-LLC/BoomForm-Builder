@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useState } from 'react'
 import classNames from 'classnames/bind'
 import Quantity from '../Quantity/Quantity'
 import { Radio, Input } from 'boomform'
@@ -11,8 +11,13 @@ const SingleChoice = ({
   quantity,
   ...props
 }) => {
+  const [otherChecked, setOtherChecked] = useState(null)
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
 
+  const handleOtherChange = ({ value, id: key }) => {
+    if (key === `${id}.other` && value.checked) setOtherChecked(true)
+    else setOtherChecked(false)
+  }
   return (
     <>
       {options.map(({ key, label, placeholder, value, checked }) => {
@@ -30,28 +35,34 @@ const SingleChoice = ({
                 name={id}
                 value={value || 'other'}
                 initial={checked}
+                onChange={handleOtherChange}
               />
-              <Input
-                {...props}
-                id={`${id}.otherValue`}
-                type='text'
-                placeholder={placeholder}
-                onClick={({ handleChange }) => {
-                  handleChange({
-                    id: `${id}.other`,
-                    value: {
-                      checked: true,
-                      value: 'other'
-                    },
-                    e: null,
-                    field: {
+              {otherChecked || (otherChecked === null && checked) ? (
+                <Input
+                  {...props}
+                  autoFocus={true}
+                  id={`${id}.otherValue`}
+                  type='text'
+                  placeholder={placeholder}
+                  onClick={({ handleChange }) => {
+                    handleChange({
                       id: `${id}.other`,
-                      type: 'radio',
-                      name: id
-                    }
-                  })
-                }}
-              />
+                      value: {
+                        checked: true,
+                        value: 'other'
+                      },
+                      e: null,
+                      field: {
+                        id: `${id}.other`,
+                        type: 'radio',
+                        name: id
+                      }
+                    })
+                  }}
+                />
+              ) : (
+                <span>{placeholder}</span>
+              )}
             </label>
           )
         else
@@ -68,6 +79,7 @@ const SingleChoice = ({
                 name={id}
                 value={value}
                 initial={checked}
+                onChange={handleOtherChange}
               />
               <span>{label}</span>
             </label>

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import classNames from 'classnames/bind'
 import Quantity from '../Quantity/Quantity'
 import { Checkbox, Input } from 'boomform'
@@ -11,8 +11,13 @@ const MultipleChoice = ({
   quantity,
   ...props
 }) => {
+  const [otherChecked, setOtherChecked] = useState(null)
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
 
+  const handleOtherChange = ({ value }) => {
+    if (value.checked) setOtherChecked(true)
+    else setOtherChecked(false)
+  }
   return (
     <>
       {options.map(({ key, label, placeholder, value, checked }) => {
@@ -30,27 +35,33 @@ const MultipleChoice = ({
                 name={id}
                 value={value || 'other'}
                 initial={checked}
+                onChange={handleOtherChange}
               />
-              <Input
-                {...props}
-                id={`${id}.otherValue`}
-                type='text'
-                placeholder={placeholder}
-                onClick={({ handleChange }) => {
-                  handleChange({
-                    id: `${id}.other`,
-                    value: {
-                      checked: true,
-                      value: 'other'
-                    },
-                    e: null,
-                    field: {
+              {otherChecked || (otherChecked === null && checked) ? (
+                <Input
+                  {...props}
+                  autoFocus={true}
+                  id={`${id}.otherValue`}
+                  type='text'
+                  placeholder={placeholder}
+                  onClick={({ handleChange }) => {
+                    handleChange({
                       id: `${id}.other`,
-                      type: 'checkbox'
-                    }
-                  })
-                }}
-              />
+                      value: {
+                        checked: true,
+                        value: 'other'
+                      },
+                      e: null,
+                      field: {
+                        id: `${id}.other`,
+                        type: 'checkbox'
+                      }
+                    })
+                  }}
+                />
+              ) : (
+                <span>{placeholder}</span>
+              )}
               {enabled && (
                 <Quantity
                   id={`${id}.quantitys.${key}`}
@@ -69,7 +80,6 @@ const MultipleChoice = ({
               })}
               key={`${id}.${key}`}
             >
-              <span>{label}</span>
               <Checkbox
                 {...props}
                 id={`${id}.${key}`}
@@ -77,6 +87,7 @@ const MultipleChoice = ({
                 value={value}
                 initial={checked}
               />
+              <span>{label}</span>
               {enabled && (
                 <Quantity
                   id={`${id}.quantitys.${key}`}
