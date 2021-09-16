@@ -16,3 +16,12 @@ export const getInitial = (initials, id) =>
 
 export const getValidation = (validation, id) =>
   validation !== undefined && validation[id] ? validation[id] : undefined
+
+export const getNestedValue = (values, index) => {
+  return index
+    .toString()
+    .split('.')
+    .reduce((acc, index) => {
+      return acc[index] || {}
+    }, values)
+}
