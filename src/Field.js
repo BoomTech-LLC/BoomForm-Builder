@@ -19,7 +19,7 @@ import Time from './Fields/Time/Time'
 import StarRating from './Fields/StarRating/StarRating'
 import ScaleRating from './Fields/ScaleRating/ScaleRating'
 import Textarea from './Fields/Textarea/Textarea'
-import { Select } from 'boomform'
+import Map from './Fields/Map/Map'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
@@ -57,6 +57,8 @@ const FieldByType = ({ type, ...props }) => {
       return <StarRating {...props} />
     case 'scaleRating':
       return <ScaleRating {...props} />
+    case 'map':
+      return <Map {...props} />
     default:
       return null
   }

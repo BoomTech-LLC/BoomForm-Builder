@@ -1,6 +1,6 @@
 {
   "name": "boomform-builder",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Simple Form Builder",
   "author": "BoomTechLLC",
   "license": "MIT",
@@ -51,7 +51,8 @@
     "dist"
   ],
   "dependencies": {
-    "boomform": "^2.0.5",
+    "@googlemaps/js-api-loader": "^1.12.3",
+    "boomform": "^2.1.0",
     "classnames": "^2.3.1"
   }
 }

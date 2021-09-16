@@ -1,35 +1,47 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import Quantity from '../Quantity/Quantity'
-import { Select as PrimarySelect, Input } from 'boomform'
+import { Select as PrimarySelect, Viewer } from 'boomform'
 
 const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
-  const [value, setValue] = useState(null)
-  const { value: quantityValue, label: quantityLabel, enabled } = quantity
+  const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
 
   return (
-    <>
-      <PrimarySelect
-        id={`${id}.selected`}
-        onChange={({ value }) => setValue(value)}
-        {...props}
-      />
-      {value?.key === 'other' && (
-        <Input
-          {...props}
-          id={`${id}.otherValue`}
-          type='text'
-          placeholder={value?.value}
-        />
-      )}
-      {enabled && (
-        <Quantity
-          id={id}
-          label={quantityLabel}
-          value={quantityValue}
-          classnameprefix={classnameprefix}
-        />
-      )}
-    </>
+    <Viewer>
+      {({ values, handleChange }) => {
+        return (
+          <>
+            <PrimarySelect id={`${id}.selected`} {...props} />
+            {values[id]?.selected.key === 'other' && (
+              <input
+                {...props}
+                autoFocus={true}
+                type='text'
+                placeholder={values[id]?.selected.value}
+                onChange={(e) => {
+                  handleChange({
+                    id: `${id}.selected.value`,
+                    value: e.target.value,
+                    e: null,
+                    field: {
+                      id: `${id}.selected.value`,
+                      type: 'select'
+                    }
+                  })
+                }}
+              />
+            )}
+            {enabled && (
+              <Quantity
+                id={id}
+                label={quantityLabel}
+                value={quantityValue}
+                classnameprefix={classnameprefix}
+              />
+            )}
+          </>
+        )
+      }}
+    </Viewer>
   )
 }
 
