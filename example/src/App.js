@@ -44,7 +44,12 @@ const App = () => {
             { key: 2, value: '2' },
             { key: 3, value: '3' },
             { key: 'other', value: 'Other' }
-          ]
+          ],
+          quantity: {
+            enabled: true,
+            label: 'Label',
+            value: 1
+          }
         }
       ]}
     />
