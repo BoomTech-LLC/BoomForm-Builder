@@ -23,12 +23,7 @@ const App = () => {
             { key: 3, label: 'ars', value: 'yes' },
             { key: 'other', placeholder: 'Other' }
           ],
-          name: 'checkbox',
-          quantity: {
-            enabled: true,
-            label: 'Quantity',
-            value: 1
-          }
+          name: 'checkbox'
         },
         {
           id: 2,
@@ -39,12 +34,7 @@ const App = () => {
             { key: 3, label: 'ars', value: 'yes' },
             { key: 'other', placeholder: 'Other' }
           ],
-          name: 'checkbox',
-          quantity: {
-            enabled: true,
-            label: 'Quantity',
-            value: 1
-          }
+          name: 'radio'
         }
       ]}
     />
