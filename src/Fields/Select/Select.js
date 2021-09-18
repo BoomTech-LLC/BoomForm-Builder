@@ -7,16 +7,16 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
 
   return (
-    <Viewer>
-      {({ values, handleChange }) => {
-        const { key: otherKey, value: otherValue } = getOtherKey(
-          `${id}.selected`,
-          values
-        )
-        return (
-          <>
-            <PrimarySelect id={`${id}.selected`} {...props} />
-            {otherKey === 'other' && (
+    <>
+      <PrimarySelect id={`${id}`} {...props} />
+      <Viewer>
+        {({ values, handleChange }) => {
+          const { key: otherKey, value: otherValue } = getOtherKey(
+            `${id}`,
+            values
+          )
+          return (
+            otherKey === 'other' && (
               <input
                 {...props}
                 autoFocus={true}
@@ -24,29 +24,29 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
                 placeholder={otherValue}
                 onChange={(e) => {
                   handleChange({
-                    id: `${id}.selected.value`,
+                    id: `${id}.value`,
                     value: e.target.value,
                     e: null,
                     field: {
-                      id: `${id}.selected.value`,
+                      id: `${id}.value`,
                       type: 'select'
                     }
                   })
                 }}
               />
-            )}
-            {enabled && (
-              <Quantity
-                id={id}
-                label={quantityLabel}
-                value={quantityValue}
-                classnameprefix={classnameprefix}
-              />
-            )}
-          </>
-        )
-      }}
-    </Viewer>
+            )
+          )
+        }}
+      </Viewer>
+      {enabled && (
+        <Quantity
+          id={id}
+          label={quantityLabel}
+          value={quantityValue}
+          classnameprefix={classnameprefix}
+        />
+      )}
+    </>
   )
 }
 

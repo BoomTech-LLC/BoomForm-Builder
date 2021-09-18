@@ -15,90 +15,90 @@ const SingleChoice = ({
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
 
   return (
-    <Viewer>
-      {({ values, handleChange }) => {
-        const { checked: otherChecked } = getOtherChecked(id, values)
-        return (
-          <>
-            {options.map(
-              ({ key, label, placeholder, value, checked, type = 'text' }) => {
-                if (key === 'other')
-                  return (
-                    <label
-                      className={classNames('boomForm-singleChoice__item', {
-                        [`${classnameprefix}-singleChoice__item`]:
-                          classnameprefix
-                      })}
-                      key={`${id}.${key}`}
-                    >
-                      <Radio
+    <>
+      {options.map(
+        ({ key, label, placeholder, value, checked, type = 'text' }) => {
+          if (key === 'other')
+            return (
+              <label
+                className={classNames('boomForm-singleChoice__item', {
+                  [`${classnameprefix}-singleChoice__item`]: classnameprefix
+                })}
+                key={`${id}.${key}`}
+              >
+                <Radio
+                  {...props}
+                  id={`${id}.${key}`}
+                  name={id}
+                  value={value || 'other'}
+                  initial={checked}
+                />
+                <Viewer>
+                  {({ values, handleChange }) => {
+                    const { checked: otherChecked } = getOtherChecked(
+                      id,
+                      values
+                    )
+                    return otherChecked ||
+                      (otherChecked === null && checked) ? (
+                      <input
                         {...props}
-                        id={`${id}.${key}`}
-                        name={id}
-                        value={value || 'other'}
-                        initial={checked}
-                      />
-                      {otherChecked || (otherChecked === null && checked) ? (
-                        <input
-                          {...props}
-                          autoFocus={true}
-                          type={type}
-                          placeholder={placeholder}
-                          onChange={(e) => {
-                            handleChange({
+                        autoFocus={true}
+                        type={type}
+                        placeholder={placeholder}
+                        onChange={(e) => {
+                          handleChange({
+                            id: `${id}.other`,
+                            value: {
+                              checked: true,
+                              value: e.target.value
+                            },
+                            e: null,
+                            field: {
                               id: `${id}.other`,
-                              value: {
-                                checked: true,
-                                value: e.target.value
-                              },
-                              e: null,
-                              field: {
-                                id: `${id}.other`,
-                                type: 'radio',
-                                name: id
-                              }
-                            })
-                          }}
-                        />
-                      ) : (
-                        <span>{placeholder}</span>
-                      )}
-                    </label>
-                  )
-                else
-                  return (
-                    <label
-                      className={classNames('boomForm-singleChoice__item', {
-                        [`${classnameprefix}-singleChoice__item`]:
-                          classnameprefix
-                      })}
-                      key={`${id}.${key}`}
-                    >
-                      <Radio
-                        {...props}
-                        id={`${id}.${key}`}
-                        name={id}
-                        value={value}
-                        initial={checked}
+                              type: 'radio',
+                              name: id
+                            }
+                          })
+                        }}
                       />
-                      <span>{label}</span>
-                    </label>
-                  )
-              }
-            )}
+                    ) : (
+                      <span>{placeholder}</span>
+                    )
+                  }}
+                </Viewer>
+              </label>
+            )
+          else
+            return (
+              <label
+                className={classNames('boomForm-singleChoice__item', {
+                  [`${classnameprefix}-singleChoice__item`]: classnameprefix
+                })}
+                key={`${id}.${key}`}
+              >
+                <Radio
+                  {...props}
+                  id={`${id}.${key}`}
+                  name={id}
+                  value={value}
+                  initial={checked}
+                />
+                <span>{label}</span>
+              </label>
+            )
+        }
+      )}
 
-            {enabled && (
-              <Quantity
-                id={id}
-                label={quantityLabel}
-                value={quantityValue}
-                classnameprefix={classnameprefix}
-              />
-            )}
-          </>
-        )
-      }}
-    </Viewer>
+      {enabled && (
+        <Quantity
+          id={id}
+          label={quantityLabel}
+          value={quantityValue}
+          classnameprefix={classnameprefix}
+        />
+      )}
+    </>
   )
 }
 

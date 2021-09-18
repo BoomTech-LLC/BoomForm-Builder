@@ -15,98 +15,98 @@ const MultipleChoice = ({
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
 
   return (
-    <Viewer>
-      {({ values, handleChange }) => {
-        const { checked: otherChecked } = getOtherChecked(id, values)
+    <>
+      {options.map(
+        ({ key, label, placeholder, value, checked, type = 'text' }) => {
+          if (key === 'other')
+            return (
+              <label
+                className={classNames('boomForm-singleChoice__item', {
+                  [`${classnameprefix}-singleChoice__item`]: classnameprefix
+                })}
+                key={`${id}.${key}`}
+              >
+                <Checkbox
+                  {...props}
+                  id={`${id}.${key}`}
+                  name={id}
+                  value={value || 'other'}
+                  initial={checked}
+                />
+                <Viewer>
+                  {({ values, handleChange }) => {
+                    const { checked: otherChecked } = getOtherChecked(
+                      id,
+                      values
+                    )
 
-        return (
-          <>
-            {options.map(
-              ({ key, label, placeholder, value, checked, type = 'text' }) => {
-                if (key === 'other')
-                  return (
-                    <label
-                      className={classNames('boomForm-singleChoice__item', {
-                        [`${classnameprefix}-singleChoice__item`]:
-                          classnameprefix
-                      })}
-                      key={`${id}.${key}`}
-                    >
-                      <Checkbox
+                    return otherChecked ||
+                      (otherChecked === null && checked) ? (
+                      <input
                         {...props}
-                        id={`${id}.${key}`}
-                        name={id}
-                        value={value || 'other'}
-                        initial={checked}
-                      />
-                      {otherChecked || (otherChecked === null && checked) ? (
-                        <input
-                          {...props}
-                          autoFocus={true}
-                          type={type}
-                          placeholder={placeholder}
-                          onChange={(e) => {
-                            handleChange({
+                        autoFocus={true}
+                        type={type}
+                        placeholder={placeholder}
+                        onChange={(e) => {
+                          handleChange({
+                            id: `${id}.other`,
+                            value: {
+                              checked: true,
+                              value: e.target.value
+                            },
+                            e: null,
+                            field: {
                               id: `${id}.other`,
-                              value: {
-                                checked: true,
-                                value: e.target.value
-                              },
-                              e: null,
-                              field: {
-                                id: `${id}.other`,
-                                type: 'checkbox',
-                                name: id
-                              }
-                            })
-                          }}
-                        />
-                      ) : (
-                        <span>{placeholder}</span>
-                      )}
-                      {enabled && (
-                        <Quantity
-                          id={`${id}.quantitys.${key}`}
-                          label={quantityLabel}
-                          value={quantityValue}
-                          classnameprefix={classnameprefix}
-                        />
-                      )}
-                    </label>
-                  )
-                else
-                  return (
-                    <label
-                      className={classNames('boomForm-multipleChoice__item', {
-                        [`${classnameprefix}-multipleChoice__item`]:
-                          classnameprefix
-                      })}
-                      key={`${id}.${key}`}
-                    >
-                      <Checkbox
-                        {...props}
-                        id={`${id}.${key}`}
-                        name={id}
-                        value={value}
-                        initial={checked}
+                              type: 'checkbox',
+                              name: id
+                            }
+                          })
+                        }}
                       />
-                      <span>{label}</span>
-                      {enabled && (
-                        <Quantity
-                          id={`${id}.quantitys.${key}`}
-                          label={quantityLabel}
-                          value={quantityValue}
-                          classnameprefix={classnameprefix}
-                        />
-                      )}
-                    </label>
-                  )
-              }
-            )}
-          </>
-        )
-      }}
-    </Viewer>
+                    ) : (
+                      <span>{placeholder}</span>
+                    )
+                  }}
+                </Viewer>
+                {enabled && (
+                  <Quantity
+                    id={`${id}.${key}`}
+                    label={quantityLabel}
+                    value={quantityValue}
+                    classnameprefix={classnameprefix}
+                  />
+                )}
+              </label>
+            )
+          else
+            return (
+              <label
+                className={classNames('boomForm-multipleChoice__item', {
+                  [`${classnameprefix}-multipleChoice__item`]: classnameprefix
+                })}
+                key={`${id}.${key}`}
+              >
+                <Checkbox
+                  {...props}
+                  id={`${id}.${key}`}
+                  name={id}
+                  value={value}
+                  initial={checked}
+                />
+                <span>{label}</span>
+                {enabled && (
+                  <Quantity
+                    id={`${id}.${key}`}
+                    label={quantityLabel}
+                    value={quantityValue}
+                    classnameprefix={classnameprefix}
+                  />
+                )}
+              </label>
+            )
+        }
+      )}
+    </>
   )
 }
 

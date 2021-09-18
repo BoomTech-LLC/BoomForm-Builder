@@ -11,7 +11,7 @@ const Quantity = ({ id, label, value, classnameprefix }) => {
     >
       {label}
       <span>:</span>
-      <Input id={`${id}.quantity`} type='number' initial={value} min={1} />
+      <Input id={`quantity.${id}`} type='number' initial={value} min={1} />
     </label>
   )
 }
