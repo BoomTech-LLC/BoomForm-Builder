@@ -11,16 +11,16 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
       <PrimarySelect id={`${id}`} {...props} />
       <Viewer>
         {({ values, handleChange }) => {
-          const { key: otherKey, value: otherValue } = getOtherKey(
-            `${id}`,
-            values
-          )
+          const {
+            key: otherKey,
+            value: otherValue,
+            isNumber
+          } = getOtherKey(`${id}`, values)
           return (
             otherKey === 'other' && (
               <input
-                {...props}
                 autoFocus={true}
-                type='text'
+                type={isNumber === true ? 'number' : 'text'}
                 placeholder={otherValue}
                 onChange={(e) => {
                   handleChange({

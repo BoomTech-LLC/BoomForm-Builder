@@ -17,7 +17,7 @@ const MultipleChoice = ({
   return (
     <>
       {options.map(
-        ({ key, label, placeholder, value, checked, type = 'text' }) => {
+        ({ key, label, placeholder, value, checked, isNumber = false }) => {
           if (key === 'other')
             return (
               <label
@@ -43,9 +43,8 @@ const MultipleChoice = ({
                     return otherChecked ||
                       (otherChecked === null && checked) ? (
                       <input
-                        {...props}
                         autoFocus={true}
-                        type={type}
+                        type={isNumber ? 'number' : 'text'}
                         placeholder={placeholder}
                         onChange={(e) => {
                           handleChange({

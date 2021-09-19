@@ -21,7 +21,12 @@ const App = () => {
             { key: 1, label: 'gag', value: 'yes' },
             { key: 2, label: 'ars', value: 'yes' },
             { key: 3, label: 'ars', value: 'yes' },
-            { key: 'other', placeholder: 'Other' }
+            {
+              key: 'other',
+              placeholder: 'Other',
+              checked: true,
+              isNumber: true
+            }
           ],
           name: 'checkbox',
           quantity: {
@@ -37,7 +42,12 @@ const App = () => {
             { key: 1, value: 'yes', label: 'BArev' },
             { key: 2, value: 'yes' },
             { key: 3, value: 'yes' },
-            { key: 'other', value: 'Other', placeholder: 'Other' }
+            {
+              key: 'other',
+              value: 'Other',
+              placeholder: 'Other',
+              isNumber: true
+            }
           ],
           name: 'radio',
           quantity: {
