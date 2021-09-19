@@ -21,8 +21,8 @@ const MultipleChoice = ({
           if (key === 'other')
             return (
               <label
-                className={classNames('boomForm-singleChoice__item', {
-                  [`${classnameprefix}-singleChoice__item`]: classnameprefix
+                className={classNames('boomForm-multipleChoice__item', {
+                  [`${classnameprefix}-multipleChoice__item`]: classnameprefix
                 })}
                 key={`${id}.${key}`}
               >
