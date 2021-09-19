@@ -42,7 +42,7 @@ const SingleChoice = ({
                     return otherChecked ||
                       (otherChecked === null && checked) ? (
                       <input
-                        {...props}
+                        className='boomForm-other__item'
                         autoFocus={true}
                         type={isNumber ? 'number' : 'text'}
                         placeholder={placeholder}

@@ -19,6 +19,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
           return (
             otherKey === 'other' && (
               <input
+                className='boomForm-other__item'
                 autoFocus={true}
                 type={isNumber === true ? 'number' : 'text'}
                 placeholder={otherValue}

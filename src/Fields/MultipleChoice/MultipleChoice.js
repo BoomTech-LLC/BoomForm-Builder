@@ -43,6 +43,7 @@ const MultipleChoice = ({
                     return otherChecked ||
                       (otherChecked === null && checked) ? (
                       <input
+                        className='boomForm-other__item'
                         autoFocus={true}
                         type={isNumber ? 'number' : 'text'}
                         placeholder={placeholder}
