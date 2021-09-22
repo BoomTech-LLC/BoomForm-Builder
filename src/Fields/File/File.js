@@ -8,13 +8,14 @@ const File = ({
   initial,
   classnameprefix,
   isMultiple = false,
-  inputContent = 'Click Or Drag and Drop For Upload Files',
+  inputContent,
   autoUpload = true,
   getErrors = (error) => {
     console.log(error)
   },
   url = 'https://httpbin.org/post',
-  headers = { 'Content-type': 'application/json' },
+  headers,
+  dropbox,
   ...props
 }) => {
   return (
@@ -62,6 +63,7 @@ const File = ({
             getErrors={getErrors}
             url={url}
             headers={headers}
+            dropbox={dropbox}
           />
         )
       }}
