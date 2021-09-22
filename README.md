@@ -1,30 +1,74 @@
 # boomform-builder
 
-> Build Your Form only passing an object
 
-[![NPM](https://img.shields.io/npm/v/boomform-builder.svg)](https://www.npmjs.com/package/boomform-builder) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/boomform.svg)](https://www.npmjs.com/package/boomform-builder)
 
-## Install
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://form.boomform.com/">
+    <img src="https://cdn.boomte.ch/images/boomtechdeveloper/Boomform-builder-logo.svg" alt="Logo" width="260" height="120">
+  </a>
 
-```bash
-npm install --save boomform-builder
-```
+  <p align="center">
+    Building a form is as easy as making coffee. :coffee:
+    <br />
+    <a href="https://form-builder.boomform.com"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://codesandbox.io/s/stoic-darkness-e34ej">View Demo</a>
+    ·
+    <a href="https://github.com/BoomTech-LLC/BoomForm-Builder/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/BoomTech-LLC/BoomForm-Builder/issues">Request Feature</a>
+  </p>
+</p>
 
-## Usage
+
+
+
+### Why BoomForm ?
+😎 It’s pretty simple. <br />
+You just need to pass an object with the parameters you want and the form builder will automatically create all fields for you. 
+
+[Full documentation here](https://form-builder.boomform.com)
+
+## Code Example
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
+import Builder from 'boomform-builder'
 
-import MyComponent from 'boomform-builder'
-import 'boomform-builder/dist/index.css'
-
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const App = () => {
+  return (
+    <Builder
+      global={{
+        name: 'Fill your name'
+      }}
+      fields={[
+        {
+          id: 'name',
+          type: 'name',
+          validations: {
+            first: { required: { msg: 'First name is required' } },
+            last: { required: { msg: 'Last name is required' } }
+          }
+        }
+      ]}
+      button={{
+        text: 'Submit'
+      }}
+    />
+  )
 }
+
+export default App
 ```
 
-## License
+## Made in BoomTech 
 
-MIT © [TikoNazaryan](https://github.com/TikoNazaryan)
+<img src="https://cdn.boomte.ch/images/boomtechdeveloper/logo.svg" height="100">
+
+![This is an image](https://cdn.boomte.ch/images/TikoN.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/TikoP.png?x=1) | ![This is an image](https://cdn.boomte.ch/images/SahakS.png?x=2) 
+-- | -- | -- 
+Tigran Nazaryan | Tigran Paployan | Sahak Sahakyan

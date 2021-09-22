@@ -20,6 +20,7 @@ import StarRating from './Fields/StarRating/StarRating'
 import ScaleRating from './Fields/ScaleRating/ScaleRating'
 import Textarea from './Fields/Textarea/Textarea'
 import Map from './Fields/Map/Map'
+import File from './Fields/File/File'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
@@ -59,6 +60,8 @@ const FieldByType = ({ type, ...props }) => {
       return <ScaleRating {...props} />
     case 'map':
       return <Map {...props} />
+    case 'file':
+      return <File {...props} />
     default:
       return null
   }
