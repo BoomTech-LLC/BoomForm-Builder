@@ -21,6 +21,7 @@ import ScaleRating from './Fields/ScaleRating/ScaleRating'
 import Textarea from './Fields/Textarea/Textarea'
 import Map from './Fields/Map/Map'
 import File from './Fields/File/File'
+import Date from './Fields/Date/Date'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
@@ -62,6 +63,8 @@ const FieldByType = ({ type, ...props }) => {
       return <Map {...props} />
     case 'file':
       return <File {...props} />
+    case 'date':
+      return <Date {...props} />
     default:
       return null
   }
