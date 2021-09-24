@@ -4,21 +4,21 @@ import classNames from 'classnames/bind'
 import List from './List'
 import {
   getPhoneCountryByCode,
-  getPhoneCountryByDialCode
-} from '../../../Helpers/address'
+  getPhoneCountryByDialCode,
+  countryListForPhone
+} from '../../../Helpers/phone'
 
 const DropDown = ({ id, defaultCountryCode }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const defaultCountry = getPhoneCountryByCode(defaultCountryCode)
+
+  const [defaultCountry] = countryListForPhone
+  if (defaultCountryCode)
+    defaultCountry = getPhoneCountryByCode(defaultCountryCode)
 
   const handleClickClose = (e) => {
     if (e.target.classList.value.indexOf('country_code') === -1)
       setIsOpen(false)
   }
-
-  useEffect(() => {
-    console.log(isOpen)
-  }, [isOpen])
 
   useEffect(() => {
     window.addEventListener('click', handleClickClose)

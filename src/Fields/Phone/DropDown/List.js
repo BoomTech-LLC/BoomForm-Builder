@@ -1,5 +1,5 @@
 import React from 'react'
-import { countryListForPhone } from '../../../Helpers/address'
+import { countryListForPhone } from '../../../Helpers/phone'
 
 const List = ({ id, setIsOpen, handleChange, values }) => {
   const handleCodeChange = (dial_code) => {

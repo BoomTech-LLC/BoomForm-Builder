@@ -1,14 +1,24 @@
-export const getAddressFields = () => {
-  return ['street', 'street2', 'city', 'state', 'zip', 'country']
+export const getPhoneCountryByCode = (code) => {
+  const [country] = countryListForPhone.filter(
+    (country) => country.code === code
+  )
+  return country
 }
 
-export const countryList = [
+export const getPhoneCountryByDialCode = (code) => {
+  const [country] = countryListForPhone.filter(
+    (country) => country.dial_code === code
+  )
+  return country
+}
+
+export const countryListForPhone = [
   {
     value: 'Afghanistan',
     dial_code: '+93',
     code: 'AF',
     name: 'Afghanistan',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Afghanistan.svg',
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Flag_of_Afghanistan_%281931%E2%80%931973%29.svg/330px-Flag_of_Afghanistan_%281931%E2%80%931973%29.svg.png',
     key: 1
   },
   {
