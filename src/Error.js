@@ -63,6 +63,13 @@ const getErrorByType = (id, type, errors, touched) => {
       if (errors[`${id}.last`] !== undefined && touched[`${id}.last`] === true)
         return errors[`${id}.last`]
 
+    case 'phone':
+      if (
+        errors[`${id}.phone`] !== undefined &&
+        touched[`${id}.phone`] === true
+      )
+        return errors[`${id}.phone`]
+
     case 'time':
       if (
         errors[`${id}.format`] !== undefined &&
