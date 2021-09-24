@@ -1,8 +1,20 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Input } from 'boomform'
+import DropDown from './DropDown/DropDown'
 
-const Phone = ({ label, classnameprefix, ...props }) => {
-  return <Input {...props} type='phone' />
+const Phone = ({
+  label,
+  classnameprefix,
+  id,
+  defaultCountryCode,
+  ...props
+}) => {
+  return (
+    <>
+      <DropDown id={id} defaultCountryCode={defaultCountryCode} />
+      <Input id={`${id}.phone`} type='phone' {...props} />
+    </>
+  )
 }
 
 export default Phone
