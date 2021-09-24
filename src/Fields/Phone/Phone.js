@@ -11,7 +11,7 @@ const Phone = ({
 }) => {
   return (
     <>
-      <DropDown id={id} />
+      <DropDown id={id} defaultCountryCode={defaultCountryCode} />
       <Input id={`${id}.phone`} type='phone' {...props} />
     </>
   )

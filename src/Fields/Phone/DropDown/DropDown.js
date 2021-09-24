@@ -11,7 +11,7 @@ import {
 const DropDown = ({ id, defaultCountryCode }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const [defaultCountry] = countryListForPhone
+  let [defaultCountry] = countryListForPhone
   if (defaultCountryCode)
     defaultCountry = getPhoneCountryByCode(defaultCountryCode)
 
