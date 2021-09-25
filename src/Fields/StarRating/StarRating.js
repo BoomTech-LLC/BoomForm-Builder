@@ -14,8 +14,7 @@ const StarRating = ({
 }) => {
   return (
     <Custom id={id}>
-      {({ values, handleChange }) => {
-        const value = values[id]
+      {({ value, handleChange }) => {
         return Array.from({ length: count }, (item, index) => {
           return shape === 'circle' ? (
             <Circle
