@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Circle = ({ color, zoom, click, value, index }) => {
+const Circle = ({ color, zoom, click, value, index, ...props }) => {
   return (
     <svg
+      {...props}
       className='boomForm-svg boomForm-svg-circle'
       onClick={click}
       width={zoom}

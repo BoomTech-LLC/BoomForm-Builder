@@ -1,8 +1,9 @@
 import React from 'react'
 
-const Star = ({ color, zoom, click, value, index }) => {
+const Star = ({ color, zoom, click, value, index, ...props }) => {
   return (
     <svg
+      {...props}
       className='boomForm-svg boomForm-svg-star'
       onClick={click}
       width={zoom}
