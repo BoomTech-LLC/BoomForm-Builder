@@ -1,17 +1,11 @@
 import React from 'react'
 import Builder from 'boomform-builder'
 
-const innerComponent = (attrs) => {
-  console.log('Inner Component', attrs)
-}
-
 const App = () => {
   return (
     <Builder
       global={{
-        name: 'Form',
-        description: 'Description',
-        innerComponent: innerComponent
+        name: 'Rich Text Editor'
       }}
       fields={[
         {
@@ -20,6 +14,9 @@ const App = () => {
           initial: 3
         }
       ]}
+      button={{
+        text: 'submit'
+      }}
     />
   )
 }
