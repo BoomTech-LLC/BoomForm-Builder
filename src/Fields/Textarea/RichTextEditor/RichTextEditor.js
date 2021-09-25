@@ -8,7 +8,7 @@ const RichTextEditor = (props) => {
   const { id, placeholder } = props
 
   return (
-    <Custom id={id}>
+    <Custom id={id} {...props}>
       {({ handleChange, handleBlur, value }) => {
         return (
           <div

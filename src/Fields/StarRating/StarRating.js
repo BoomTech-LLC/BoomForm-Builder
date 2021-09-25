@@ -13,45 +13,58 @@ const StarRating = ({
   ...props
 }) => {
   return (
-    <Custom id={id}>
-      {({ value, handleChange }) => {
-        return Array.from({ length: count }, (item, index) => {
-          return shape === 'circle' ? (
-            <Circle
-              key={index}
-              {...props}
-              click={(e) =>
-                handleChange({
-                  id,
-                  value: index + 1,
-                  e,
-                  field: { id, type: 'starRating' }
-                })
-              }
-              value={value || initial}
-              index={index}
-              color={color}
-              zoom={zoom}
-            />
-          ) : (
-            <Star
-              key={index}
-              {...props}
-              click={(e) =>
-                handleChange({
-                  id,
-                  value: index + 1,
-                  e,
-                  field: { id, type: 'starRating' }
-                })
-              }
-              value={value || initial}
-              index={index}
-              color={color}
-              zoom={zoom}
-            />
-          )
-        })
+    <Custom id={id} {...props}>
+      {({ handleChange, handleBlur, value }) => {
+        return (
+          <div
+            onBlur={() => {
+              handleBlur({
+                id,
+                value,
+                e: null,
+                field: props
+              })
+            }}
+          >
+            {Array.from({ length: count }, (item, index) => {
+              return shape === 'circle' ? (
+                <Circle
+                  key={index}
+                  {...props}
+                  click={(e) =>
+                    handleChange({
+                      id,
+                      value: index + 1,
+                      e,
+                      field: { id, type: 'starRating' }
+                    })
+                  }
+                  value={value || initial}
+                  index={index}
+                  color={color}
+                  zoom={zoom}
+                />
+              ) : (
+                <Star
+                  key={index}
+                  {...props}
+                  click={(e) =>
+                    handleChange({
+                      id,
+                      value: index + 1,
+                      e,
+                      field: { id, type: 'starRating' }
+                    })
+                  }
+                  value={value || initial}
+                  index={index}
+                  color={color}
+                  zoom={zoom}
+                />
+              )
+            })}
+          </div>
+        )
       }}
     </Custom>
   )
