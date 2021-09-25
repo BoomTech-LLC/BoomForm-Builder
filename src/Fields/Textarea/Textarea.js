@@ -1,8 +1,10 @@
 import React from 'react'
 import { Textarea as TextareaInput } from 'boomform'
+import RichTextEditor from './RichTextEditor/RichTextEditor'
 
-const Textarea = (props) => {
-  return <TextareaInput {...props} />
+const Textarea = ({ richTextEditor, ...props }) => {
+  if (richTextEditor) return <RichTextEditor {...props} />
+  else return <TextareaInput {...props} />
 }
 
 export default Textarea
