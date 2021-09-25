@@ -5,14 +5,18 @@ const App = () => {
   return (
     <Builder
       global={{
-        name: 'Rich Text Editor'
+        name: 'Rich Text Editor',
+        innerComponent: ({ ...state }) => {
+          console.log(state)
+        }
       }}
       fields={[
         {
           id: 1,
-          type: 'textarea',
-          richTextEditor: true,
-          validation: { required: { msg: 'Something' } }
+          max: 8,
+          min: 3,
+          type: 'scaleRating',
+          validation: { required: { msg: 'this field is required' } }
         }
       ]}
       button={{
