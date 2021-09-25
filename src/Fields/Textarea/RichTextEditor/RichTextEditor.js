@@ -6,7 +6,6 @@ import { modules, formats } from './../../../Helpers/textarea'
 
 const RichTextEditor = (props) => {
   const { id, placeholder } = props
-
   return (
     <Custom id={id} {...props}>
       {({ handleChange, handleBlur, value }) => {
@@ -33,7 +32,7 @@ const RichTextEditor = (props) => {
                   field: props
                 })
               }}
-              value={value || ''}
+              value={value}
               modules={modules}
               formats={formats}
             />

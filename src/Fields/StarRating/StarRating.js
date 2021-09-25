@@ -5,7 +5,6 @@ import { Custom } from 'boomform'
 
 const StarRating = ({
   id,
-  initial,
   count = 5,
   shape,
   color = '#FFAB07',
@@ -39,7 +38,7 @@ const StarRating = ({
                       field: { id, type: 'starRating' }
                     })
                   }
-                  value={value || initial}
+                  value={value}
                   index={index}
                   color={color}
                   zoom={zoom}
@@ -56,7 +55,7 @@ const StarRating = ({
                       field: { id, type: 'starRating' }
                     })
                   }
-                  value={value || initial}
+                  value={value}
                   index={index}
                   color={color}
                   zoom={zoom}

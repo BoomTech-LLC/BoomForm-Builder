@@ -14,6 +14,7 @@ const App = () => {
         {
           id: 1,
           type: 'starRating',
+          initial: 3,
           validation: {
             required: {
               msg: 'this field is required'
