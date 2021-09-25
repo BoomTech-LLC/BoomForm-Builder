@@ -16,9 +16,8 @@ const App = () => {
       fields={[
         {
           id: 1,
-          type: 'phone',
-          defaultCountryCode: 'AM',
-          validation: { required: { msg: 'BArev Vazgenchik' } }
+          type: 'starRating',
+          initial: 3
         }
       ]}
     />
