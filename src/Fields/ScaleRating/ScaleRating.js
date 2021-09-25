@@ -9,35 +9,36 @@ const ScaleRating = ({
   preFix,
   postFix,
   classnameprefix,
+  initial,
   ...props
 }) => {
   return (
     <>
       <span>{preFix}</span>
-      <div
-        className={classNames('boomForm-scaleRating-option__content', {
-          [`${classnameprefix}-scaleRating-option__content`]: classnameprefix
-        })}
-      >
-        {Array.from(
-          { length: max + 1 },
-          (val, index) => index >= min && index
-        ).map((item, i) => {
-          if (item === false) return
-          return (
-            <>
-              <span>{i}</span>
-              <Radio
-                key={item}
-                id={`${id}.${i}`}
-                value={`${id}.${i}`}
-                name={id}
-                {...props}
-              />
-            </>
-          )
-        })}
-      </div>
+      {Array.from(
+        { length: max + 1 },
+        (val, index) => index >= min && index
+      ).map((value) => {
+        if (value === false) return
+        return (
+          <div
+            key={value}
+            className={classNames('boomForm-scaleRating-option__content', {
+              [`${classnameprefix}-scaleRating-option__content`]:
+                classnameprefix
+            })}
+          >
+            <span>{value}</span>
+            <Radio
+              {...props}
+              id={`${id}.${value}`}
+              value={value}
+              name={id}
+              initial={initial === value ? true : false}
+            />
+          </div>
+        )
+      })}
       <span>{postFix}</span>
     </>
   )

@@ -6,20 +6,17 @@ const App = () => {
     <Builder
       global={{
         name: 'Rich Text Editor',
-        innerComponent: ({ ...rest }) => {
-          console.log(rest)
+        innerComponent: ({ ...state }) => {
+          console.log(state)
         }
       }}
       fields={[
         {
           id: 1,
-          type: 'starRating',
-          initial: 3,
-          validation: {
-            required: {
-              msg: 'this field is required'
-            }
-          }
+          max: 8,
+          min: 3,
+          type: 'scaleRating',
+          validation: { required: { msg: 'this field is required' } }
         }
       ]}
       button={{
