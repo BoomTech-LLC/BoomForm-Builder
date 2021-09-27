@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
 import { Radio } from 'boomform'
+import { getOptions } from '../../Helpers/scaleRating'
 
 const ScaleRating = ({
   id,
@@ -15,11 +16,7 @@ const ScaleRating = ({
   return (
     <>
       <span>{preFix}</span>
-      {Array.from(
-        { length: max + 1 },
-        (val, index) => index >= min && index
-      ).map((value) => {
-        if (value === false) return
+      {getOptions({ min, max }).map((value) => {
         return (
           <div
             key={value}
