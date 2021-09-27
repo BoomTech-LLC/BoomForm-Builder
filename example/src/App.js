@@ -14,7 +14,7 @@ const App = () => {
         {
           id: 1,
           max: 8,
-          min: 3,
+          min: 4,
           type: 'scaleRating',
           validation: { required: { msg: 'this field is required' } }
         }
