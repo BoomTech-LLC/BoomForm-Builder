@@ -22,6 +22,7 @@ import Textarea from './Fields/Textarea/Textarea'
 import Map from './Fields/Map/Map'
 import File from './Fields/File/File'
 import Date from './Fields/Date/Date'
+import Just from './Fields/Just/Just'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
@@ -65,6 +66,8 @@ const FieldByType = ({ type, ...props }) => {
       return <File {...props} />
     case 'date':
       return <Date {...props} />
+    case 'just':
+      return <Just {...props} />
     default:
       return null
   }
