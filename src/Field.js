@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import classNames from 'classnames/bind'
 import Error from './Error'
 
@@ -71,6 +71,13 @@ const FieldByType = ({ type, ...props }) => {
 }
 
 const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
+  if (type === 'just') {
+    const { Component } = props
+    if (typeof Component !== 'function') return null
+
+    return <Component />
+  }
+
   return (
     <div
       id={`field-${id}`}
