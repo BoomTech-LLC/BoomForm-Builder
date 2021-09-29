@@ -1,21 +1,21 @@
 import React from 'react'
 import Builder from 'boomform-builder'
 
-const SmallTitle = () => {
-  return <h2>Small Title</h2>
-}
-
 const App = () => {
   return (
     <Builder
       global={{
-        name: 'Simple Text'
+        name: 'Some Form',
+        onSubmit: (attr) => {
+          console.log(attr)
+        }
       }}
       fields={[
         {
           id: 1,
-          type: 'just',
-          Component: SmallTitle
+          type: 'terms',
+          text: 'I agree to the {Terms of Service}',
+          url: 'https://example.com/'
         }
       ]}
       button={{
