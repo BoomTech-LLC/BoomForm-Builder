@@ -23,6 +23,7 @@ import Map from './Fields/Map/Map'
 import File from './Fields/File/File'
 import Date from './Fields/Date/Date'
 import Just from './Fields/Just/Just'
+import Terms from './Fields/Terms/Terms'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
@@ -66,6 +67,8 @@ const FieldByType = ({ type, ...props }) => {
       return <File {...props} />
     case 'date':
       return <Date {...props} />
+    case 'terms':
+      return <Terms {...props} />
     case 'just':
       return <Just {...props} />
     default:
