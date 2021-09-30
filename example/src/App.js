@@ -5,17 +5,13 @@ const App = () => {
   return (
     <Builder
       global={{
-        name: 'Some Form',
-        onSubmit: (attr) => {
-          console.log(attr)
-        }
+        name: 'Terms And Conditions'
       }}
       fields={[
         {
           id: 1,
-          type: 'terms',
-          text: 'I agree to the {Terms of Service}',
-          url: 'https://example.com/'
+          type: 'signature',
+          validation: { required: { msg: 'Vazgen' } }
         }
       ]}
       button={{

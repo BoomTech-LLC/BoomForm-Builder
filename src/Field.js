@@ -24,6 +24,7 @@ import File from './Fields/File/File'
 import Date from './Fields/Date/Date'
 import Just from './Fields/Just/Just'
 import Terms from './Fields/Terms/Terms'
+import Signature from './Fields/Signature/Signature'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
@@ -71,6 +72,8 @@ const FieldByType = ({ type, ...props }) => {
       return <Terms {...props} />
     case 'just':
       return <Just {...props} />
+    case 'signature':
+      return <Signature {...props} />
     default:
       return null
   }
