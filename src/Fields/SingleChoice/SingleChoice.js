@@ -16,7 +16,11 @@ const SingleChoice = ({
 
   return (
     <>
-      <div>
+      <div
+        className={classNames('boomForm-singleChoice__optionsContent', {
+          [`${classnameprefix}-singleChoice__optionsContent`]: classnameprefix
+        })}
+      >
         {options.map(
           ({ key, label, placeholder, value, checked, isNumber = false }) => {
             if (key === 'other')
