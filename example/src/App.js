@@ -10,7 +10,7 @@ const App = () => {
       fields={[
         {
           id: 1,
-          type: 'signature',
+          type: 'address',
           validation: { required: { msg: 'Vazgen' } }
         }
       ]}
