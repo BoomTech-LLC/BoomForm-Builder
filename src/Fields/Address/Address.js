@@ -86,7 +86,20 @@ const Address = ({
             {...props}
             key={`${id}.country`}
             id={`${id}.country`}
-            options={countryList}
+            options={
+              getPlaceholder(placeholders, 'country')
+                ? [
+                    {
+                      key: 'placeholder',
+                      value: ` -- ${getPlaceholder(
+                        placeholders,
+                        'country'
+                      )} -- `
+                    },
+                    ...countryList
+                  ]
+                : countryList
+            }
             initial={defaultCountry}
           />
         )}
@@ -96,29 +109,3 @@ const Address = ({
 }
 
 export default Address
-
-// {fields.map((item) => {
-//   if (hide?.includes(item)) return null
-//   if (item === 'country') {
-//     return (
-//       <Select
-//         {...props}
-//         key={`${id}.${item}`}
-//         id={`${id}.${item}`}
-//         options={countryList}
-//         initial={defaultCountry}
-//       />
-//     )
-//   }
-//   return (
-//     <Input
-//       {...props}
-//       key={`${id}.${item}`}
-//       id={`${id}.${item}`}
-//       type='text'
-//       placeholder={getPlaceholder(placeholders, item)}
-//       initial={getInitial(initials, item)}
-//       validation={getValidation(validations, item)}
-//     />
-//   )
-// })}
