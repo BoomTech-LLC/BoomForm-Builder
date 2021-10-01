@@ -108,7 +108,13 @@ const Error = ({ classnameprefix, id, type }) => {
         [`${classnameprefix}-field__error`]: classnameprefix
       })}
     >
-      {possibleError}
+      <span
+        className={classNames(`boomForm-field__error_text`, {
+          [`${classnameprefix}-field__error_text`]: classnameprefix
+        })}
+      >
+        {possibleError}
+      </span>
     </div>
   )
 }

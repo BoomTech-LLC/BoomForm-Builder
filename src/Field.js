@@ -109,8 +109,8 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
           instruction={instruction}
           {...props}
         />
+        <Error classnameprefix={classnameprefix} id={id} type={type} />
       </div>
-      <Error classnameprefix={classnameprefix} id={id} type={type} />
       {instruction !== undefined ? (
         <div
           className={classNames(`boomForm-field__instruction`, {
