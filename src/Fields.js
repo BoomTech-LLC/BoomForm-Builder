@@ -1,20 +1,32 @@
 import React, { memo } from 'react'
 import Field from './Field'
 import { getPrintableFields } from './Helpers/global'
+import { Viewer } from 'boomform'
+import { getHiddenIds } from './Helpers/logic'
 
-const Fields = ({ fields, paginationIds, logicIds }) => {
-  const printableFields = getPrintableFields(fields, logicIds, paginationIds)
-
+const Fields = ({ fields, logic, paginationIds }) => {
   return (
-    <div className='boomForm-fields'>
-      {fields.map((field) => {
-        const { id } = field
+    <Viewer>
+      {({ values }) => {
+        const logicIds = getHiddenIds({ logic, values })
+        const printableFields = getPrintableFields(
+          fields,
+          logicIds,
+          paginationIds
+        )
+        return (
+          <div className='boomForm-fields'>
+            {fields.map((field) => {
+              const { id } = field
 
-        if (!printableFields.includes(id)) return null
+              if (!printableFields.includes(id)) return null
 
-        return <Field key={id} {...field} />
-      })}
-    </div>
+              return <Field key={id} {...field} />
+            })}
+          </div>
+        )
+      }}
+    </Viewer>
   )
 }
 
