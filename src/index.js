@@ -36,7 +36,6 @@ const Builder = ({
   const [currentPage, setCurrentPage] = useState(
     isPaginationOn ? current : null
   )
-  const [logicIds, setLogicIds] = useState([])
 
   useEffect(() => {
     if (isPaginationOn) setPaginationIds(pages[currentPage])
@@ -55,7 +54,7 @@ const Builder = ({
         <Fields
           fields={fields}
           paginationIds={paginationIds}
-          logicIds={logicIds}
+          logic={isLogicOn ? logic : []}
         />
         {isPaginationOn ? (
           <PaginationFooter
@@ -66,10 +65,8 @@ const Builder = ({
             prevText={prevText}
             pagesLength={pages.length}
             isLogicOn={isLogicOn}
-            logic={logic}
             onSubmit={onSubmit}
             setCurrentPage={setCurrentPage}
-            setLogicIds={setLogicIds}
             pages={pages}
           />
         ) : (
@@ -77,8 +74,6 @@ const Builder = ({
             onSubmit={onSubmit}
             button={button}
             isLogicOn={isLogicOn}
-            logic={logic}
-            setLogicIds={setLogicIds}
           />
         )}
         <StateHandler innerComponent={innerComponent} />
