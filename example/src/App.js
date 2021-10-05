@@ -6,7 +6,8 @@ const App = () => {
     <Builder
       global={{
         name: 'Terms And Conditions',
-        logic: true
+        logic: true,
+        innerComponent: ({ ...state }) => console.log(state)
       }}
       fields={[
         {
@@ -22,7 +23,14 @@ const App = () => {
         },
         {
           id: 2,
-          type: 'text'
+          type: 'text',
+          validation: { required: { msg: 'gago' } }
+        },
+        {
+          id: 3,
+          label: 'file',
+          type: 'file',
+          validation: { required: { msg: 'file upload' } }
         }
       ]}
       button={{

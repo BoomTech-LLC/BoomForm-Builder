@@ -19,7 +19,7 @@ const File = ({
   ...props
 }) => {
   return (
-    <Custom id={id}>
+    <Custom id={id} {...props}>
       {({ values, handleChange, handleBlur }) => {
         const handleGetFiles = (result) => {
           if (result.length)
@@ -27,7 +27,7 @@ const File = ({
               id,
               e: null,
               value: result,
-              field: { id, initial }
+              field: { id, initial, ...props }
             })
         }
         const handleRemove = (key) => {
@@ -36,7 +36,7 @@ const File = ({
             id,
             e: null,
             value: files || null,
-            field: { id, initial }
+            field: { id, initial, ...props }
           })
         }
 
@@ -45,7 +45,7 @@ const File = ({
             id,
             e: null,
             value: result,
-            field: { id, initial }
+            field: { id, initial, ...props }
           })
         }
         return (
