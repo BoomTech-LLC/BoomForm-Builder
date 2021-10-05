@@ -5,7 +5,8 @@ const App = () => {
   return (
     <Builder
       global={{
-        name: 'Terms And Conditions'
+        name: 'Terms And Conditions',
+        logic: true
       }}
       fields={[
         {
@@ -13,16 +14,35 @@ const App = () => {
           type: 'singleChoice',
           options: [
             { key: 1, label: 'option 1', value: 'option 1' },
-            { key: 2, label: 'option 2', value: 'option 2' },
+            { key: 2, label: 'option 2', value: 'no' },
             { key: 3, label: 'option 3', value: 'option 3' }
           ],
           validation: { required: { msg: 'Vazgen' } },
           quantity: { value: 1, enabled: true }
+        },
+        {
+          id: 2,
+          type: 'text'
         }
       ]}
       button={{
         text: 'submit'
       }}
+      logic={[
+        {
+          id: 2,
+          action: 'show',
+          operator: 'or',
+          conditions: [
+            {
+              id: 1,
+              value: 'no',
+              rule: 'checked',
+              item: ''
+            }
+          ]
+        }
+      ]}
     />
   )
 }
