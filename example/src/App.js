@@ -7,7 +7,8 @@ const App = () => {
       global={{
         name: 'Terms And Conditions',
         logic: true,
-        innerComponent: ({ ...state }) => console.log(state)
+        innerComponent: ({ ...state }) => console.log(state),
+        captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
       fields={[
         {
