@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-import { Custom, Error } from 'boomform'
+import { Custom } from 'boomform'
 import ReCAPTCHA from 'react-google-recaptcha'
+import Error from './../../Error'
 
 const Captcha = ({ siteKey }) => {
   const onChange = (handleChange, value) => {
