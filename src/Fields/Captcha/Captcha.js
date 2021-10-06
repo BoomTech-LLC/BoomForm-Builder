@@ -28,7 +28,7 @@ const Captcha = ({ siteKey }) => {
     >
       {({ handleChange, handleBlur }) => {
         return (
-          <>
+          <div id='field-captcha' className='boomForm-field__content'>
             <ReCAPTCHA
               sitekey={siteKey}
               onChange={(value) => onChange(handleChange, value)}
@@ -39,7 +39,7 @@ const Captcha = ({ siteKey }) => {
                 <Error id='captcha' />
               </span>
             </div>
-          </>
+          </div>
         )
       }}
     </Custom>
