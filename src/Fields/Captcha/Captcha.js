@@ -8,16 +8,20 @@ const Captcha = ({ siteKey }) => {
       id: 'captcha',
       e: null,
       value,
-      field: { id: 'captcha' }
+      field: {
+        id: 'captcha',
+        initial: null,
+        validation: { required: { msg: 'Captcha Is Required' } }
+      }
     })
   }
 
-  const onBlur = (handleBlur) => {
+  const onBlur = (handleBlur, value) => {
     handleBlur({
       id: 'captcha',
       e: null,
-      value: null,
-      field: { id: 'captcha' }
+      value: value,
+      field: { id: 'captcha', initial: null }
     })
   }
 
@@ -26,19 +30,19 @@ const Captcha = ({ siteKey }) => {
       id='captcha'
       validation={{ required: { msg: 'Captcha Is Required' } }}
     >
-      {({ handleChange, handleBlur }) => {
+      {({ handleChange, handleBlur, value }) => {
         return (
           <div id='field-captcha' className='boomForm-field__content'>
             <ReCAPTCHA
               sitekey={siteKey}
-              onChange={(value) => onChange(handleChange, value)}
-              onBlur={() => onBlur(handleBlur)}
+              onChange={(newValue) => onChange(handleChange, newValue)}
+              onBlur={() => onBlur(handleBlur, value)}
             />
-            <div className={`boomForm-field__error`}>
-              <span className={`boomForm-field__error_text`}>
-                <Error id='captcha' />
-              </span>
-            </div>
+            <Error
+              classnameprefix={'captcha'}
+              id={'captcha'}
+              type={'captcha'}
+            />
           </div>
         )
       }}
