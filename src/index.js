@@ -5,6 +5,7 @@ import StandardFooter from './Footer'
 import PaginationFooter from './Pagination/Footer/Footer'
 import Fields from './Fields'
 import StateHandler from './StateHandler'
+import Captcha from './Fields/Captcha/Captcha'
 
 const Builder = ({
   global = {},
@@ -19,7 +20,8 @@ const Builder = ({
     onSubmit,
     pagination: isPaginationOn = false,
     logic: isLogicOn = false,
-    innerComponent = () => {}
+    innerComponent = () => {},
+    captcha
   } = global
 
   const {
@@ -56,6 +58,7 @@ const Builder = ({
           paginationIds={paginationIds}
           logic={isLogicOn ? logic : []}
         />
+        {captcha !== undefined && <Captcha siteKey={captcha} />}
         {isPaginationOn ? (
           <PaginationFooter
             currentPage={currentPage}
