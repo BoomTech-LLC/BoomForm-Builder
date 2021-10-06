@@ -20,7 +20,7 @@ const File = ({
 }) => {
   return (
     <Custom id={id} {...props}>
-      {({ values, handleChange, handleBlur }) => {
+      {({ values, handleChange, handleBlur, value }) => {
         const handleGetFiles = (result) => {
           if (result.length)
             handleChange({
@@ -49,22 +49,33 @@ const File = ({
           })
         }
         return (
-          <FileUpload
-            {...props}
-            id={id}
-            classprefix={classnameprefix}
-            isMultiple={isMultiple}
-            initialValue={initial}
-            inputContent={inputContent}
-            autoUpload={autoUpload}
-            getResult={handleGetResult}
-            onRemove={handleRemove}
-            getFiles={handleGetFiles}
-            getErrors={getErrors}
-            url={url}
-            headers={headers}
-            dropbox={dropbox}
-          />
+          <div
+            onBlur={() => {
+              handleBlur({
+                id,
+                value,
+                e: null,
+                field: props
+              })
+            }}
+          >
+            <FileUpload
+              {...props}
+              id={id}
+              classprefix={classnameprefix}
+              isMultiple={isMultiple}
+              initialValue={initial}
+              inputContent={inputContent}
+              autoUpload={autoUpload}
+              getResult={handleGetResult}
+              onRemove={handleRemove}
+              getFiles={handleGetFiles}
+              getErrors={getErrors}
+              url={url}
+              headers={headers}
+              dropbox={dropbox}
+            />
+          </div>
         )
       }}
     </Custom>
