@@ -22,7 +22,15 @@ const SingleChoice = ({
         })}
       >
         {options.map(
-          ({ key, label, placeholder, value, checked, isNumber = false }) => {
+          ({
+            key,
+            label,
+            placeholder,
+            value,
+            checked,
+            isNumber = false,
+            ...attr
+          }) => {
             if (key === 'other')
               return (
                 <label
@@ -32,6 +40,7 @@ const SingleChoice = ({
                   key={`${id}.${key}`}
                 >
                   <Radio
+                    {...attr}
                     {...props}
                     id={`${id}.${key}`}
                     name={id}
@@ -84,6 +93,7 @@ const SingleChoice = ({
                   key={`${id}.${key}`}
                 >
                   <Radio
+                    {...attr}
                     {...props}
                     id={`${id}.${key}`}
                     name={id}

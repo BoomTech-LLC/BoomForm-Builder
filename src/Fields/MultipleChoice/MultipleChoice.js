@@ -17,7 +17,15 @@ const MultipleChoice = ({
   return (
     <>
       {options.map(
-        ({ key, label, placeholder, value, checked, isNumber = false }) => {
+        ({
+          key,
+          label,
+          placeholder,
+          value,
+          checked,
+          isNumber = false,
+          ...attr
+        }) => {
           if (key === 'other')
             return (
               <label
@@ -27,6 +35,7 @@ const MultipleChoice = ({
                 key={`${id}.${key}`}
               >
                 <Checkbox
+                  {...attr}
                   {...props}
                   id={`${id}.${key}`}
                   name={id}
@@ -89,6 +98,7 @@ const MultipleChoice = ({
                 key={`${id}.${key}`}
               >
                 <Checkbox
+                  {...attr}
                   {...props}
                   id={`${id}.${key}`}
                   name={id}
