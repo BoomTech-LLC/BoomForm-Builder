@@ -35,7 +35,6 @@ const MultipleChoice = ({
                 key={`${id}.${key}`}
               >
                 <Checkbox
-                  {...attr}
                   {...props}
                   id={`${id}.${key}`}
                   name={id}
