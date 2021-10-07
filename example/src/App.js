@@ -7,17 +7,32 @@ const App = () => {
       global={{
         name: 'Terms And Conditions',
         logic: true,
-        innerComponent: ({ ...state }) => console.log(state),
-        captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
+        innerComponent: ({ ...state }) => console.log(state)
+        //   captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
       fields={[
         {
           id: 1,
           type: 'singleChoice',
+          onChange: () => console.log(11),
           options: [
             { key: 1, label: 'option 1', value: 'option 1' },
             { key: 2, label: 'option 2', value: 'no' },
-            { key: 3, label: 'option 3', value: 'option 3' }
+            { key: 3, label: 'option 3', value: 'option 3' },
+            { key: 'other', placeholder: 'other' }
+          ],
+          validation: { required: { msg: 'Vazgen' } },
+          quantity: { value: 1, enabled: true }
+        },
+        {
+          id: 11,
+          type: 'multipleChoice',
+          onChange: () => console.log(333),
+          options: [
+            { key: 1, label: 'option 1', value: 'option 1' },
+            { key: 2, label: 'option 2', value: 'no' },
+            { key: 3, label: 'option 3', value: 'option 3' },
+            { key: 'other', placeholder: 'other' }
           ],
           validation: { required: { msg: 'Vazgen' } },
           quantity: { value: 1, enabled: true }
@@ -32,6 +47,19 @@ const App = () => {
           label: 'file',
           type: 'file',
           validation: { required: { msg: 'file upload' } }
+        },
+        {
+          id: 4,
+          type: 'select',
+          onChange: () => console.log(22),
+          options: [
+            { key: 1, label: 'option 1', value: 'option 1' },
+            { key: 2, label: 'option 2', value: 'no' },
+            { key: 3, label: 'option 3', value: 'option 3' },
+            { key: 'other', placeholder: 'other' }
+          ],
+          validation: { required: { msg: 'Vazgen' } },
+          quantity: { value: 1, enabled: true }
         }
       ]}
       button={{

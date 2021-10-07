@@ -29,6 +29,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
                     value: e.target.value,
                     e: null,
                     field: {
+                      ...props,
                       id: `${id}.value`,
                       type: 'select'
                     }
@@ -41,6 +42,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
       </Viewer>
       {enabled && (
         <Quantity
+          {...props}
           id={id}
           label={quantityLabel}
           value={quantityValue}
