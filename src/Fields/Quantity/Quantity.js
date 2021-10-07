@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames/bind'
 import { Input } from 'boomform'
 
-const Quantity = ({ id, label, value, classnameprefix }) => {
+const Quantity = ({ id, label, value, classnameprefix, ...props }) => {
   return (
     <label
       className={classNames('boomForm-quantity__item', {
@@ -11,7 +11,13 @@ const Quantity = ({ id, label, value, classnameprefix }) => {
     >
       {label}
       {label && <span>:</span>}
-      <Input id={`quantity.${id}`} type='number' initial={value} min={1} />
+      <Input
+        {...props}
+        id={`quantity.${id}`}
+        type='number'
+        initial={value}
+        min={1}
+      />
     </label>
   )
 }

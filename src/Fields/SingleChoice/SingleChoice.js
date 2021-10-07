@@ -60,6 +60,7 @@ const SingleChoice = ({
                               },
                               e: null,
                               field: {
+                                ...props,
                                 id: `${id}.other`,
                                 type: 'radio',
                                 name: id
@@ -97,6 +98,7 @@ const SingleChoice = ({
       </div>
       {enabled && (
         <Quantity
+          {...props}
           id={id}
           label={quantityLabel}
           value={quantityValue}

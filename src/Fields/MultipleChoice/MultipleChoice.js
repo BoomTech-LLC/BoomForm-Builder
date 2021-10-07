@@ -56,6 +56,7 @@ const MultipleChoice = ({
                             },
                             e: null,
                             field: {
+                              ...props,
                               id: `${id}.other`,
                               type: 'checkbox',
                               name: id
@@ -70,6 +71,7 @@ const MultipleChoice = ({
                 </Viewer>
                 {enabled && (
                   <Quantity
+                    {...props}
                     id={`${id}.${key}`}
                     label={quantityLabel}
                     value={quantityValue}
@@ -96,6 +98,7 @@ const MultipleChoice = ({
                 <span>{label}</span>
                 {enabled && (
                   <Quantity
+                    {...props}
                     id={`${id}.${key}`}
                     label={quantityLabel}
                     value={quantityValue}
