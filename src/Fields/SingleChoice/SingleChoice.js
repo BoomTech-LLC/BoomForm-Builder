@@ -40,7 +40,6 @@ const SingleChoice = ({
                   key={`${id}.${key}`}
                 >
                   <Radio
-                    {...attr}
                     {...props}
                     id={`${id}.${key}`}
                     name={id}
