@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import SubmitButton from './Fields/SubmitButton/SubmitButton'
 import Captcha from './Fields/Captcha/Captcha'
 

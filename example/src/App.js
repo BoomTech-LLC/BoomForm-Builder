@@ -23,29 +23,29 @@ const App = () => {
       button={{
         text: 'submit'
       }}
-      pagination={{
-        pages: [
-          {
-            title: 'Title 1',
-            description: 'Description 1',
-            fields: [1, 2, 3]
-          },
-          {
-            title: 'Title 2',
-            description: 'Description 2',
-            fields: [4, 5]
-          },
-          {
-            title: 'Title 3',
-            description: 'Description 3',
-            fields: [6, 7, 8]
-          }
-        ],
-        buttons: {
-          type: 0
-        },
-        timeline: 1
-      }}
+      // pagination={{
+      //   pages: [
+      //     {
+      //       title: 'Title 1',
+      //       description: 'Description 1',
+      //       fields: [1, 2, 3]
+      //     },
+      //     {
+      //       title: 'Title 2',
+      //       description: 'Description 2',
+      //       fields: [4, 5]
+      //     },
+      //     {
+      //       title: 'Title 3',
+      //       description: 'Description 3',
+      //       fields: [6, 7, 8]
+      //     }
+      //   ],
+      //   buttons: {
+      //     type: 0
+      //   },
+      //   timeline: 1
+      // }}
     />
   )
 }
