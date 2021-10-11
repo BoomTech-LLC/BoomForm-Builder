@@ -1,51 +1,52 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
+import Captcha from './../../../Fields/Captcha/Captcha'
 
 const Buttons = ({
-  nextText,
-  prevText,
-  currentPage,
+  onSubmit,
   button,
   pages,
-  onSubmit,
+  paginationButtons,
+  currentPage,
   setCurrentPage,
-  isLogicOn,
-  logic,
-  setLogicIds
+  captcha
 }) => {
   const handleNext = () => setCurrentPage((prev) => prev + 1)
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
 
-  return (
-    <div className='boomForm-paginationButtons__content'>
-      {currentPage !== 0 ? (
-        <button
-          type='button'
-          className='boomForm-paginationButton'
-          onClick={handlePrev}
-        >
-          {prevText}
-        </button>
-      ) : null}
-      <SubmitButton
-        button={button}
-        isLogicOn={isLogicOn}
-        logic={logic}
-        setLogicIds={setLogicIds}
-        onSubmit={onSubmit}
-        hide={currentPage !== pages.length - 1}
-      />
+  const { prev = 'Prev', next = 'Next' } = paginationButtons
 
-      {currentPage !== pages.length - 1 ? (
-        <button
-          type='button'
-          className='boomForm-paginationButton'
-          onClick={handleNext}
-        >
-          {nextText}
-        </button>
-      ) : null}
-    </div>
+  return (
+    <>
+      {captcha !== undefined && currentPage === pages.length - 1 && (
+        <Captcha siteKey={captcha} />
+      )}
+      <div className='boomForm-paginationButtons__content'>
+        {currentPage !== 0 ? (
+          <button
+            type='button'
+            className='boomForm-paginationButton'
+            onClick={handlePrev}
+          >
+            {prev}
+          </button>
+        ) : null}
+        <SubmitButton
+          button={button}
+          onSubmit={onSubmit}
+          hide={currentPage !== pages.length - 1}
+        />
+        {currentPage !== pages.length - 1 ? (
+          <button
+            type='button'
+            className='boomForm-paginationButton'
+            onClick={handleNext}
+          >
+            {next}
+          </button>
+        ) : null}
+      </div>
+    </>
   )
 }
 

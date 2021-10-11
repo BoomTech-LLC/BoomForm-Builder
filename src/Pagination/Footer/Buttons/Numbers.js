@@ -1,43 +1,46 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import classNames from 'classnames'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
+import Captcha from './../../../Fields/Captcha/Captcha'
 
 const Numbers = ({
-  currentPage,
   button,
-  pages,
   onSubmit,
+  currentPage,
+  pages,
   setCurrentPage,
-  isLogicOn,
-  logic,
-  setLogicIds
+  captcha
 }) => {
-  const handleSetPage = (index) => {
-    setCurrentPage(index)
-  }
+  const handleSetPage = (index) => setCurrentPage(index)
 
   return (
-    <div className='boomForm-paginationNumbers__content'>
-      {pages.map((page, index) => {
-        return (
-          <button
-            key={index}
-            type='button'
-            className='boomForm-paginationNumber__button'
-            onClick={() => handleSetPage(index)}
-          >
-            {index + 1}
-          </button>
-        )
-      })}
-      <SubmitButton
-        onSubmit={onSubmit}
-        button={button}
-        hide={currentPage === pages.length - 1}
-        isLogicOn={isLogicOn}
-        logic={logic}
-        setLogicIds={setLogicIds}
-      />
-    </div>
+    <>
+      {captcha !== undefined && currentPage === pages.length - 1 && (
+        <Captcha siteKey={captcha} />
+      )}
+      <div className='boomForm-paginationNumbers__content'>
+        {pages.map((page, index) => {
+          return (
+            <button
+              key={index}
+              type='button'
+              className={classNames('boomForm-paginationNumber__button', {
+                'boomForm-paginationNumber__button-active':
+                  index === currentPage
+              })}
+              onClick={() => handleSetPage(index)}
+            >
+              {index + 1}
+            </button>
+          )
+        })}
+        <SubmitButton
+          onSubmit={onSubmit}
+          button={button}
+          hide={currentPage !== pages.length - 1}
+        />
+      </div>
+    </>
   )
 }
 

@@ -1,11 +1,15 @@
 import React from 'react'
 import SubmitButton from './Fields/SubmitButton/SubmitButton'
+import Captcha from './Fields/Captcha/Captcha'
 
-const Footer = ({ onSubmit, button }) => {
+const Footer = ({ captcha, button, onSubmit }) => {
   return (
-    <div>
-      <SubmitButton button={button} onSubmit={onSubmit} />
-    </div>
+    <>
+      {captcha !== undefined && <Captcha siteKey={captcha} />}
+      <div>
+        <SubmitButton button={button} onSubmit={onSubmit} />
+      </div>
+    </>
   )
 }
 

@@ -5,81 +5,47 @@ const App = () => {
   return (
     <Builder
       global={{
-        name: 'Terms And Conditions',
-        logic: true,
-        innerComponent: ({ ...state }) => console.log(state)
-        //   captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
+        name: 'Pagination And Shit',
+        pagination: true,
+        innerComponent: ({ ...state }) => console.log(state),
+        captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
       fields={[
-        {
-          id: 1,
-          type: 'singleChoice',
-          onChange: () => console.log(11),
-          options: [
-            { key: 1, label: 'option 1', value: 'option 1' },
-            { key: 2, label: 'option 2', value: 'no' },
-            { key: 3, label: 'option 3', value: 'option 3' },
-            { key: 'other', placeholder: 'other' }
-          ],
-          validation: { required: { msg: 'Vazgen' } },
-          quantity: { value: 1, enabled: true }
-        },
-        {
-          id: 11,
-          type: 'multipleChoice',
-          onChange: () => console.log(333),
-          options: [
-            { key: 1, label: 'option 1', value: 'option 1' },
-            { key: 2, label: 'option 2', value: 'no' },
-            { key: 3, label: 'option 3', value: 'option 3' },
-            { key: 'other', placeholder: 'other' }
-          ],
-          validation: { required: { msg: 'Vazgen' } },
-          quantity: { value: 1, enabled: true }
-        },
-        {
-          id: 2,
-          type: 'text',
-          validation: { required: { msg: 'gago' } }
-        },
-        {
-          id: 3,
-          label: 'file',
-          type: 'file',
-          validation: { required: { msg: 'file upload' } }
-        },
-        {
-          id: 4,
-          type: 'select',
-          onChange: () => console.log(22),
-          options: [
-            { key: 1, label: 'option 1', value: 'option 1' },
-            { key: 2, label: 'option 2', value: 'no' },
-            { key: 3, label: 'option 3', value: 'option 3' },
-            { key: 'other', placeholder: 'other' }
-          ],
-          validation: { required: { msg: 'Vazgen' } },
-          quantity: { value: 1, enabled: true }
-        }
+        { id: 1, type: 'email' },
+        { id: 2, type: 'email' },
+        { id: 3, type: 'email' },
+        { id: 4, type: 'email' },
+        { id: 5, type: 'email' },
+        { id: 6, type: 'email' },
+        { id: 7, type: 'email' },
+        { id: 8, type: 'email' }
       ]}
       button={{
         text: 'submit'
       }}
-      logic={[
-        {
-          id: 2,
-          action: 'show',
-          operator: 'or',
-          conditions: [
-            {
-              id: 1,
-              value: 'no',
-              rule: 'checked',
-              item: ''
-            }
-          ]
-        }
-      ]}
+      pagination={{
+        pages: [
+          {
+            title: 'Title 1',
+            description: 'Description 1',
+            fields: [1, 2, 3]
+          },
+          {
+            title: 'Title 2',
+            description: 'Description 2',
+            fields: [4, 5]
+          },
+          {
+            title: 'Title 3',
+            description: 'Description 3',
+            fields: [6, 7, 8]
+          }
+        ],
+        buttons: {
+          type: 0
+        },
+        timeline: 1
+      }}
     />
   )
 }

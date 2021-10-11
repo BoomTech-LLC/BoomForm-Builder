@@ -4,16 +4,12 @@ import { getPrintableFields } from './Helpers/global'
 import { Viewer } from 'boomform'
 import { getHiddenIds } from './Helpers/logic'
 
-const Fields = ({ fields, logic, paginationIds }) => {
+const Fields = ({ fields, logic, pagination }) => {
   return (
     <Viewer>
       {({ values }) => {
         const logicIds = getHiddenIds({ logic, values })
-        const printableFields = getPrintableFields(
-          fields,
-          logicIds,
-          paginationIds
-        )
+        const printableFields = getPrintableFields(fields, logicIds, pagination)
         return (
           <div className='boomForm-fields'>
             {fields.map((field) => {

@@ -1,10 +1,15 @@
 import React from 'react'
-import ProgressBar from './ProgressBar'
+import Text from './Text'
+import Progress from './Progress'
 
-const Pagination = ({ isPaginationOn, ...props }) => {
-  if (isPaginationOn !== true) return null
+const Pagination = ({ timeline, pagesLength, currentPage }) => {
+  if (timeline === undefined) return null
 
-  return <ProgressBar {...props} />
+  return timeline === 0 ? (
+    <Text pagesLength={pagesLength} currentPage={currentPage} />
+  ) : (
+    <Progress pagesLength={pagesLength} currentPage={currentPage} />
+  )
 }
 
 export default Pagination

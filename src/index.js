@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { BoomForm } from 'boomform'
 import Header from './Header'
-import StandardFooter from './Footer'
-import PaginationFooter from './Pagination/Footer/Footer'
+import Footer from './Footer'
 import Fields from './Fields'
 import StateHandler from './StateHandler'
-import Captcha from './Fields/Captcha/Captcha'
+
+//Pagination
+import PaginationFooter from './Pagination/Footer/Footer'
+import PaginationHeader from './Pagination/Header/Pagination'
+import PerPageHeader from './Pagination/Header/PerPageHeader'
 
 const Builder = ({
   global = {},
@@ -18,66 +21,45 @@ const Builder = ({
     name,
     description,
     onSubmit,
-    pagination: isPaginationOn = false,
     logic: isLogicOn = false,
     innerComponent = () => {},
     captcha
   } = global
 
-  const {
-    pages,
-    current = 0,
-    nextText = 'Next',
-    prevText = 'Previous',
-    navigation = 'buttons'
-  } = pagination
+  const isPagination = Object.keys(pagination).length !== 0
 
-  const [paginationIds, setPaginationIds] = useState(
-    isPaginationOn ? pages[current] : []
-  )
-  const [currentPage, setCurrentPage] = useState(
-    isPaginationOn ? current : null
-  )
-
-  useEffect(() => {
-    if (isPaginationOn) setPaginationIds(pages[currentPage])
-  }, [currentPage])
+  const { pages, initial = 0, buttons, timeline } = pagination
+  const [currentPage, setCurrentPage] = useState(initial)
 
   return (
     <BoomForm>
       <form className='boomForm' noValidate>
-        <Header
-          name={name}
-          description={description}
-          pagesLength={pages?.length}
-          currentPage={currentPage}
-          isPaginationOn={isPaginationOn}
-        />
+        <Header name={name} description={description} />
+        {isPagination && (
+          <PaginationHeader
+            timeline={timeline}
+            pagesLength={pages.length}
+            currentPage={currentPage}
+          />
+        )}
+        {isPagination && <PerPageHeader page={pages[currentPage]} />}
         <Fields
           fields={fields}
-          paginationIds={paginationIds}
+          pagination={isPagination ? pages[currentPage].fields : []}
           logic={isLogicOn ? logic : []}
         />
-        {captcha !== undefined && <Captcha siteKey={captcha} />}
-        {isPaginationOn ? (
+        {isPagination ? (
           <PaginationFooter
-            currentPage={currentPage}
-            button={button}
-            navigation={navigation}
-            nextText={nextText}
-            prevText={prevText}
-            pagesLength={pages.length}
-            isLogicOn={isLogicOn}
             onSubmit={onSubmit}
-            setCurrentPage={setCurrentPage}
+            button={button}
+            paginationButtons={buttons}
             pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            captcha={captcha}
           />
         ) : (
-          <StandardFooter
-            onSubmit={onSubmit}
-            button={button}
-            isLogicOn={isLogicOn}
-          />
+          <Footer captcha={captcha} onSubmit={onSubmit} button={button} />
         )}
         <StateHandler innerComponent={innerComponent} />
       </form>
