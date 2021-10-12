@@ -11,14 +11,21 @@ const App = () => {
         captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
       fields={[
-        { id: 1, type: 'email' },
-        { id: 2, type: 'email' },
-        { id: 3, type: 'email' },
-        { id: 4, type: 'email' },
-        { id: 5, type: 'email' },
-        { id: 6, type: 'email' },
-        { id: 7, type: 'email' },
-        { id: 8, type: 'email' }
+        {
+          id: 'terms',
+          type: 'terms',
+          text: 'Terms and Conditions {Read Here} more',
+          url: 'https://form-builder.boomform.com/fields#terms',
+          // openIn: 'newTab'
+        }
+        // { id: 1, type: 'email' },
+        // { id: 2, type: 'email' },
+        // { id: 3, type: 'email' },
+        // { id: 4, type: 'email' },
+        // { id: 5, type: 'email' },
+        // { id: 6, type: 'email' },
+        // { id: 7, type: 'email' },
+        // { id: 8, type: 'email' }
       ]}
       button={{
         text: 'submit'
