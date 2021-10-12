@@ -5,10 +5,8 @@ const PerPageHeader = ({ page }) => {
 
   return (
     <div className={'perpage-header'}>
-      {title && <div className={'perpage-title'}>{title}</div>}
-      {description && (
-        <div className={'perpage-description'}>{description}</div>
-      )}
+      {title && <h3 className={'perpage-title'}>{title}</h3>}
+      {description && <h5 className={'perpage-description'}>{description}</h5>}
     </div>
   )
 }
