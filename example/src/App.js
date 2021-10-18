@@ -7,6 +7,7 @@ const App = () => {
       global={{
         name: 'Pagination And Shit',
         pagination: true,
+        print: true,
         innerComponent: ({ ...state }) => console.log(state),
         captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
