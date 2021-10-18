@@ -1,20 +1,14 @@
 import React, { Fragment } from 'react'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
-import Print from '../../../Print/Print'
 
 const Buttons = ({
-  fields,
-  button,
   pages,
   paginationButtons,
   currentPage,
   captcha,
-  isPrint,
-  name,
-  description,
   setCurrentPage,
-  onSubmit
+  ...props
 }) => {
   const handleNext = () => setCurrentPage((prev) => prev + 1)
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
@@ -36,14 +30,7 @@ const Buttons = ({
             {prev}
           </button>
         ) : null}
-        <SubmitButton
-          button={button}
-          onSubmit={onSubmit}
-          hide={currentPage !== pages.length - 1}
-        />
-        {isPrint && currentPage === pages.length - 1 && (
-          <Print fields={fields} name={name} description={description} />
-        )}
+        <SubmitButton hide={currentPage !== pages.length - 1} {...props} />
         {currentPage !== pages.length - 1 ? (
           <button
             type='button'

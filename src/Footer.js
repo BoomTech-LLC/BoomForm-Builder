@@ -1,25 +1,13 @@
 import React, { Fragment } from 'react'
 import SubmitButton from './Fields/SubmitButton/SubmitButton'
 import Captcha from './Fields/Captcha/Captcha'
-import Print from './Print/Print'
 
-const Footer = ({
-  captcha,
-  button,
-  fields,
-  name,
-  description,
-  isPrint,
-  onSubmit
-}) => {
+const Footer = ({ captcha, ...props }) => {
   return (
     <>
       {captcha !== undefined && <Captcha siteKey={captcha} />}
       <div>
-        <SubmitButton button={button} onSubmit={onSubmit} />
-        {isPrint && (
-          <Print fields={fields} name={name} description={description} />
-        )}
+        <SubmitButton {...props} />
       </div>
     </>
   )

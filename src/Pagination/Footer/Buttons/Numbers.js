@@ -2,19 +2,14 @@ import React, { Fragment } from 'react'
 import classNames from 'classnames'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
-import Print from '../../../Print/Print'
 
 const Numbers = ({
   button,
-  fields,
   currentPage,
   pages,
   captcha,
-  isPrint,
-  name,
-  description,
   setCurrentPage,
-  onSubmit
+  ...props
 }) => {
   const handleSetPage = (index) => setCurrentPage(index)
 
@@ -39,14 +34,7 @@ const Numbers = ({
             </button>
           )
         })}
-        <SubmitButton
-          onSubmit={onSubmit}
-          button={button}
-          hide={currentPage !== pages.length - 1}
-        />
-        {isPrint && currentPage === pages.length - 1 && (
-          <Print fields={fields} name={name} description={description} />
-        )}
+        <SubmitButton hide={currentPage !== pages.length - 1} {...props} />
       </div>
     </>
   )
