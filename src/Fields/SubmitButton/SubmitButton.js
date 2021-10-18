@@ -1,7 +1,16 @@
 import React, { useContext } from 'react'
 import { Context } from 'boomform'
+import Print from '../../Print/Print'
 
-const SubmitButton = ({ onSubmit, button, hide }) => {
+const SubmitButton = ({
+  onSubmit,
+  button,
+  hide,
+  fields,
+  name,
+  description,
+  isPrint
+}) => {
   const { state, actions } = useContext(Context)
   const { text, prefix, suffix } = button || { text: 'Submit' }
 
@@ -20,6 +29,9 @@ const SubmitButton = ({ onSubmit, button, hide }) => {
         <span>{text}</span>
       </button>
       {prefix}
+      {isPrint && (
+        <Print fields={fields} name={name} description={description} />
+      )}
     </div>
   )
 }

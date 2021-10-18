@@ -23,6 +23,7 @@ const Builder = ({
     onSubmit,
     logic: isLogicOn = false,
     innerComponent = () => {},
+    print: isPrint = false,
     captcha
   } = global
 
@@ -57,9 +58,21 @@ const Builder = ({
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             captcha={captcha}
+            fields={fields}
+            name={name}
+            description={description}
+            isPrint={isPrint}
           />
         ) : (
-          <Footer captcha={captcha} onSubmit={onSubmit} button={button} />
+          <Footer
+            captcha={captcha}
+            button={button}
+            fields={fields}
+            name={name}
+            description={description}
+            isPrint={isPrint}
+            onSubmit={onSubmit}
+          />
         )}
         <StateHandler innerComponent={innerComponent} />
       </form>
