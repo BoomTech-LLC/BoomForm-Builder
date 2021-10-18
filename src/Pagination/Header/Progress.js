@@ -8,7 +8,7 @@ const Progress = ({ pagesLength, currentPage }) => {
         return (
           <div
             className={classNames('boomForm-paginationProgressBar-item', {
-              'boomForm-paginationProgressBar-item': item <= currentPage
+              'boomForm-paginationProgressBar-item--active': item <= currentPage
             })}
           ></div>
         )
