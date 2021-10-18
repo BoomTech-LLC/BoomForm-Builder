@@ -24,7 +24,7 @@ const Buttons = ({
         {currentPage !== 0 ? (
           <button
             type='button'
-            className='boomForm-paginationButton'
+            className='boomForm-paginationButton boomForm-paginationButton-prev'
             onClick={handlePrev}
           >
             {prev}
@@ -34,7 +34,7 @@ const Buttons = ({
         {currentPage !== pages.length - 1 ? (
           <button
             type='button'
-            className='boomForm-paginationButton'
+            className='boomForm-paginationButton boomForm-paginationButton-next'
             onClick={handleNext}
           >
             {next}
