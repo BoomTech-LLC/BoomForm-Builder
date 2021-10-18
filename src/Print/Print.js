@@ -11,7 +11,7 @@ const Print = ({ fields, name, description }) => {
   })
 
   return (
-    <div>
+    <div className='boomForm-print__content'>
       <div style={{ display: 'none' }}>
         <ComponentToPrint
           ref={componentRef}
