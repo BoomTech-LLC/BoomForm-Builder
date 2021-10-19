@@ -34,7 +34,7 @@ const Builder = ({
 
   useEffect(() => {
     setCurrentPage(initial)
-  }, initial)
+  }, [initial])
 
   return (
     <BoomForm>
