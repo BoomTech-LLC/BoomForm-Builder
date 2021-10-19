@@ -84,8 +84,8 @@ export const getHiddenIds = ({ logic, values }) => {
   let hiddenFields = []
   logic.map((option) => {
     const { action, conditions, operator = 'and', id } = option
-    conditions.map((condition) => {
-      const { id: key, value, rule, item } = condition
+    for (let i = 0; i < conditions.length; i++) {
+      const { id: key, value, rule, item } = conditions[i]
       const fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
@@ -95,18 +95,29 @@ export const getHiddenIds = ({ logic, values }) => {
         item,
         rule
       })
+
+      if (action === 'show') hiddenFields.push(id)
+
       if (isMatch) {
-        if (action === 'hide') hiddenFields.push(id)
-        if (operator === 'or' && action === 'show') {
-          hiddenFields = hiddenFields.filter((item) => item !== id)
+        if (action === 'show') {
+          if (operator === 'or') {
+            hiddenFields = hiddenFields.filter((item) => item !== id)
+            break
+          } else {
+            const index = hiddenFields.indexOf(id)
+            hiddenFields.splice(index, 1)
+          }
+        } else {
+          hiddenFields.push(id)
+          if (operator === 'or') break
         }
       } else {
-        if (action === 'show') hiddenFields.push(id)
         if (operator === 'and' && action === 'hide') {
           hiddenFields = hiddenFields.filter((item) => item !== id)
+          break
         }
       }
-    })
+    }
   })
   return hiddenFields
 }
