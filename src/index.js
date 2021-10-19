@@ -32,6 +32,10 @@ const Builder = ({
   const { pages, initial = 0, buttons, timeline } = pagination
   const [currentPage, setCurrentPage] = useState(initial)
 
+  useEffect(() => {
+    setCurrentPage(initial)
+  }, initial)
+
   return (
     <BoomForm>
       <form className='boomForm' noValidate>

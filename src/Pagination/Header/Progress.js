@@ -7,6 +7,7 @@ const Progress = ({ pagesLength, currentPage }) => {
       {Array.from(Array(pagesLength).keys()).map((item) => {
         return (
           <div
+            key={item}
             className={classNames('boomForm-paginationProgressBar-item', {
               'boomForm-paginationProgressBar-item--active': item <= currentPage
             })}
