@@ -9,17 +9,18 @@ const App = () => {
         pagination: true,
         print: true,
         innerComponent: ({ ...state }) => console.log(state),
-        captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
+        captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b',
+        logic: true
       }}
       fields={[
-        { id: 1, type: 'email' },
-        { id: 2, type: 'email' },
-        { id: 3, type: 'email' },
-        { id: 4, type: 'email' },
-        { id: 5, type: 'email' },
-        { id: 6, type: 'email' },
-        { id: 7, type: 'email' },
-        { id: 8, type: 'email' }
+        { id: 1, type: 'text', label: '1' },
+        { id: 2, type: 'email', label: '2' },
+        { id: 3, type: 'email', label: '3' },
+        { id: 4, type: 'email', label: '4' },
+        { id: 5, type: 'email', label: '5' },
+        { id: 6, type: 'email', label: '6' },
+        { id: 7, type: 'email', label: '7' },
+        { id: 8, type: 'email', label: '8' }
       ]}
       button={{
         text: 'submit'
@@ -46,6 +47,18 @@ const App = () => {
           type: 0
         }
       }}
+      logic={[
+        {
+          action: 'show',
+          conditions: [
+            { id: 1, rule: 'is', item: 'first', value: 'aaa' },
+            { id: 2, rule: 'starts', item: null, value: 'aaa' },
+            { id: 3, rule: 'starts', item: null, value: 'aaa' }
+          ],
+          id: 6,
+          operator: 'and'
+        }
+      ]}
     />
   )
 }
