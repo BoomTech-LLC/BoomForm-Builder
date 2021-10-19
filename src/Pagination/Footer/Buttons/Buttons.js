@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
+import { Context } from 'boomform'
 
 const Buttons = ({
   pages,
@@ -10,7 +11,26 @@ const Buttons = ({
   setCurrentPage,
   ...props
 }) => {
-  const handleNext = () => setCurrentPage((prev) => prev + 1)
+  const { state, actions } = useContext(Context)
+
+  const handleNext = () => {
+    const { errors } = state
+    const { fields } = pages[currentPage]
+    const { handleBlur } = actions
+    let isErrorExists = false
+
+    Object.keys(errors).map((item) => {
+      fields.map((subitem) => {
+        if (subitem == item) {
+          isErrorExists = true
+          handleBlur({
+            id: item
+          })
+        }
+      })
+    })
+    if (!isErrorExists) setCurrentPage((prev) => prev + 1)
+  }
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
 
   const { prev = 'Prev', next = 'Next' } = paginationButtons

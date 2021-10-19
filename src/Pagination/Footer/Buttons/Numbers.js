@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import classNames from 'classnames'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
+import { Context } from 'boomform'
 
 const Numbers = ({
   button,
@@ -11,7 +12,27 @@ const Numbers = ({
   setCurrentPage,
   ...props
 }) => {
-  const handleSetPage = (index) => setCurrentPage(index)
+  const { state, actions } = useContext(Context)
+
+  const handleSetPage = (index) => {
+    const { errors } = state
+    const { fields } = pages[currentPage]
+    const { handleBlur } = actions
+    let isErrorExists = false
+
+    Object.keys(errors).map((item) => {
+      fields.map((subitem) => {
+        if (subitem == item) {
+          isErrorExists = true
+          handleBlur({
+            id: item
+          })
+        }
+      })
+    })
+
+    if (!isErrorExists) setCurrentPage(index)
+  }
 
   return (
     <>
