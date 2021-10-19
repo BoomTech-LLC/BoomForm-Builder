@@ -3,13 +3,12 @@ import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
 
 const Buttons = ({
-  onSubmit,
-  button,
   pages,
   paginationButtons,
   currentPage,
+  captcha,
   setCurrentPage,
-  captcha
+  ...props
 }) => {
   const handleNext = () => setCurrentPage((prev) => prev + 1)
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
@@ -25,21 +24,17 @@ const Buttons = ({
         {currentPage !== 0 ? (
           <button
             type='button'
-            className='boomForm-paginationButton'
+            className='boomForm-paginationButton boomForm-paginationButton-prev'
             onClick={handlePrev}
           >
             {prev}
           </button>
         ) : null}
-        <SubmitButton
-          button={button}
-          onSubmit={onSubmit}
-          hide={currentPage !== pages.length - 1}
-        />
+        <SubmitButton hide={currentPage !== pages.length - 1} {...props} />
         {currentPage !== pages.length - 1 ? (
           <button
             type='button'
-            className='boomForm-paginationButton'
+            className='boomForm-paginationButton boomForm-paginationButton-next'
             onClick={handleNext}
           >
             {next}

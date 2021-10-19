@@ -5,11 +5,11 @@ import Captcha from './../../../Fields/Captcha/Captcha'
 
 const Numbers = ({
   button,
-  onSubmit,
   currentPage,
   pages,
+  captcha,
   setCurrentPage,
-  captcha
+  ...props
 }) => {
   const handleSetPage = (index) => setCurrentPage(index)
 
@@ -34,11 +34,7 @@ const Numbers = ({
             </button>
           )
         })}
-        <SubmitButton
-          onSubmit={onSubmit}
-          button={button}
-          hide={currentPage !== pages.length - 1}
-        />
+        <SubmitButton hide={currentPage !== pages.length - 1} {...props} />
       </div>
     </>
   )

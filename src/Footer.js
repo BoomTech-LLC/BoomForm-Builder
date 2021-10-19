@@ -2,12 +2,12 @@ import React, { Fragment } from 'react'
 import SubmitButton from './Fields/SubmitButton/SubmitButton'
 import Captcha from './Fields/Captcha/Captcha'
 
-const Footer = ({ captcha, button, onSubmit }) => {
+const Footer = ({ captcha, ...props }) => {
   return (
     <>
       {captcha !== undefined && <Captcha siteKey={captcha} />}
       <div>
-        <SubmitButton button={button} onSubmit={onSubmit} />
+        <SubmitButton {...props} />
       </div>
     </>
   )

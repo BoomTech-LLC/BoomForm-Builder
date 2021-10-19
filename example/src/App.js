@@ -6,7 +6,8 @@ const App = () => {
     <Builder
       global={{
         name: 'Pagination And Shit',
-        pagination: false,
+        pagination: true,
+        print: true,
         innerComponent: ({ ...state }) => console.log(state),
         captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b',
         logic: true
@@ -24,28 +25,28 @@ const App = () => {
       button={{
         text: 'submit'
       }}
-      // pagination={{
-      //   pages: [
-      //     {
-      //       title: 'Title 1',
-      //       description: 'Description 1',
-      //       fields: [1, 2, 3]
-      //     },
-      //     {
-      //       title: 'Title 2',
-      //       description: 'Description 2',
-      //       fields: [4, 5]
-      //     },
-      //     {
-      //       title: 'Title 3',
-      //       description: 'Description 3',
-      //       fields: [6, 7, 8]
-      //     }
-      //   ],
-      //   buttons: {
-      //     type: 0
-      //   }
-      // }}
+      pagination={{
+        pages: [
+          {
+            title: 'Title 1',
+            description: 'Description 1',
+            fields: [1, 2, 3]
+          },
+          {
+            title: 'Title 2',
+            description: 'Description 2',
+            fields: [4, 5]
+          },
+          {
+            title: 'Title 3',
+            description: 'Description 3',
+            fields: [6, 7, 8]
+          }
+        ],
+        buttons: {
+          type: 0
+        }
+      }}
       logic={[
         {
           action: 'show',
