@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Input, Select } from 'boomform'
 import { getTimeFields } from './../../Helpers/time'
-import { getValidation } from './../../Helpers/global'
+import { getInitial, getValidation } from './../../Helpers/global'
 
 const Time = ({
   id,
@@ -10,6 +10,7 @@ const Time = ({
   format,
   classnamepreFix,
   validations,
+  initials,
   ...props
 }) => {
   return (
@@ -26,6 +27,7 @@ const Time = ({
                 maxLength='2'
                 placeholder={placeholder}
                 validation={getValidation(validations, key)}
+                initial={getInitial(initials, key)}
               />
             )}
 
@@ -34,6 +36,7 @@ const Time = ({
               <Select
                 {...props}
                 id={`${id}.${key}`}
+                initial={initials?.format || 1}
                 options={[
                   { key: 1, value: 'AM' },
                   { key: 2, value: 'PM' }

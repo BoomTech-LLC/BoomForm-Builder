@@ -13,6 +13,23 @@ const App = () => {
       }}
       fields={[
         {
+          id: 12,
+          type: 'signature',
+          initial: [
+            [
+              { x: 34, y: 142.9375, time: 1634883646937, color: '#000' },
+              { x: 45, y: 135.9375, time: 1634883646959, color: '#000' },
+              { x: 61, y: 122.9375, time: 1634883646975, color: '#000' },
+              { x: 80, y: 109.9375, time: 1634883646992, color: '#000' },
+              { x: 97, y: 98.9375, time: 1634883647008, color: '#000' },
+              { x: 105, y: 93.9375, time: 1634883647024, color: '#000' },
+              { x: 80, y: 109.9375, time: 1634883646992, color: '#000' }
+            ]
+          ],
+          label: 'time',
+          validation: { required: { msg: 'Required shit' } }
+        },
+        {
           id: 1,
           type: 'text',
           label: '1',
@@ -39,7 +56,7 @@ const App = () => {
           {
             title: 'Title 1',
             description: 'Description 1',
-            fields: [1, 2, 3]
+            fields: [12, 1, 2, 3]
           },
           {
             title: 'Title 2',
