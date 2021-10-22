@@ -1,7 +1,8 @@
 export const getPhoneCountryByCode = (code) => {
   const [country] = countryListForPhone.filter(
-    (country) => country.code === code
+    (country) => country.code === code || country.dial_code === code
   )
+
   return country
 }
 
