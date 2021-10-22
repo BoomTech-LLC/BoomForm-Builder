@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 import { Viewer } from 'boomform'
 
 const Table = ({ fields }) => {
-  console.log(fields)
   const getValues = ({ values, type, id }) => {
     switch (type) {
       case 'select': {
