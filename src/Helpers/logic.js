@@ -1,16 +1,13 @@
 import { getNestedValue, timeConversion } from '../Helpers/global'
 
-const conditionalLogic = ({ fieldValue, value, item, rule }) => {
+const conditionalLogic = ({ fieldValue, value, rule }) => {
   switch (rule) {
     case 'is': {
-      if (fieldValue == value || fieldValue?.[item] == value) return true
+      if (fieldValue == value) return true
       else return false
     }
     case 'isNot': {
-      if (
-        (fieldValue != value && !item) ||
-        (fieldValue?.[item] != value && item)
-      ) {
+      if (fieldValue != value) {
         return true
       } else return false
     }
@@ -95,7 +92,6 @@ export const getHiddenIds = ({ logic, values, fields }) => {
       const isMatch = conditionalLogic({
         fieldValue: getFieldValue(type, fieldValue, item),
         value,
-        item,
         rule
       })
 
@@ -165,6 +161,7 @@ const getFieldValue = (type, fieldValue, item) => {
       if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
       return price
     case 'address':
+    case 'name':
       let address = ''
       if (fieldValue && item)
         address = fieldValue[item]?.value || fieldValue[item]

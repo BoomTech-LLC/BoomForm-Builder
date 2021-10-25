@@ -375,7 +375,7 @@ const App = () => {
           id: 15,
           action: 'show',
           operator: 'and',
-          conditions: [{ id: 13, rule: 'is', item: 'street', value: 'gag' }]
+          conditions: [{ id: 12, rule: 'ends', item: 'first', value: 'gag' }]
         }
       ]}
       button={{
