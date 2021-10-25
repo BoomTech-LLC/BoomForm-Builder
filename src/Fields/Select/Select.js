@@ -25,14 +25,9 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
                 placeholder={otherValue}
                 onChange={(e) => {
                   handleChange({
-                    id: `${id}.value`,
-                    value: e.target.value,
-                    e: null,
-                    field: {
-                      ...props,
-                      id: `${id}.value`,
-                      type: 'select'
-                    }
+                    id,
+                    value: { key: otherKey, value: e.target.value },
+                    e: null
                   })
                 }}
               />
