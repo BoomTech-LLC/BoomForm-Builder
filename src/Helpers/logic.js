@@ -1,4 +1,4 @@
-import { getNestedValue } from '../Helpers/global'
+import { getNestedValue, timeConversion } from '../Helpers/global'
 
 const conditionalLogic = ({ fieldValue, value, item, rule }) => {
   switch (rule) {
@@ -80,7 +80,7 @@ const conditionalLogic = ({ fieldValue, value, item, rule }) => {
   }
 }
 
-export const getHiddenIds = ({ logic, values }) => {
+export const getHiddenIds = ({ logic, values, fields }) => {
   let hiddenFields = []
   logic.map((option) => {
     const { action, conditions, operator = 'and', id } = option
@@ -89,8 +89,11 @@ export const getHiddenIds = ({ logic, values }) => {
       const fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
+      const [field] = fields.filter((field) => field.id === key)
+      const { type } = field
+
       const isMatch = conditionalLogic({
-        fieldValue: fieldValue?.value || fieldValue,
+        fieldValue: getFieldValue(type, fieldValue),
         value,
         item,
         rule
@@ -120,4 +123,48 @@ export const getHiddenIds = ({ logic, values }) => {
     }
   })
   return hiddenFields
+}
+
+const getFieldValue = (type, fieldValue) => {
+  switch (type) {
+    case 'phone':
+      let phone = ''
+      if (fieldValue) phone = `${fieldValue.code}${fieldValue.phone}`
+      return phone
+    case 'date':
+      let date = ''
+      if (fieldValue)
+        date = `${fieldValue.split('-')[2]}-${fieldValue.split('-')[1]}-${
+          fieldValue.split('-')[0]
+        }`
+      return date
+    case 'time':
+      let time = ''
+      if (fieldValue) {
+        if (fieldValue.hour && fieldValue.minute && fieldValue.format) {
+          time = timeConversion(
+            `${fieldValue.hour}:${fieldValue.minute}${fieldValue.format.value}`
+          )
+          if (!time) return ''
+        } else {
+          if (fieldValue.hour && fieldValue.minute)
+            time = `${fieldValue.hour}:${fieldValue.minute}`
+        }
+      }
+      return time
+    case 'scaleRating':
+      let scaleRating = ''
+      if (fieldValue)
+        for (let i in fieldValue) {
+          const { checked, value } = fieldValue[i]
+          if (checked) scaleRating = value
+        }
+      return scaleRating
+    case 'price':
+      let price = ''
+      if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
+      return price
+    default:
+      return fieldValue?.value || fieldValue
+  }
 }

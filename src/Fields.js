@@ -8,7 +8,7 @@ const Fields = ({ fields, logic, pagination }) => {
   return (
     <Viewer>
       {({ values }) => {
-        const logicIds = getHiddenIds({ logic, values })
+        const logicIds = getHiddenIds({ logic, values, fields })
         const printableFields = getPrintableFields(fields, logicIds, pagination)
         return (
           <div className='boomForm-fields'>
