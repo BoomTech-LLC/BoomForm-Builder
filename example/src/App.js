@@ -370,6 +370,12 @@ const App = () => {
           conditions: [
             { id: 24, rule: 'is', item: null, value: { 1: '10', 2: '20' } }
           ]
+        },
+        {
+          id: 15,
+          action: 'show',
+          operator: 'and',
+          conditions: [{ id: 13, rule: 'is', item: 'street', value: 'gag' }]
         }
       ]}
       button={{

@@ -93,7 +93,7 @@ export const getHiddenIds = ({ logic, values, fields }) => {
       const { type } = field
 
       const isMatch = conditionalLogic({
-        fieldValue: getFieldValue(type, fieldValue),
+        fieldValue: getFieldValue(type, fieldValue, item),
         value,
         item,
         rule
@@ -125,7 +125,7 @@ export const getHiddenIds = ({ logic, values, fields }) => {
   return hiddenFields
 }
 
-const getFieldValue = (type, fieldValue) => {
+const getFieldValue = (type, fieldValue, item) => {
   switch (type) {
     case 'phone':
       let phone = ''
@@ -164,6 +164,11 @@ const getFieldValue = (type, fieldValue) => {
       let price = ''
       if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
       return price
+    case 'address':
+      let address = ''
+      if (fieldValue && item)
+        address = fieldValue[item]?.value || fieldValue[item]
+      return address
     default:
       return fieldValue?.value || fieldValue
   }
