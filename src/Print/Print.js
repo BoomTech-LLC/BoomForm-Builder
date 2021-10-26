@@ -6,6 +6,7 @@ const Print = ({ fields, name, description }) => {
   const componentRef = useRef(null)
 
   const handlePrint = useReactToPrint({
+    bodyClass: 'boomForm__print',
     pageStyle: 'background: #fff',
     content: () => componentRef.current
   })

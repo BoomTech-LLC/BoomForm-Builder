@@ -74,7 +74,8 @@ const Table = ({ fields }) => {
                   type === 'map' ||
                   type === 'custom' ||
                   type === 'file' ||
-                  type === 'just'
+                  type === 'just' ||
+                  values[id] === undefined
                 )
                   return null
 
