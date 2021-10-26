@@ -186,7 +186,8 @@ const App = () => {
             { key: 'placeholder', value: 'Please choose...' },
             { key: 0, value: 'option1', label: 'option1  ', price: '' },
             { key: 1, value: 'option2', label: 'option2  ', price: '' },
-            { key: 2, value: 'option3', label: 'option3  ', price: '' }
+            { key: 2, value: 'option3', label: 'option3  ', price: '' },
+            { key: 'other', value: 'option3', label: 'option3  ', price: '' }
           ],
           payable: 1,
           label: 'Dropdown',
