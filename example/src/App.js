@@ -29,13 +29,6 @@ const App = () => {
           validation: {}
         },
         {
-          type: 'name',
-          id: 12,
-          placeholders: { first: 'First', last: 'Last', middle: 'Middle' },
-          label: 'Name',
-          validations: {}
-        },
-        {
           type: 'address',
           id: 13,
           placeholders: {
