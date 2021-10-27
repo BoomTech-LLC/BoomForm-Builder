@@ -15,7 +15,7 @@ const App = () => {
       fields={[
         {
           type: 'text',
-          id: 4,
+          id: 'a.b.c',
           label: 'text',
           validation: {
             required: { msg: 'This field is required.' }
@@ -23,7 +23,7 @@ const App = () => {
         },
         {
           type: 'phone',
-          id: 1,
+          id: 'z',
           label: 'phone',
           validation: {
             required: { msg: 'This field is required.' }
@@ -65,7 +65,7 @@ const App = () => {
           {
             title: 'Step 1',
             description: '',
-            fields: [1, 'a.b.sss.c', 4]
+            fields: ['z', 'a.b.sss.c', 'a.b.c']
           },
           {
             title: 'Step 2',
@@ -74,7 +74,7 @@ const App = () => {
           }
         ],
         initial: 0,
-        buttons: { type: 0, next: 'NEXT', prev: 'PREVIOUS' },
+        buttons: { type: 1, next: 'NEXT', prev: 'PREVIOUS' },
         timeline: 1
       }}
       button={{
