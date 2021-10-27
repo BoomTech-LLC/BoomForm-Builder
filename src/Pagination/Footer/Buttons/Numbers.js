@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
 import { Context } from 'boomform'
+import { getErrorByType } from '../../../Helpers/global'
 
 const Numbers = ({
   button,
@@ -10,23 +11,31 @@ const Numbers = ({
   pages,
   captcha,
   setCurrentPage,
+  fields,
   ...props
 }) => {
   const { state, actions } = useContext(Context)
 
   const handleSetPage = (index) => {
-    const { errors } = state
-    const { fields } = pages[currentPage]
+    const { errors, touched } = state
+    const { fields: pageFields } = pages[currentPage]
     const { handleBlur } = actions
     let isErrorExists = false
 
     Object.keys(errors).map((item) => {
-      fields.map((subitem) => {
-        if (subitem == item) {
-          isErrorExists = true
-          handleBlur({
-            id: item
-          })
+      fields.map((field) => {
+        const { id, type, name } = field
+        if (pageFields.includes(id)) {
+          if (type === 'multipleChoice' || type === 'singleChoice')
+            touched[name] = true
+          else touched[id] = true
+          const isError = getErrorByType(id, type, errors, touched)
+          if (isError) {
+            isErrorExists = true
+            handleBlur({
+              id: item
+            })
+          }
         }
       })
     })
@@ -55,7 +64,11 @@ const Numbers = ({
             </button>
           )
         })}
-        <SubmitButton hide={currentPage !== pages.length - 1} {...props} />
+        <SubmitButton
+          hide={currentPage !== pages.length - 1}
+          fields={fields}
+          {...props}
+        />
       </div>
     </>
   )
