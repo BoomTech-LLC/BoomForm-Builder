@@ -43,3 +43,9 @@ export const timeConversion = (s) => {
   }
   return false
 }
+
+export const getIdPath = (id) => {
+  const pathArray = id.split('.')
+  pathArray.splice(-1)
+  return pathArray.join('.')
+}

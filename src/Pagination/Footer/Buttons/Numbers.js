@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
 import Captcha from './../../../Fields/Captcha/Captcha'
 import { Context } from 'boomform'
+import { getIdPath } from '../../../Helpers/global'
 
 const Numbers = ({
   button,
@@ -22,7 +23,8 @@ const Numbers = ({
 
     Object.keys(errors).map((item) => {
       fields.map((subitem) => {
-        if (subitem == item) {
+        const id = item.toString().includes('.') ? getIdPath(item) : item
+        if (String(subitem) === String(id)) {
           isErrorExists = true
           handleBlur({
             id: item
