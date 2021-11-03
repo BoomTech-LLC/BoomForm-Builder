@@ -64,7 +64,7 @@ const Buttons = ({
           fields={fields}
           {...props}
         />
-        {currentPage !== pages.length - 1 ? (
+        {currentPage !== pages.length - 1 && 
           <button
             type='button'
             className='boomForm-paginationButton boomForm-paginationButton-next'
@@ -72,7 +72,7 @@ const Buttons = ({
           >
             {next}
           </button>
-        ) : null}
+        }
       </div>
     </>
   )
