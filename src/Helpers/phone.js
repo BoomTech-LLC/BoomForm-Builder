@@ -755,7 +755,7 @@ export const countryListForPhone = [
     dial_code: '+504',
     code: 'HN',
     name: 'Honduras',
-    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Honduras_%282008_Olympics%29.svg/128px-Flag_of_Honduras_%282008_Olympics%29.svg.png',
+    flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Flag_of_Honduras.svg/1024px-Flag_of_Honduras.svg.png",
     key: 93
   },
   {
