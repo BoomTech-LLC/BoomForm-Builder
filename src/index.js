@@ -15,7 +15,8 @@ const Builder = ({
   fields = [],
   button = {},
   pagination = {},
-  logic
+  logic,
+  isSingleField = false
 }) => {
   const {
     name,
@@ -33,7 +34,7 @@ const Builder = ({
   const [currentPage, setCurrentPage] = useState(initial)
 
   useEffect(() => {
-    setCurrentPage(initial)
+    setCurrentPage(initial || 0)
   }, [initial])
 
   return (
@@ -53,6 +54,10 @@ const Builder = ({
           pagination={isPagination ? pages[currentPage].fields : []}
           logic={isLogicOn ? logic : []}
         />
+        {isSingleField && <div className='boomForm-paginationCount'>
+          {currentPage + 1}/{pages.length || 1}
+        </div>
+        }
         {isPagination ? (
           <PaginationFooter
             onSubmit={onSubmit}
@@ -66,6 +71,7 @@ const Builder = ({
             name={name}
             description={description}
             isPrint={isPrint}
+            isSingleField={isSingleField}
           />
         ) : (
           <Footer
