@@ -9,13 +9,14 @@ import StateHandler from './StateHandler'
 import PaginationFooter from './Pagination/Footer/Footer'
 import PaginationHeader from './Pagination/Header/Pagination'
 import PerPageHeader from './Pagination/Header/PerPageHeader'
+import Counter from './Pagination/Counter'
 
 const Builder = ({
   global = {},
   fields = [],
   button = {},
   pagination = {},
-  logic
+  logic,
 }) => {
   const {
     name,
@@ -29,11 +30,11 @@ const Builder = ({
 
   const isPagination = Object.keys(pagination).length !== 0
 
-  const { pages, initial = 0, buttons, timeline } = pagination
+  const { pages, initial = 0, buttons, timeline, pageCounter } = pagination
   const [currentPage, setCurrentPage] = useState(initial)
 
   useEffect(() => {
-    setCurrentPage(initial)
+    setCurrentPage(initial || 0)
   }, [initial])
 
   return (
@@ -54,19 +55,22 @@ const Builder = ({
           logic={isLogicOn ? logic : []}
         />
         {isPagination ? (
-          <PaginationFooter
-            onSubmit={onSubmit}
-            button={button}
-            paginationButtons={buttons}
-            pages={pages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            captcha={captcha}
-            fields={fields}
-            name={name}
-            description={description}
-            isPrint={isPrint}
-          />
+          <React.Fragment>
+            {pageCounter && <Counter currentPage={currentPage} pagesLangth={pages.length}/>}
+            <PaginationFooter
+              onSubmit={onSubmit}
+              button={button}
+              paginationButtons={buttons}
+              pages={pages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              captcha={captcha}
+              fields={fields}
+              name={name}
+              description={description}
+              isPrint={isPrint}
+            />
+          </React.Fragment>
         ) : (
           <Footer
             captcha={captcha}
