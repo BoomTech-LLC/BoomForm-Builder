@@ -11,7 +11,6 @@ const Buttons = ({
   captcha,
   setCurrentPage,
   fields,
-  isSingleField,
   ...props
 }) => {
   const { state, actions } = useContext(Context)
@@ -47,7 +46,7 @@ const Buttons = ({
 
   return (
     <>
-      {!isSingleField && captcha !== undefined && currentPage === pages.length - 1 && (
+      {captcha !== undefined && currentPage === pages.length - 1 && (
         <Captcha siteKey={captcha} />
       )}
       <div className='boomForm-paginationButtons__content'>
