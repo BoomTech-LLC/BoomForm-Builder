@@ -87,6 +87,8 @@ export const getHiddenIds = ({ logic, values, fields }) => {
         ? getNestedValue(values, key)
         : values[key]
       const [field] = fields.filter((field) => field.id === key)
+      if(field === undefined) return null;
+      
       const { type } = field
 
       const isMatch = conditionalLogic({
