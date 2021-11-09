@@ -15,30 +15,36 @@ const Buttons = ({
 }) => {
   const { state, actions } = useContext(Context)
 
-  const handleNext = () => {
+  const handleValidationFields = () => {
     const { errors, touched } = state
     const { fields: pageFields } = pages[currentPage]
     const { handleBlur } = actions
     let isErrorExists = false
-
+    Object.keys(touched).forEach((key) => {
+      if (pages[currentPage].fields.find((_key) => key.includes(_key))) touched[key] = true;
+    })
+    const vlidateCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
     Object.keys(errors).map((item) => {
       fields.map((field) => {
-        const { id, type, name } = field
+        const { id, type } = field
         if (pageFields.includes(id)) {
-          if (type === 'multipleChoice' || type === 'singleChoice')
-            touched[name] = true
-          else touched[id] = true
           const isError = getErrorByType(id, type, errors, touched)
-          if (isError) {
+          if (isError || vlidateCaptcha) {
             isErrorExists = true
             handleBlur({
-              id: item
+              id: item,
+              e: null,
+              field: field
             })
           }
         }
       })
     })
-    if (!isErrorExists) setCurrentPage((prev) => prev + 1)
+    return isErrorExists || vlidateCaptcha;
+  }
+
+  const handleNext = () => {
+    if (!handleValidationFields()) setCurrentPage((prev) => prev + 1);
   }
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
 
@@ -60,6 +66,7 @@ const Buttons = ({
           </button>
         ) : null}
         <SubmitButton
+          handleValidationFields={() => handleValidationFields()}
           hide={currentPage !== pages.length - 1}
           fields={fields}
           {...props}
@@ -68,7 +75,7 @@ const Buttons = ({
           <button
             type='button'
             className='boomForm-paginationButton boomForm-paginationButton-next'
-            onClick={handleNext}
+            onClick={() => handleNext()}
           >
             {next}
           </button>

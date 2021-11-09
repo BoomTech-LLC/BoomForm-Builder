@@ -16,31 +16,58 @@ const Numbers = ({
 }) => {
   const { state, actions } = useContext(Context)
 
-  const handleSetPage = (index) => {
+  const handleValidationFields = (index, isValidateSubmit = false) => {
     const { errors, touched } = state
     const { fields: pageFields } = pages[currentPage]
     const { handleBlur } = actions
     let isErrorExists = false
-
+    let pageIndex = false;
+    pages.forEach((page, _index) => {
+      const checkTouchedKey = Object.keys(touched).find((touchedKey) => page.fields.find((_key) => touchedKey.includes(String(_key))));
+      const checkErrorsKey = Object.keys(errors).find((errorKey) => page.fields.find((_key) => errorKey.includes(String(_key))));
+      if (index >= _index) {
+        if (_index === currentPage && checkTouchedKey) {
+          touched[checkTouchedKey] = true;
+        } else if (_index > currentPage && !checkTouchedKey) {
+          if (pageIndex === false) pageIndex = _index;
+        } else if (_index > currentPage && checkErrorsKey) {
+          if (pageIndex === false) pageIndex = _index;
+        } else {
+          if (pageIndex === false) pageIndex = true
+        }
+      }
+    });
+    const vlidateCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
     Object.keys(errors).map((item) => {
       fields.map((field) => {
-        const { id, type, name } = field
+        const { id, type } = field
         if (pageFields.includes(id)) {
-          if (type === 'multipleChoice' || type === 'singleChoice')
-            touched[name] = true
-          else touched[id] = true
           const isError = getErrorByType(id, type, errors, touched)
-          if (isError) {
+          if (isError || vlidateCaptcha) {
             isErrorExists = true
             handleBlur({
-              id: item
+              id: item,
+              e: null,
+              field: field
             })
           }
         }
       })
     })
+    const endNoIndexData = isErrorExists || vlidateCaptcha;
+    if (isValidateSubmit) return endNoIndexData;
+    if (endNoIndexData) return true;
+    if (typeof pageIndex === 'number') return pageIndex;
+    else return typeof index === 'number' ? index : false;
+  }
 
-    if (!isErrorExists) setCurrentPage(index)
+  const handleSetPage = (index) => {
+    if (currentPage > index) {
+      setCurrentPage(index);
+    } else {
+      const newIndex = handleValidationFields(index);
+      if (typeof newIndex === 'number') setCurrentPage(newIndex);
+    }
   }
 
   return (
@@ -65,6 +92,7 @@ const Numbers = ({
           )
         })}
         <SubmitButton
+          handleValidationFields={() => handleValidationFields( pages.length - 1, true)}
           hide={currentPage !== pages.length - 1}
           fields={fields}
           {...props}
