@@ -23,13 +23,13 @@ const Buttons = ({
     Object.keys(touched).forEach((key) => {
       if (pages[currentPage].fields.find((_key) => key.includes(_key))) touched[key] = true;
     })
-    const vlidateCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
+    const validationCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
     Object.keys(errors).map((item) => {
       fields.map((field) => {
         const { id, type } = field
         if (pageFields.includes(id)) {
           const isError = getErrorByType(id, type, errors, touched)
-          if (isError || vlidateCaptcha) {
+          if (isError || validationCaptcha) {
             isErrorExists = true
             handleBlur({
               id: item,
@@ -40,7 +40,7 @@ const Buttons = ({
         }
       })
     })
-    return isErrorExists || vlidateCaptcha;
+    return isErrorExists || validationCaptcha;
   }
 
   const handleNext = () => {

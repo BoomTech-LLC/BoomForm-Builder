@@ -37,13 +37,13 @@ const Numbers = ({
         }
       }
     });
-    const vlidateCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
+    const validationCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
     Object.keys(errors).map((item) => {
       fields.map((field) => {
         const { id, type } = field
         if (pageFields.includes(id)) {
           const isError = getErrorByType(id, type, errors, touched)
-          if (isError || vlidateCaptcha) {
+          if (isError || validationCaptcha) {
             isErrorExists = true
             handleBlur({
               id: item,
@@ -54,7 +54,7 @@ const Numbers = ({
         }
       })
     })
-    const endNoIndexData = isErrorExists || vlidateCaptcha;
+    const endNoIndexData = isErrorExists || validationCaptcha;
     if (isValidateSubmit) return endNoIndexData;
     if (endNoIndexData) return true;
     if (typeof pageIndex === 'number') return pageIndex;
