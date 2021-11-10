@@ -29,7 +29,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
   return (
     <div
       className={classNames('country_code_picker', {
-        country_code_picker_active: isOpen
+        country_code_picker_active: isOpen !== 'none'
       })}
     >
       <Custom initial={defaultCountry.dial_code} id={`${id}.code`}>
@@ -45,7 +45,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
                 <img src={flag} alt={flag} className='country_code_image' />
               </div>
               <div>{value}</div>
-              {isOpen && (
+              {isOpen !== 'none' && (
                 <div className={`country_code_dropdown open_${isOpen}`}>
                   <div className='country_code_search'>
                     <Input
