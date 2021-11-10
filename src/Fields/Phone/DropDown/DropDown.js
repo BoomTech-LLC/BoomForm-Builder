@@ -40,7 +40,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
             <>
               <div
                 className='country_code_action'
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsOpen(!isOpen)}
               >
                 <img src={flag} alt={flag} className='country_code_image' />
               </div>
