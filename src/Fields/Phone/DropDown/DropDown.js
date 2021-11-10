@@ -9,7 +9,7 @@ import {
 } from '../../../Helpers/phone'
 
 const DropDown = ({ id, defaultCountryCode }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState('none')
 
   let [defaultCountry] = countryListForPhone
   if (defaultCountryCode)
@@ -17,7 +17,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
 
   const handleClickClose = (e) => {
     if (e.target.classList.value.indexOf('country_code') === -1)
-      setIsOpen(false)
+      setIsOpen('none')
   }
 
   useEffect(() => {
@@ -40,13 +40,13 @@ const DropDown = ({ id, defaultCountryCode }) => {
             <>
               <div
                 className='country_code_action'
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={(event) => setIsOpen(isOpen === 'none' ? event.target?.offsetTop < 200 ? 'bottom' : 'top' : 'none')}
               >
                 <img src={flag} alt={flag} className='country_code_image' />
               </div>
               <div>{value}</div>
               {isOpen && (
-                <div className='country_code_dropdown'>
+                <div className={`country_code_dropdown open_${isOpen}`}>
                   <div className='country_code_search'>
                     <Input
                       id={`${id}.search`}

@@ -3,7 +3,7 @@ import { countryListForPhone } from '../../../Helpers/phone'
 
 const List = ({ id, setIsOpen, handleChange, values }) => {
   const handleCodeChange = (dial_code) => {
-    setIsOpen(false)
+    setIsOpen('none')
     handleChange({
       id: `${id}.code`,
       value: dial_code,
