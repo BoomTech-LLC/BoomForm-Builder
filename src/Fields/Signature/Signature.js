@@ -1,16 +1,25 @@
-import React, { useRef } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import SignatureCanvas from 'react-signature-canvas'
 import { Custom } from 'boomform'
 
 const Signature = ({ id, initial, ...props }) => {
-  const sigPadRef = useRef()
+  const [sigPadRef, setSigPadRef] = useState(null)
+
+  useEffect(() => {
+    if (initial && sigPadRef) sigPadRef.fromData(initial)
+  }, [initial, sigPadRef])
+
+  const onRefSet = useCallback((ref) => {
+    setSigPadRef(ref)
+  })
 
   const handleTrim = (handleChange) => {
-    const url = sigPadRef.current.getTrimmedCanvas().toDataURL('image/png')
+    const url = sigPadRef.getTrimmedCanvas().toDataURL('image/png')
+    const data = sigPadRef.toData()
     handleChange({
       id,
-      value: url,
-      e: sigPadRef.current,
+      value: { url, data },
+      e: sigPadRef,
       field: { id, initial, ...props }
     })
   }
@@ -19,17 +28,18 @@ const Signature = ({ id, initial, ...props }) => {
     handleChange({
       id,
       value: null,
-      e: sigPadRef.current,
+      e: sigPadRef,
       field: { id, initial, ...props }
     })
-    sigPadRef.current.clear()
+    sigPadRef.clear()
   }
 
   const handleOnBlur = (handleBlur) => {
-    const url = sigPadRef.current.getTrimmedCanvas().toDataURL('image/png')
+    const url = sigPadRef.getTrimmedCanvas().toDataURL('image/png')
+    const data = sigPadRef.toData()
     handleBlur({
       id,
-      value: url,
+      value: { url, data },
       e: null,
       field: props
     })
@@ -41,7 +51,7 @@ const Signature = ({ id, initial, ...props }) => {
         return (
           <div onClick={() => handleOnBlur(handleBlur)}>
             <SignatureCanvas
-              ref={sigPadRef}
+              ref={onRefSet}
               penColor='#000'
               canvasProps={{
                 height: '200px',

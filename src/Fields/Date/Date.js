@@ -12,7 +12,6 @@ const Date = ({ validation = {}, ...props }) => {
       }
     }
   }
-  console.log(validation)
   return (
     <Input
       {...props}

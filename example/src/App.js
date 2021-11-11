@@ -7,52 +7,80 @@ const App = () => {
       global={{
         name: 'Pagination And Shit',
         pagination: true,
+        print: true,
+        logic: true,
         innerComponent: ({ ...state }) => console.log(state),
         captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
       fields={[
         {
-          id: 'terms',
-          type: 'terms',
-          text: 'Terms and Conditions {Read Here} more',
-          url: 'https://form-builder.boomform.com/fields#terms',
-          // openIn: 'newTab'
+          type: 'text',
+          id: 'a.b.c',
+          label: 'text',
+          validation: {
+            required: { msg: 'This field is required.' }
+          }
+        },
+        {
+          type: 'phone',
+          id: 'z',
+          label: 'phone',
+          validation: {
+            required: { msg: 'This field is required.' }
+          }
+        },
+        {
+          type: 'name',
+          id: 'a.b.sss.c',
+          placeholders: {
+            first: 'Family name',
+            last: 'First (Given) name',
+            middle: 'Middle'
+          },
+          label: 'Full Name (as in Passport) *',
+          width: '400px',
+          validations: {
+            first: { required: { msg: 'This field is required.' } },
+            last: { required: { msg: 'This field is required.' } }
+          }
+        },
+        {
+          type: 'name',
+          id: 3,
+          placeholders: {
+            first: 'Family name',
+            last: 'First (Given) name',
+            middle: 'Middle'
+          },
+          label: 'Full Name (as in Passport) *',
+          width: '400px',
+          validations: {
+            first: { required: { msg: 'This field is required.' } },
+            last: { required: { msg: 'This field is required.' } }
+          }
         }
-        // { id: 1, type: 'email' },
-        // { id: 2, type: 'email' },
-        // { id: 3, type: 'email' },
-        // { id: 4, type: 'email' },
-        // { id: 5, type: 'email' },
-        // { id: 6, type: 'email' },
-        // { id: 7, type: 'email' },
-        // { id: 8, type: 'email' }
       ]}
+      pagination={{
+        pages: [
+          {
+            title: 'Step 1',
+            description: '',
+            fields: ['z', 'a.b.sss.c', 'a.b.c']
+          },
+          {
+            title: 'Step 2',
+            description: '',
+            fields: [3]
+          }
+        ],
+        initial: 0,
+        buttons: { type: 1, next: 'NEXT', prev: 'PREVIOUS' },
+        timeline: 1
+      }}
+      logic={[{"id":14,"action":"show","operator":"or","conditions":[{"id":19,"rule":"is","item":null,"value":"123"},{"id":20,"rule":"isNot","item":null,"value":"321"}]}]}
       button={{
         text: 'submit'
       }}
-      // pagination={{
-      //   pages: [
-      //     {
-      //       title: 'Title 1',
-      //       description: 'Description 1',
-      //       fields: [1, 2, 3]
-      //     },
-      //     {
-      //       title: 'Title 2',
-      //       description: 'Description 2',
-      //       fields: [4, 5]
-      //     },
-      //     {
-      //       title: 'Title 3',
-      //       description: 'Description 3',
-      //       fields: [6, 7, 8]
-      //     }
-      //   ],
-      //   buttons: {
-      //     type: 0
-      //   },
-      //   timeline: 1
-      // }}
     />
   )
 }

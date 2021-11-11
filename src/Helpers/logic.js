@@ -1,16 +1,13 @@
-import { getNestedValue } from '../Helpers/global'
+import { getNestedValue, timeConversion } from '../Helpers/global'
 
-const conditionalLogic = ({ fieldValue, value, item, rule }) => {
+const conditionalLogic = ({ fieldValue, value, rule }) => {
   switch (rule) {
     case 'is': {
-      if (fieldValue == value || fieldValue?.[item] == value) return true
+      if (fieldValue == value) return true
       else return false
     }
     case 'isNot': {
-      if (
-        (fieldValue != value && !item) ||
-        (fieldValue?.[item] != value && item)
-      ) {
+      if (fieldValue != value) {
         return true
       } else return false
     }
@@ -80,33 +77,98 @@ const conditionalLogic = ({ fieldValue, value, item, rule }) => {
   }
 }
 
-export const getHiddenIds = ({ logic, values }) => {
+export const getHiddenIds = ({ logic, values, fields }) => {
   let hiddenFields = []
   logic.map((option) => {
     const { action, conditions, operator = 'and', id } = option
-    conditions.map((condition) => {
-      const { id: key, value, rule, item } = condition
+    for (let i = 0; i < conditions.length; i++) {
+      const { id: key, value, rule, item } = conditions[i]
       const fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
+      const [field] = fields.filter((field) => field.id === key)
+      if(field === undefined) return null;
+      
+      const { type } = field
+
       const isMatch = conditionalLogic({
-        fieldValue: fieldValue?.value || fieldValue,
+        fieldValue: getFieldValue(type, fieldValue, item),
         value,
-        item,
         rule
       })
+
+      if (action === 'show') hiddenFields.push(id)
+
       if (isMatch) {
-        if (action === 'hide') hiddenFields.push(id)
-        if (operator === 'or' && action === 'show') {
-          hiddenFields = hiddenFields.filter((item) => item !== id)
+        if (action === 'show') {
+          if (operator === 'or') {
+            hiddenFields = hiddenFields.filter((item) => item !== id)
+            break
+          } else {
+            const index = hiddenFields.indexOf(id)
+            hiddenFields.splice(index, 1)
+          }
+        } else {
+          hiddenFields.push(id)
+          if (operator === 'or') break
         }
       } else {
-        if (action === 'show') hiddenFields.push(id)
         if (operator === 'and' && action === 'hide') {
           hiddenFields = hiddenFields.filter((item) => item !== id)
+          break
         }
       }
-    })
+    }
   })
   return hiddenFields
+}
+
+const getFieldValue = (type, fieldValue, item) => {
+  switch (type) {
+    case 'phone':
+      let phone = ''
+      if (fieldValue) phone = `${fieldValue.code}${fieldValue.phone}`
+      return phone
+    case 'date':
+      let date = ''
+      if (fieldValue)
+        date = `${fieldValue.split('-')[2]}-${fieldValue.split('-')[1]}-${
+          fieldValue.split('-')[0]
+        }`
+      return date
+    case 'time':
+      let time = ''
+      if (fieldValue) {
+        if (fieldValue.hour && fieldValue.minute && fieldValue.format) {
+          time = timeConversion(
+            `${fieldValue.hour}:${fieldValue.minute}${fieldValue.format.value}`
+          )
+          if (!time) return ''
+        } else {
+          if (fieldValue.hour && fieldValue.minute)
+            time = `${fieldValue.hour}:${fieldValue.minute}`
+        }
+      }
+      return time
+    case 'scaleRating':
+      let scaleRating = ''
+      if (fieldValue)
+        for (let i in fieldValue) {
+          const { checked, value } = fieldValue[i]
+          if (checked) scaleRating = value
+        }
+      return scaleRating
+    case 'price':
+      let price = ''
+      if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
+      return price
+    case 'address':
+    case 'name':
+      let address = ''
+      if (fieldValue && item)
+        address = fieldValue[item]?.value || fieldValue[item]
+      return address
+    default:
+      return fieldValue?.value || fieldValue
+  }
 }
