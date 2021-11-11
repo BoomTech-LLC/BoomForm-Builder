@@ -8,7 +8,7 @@ const App = () => {
         name: 'Pagination And Shit',
         pagination: true,
         print: true,
-        logic: false,
+        logic: true,
         innerComponent: ({ ...state }) => console.log(state),
         captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
       }}
@@ -77,6 +77,7 @@ const App = () => {
         buttons: { type: 1, next: 'NEXT', prev: 'PREVIOUS' },
         timeline: 1
       }}
+      logic={[{"id":14,"action":"show","operator":"or","conditions":[{"id":19,"rule":"is","item":null,"value":"123"},{"id":20,"rule":"isNot","item":null,"value":"321"}]}]}
       button={{
         text: 'submit'
       }}
