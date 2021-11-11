@@ -29,7 +29,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
   return (
     <div
       className={classNames('country_code_picker', {
-        country_code_picker_active: isOpen
+        country_code_picker_active: isOpen !== false
       })}
     >
       <Custom initial={defaultCountry.dial_code} id={`${id}.code`}>
@@ -40,13 +40,13 @@ const DropDown = ({ id, defaultCountryCode }) => {
             <>
               <div
                 className='country_code_action'
-                onClick={() => setIsOpen(true)}
+                onClick={(event) => setIsOpen(isOpen === false ? event.target?.offsetTop < 200 ? 'bottom' : 'top' : false)}
               >
                 <img src={flag} alt={flag} className='country_code_image' />
               </div>
               <div>{value}</div>
-              {isOpen && (
-                <div className='country_code_dropdown'>
+              {isOpen !== false && (
+                <div className={classNames('country_code_dropdown', {open_bottom: isOpen === 'bottom'})}>
                   <div className='country_code_search'>
                     <Input
                       id={`${id}.search`}
