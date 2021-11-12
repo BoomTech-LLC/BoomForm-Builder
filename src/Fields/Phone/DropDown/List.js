@@ -1,7 +1,7 @@
 import React from 'react'
 import { countryListForPhone } from '../../../Helpers/phone'
 
-const List = ({ id, setIsOpen, handleChange, values }) => {
+const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
   const handleCodeChange = (dial_code) => {
     setIsOpen(false)
     handleChange({
@@ -27,10 +27,10 @@ const List = ({ id, setIsOpen, handleChange, values }) => {
     })
     .map((country) => {
       const { key, dial_code, flag, name } = country
-
+      
       return (
         <div
-          className='country_code_item'
+          className={'country_code_item' + (selectedKey === key) ? ' selected' : ''}
           onClick={() => handleCodeChange(dial_code)}
           key={key}
         >

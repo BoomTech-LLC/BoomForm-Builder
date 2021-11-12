@@ -35,7 +35,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
       <Custom initial={defaultCountry.dial_code} id={`${id}.code`}>
         {(state) => {
           const { handleChange, value, values } = state
-          const { flag } = getPhoneCountryByDialCode(value)
+          const { flag, key } = getPhoneCountryByDialCode(value)
           return (
             <>
               <div
@@ -61,6 +61,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
                       id={id}
                       values={values}
                       setIsOpen={setIsOpen}
+                      selectedKey={key}
                     />
                   </div>
                 </div>
