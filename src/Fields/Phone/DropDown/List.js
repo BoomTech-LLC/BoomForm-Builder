@@ -1,4 +1,6 @@
 import React from 'react'
+import classNames from 'classnames/bind'
+
 import { countryListForPhone } from '../../../Helpers/phone'
 
 const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
@@ -27,10 +29,11 @@ const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
     })
     .map((country) => {
       const { key, dial_code, flag, name } = country
-      
+
       return (
         <div
-          className={'country_code_item' + (selectedKey === key) ? ' selected' : ''}
+          id={`country_item${id}`}
+          className={classNames('country_code_item', {selected: selectedKey === key} )}
           onClick={() => handleCodeChange(dial_code)}
           key={key}
         >

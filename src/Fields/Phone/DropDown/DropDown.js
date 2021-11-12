@@ -55,7 +55,9 @@ const DropDown = ({ id, defaultCountryCode }) => {
                       placeholder='Search ...'
                     />
                   </div>
-                  <div className='country_code_list'>
+                  <div onLoad={(event) => {
+                    if (String(event.nativeEvent.path[1].classList).includes('selected')) event.currentTarget.scrollTop = event.target.offsetTop - event.target.height
+                  }} className='country_code_list'>
                     <List
                       handleChange={handleChange}
                       id={id}
