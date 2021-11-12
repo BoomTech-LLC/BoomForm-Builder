@@ -1,7 +1,9 @@
 import React from 'react'
+import classNames from 'classnames/bind'
+
 import { countryListForPhone } from '../../../Helpers/phone'
 
-const List = ({ id, setIsOpen, handleChange, values }) => {
+const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
   const handleCodeChange = (dial_code) => {
     setIsOpen(false)
     handleChange({
@@ -30,7 +32,8 @@ const List = ({ id, setIsOpen, handleChange, values }) => {
 
       return (
         <div
-          className='country_code_item'
+          id={`country_item${id}`}
+          className={classNames('country_code_item', {selected: selectedKey === key} )}
           onClick={() => handleCodeChange(dial_code)}
           key={key}
         >
