@@ -35,7 +35,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
       <Custom initial={defaultCountry.dial_code} id={`${id}.code`}>
         {(state) => {
           const { handleChange, value, values } = state
-          const { flag } = getPhoneCountryByDialCode(value)
+          const { flag, key } = getPhoneCountryByDialCode(value)
           return (
             <>
               <div
@@ -55,12 +55,15 @@ const DropDown = ({ id, defaultCountryCode }) => {
                       placeholder='Search ...'
                     />
                   </div>
-                  <div className='country_code_list'>
+                  <div onLoad={(event) => {
+                    if (String(event.nativeEvent.path[1].classList).includes('selected')) event.currentTarget.scrollTop = event.target.offsetTop - event.target.height
+                  }} className='country_code_list'>
                     <List
                       handleChange={handleChange}
                       id={id}
                       values={values}
                       setIsOpen={setIsOpen}
+                      selectedKey={key}
                     />
                   </div>
                 </div>
