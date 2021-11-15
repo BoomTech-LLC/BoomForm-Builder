@@ -26,6 +26,10 @@ const DropDown = ({ id, defaultCountryCode }) => {
     return () => window.removeEventListener('click', handleClickClose)
   }, [])
 
+  const onScrollCountriesList = (event) => {
+    if (String(event.nativeEvent.path[1].classList).includes('selected')) event.currentTarget.scrollTop = event.target.offsetTop - event.currentTarget.offsetTop;
+  }
+
   return (
     <div
       className={classNames('country_code_picker', {
@@ -55,9 +59,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
                       placeholder='Search ...'
                     />
                   </div>
-                  <div onLoad={(event) => {
-                    if (String(event.nativeEvent.path[1].classList).includes('selected')) event.currentTarget.scrollTop = event.target.offsetTop - event.target.height
-                  }} className='country_code_list'>
+                  <div onLoad={onScrollCountriesList} className='country_code_list'>
                     <List
                       handleChange={handleChange}
                       id={id}
