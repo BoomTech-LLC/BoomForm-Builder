@@ -8,7 +8,7 @@ const Password = ({ label, classnameprefix, ...props }) => {
     <Input {...props} type={showPassword ? 'text' : 'password'} />
     <span 
       onClick={() => setShowPassword(value => !value)}  
-      className={classNames({'no-show-password': !showPassword, 'show-password': showPassword})}
+      className={classNames('password-icon', {'active': showPassword})}
     ></span>
   </>
 }
