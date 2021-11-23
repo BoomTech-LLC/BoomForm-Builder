@@ -109,7 +109,6 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
           instruction={instruction}
           {...props}
         />
-        <Error classnameprefix={classnameprefix} id={id} type={type} />
       </div>
       {instruction !== undefined ? (
         <div

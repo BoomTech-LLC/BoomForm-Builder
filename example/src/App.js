@@ -5,79 +5,29 @@ const App = () => {
   return (
     <Builder
       global={{
-        name: 'Pagination And Shit',
-        pagination: true,
-        print: true,
-        logic: true,
-        innerComponent: ({ ...state }) => console.log(state),
-        captcha: '6Ldlgb8UAAAAABF24ciRo57EtSyDxt-1zri0tk7b'
+        name: 'Something',
+        innerComponent: ({ ...state }) => console.log(state)
       }}
       fields={[
         {
-          type: 'text',
-          id: 'a.b.c',
-          label: 'text',
+          id: 1,
+          type: 'multipleChoice',
           validation: {
-            required: { msg: 'This field is required.' }
-          }
-        },
-        {
-          type: 'phone',
-          id: 'z',
-          label: 'phone',
-          validation: {
-            required: { msg: 'This field is required.' }
-          }
-        },
-        {
-          type: 'name',
-          id: 'a.b.sss.c',
-          placeholders: {
-            first: 'Family name',
-            last: 'First (Given) name',
-            middle: 'Middle'
+            HTMLValidate: true,
+            required: { msg: 'Barev' }
           },
-          label: 'Full Name (as in Passport) *',
-          width: '400px',
-          validations: {
-            first: { required: { msg: 'This field is required.' } },
-            last: { required: { msg: 'This field is required.' } }
-          }
-        },
-        {
-          type: 'name',
-          id: 3,
-          placeholders: {
-            first: 'Family name',
-            last: 'First (Given) name',
-            middle: 'Middle'
-          },
-          label: 'Full Name (as in Passport) *',
-          width: '400px',
-          validations: {
-            first: { required: { msg: 'This field is required.' } },
-            last: { required: { msg: 'This field is required.' } }
-          }
+          options: [
+            { key: 1, label: 'Cycling', value: 'cycling' },
+            { key: 2, label: 'Runing', value: 'runing' },
+            { key: 3, label: 'Reading', value: 'reading' },
+            { key: 4, label: 'Photographing', value: 'photographing' },
+            {
+              key: 'other',
+              placeholder: 'Other'
+            }
+          ]
         }
       ]}
-      pagination={{
-        pages: [
-          {
-            title: 'Step 1',
-            description: '',
-            fields: ['z', 'a.b.sss.c', 'a.b.c']
-          },
-          {
-            title: 'Step 2',
-            description: '',
-            fields: [3]
-          }
-        ],
-        initial: 0,
-        buttons: { type: 1, next: 'NEXT', prev: 'PREVIOUS' },
-        timeline: 1
-      }}
-      logic={[{"id":14,"action":"show","operator":"or","conditions":[{"id":19,"rule":"is","item":null,"value":"123"},{"id":20,"rule":"isNot","item":null,"value":"321"}]}]}
       button={{
         text: 'submit'
       }}
