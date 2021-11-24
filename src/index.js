@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { BoomForm } from 'boomform'
 import Header from './Header'
 import Footer from './Footer'
@@ -23,7 +23,7 @@ const Builder = ({
     description,
     onSubmit,
     logic: isLogicOn = false,
-    innerComponent = () => {},
+    innerComponent = () => { },
     print: isPrint = false,
     captcha
   } = global
@@ -32,6 +32,7 @@ const Builder = ({
 
   const { pages, initial = 0, buttons, timeline, pageCounter } = pagination
   const [currentPage, setCurrentPage] = useState(initial)
+  const formRef = useRef()
 
   useEffect(() => {
     setCurrentPage(initial || 0)
@@ -39,7 +40,7 @@ const Builder = ({
 
   return (
     <BoomForm>
-      <form className='boomForm' noValidate>
+      <form className='boomForm' noValidate ref={formRef}>
         <Header name={name} description={description} />
         {isPagination && (
           <PaginationHeader
@@ -51,14 +52,16 @@ const Builder = ({
         {isPagination && <PerPageHeader page={pages[currentPage]} />}
         <Fields
           fields={fields}
+          formRef={formRef}
           pagination={isPagination ? pages[currentPage].fields : []}
           logic={isLogicOn ? logic : []}
         />
         {isPagination ? (
           <React.Fragment>
-            {pageCounter && <Counter currentPage={currentPage} pagesLangth={pages.length}/>}
+            {pageCounter && <Counter currentPage={currentPage} pagesLangth={pages.length} />}
             <PaginationFooter
               onSubmit={onSubmit}
+              formRef={formRef}
               button={button}
               paginationButtons={buttons}
               pages={pages}

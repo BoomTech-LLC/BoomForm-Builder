@@ -19,18 +19,25 @@ const Buttons = ({
     const { errors, touched } = state
     const { fields: pageFields } = pages[currentPage]
     const { handleBlur } = actions
+
     let isErrorExists = false
+
     Object.keys(touched).forEach((key) => {
       if (pages[currentPage].fields.find((_key) => key.includes(_key))) touched[key] = true;
     })
+
     const validationCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
+
     Object.keys(errors).map((item) => {
       fields.map((field) => {
         const { id, type } = field
+
         if (pageFields.includes(id)) {
           const isError = getErrorByType(id, type, errors, touched)
+
           if (isError || validationCaptcha) {
             isErrorExists = true
+
             handleBlur({
               id: item,
               e: null,
@@ -40,12 +47,14 @@ const Buttons = ({
         }
       })
     })
+
     return isErrorExists || validationCaptcha;
   }
 
   const handleNext = () => {
     if (!handleValidationFields()) setCurrentPage((prev) => prev + 1);
   }
+
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
 
   const { prev = 'Prev', next = 'Next' } = paginationButtons
@@ -71,11 +80,11 @@ const Buttons = ({
           fields={fields}
           {...props}
         />
-        {currentPage !== pages.length - 1 && 
+        {currentPage !== pages.length - 1 &&
           <button
             type='button'
             className='boomForm-paginationButton boomForm-paginationButton-next'
-            onClick={() => handleNext()}
+            onClick={handleNext}
           >
             {next}
           </button>

@@ -92,7 +92,7 @@ const Numbers = ({
           )
         })}
         <SubmitButton
-          handleValidationFields={() => handleValidationFields( pages.length - 1, true)}
+          handleValidationFields={() => handleValidationFields(pages.length - 1, true)}
           hide={currentPage !== pages.length - 1}
           fields={fields}
           {...props}

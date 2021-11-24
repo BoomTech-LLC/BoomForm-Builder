@@ -4,7 +4,7 @@ import { getPrintableFields } from './Helpers/global'
 import { Viewer } from 'boomform'
 import { getHiddenIds } from './Helpers/logic'
 
-const Fields = ({ fields, logic, pagination }) => {
+const Fields = ({ fields, logic, pagination, formRef }) => {
   return (
     <Viewer>
       {({ values }) => {
@@ -17,7 +17,7 @@ const Fields = ({ fields, logic, pagination }) => {
 
               if (!printableFields.includes(id)) return null
 
-              return <Field key={id} {...field} />
+              return <Field key={id} formRef={formRef} {...field} />
             })}
           </div>
         )

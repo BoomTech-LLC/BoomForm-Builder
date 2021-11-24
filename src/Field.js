@@ -79,7 +79,7 @@ const FieldByType = ({ type, ...props }) => {
   }
 }
 
-const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
+const Field = ({ id, type, classnameprefix, label, instruction, formRef, ...props }) => {
   return (
     <div
       id={`field-${id}`}
@@ -109,7 +109,7 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
           instruction={instruction}
           {...props}
         />
-        <Error classnameprefix={classnameprefix} id={id} type={type} />
+        <Error classnameprefix={classnameprefix} id={id} type={type} formRef={formRef} />
       </div>
       {instruction !== undefined ? (
         <div
