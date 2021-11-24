@@ -33,12 +33,10 @@ const Footer = ({ fields, captcha, ...props }) => {
   return (
     <>
       {captcha !== undefined && <Captcha siteKey={captcha} />}
-      <div>
-        <SubmitButton
-          handleValidationFields={() => handleValidationFields()}
-          {...props}
-        />
-      </div>
+      <SubmitButton
+        handleValidationFields={() => handleValidationFields()}
+        {...props}
+      />
     </>
   )
 }

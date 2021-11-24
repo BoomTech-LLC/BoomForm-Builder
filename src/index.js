@@ -16,7 +16,7 @@ const Builder = ({
   fields = [],
   button = {},
   pagination = {},
-  logic,
+  logic
 }) => {
   const {
     name,
@@ -39,7 +39,7 @@ const Builder = ({
 
   return (
     <BoomForm>
-      <form className='boomForm' noValidate>
+      <form className='boomForm'>
         <Header name={name} description={description} />
         {isPagination && (
           <PaginationHeader
@@ -56,7 +56,9 @@ const Builder = ({
         />
         {isPagination ? (
           <React.Fragment>
-            {pageCounter && <Counter currentPage={currentPage} pagesLangth={pages.length}/>}
+            {pageCounter && (
+              <Counter currentPage={currentPage} pagesLangth={pages.length} />
+            )}
             <PaginationFooter
               onSubmit={onSubmit}
               button={button}
