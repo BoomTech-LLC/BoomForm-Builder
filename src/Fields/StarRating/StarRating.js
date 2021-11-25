@@ -1,22 +1,31 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useRef } from 'react'
 import Star from './Star'
 import Circle from './Circle'
-import { Custom } from 'boomform'
+import { Custom, Input } from 'boomform'
 
-const StarRating = ({
-  id,
-  count = 5,
-  shape,
-  color = '#FFAB07',
-  zoom = 40,
-  ...props
-}) => {
+const StarRating = (props) => {
+  const { id,
+    count = 5,
+    shape,
+    color = '#FFAB07',
+    zoom = 40,
+    validation} = props
+
+
+const validationField = useRef()
+  
   return (
     <Custom id={id} {...props}>
       {({ handleChange, handleBlur, value }) => {
         return (
+          <>
           <div
             onBlur={() => {
+              if (validation.HTMLValidate === true) {
+                const validationInput = validationField.current.firstChild
+                validationInput.focus()
+                validationInput.blur()
+              }
               handleBlur({
                 id,
                 value,
@@ -63,6 +72,11 @@ const StarRating = ({
               )
             })}
           </div>
+            {validation.HTMLValidate === true && <div ref={validationField} style={{ overflow: 'hidden', height: "0px" }}>
+                <Input maxLength="0" {...props} type='text'/>
+              </div>
+            }
+          </>
         )
       }}
     </Custom>

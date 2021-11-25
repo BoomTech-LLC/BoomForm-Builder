@@ -41,7 +41,7 @@ const File = ({
         }
 
         const handleGetResult = (result) => {
-          handleBlur({
+          handleChange({
             id,
             e: null,
             value: result,
