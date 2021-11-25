@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, Fragment } from 'react'
 import SignatureCanvas from 'react-signature-canvas'
-import { Custom } from 'boomform'
+import { Custom, Input } from 'boomform'
 
-const Signature = ({ id, initial, ...props }) => {
+const Signature = (props) => {
+  const { id, initial, validation} = props
+
   const [sigPadRef, setSigPadRef] = useState(null)
 
   useEffect(() => {
@@ -66,6 +68,10 @@ const Signature = ({ id, initial, ...props }) => {
             >
               Clear
             </div>
+            {validation.HTMLValidate === true && <div style={{ overflow: 'hidden', height: 0 }}>
+                <Input maxLength="0" {...props} type='text'/>
+              </div>
+            }
           </div>
         )
       }}

@@ -39,7 +39,7 @@ const Builder = ({
 
   return (
     <BoomForm>
-      <form className='boomForm' noValidate>
+      <form className='boomForm'>
         <Header name={name} description={description} />
         {isPagination && (
           <PaginationHeader
