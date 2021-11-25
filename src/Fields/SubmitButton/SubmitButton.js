@@ -18,7 +18,6 @@ const SubmitButton = ({
   if (hide) return null
 
   const handleClick = (e) => {
-    e.preventDefault()
     if (!handleValidationFields()) {
       if (onSubmit) onSubmit({ state, actions })
       else console.log({ state, actions })
