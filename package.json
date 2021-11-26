@@ -52,7 +52,7 @@
   ],
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.12.3",
-    "boom-file-upload": "^1.0.8",
+    "boom-file-upload": "^1.1.0",
     "boomform": "^3.0.0",
     "classnames": "^2.3.1",
     "react-google-recaptcha": "^2.1.0",
