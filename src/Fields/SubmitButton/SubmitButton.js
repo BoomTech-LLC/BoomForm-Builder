@@ -10,7 +10,8 @@ const SubmitButton = ({
   fields,
   name,
   description,
-  isPrint
+  isPrint,
+  formRef
 }) => {
   const { state, actions } = useContext(Context)
   const { text, prefix, suffix } = button || { text: 'Submit' }
@@ -18,10 +19,12 @@ const SubmitButton = ({
   if (hide) return null
 
   const handleClick = (e) => {
+    e.preventDefault()
+
     if (!handleValidationFields()) {
       if (onSubmit) onSubmit({ state, actions })
       else console.log({ state, actions })
-    } 
+    } else formRef.current.reportValidity()
   }
 
   return (

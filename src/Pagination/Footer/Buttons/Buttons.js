@@ -11,6 +11,7 @@ const Buttons = ({
   captcha,
   setCurrentPage,
   fields,
+  formRef,
   ...props
 }) => {
   const { state, actions } = useContext(Context)
@@ -21,9 +22,12 @@ const Buttons = ({
     const { handleBlur } = actions
     let isErrorExists = false
     Object.keys(touched).forEach((key) => {
-      if (pages[currentPage].fields.find((_key) => key.includes(_key))) touched[key] = true;
+      if (pages[currentPage].fields.find((_key) => key.includes(_key)))
+        touched[key] = true
     })
-    const validationCaptcha = currentPage === pages.length - 1 && Object.keys(errors).includes('captcha');
+    const validationCaptcha =
+      currentPage === pages.length - 1 &&
+      Object.keys(errors).includes('captcha')
     Object.keys(errors).map((item) => {
       fields.map((field) => {
         const { id, type } = field
@@ -40,11 +44,12 @@ const Buttons = ({
         }
       })
     })
-    return isErrorExists || validationCaptcha;
+    return isErrorExists || validationCaptcha
   }
 
   const handleNext = () => {
-    if (!handleValidationFields()) setCurrentPage((prev) => prev + 1);
+    if (!handleValidationFields()) setCurrentPage((prev) => prev + 1)
+    else formRef.current.reportValidity()
   }
   const handlePrev = () => setCurrentPage((prev) => prev - 1)
 
@@ -69,9 +74,10 @@ const Buttons = ({
           handleValidationFields={() => handleValidationFields()}
           hide={currentPage !== pages.length - 1}
           fields={fields}
+          formRef={formRef}
           {...props}
         />
-        {currentPage !== pages.length - 1 && 
+        {currentPage !== pages.length - 1 && (
           <button
             type='button'
             className='boomForm-paginationButton boomForm-paginationButton-next'
@@ -79,7 +85,7 @@ const Buttons = ({
           >
             {next}
           </button>
-        }
+        )}
       </div>
     </>
   )
