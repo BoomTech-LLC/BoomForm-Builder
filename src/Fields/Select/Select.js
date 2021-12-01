@@ -22,7 +22,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
                 type={isNumber ? 'number' : 'text'}
                 id={`other.${id}`}
                 autoFocus={true}
-                placeholder={placeholder}
+                placeholder={otherValue}
                 className='boomForm-other__item'
               />
             )
