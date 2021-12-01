@@ -54,6 +54,7 @@ const Builder = ({
           fields={fields}
           pagination={isPagination ? pages[currentPage].fields : []}
           logic={isLogicOn ? logic : []}
+          setCurrentPage={setCurrentPage}
         />
         {isPagination ? (
           <React.Fragment>

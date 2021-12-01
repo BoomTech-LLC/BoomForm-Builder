@@ -28,9 +28,8 @@ const ScaleRating = ({
             <span>{value}</span>
             <Radio
               {...props}
-              id={`${id}.${value}`}
-              value={value}
-              name={id}
+              id={id}
+              value={`${value}`}
               initial={initial === value ? true : false}
             />
           </div>

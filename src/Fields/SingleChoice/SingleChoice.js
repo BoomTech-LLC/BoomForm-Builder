@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
 import Quantity from '../Quantity/Quantity'
-import { Radio, Viewer } from 'boomform'
-import { getOtherChecked } from '../../Helpers/choice'
+import { Radio, Input, Viewer } from 'boomform'
 
 const SingleChoice = ({
   id,
@@ -25,7 +24,7 @@ const SingleChoice = ({
           ({
             key,
             label,
-            placeholder,
+            placeholder = 'other',
             value,
             checked,
             isNumber = false,
@@ -41,40 +40,19 @@ const SingleChoice = ({
                 >
                   <Radio
                     {...props}
-                    id={`${id}.${key}`}
-                    name={id}
+                    id={id}
                     value={value || 'other'}
                     initial={checked}
                   />
                   <Viewer>
-                    {({ values, handleChange }) => {
-                      const { checked: otherChecked } = getOtherChecked(
-                        id,
-                        values
-                      )
-                      return otherChecked ||
-                        (otherChecked === null && checked) ? (
-                        <input
-                          className='boomForm-other__item'
-                          autoFocus={true}
+                    {({ values }) => {
+                      return values[id] === 'other' ? (
+                        <Input
                           type={isNumber ? 'number' : 'text'}
+                          id={`other.${id}`}
+                          autoFocus={true}
                           placeholder={placeholder}
-                          onChange={(e) => {
-                            handleChange({
-                              id: `${id}.other`,
-                              value: {
-                                checked: true,
-                                value: e.target.value
-                              },
-                              e: null,
-                              field: {
-                                ...props,
-                                id: `${id}.other`,
-                                type: 'radio',
-                                name: id
-                              }
-                            })
-                          }}
+                          className='boomForm-other__item'
                         />
                       ) : (
                         <span>{placeholder}</span>
@@ -94,8 +72,7 @@ const SingleChoice = ({
                   <Radio
                     {...attr}
                     {...props}
-                    id={`${id}.${key}`}
-                    name={id}
+                    id={id}
                     value={value}
                     initial={checked}
                   />

@@ -4,12 +4,15 @@ import { getPrintableFields } from './Helpers/global'
 import { Viewer } from 'boomform'
 import { getHiddenIds } from './Helpers/logic'
 
-const Fields = ({ fields, logic, pagination }) => {
+const Fields = ({ fields, logic, pagination, setCurrentPage }) => {
   return (
     <Viewer>
       {({ values }) => {
         const logicIds = getHiddenIds({ logic, values, fields })
         const printableFields = getPrintableFields(fields, logicIds, pagination)
+
+        if (printableFields.length === 0) setCurrentPage((prev) => prev + 1)
+
         return (
           <div className='boomForm-fields'>
             {fields.map((field) => {

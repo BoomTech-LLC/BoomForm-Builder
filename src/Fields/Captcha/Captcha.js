@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Custom } from 'boomform'
+import { Custom, Input } from 'boomform'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Error from './../../Error'
 
@@ -27,27 +27,33 @@ const Captcha = ({ siteKey }) => {
   }
 
   return (
-    <Custom
-      id='captcha'
-      validation={{ required: { msg: 'Captcha Is Required' } }}
-    >
-      {({ handleChange, handleBlur, value }) => {
-        return (
-          <div id='field-captcha' className='boomForm-field__content'>
-            <ReCAPTCHA
-              sitekey={siteKey}
-              onChange={(newValue) => onChange(handleChange, newValue)}
-              onBlur={() => onBlur(handleBlur, value)}
-            />
-            <Error
-              classnameprefix={'captcha'}
-              id={'captcha'}
-              type={'captcha'}
-            />
-          </div>
-        )
-      }}
-    </Custom>
+    <>
+      <Custom
+        id='captcha'
+        validation={{ required: { msg: 'Captcha Is Required' } }}
+      >
+        {({ handleChange, handleBlur, value }) => {
+          return (
+            <div id='field-captcha' className='boomForm-field__content'>
+              <ReCAPTCHA
+                sitekey={siteKey}
+                onChange={(newValue) => onChange(handleChange, newValue)}
+                onBlur={() => onBlur(handleBlur, value)}
+              />
+            </div>
+          )
+        }}
+      </Custom>
+      <div style={{ height: 0, overflow: 'hidden' }}>
+        <Input
+          id='captcha'
+          validation={{
+            HTMLValidate: true,
+            required: { msg: 'Captcha Is Required' }
+          }}
+        />
+      </div>
+    </>
   )
 }
 

@@ -3,7 +3,6 @@ import { Context } from 'boomform'
 import Print from '../../Print/Print'
 
 const SubmitButton = ({
-  handleValidationFields,
   onSubmit,
   button,
   hide,
@@ -21,7 +20,7 @@ const SubmitButton = ({
   const handleClick = (e) => {
     e.preventDefault()
 
-    if (!handleValidationFields()) {
+    if (formRef.current.checkValidity()) {
       if (onSubmit) onSubmit({ state, actions })
       else console.log({ state, actions })
     } else formRef.current.reportValidity()

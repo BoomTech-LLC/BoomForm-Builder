@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import Quantity from '../Quantity/Quantity'
-import { Select as PrimarySelect, Viewer } from 'boomform'
+import { Select as PrimarySelect, Viewer, Input } from 'boomform'
 import { getOtherKey } from '../../Helpers/select'
 
 const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
@@ -10,7 +10,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
     <>
       <PrimarySelect id={`${id}`} {...props} />
       <Viewer>
-        {({ values, handleChange }) => {
+        {({ values }) => {
           const {
             key: otherKey,
             value: otherValue,
@@ -18,18 +18,12 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
           } = getOtherKey(`${id}`, values)
           return (
             otherKey === 'other' && (
-              <input
-                className='boomForm-other__item'
+              <Input
+                type={isNumber ? 'number' : 'text'}
+                id={`other.${id}`}
                 autoFocus={true}
-                type={isNumber === true ? 'number' : 'text'}
-                placeholder={otherValue}
-                onChange={(e) => {
-                  handleChange({
-                    id,
-                    value: { key: otherKey, value: e.target.value },
-                    e: null
-                  })
-                }}
+                placeholder={placeholder}
+                className='boomForm-other__item'
               />
             )
           )

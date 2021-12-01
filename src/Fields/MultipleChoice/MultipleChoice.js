@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
 import Quantity from '../Quantity/Quantity'
-import { Checkbox, Viewer } from 'boomform'
-import { getOtherChecked } from '../../Helpers/choice'
+import { Checkbox, Viewer, Input } from 'boomform'
 
 const MultipleChoice = ({
   id,
@@ -39,12 +38,7 @@ const MultipleChoice = ({
                 key={`${id}.${key}`}
               >
                 <Viewer>
-                  {({ values, handleChange }) => {
-                    const { checked: otherChecked } = getOtherChecked(
-                      id,
-                      values
-                    )
-
+                  {({ values }) => {
                     let isSomeChecked = true
                     if (values[id] !== undefined) {
                       const checkboxValues = Object.values(values[id])
@@ -64,28 +58,13 @@ const MultipleChoice = ({
                               : {}
                           }
                         />
-                        {otherChecked || (otherChecked === null && checked) ? (
-                          <input
-                            className='boomForm-other__item'
-                            autoFocus={true}
+                        {values[id] !== undefined && values[id].other ? (
+                          <Input
                             type={isNumber ? 'number' : 'text'}
+                            id={`other.${id}`}
+                            autoFocus={true}
                             placeholder={placeholder}
-                            onChange={(e) => {
-                              handleChange({
-                                id: `${id}.other`,
-                                value: {
-                                  checked: true,
-                                  value: e.target.value
-                                },
-                                e: null,
-                                field: {
-                                  ...props,
-                                  id: `${id}.other`,
-                                  type: 'checkbox',
-                                  name: id
-                                }
-                              })
-                            }}
+                            className='boomForm-other__item'
                           />
                         ) : (
                           <span>{placeholder}</span>
