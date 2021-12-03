@@ -8,7 +8,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
 
   return (
     <>
-      <PrimarySelect id={`${id}`} {...props} />
+      <PrimarySelect id={id} {...props} />
       <Viewer>
         {({ values }) => {
           const {
