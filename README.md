@@ -79,3 +79,7 @@ export default App
 ![This is an image](https://cdn.boomte.ch/images/TikoN.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/TikoP.png?x=1) | ![This is an image](https://cdn.boomte.ch/images/SahakS.png?x=2) 
 -- | -- | -- 
 Tigran Nazaryan | Tigran Paployan | Sahak Sahakyan
+
+--- 
+
+[Apache 2.0 License.](https://github.com/BoomTech-LLC/BoomForm-Builder/blob/main/LICENSE)
