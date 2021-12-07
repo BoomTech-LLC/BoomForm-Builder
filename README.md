@@ -1,7 +1,14 @@
 # boomform-builder
 
 
-[![NPM](https://img.shields.io/npm/v/boomform.svg)](https://www.npmjs.com/package/boomform-builder)
+[![NPM](https://img.shields.io/npm/v/boomform-builder.svg)](https://www.npmjs.com/package/boomform-builder)
+[![github](https://badgen.net/npm/dependents/boomform-builder)](https://www.npmjs.com/package/boomform-builder?activeTab=dependents)
+[![github](https://badgen.net/github/stars/BoomTech-LLC/BoomForm-Builder)](https://github.com/BoomTech-LLC/BoomForm-Builder)
+[![github](https://badgen.net/github/issues/BoomTech-LLC/BoomForm-Builder)](https://github.com/BoomTech-LLC/BoomForm-Builder)
+[![github](https://badgen.net/github/last-commit/BoomTech-LLC/BoomForm-Builder/main)](https://github.com/BoomTech-LLC/BoomForm-Builder)
+[![NPM](https://badgen.net/npm/dt/boomform-builder)](https://www.npmjs.com/package/boomform-builder)
+
+
 
 <!-- PROJECT LOGO -->
 <br />
