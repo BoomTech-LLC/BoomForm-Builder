@@ -11,7 +11,11 @@ const App = () => {
       }}
       fields={[{
         id: "file",
-        type: "file"
+        type: "file",
+        validation: {
+          HTMLValidate: true,
+          required: { msg: "Barev" }
+        }
       }]}
       button={{
         text: 'submit'
