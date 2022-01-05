@@ -9,14 +9,16 @@ const App = () => {
         description: '456',
         innerComponent: (state) => console.log(state)
       }}
-      fields={[{
-        id: "file",
-        type: "file",
-        validation: {
-          HTMLValidate: true,
-          required: { msg: "Barev" }
+      fields={[
+        {
+          id: 'scaleRating',
+          type: 'scaleRating',
+          min: 1,
+          max: 5,
+          initial: 2,
+          validation: { required: { msg: 'please rate us' } }
         }
-      }]}
+      ]}
       button={{
         text: 'submit'
       }}
