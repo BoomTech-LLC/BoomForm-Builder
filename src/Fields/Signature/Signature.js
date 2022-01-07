@@ -3,12 +3,12 @@ import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
 const Signature = (props) => {
-  const { id, initial, validation} = props
+  const { id, initial, validation } = props
 
   const [sigPadRef, setSigPadRef] = useState(null)
 
   useEffect(() => {
-    if (initial && sigPadRef) sigPadRef.fromData(initial)
+    if (initial && sigPadRef) sigPadRef.fromData(initial.data)
   }, [initial, sigPadRef])
 
   const onRefSet = useCallback((ref) => {
@@ -68,10 +68,11 @@ const Signature = (props) => {
             >
               Clear
             </div>
-            {validation.HTMLValidate === true && <div style={{ overflow: 'hidden', height: 0 }}>
-                <Input maxLength="0" {...props} type='text'/>
+            {validation.HTMLValidate === true && (
+              <div style={{ overflow: 'hidden', height: 0 }}>
+                <Input maxLength='0' {...props} type='text' />
               </div>
-            }
+            )}
           </div>
         )
       }}
