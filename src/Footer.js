@@ -7,7 +7,7 @@ const Footer = ({ fields, captcha, ...props }) => {
   return (
     <>
       {captcha !== undefined && <Captcha siteKey={captcha} />}
-      <SubmitButton {...props} />
+      <SubmitButton {...props} fields={fields} />
     </>
   )
 }

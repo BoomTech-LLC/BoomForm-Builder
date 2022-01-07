@@ -5,18 +5,19 @@ const App = () => {
   return (
     <Builder
       global={{
+        print: true,
         name: '123',
         description: '456',
         innerComponent: (state) => console.log(state)
       }}
       fields={[
         {
-          id: 'scaleRating',
-          type: 'scaleRating',
-          min: 1,
-          max: 5,
-          initial: 2,
-          validation: { required: { msg: 'please rate us' } }
+          id: 'color',
+          type: 'text',
+          label: 'Please Type Your Favorit Color',
+          placeholder: 'Type ...',
+          validation: { required: { msg: 'Text is required' } },
+          initial: 'Red'
         }
       ]}
       button={{
