@@ -10,7 +10,8 @@ const SubmitButton = ({
   name,
   description,
   isPrint,
-  formRef
+  formRef,
+  onSubmitFailed
 }) => {
   const { state, actions } = useContext(Context)
   const { text, prefix, suffix } = button || { text: 'Submit' }
@@ -23,7 +24,10 @@ const SubmitButton = ({
     if (formRef.current.checkValidity()) {
       if (onSubmit) onSubmit({ state, actions })
       else console.log({ state, actions })
-    } else formRef.current.reportValidity()
+    } else {
+      formRef.current.reportValidity()
+      if (onSubmitFailed) onSubmitFailed(state)
+    }
   }
 
   return (

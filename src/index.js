@@ -22,6 +22,7 @@ const Builder = ({
     name,
     description,
     onSubmit,
+    onSubmitFailed,
     logic: isLogicOn = false,
     innerComponent = () => {},
     print: isPrint = false,
@@ -74,6 +75,7 @@ const Builder = ({
               name={name}
               description={description}
               isPrint={isPrint}
+              onSubmitFailed={onSubmitFailed}
             />
           </React.Fragment>
         ) : (
@@ -86,6 +88,7 @@ const Builder = ({
             description={description}
             isPrint={isPrint}
             onSubmit={onSubmit}
+            onSubmitFailed={onSubmitFailed}
           />
         )}
         <StateHandler innerComponent={innerComponent} />
