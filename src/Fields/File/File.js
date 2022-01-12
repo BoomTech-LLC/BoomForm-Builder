@@ -33,7 +33,9 @@ const File = ({
         }
 
         const handleRemove = (key) => {
-          const [files] = [...values[id]].filter((file) => file.id != key)
+          const [files] = [...values[id]].filter((file) => {
+            if (file) return file.id != key
+          })
           handleChange({
             id,
             e: null,
@@ -80,9 +82,17 @@ const File = ({
                 dropbox={dropbox}
               />
             </div>
-            {validation?.HTMLValidate === true && <div style={{ overflow: 'hidden', height: 0 }} >
-              <Input id={id} validation={validation} maxLength="0" {...props} type='text'/>
-            </div>}
+            {validation?.HTMLValidate === true && (
+              <div style={{ overflow: 'hidden', height: 0 }}>
+                <Input
+                  id={id}
+                  validation={validation}
+                  maxLength='0'
+                  {...props}
+                  type='text'
+                />
+              </div>
+            )}
           </>
         )
       }}
