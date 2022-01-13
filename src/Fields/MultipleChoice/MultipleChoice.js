@@ -37,27 +37,30 @@ const MultipleChoice = ({
                 })}
                 key={`${id}.${key}`}
               >
-                <Viewer>
-                  {({ values }) => {
-                    let isSomeChecked = true
-                    if (values[id] !== undefined) {
-                      const checkboxValues = Object.values(values[id])
-                      if (checkboxValues.includes(true)) isSomeChecked = false
+                <Checkbox
+                  {...props}
+                  id={`${id}.${key}`}
+                  value={value || 'other'}
+                  initial={checked}
+                  onChange={(e) => {
+                    const { handleChange, state, value } = e
+
+                    const { values } = state
+                    let isAnyChecked = false
+                    if (values[id]) {
+                      options.map((option) => {
+                        if (values[id][option.key]) isAnyChecked = true
+                      })
                     }
 
+                    if (!value && !isAnyChecked)
+                      handleChange({ id: `${id}.error`, value: '' })
+                  }}
+                />
+                <Viewer>
+                  {({ values }) => {
                     return (
                       <>
-                        <Checkbox
-                          {...props}
-                          id={`${id}.${key}`}
-                          value={value || 'other'}
-                          initial={checked}
-                          validation={
-                            index === options.length - 1 && isSomeChecked
-                              ? validation
-                              : {}
-                          }
-                        />
                         {values[id] !== undefined && values[id].other ? (
                           <Input
                             type={isNumber ? 'number' : 'text'}
@@ -65,6 +68,11 @@ const MultipleChoice = ({
                             autoFocus={true}
                             placeholder={placeholder}
                             className='boomForm-other__item'
+                            onChange={(e) => {
+                              const { handleChange, field, state, value } = e
+                              console.log('value', value)
+                              handleChange({ id: `${id}.error`, value: value })
+                            }}
                           />
                         ) : (
                           <span>{placeholder}</span>
@@ -92,30 +100,33 @@ const MultipleChoice = ({
                 })}
                 key={`${id}.${key}`}
               >
-                <Viewer>
-                  {({ values }) => {
-                    let isSomeChecked = true
-                    if (values[id] !== undefined) {
-                      const checkboxValues = Object.values(values[id])
-                      if (checkboxValues.includes(true)) isSomeChecked = false
+                <Checkbox
+                  {...attr}
+                  {...props}
+                  id={`${id}.${key}`}
+                  value={value}
+                  initial={checked}
+                  onChange={(e) => {
+                    const { handleChange, field, state, value } = e
+                    const { values } = state
+                    let isAnyChecked = false
+                    if (values[id]) {
+                      options.map((option) => {
+                        if (field.id === `${id}.${option.key}` && value)
+                          isAnyChecked = true
+                        else if (
+                          field.id !== `${id}.${option.key}` &&
+                          values[id][option.key]
+                        )
+                          isAnyChecked = true
+                      })
                     }
 
-                    return (
-                      <Checkbox
-                        {...attr}
-                        {...props}
-                        id={`${id}.${key}`}
-                        value={value}
-                        initial={checked}
-                        validation={
-                          index === options.length - 1 && isSomeChecked
-                            ? validation
-                            : {}
-                        }
-                      />
-                    )
+                    if (isAnyChecked)
+                      handleChange({ id: `${id}.error`, value: 'Checked' })
+                    else handleChange({ id: `${id}.error`, value: '' })
                   }}
-                </Viewer>
+                />
                 <span>{label}</span>
                 {enabled && (
                   <Quantity
@@ -130,6 +141,7 @@ const MultipleChoice = ({
             )
         }
       )}
+      <Input id={`${id}.error`} validation={validation} />
     </>
   )
 }

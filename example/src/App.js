@@ -12,12 +12,22 @@ const App = () => {
       }}
       fields={[
         {
-          id: 'color',
-          type: 'text',
-          label: 'Please Type Your Favorit Color',
-          placeholder: 'Type ...',
-          validation: { required: { msg: 'Text is required' } },
-          initial: 'Red'
+          id: 1,
+          type: 'multipleChoice',
+          validation: {
+            HTMLValidate: true,
+            required: { msg: 'Checked' }
+          },
+          options: [
+            { key: 1, label: 'Cycling', value: 'cycling' },
+            { key: 2, label: 'Runing', value: 'runing' },
+            { key: 3, label: 'Reading', value: 'reading' },
+            { key: 4, label: 'Photographing', value: 'photographing' },
+            {
+              key: 'other',
+              placeholder: 'Other'
+            }
+          ]
         }
       ]}
       button={{

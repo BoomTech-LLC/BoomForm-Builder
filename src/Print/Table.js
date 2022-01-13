@@ -11,8 +11,10 @@ const Table = ({ fields }) => {
       case 'multipleChoice': {
         let checkbox = ''
         for (let i in values[id]) {
-          const { checked, value } = values[id][i]
-          if (checked) checkbox += value + ','
+          if (values[id][i]) {
+            const { checked, value } = values[id][i]
+            if (checked) checkbox += value + ','
+          }
         }
         return checkbox.slice(0, -1)
       }
