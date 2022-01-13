@@ -43,13 +43,16 @@ const MultipleChoice = ({
                   value={value || 'other'}
                   initial={checked}
                   onChange={(e) => {
-                    const { handleChange, state, value } = e
+                    const { handleChange, state, value, field } = e
 
                     const { values } = state
                     let isAnyChecked = false
-                    if (values[id]) {
+                    if (field.id === `${id}.other` && value) {
+                      isAnyChecked = true
+                    } else if (values[id]) {
                       options.map((option) => {
-                        if (values[id][option.key]) isAnyChecked = true
+                        if (values[id][option.key] && option.key !== 'other')
+                          isAnyChecked = true
                       })
                     }
 
