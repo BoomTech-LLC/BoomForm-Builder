@@ -54,7 +54,9 @@ const MultipleChoice = ({
                     }
 
                     if (!value && !isAnyChecked)
-                      handleChange({ id: `${id}.error`, value: '' })
+                      setTimeout(() =>
+                        handleChange({ id: `${id}.error`, value: '' })
+                      )
                   }}
                 />
                 <Viewer>
@@ -70,8 +72,12 @@ const MultipleChoice = ({
                             className='boomForm-other__item'
                             onChange={(e) => {
                               const { handleChange, field, state, value } = e
-                              console.log('value', value)
-                              handleChange({ id: `${id}.error`, value: value })
+                              setTimeout(() =>
+                                handleChange({
+                                  id: `${id}.error`,
+                                  value: value
+                                })
+                              )
                             }}
                           />
                         ) : (
@@ -123,8 +129,13 @@ const MultipleChoice = ({
                     }
 
                     if (isAnyChecked)
-                      handleChange({ id: `${id}.error`, value: 'Checked' })
-                    else handleChange({ id: `${id}.error`, value: '' })
+                      setTimeout(() =>
+                        handleChange({ id: `${id}.error`, value: 'Checked' })
+                      )
+                    else
+                      setTimeout(() =>
+                        handleChange({ id: `${id}.error`, value: '' })
+                      )
                   }}
                 />
                 <span>{label}</span>

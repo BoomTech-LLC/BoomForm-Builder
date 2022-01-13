@@ -1,33 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Builder from 'boomform-builder'
 
 const App = () => {
+  const [x, setX] = useState(0)
+  const [y, setY] = useState(1)
+
   return (
     <Builder
       global={{
         print: true,
-        name: '123',
+        name: x,
         description: '456',
-        innerComponent: (state) => console.log(state)
+        innerComponent: (state) => {
+          setTimeout(() => {
+            setX(132)
+            setY(456)
+          })
+        }
       }}
       fields={[
         {
-          id: 1,
           type: 'multipleChoice',
-          validation: {
-            HTMLValidate: true,
-            required: { msg: 'Checked' }
-          },
+          id: 8,
+          columns: 1,
           options: [
-            { key: 1, label: 'Cycling', value: 'cycling' },
-            { key: 2, label: 'Runing', value: 'runing' },
-            { key: 3, label: 'Reading', value: 'reading' },
-            { key: 4, label: 'Photographing', value: 'photographing' },
+            {
+              key: 0,
+              value: 'option1',
+              label: 'option1  ',
+              price: '',
+              checked: false
+            },
+            {
+              key: 1,
+              value: 'option2',
+              label: 'option2  ',
+              price: '',
+              checked: false
+            },
+            {
+              key: 2,
+              value: 'option3',
+              label: 'option3  ',
+              price: '',
+              checked: false
+            },
             {
               key: 'other',
-              placeholder: 'Other'
+              value: 'other',
+              label: 'Other',
+              placeholder: 'Other',
+              checked: false
             }
-          ]
+          ],
+          validation: {
+            HTMLValidate: true,
+            required: { msg: 'This field is required.' }
+          }
         }
       ]}
       button={{
