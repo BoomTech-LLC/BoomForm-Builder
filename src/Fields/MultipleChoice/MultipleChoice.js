@@ -155,7 +155,7 @@ const MultipleChoice = ({
             )
         }
       )}
-      <Input id={`${id}.error`} validation={validation} readOnly />
+      <Input id={`${id}.error`} validation={validation} />
     </>
   )
 }
