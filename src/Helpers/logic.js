@@ -1,6 +1,6 @@
 import { getNestedValue, timeConversion } from '../Helpers/global'
 
-const conditionalLogic = ({ fieldValue, value, rule }) => {
+const conditionalLogic = ({ fieldValue, value, rule, field }) => {
   switch (rule) {
     case 'is': {
       if (fieldValue == value) return true
@@ -32,44 +32,38 @@ const conditionalLogic = ({ fieldValue, value, rule }) => {
       else return false
     }
     case 'checked': {
-      for (let i in fieldValue) {
-        const { checked, value: option } = fieldValue[i]
-        if (checked && option === value) return true
-      }
+      for (let i in fieldValue)
+        if (fieldValue[i]) {
+          const [option] = field.options.filter((option) => option.key == i)
+          if (option && option.value === value) return true
+        }
+
       return false
     }
     case 'doNotChecked': {
       for (let i in fieldValue) {
-        const { checked, value: option } = fieldValue[i]
-        if (!checked && option === value) return true
+        const [option] = field.options.filter((option) => option.key == i)
+        if (option && !fieldValue[i] && option.value === value) return true
       }
       return false
     }
     case 'checkedMore': {
       let count = 0
-      for (let i in fieldValue) {
-        const { checked, value: option } = fieldValue[i]
-        count = count + checked
-        if (count > value) return true
-      }
+      for (let i in fieldValue) if (fieldValue[i]) count++
+
+      if (count > parseInt(value)) return true
       return false
     }
     case 'checkedLess': {
       let count = 0
-      for (let i in fieldValue) {
-        const { checked, value: option } = fieldValue[i]
-        count = count + checked
-        if (count < value) return true
-      }
+      for (let i in fieldValue) if (fieldValue[i]) count++
+      if (count < parseInt(value)) return true
       return false
     }
     case 'checkedEqual': {
       let count = 0
-      for (let i in fieldValue) {
-        const { checked, value: option } = fieldValue[i]
-        count = count + checked
-        if (count == value) return true
-      }
+      for (let i in fieldValue) if (fieldValue[i]) count++
+      if (count === parseInt(value)) return true
       return false
     }
     default:
@@ -94,7 +88,8 @@ export const getHiddenIds = ({ logic, values, fields }) => {
       const isMatch = conditionalLogic({
         fieldValue: getFieldValue(type, fieldValue, item),
         value,
-        rule
+        rule,
+        field
       })
 
       if (action === 'show') hiddenFields.push(id)
