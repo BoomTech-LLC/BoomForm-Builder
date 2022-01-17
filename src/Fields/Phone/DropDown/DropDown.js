@@ -27,7 +27,16 @@ const DropDown = ({ id, defaultCountryCode }) => {
   }, [])
 
   const onScrollCountriesList = (event) => {
-    if (String(event.nativeEvent.path[1].classList).includes('selected')) event.currentTarget.scrollTop = event.target.offsetTop - event.currentTarget.offsetTop;
+    if (
+      event &&
+      event.nativeEvent &&
+      event.nativeEvent.path &&
+      event.nativeEvent.path[1] &&
+      event.nativeEvent.path[1].classList
+    )
+      if (String(event.nativeEvent.path[1].classList).includes('selected'))
+        event.currentTarget.scrollTop =
+          event.target.offsetTop - event.currentTarget.offsetTop
   }
 
   return (
@@ -44,13 +53,25 @@ const DropDown = ({ id, defaultCountryCode }) => {
             <>
               <div
                 className='country_code_action'
-                onClick={(event) => setIsOpen(isOpen === false ? event.target?.offsetTop < 200 ? 'bottom' : 'top' : false)}
+                onClick={(event) =>
+                  setIsOpen(
+                    isOpen === false
+                      ? event.target?.offsetTop < 200
+                        ? 'bottom'
+                        : 'top'
+                      : false
+                  )
+                }
               >
                 <img src={flag} alt={flag} className='country_code_image' />
               </div>
               <div>{value}</div>
               {isOpen !== false && (
-                <div className={classNames('country_code_dropdown', {open_bottom: isOpen === 'bottom'})}>
+                <div
+                  className={classNames('country_code_dropdown', {
+                    open_bottom: isOpen === 'bottom'
+                  })}
+                >
                   <div className='country_code_search'>
                     <Input
                       id={`${id}.search`}
@@ -59,7 +80,10 @@ const DropDown = ({ id, defaultCountryCode }) => {
                       placeholder='Search ...'
                     />
                   </div>
-                  <div onLoad={onScrollCountriesList} className='country_code_list'>
+                  <div
+                    onLoad={onScrollCountriesList}
+                    className='country_code_list'
+                  >
                     <List
                       handleChange={handleChange}
                       id={id}
