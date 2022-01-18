@@ -86,7 +86,7 @@ export const getHiddenIds = ({ logic, values, fields }) => {
       const { type } = field
 
       const isMatch = conditionalLogic({
-        fieldValue: getFieldValue(type, fieldValue, item),
+        fieldValue: getFieldValue(type, fieldValue, field, values, item),
         value,
         rule,
         field
@@ -118,52 +118,111 @@ export const getHiddenIds = ({ logic, values, fields }) => {
   return hiddenFields
 }
 
-const getFieldValue = (type, fieldValue, item) => {
+export const getFieldValue = (type, value, field, values, item) => {
+  if (value === null) return ''
+
   switch (type) {
-    case 'phone':
-      let phone = ''
-      if (fieldValue) phone = `${fieldValue.code}${fieldValue.phone}`
-      return phone
-    case 'date':
-      let date = ''
-      if (fieldValue)
-        date = `${fieldValue.split('-')[2]}-${fieldValue.split('-')[1]}-${
-          fieldValue.split('-')[0]
-        }`
-      return date
-    case 'time':
-      let time = ''
-      if (fieldValue) {
-        if (fieldValue.hour && fieldValue.minute && fieldValue.format) {
-          time = timeConversion(
-            `${fieldValue.hour}:${fieldValue.minute}${fieldValue.format.value}`
-          )
-          if (!time) return ''
-        } else {
-          if (fieldValue.hour && fieldValue.minute)
-            time = `${fieldValue.hour}:${fieldValue.minute}`
-        }
-      }
-      return time
-    case 'scaleRating':
-      let scaleRating = ''
-      if (fieldValue)
-        for (let i in fieldValue) {
-          const { checked, value } = fieldValue[i]
-          if (checked) scaleRating = value
-        }
-      return scaleRating
-    case 'price':
-      let price = ''
-      if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
-      return price
-    case 'address':
+    case 'select': {
+      let newValue = value?.value
+      if (value?.key === 'placeholder') newValue = ''
+
+      return newValue
+    }
+    case 'phone': {
+      return `${value?.code}${value?.phone || ''}`
+    }
+    case 'time': {
+      return `${value?.hour || ''} : ${value?.minute || ''} ${
+        value?.format ? value.format?.value : ''
+      }`
+    }
+    case 'signature': {
+      return value?.url
+    }
+
+    case 'singleChoice': {
+      const [option] = field.options.filter(
+        (option) => option.key === parseInt(value) || option.key === 'other'
+      )
+
+      return option && option.label
+    }
+
     case 'name':
-      let address = ''
-      if (fieldValue && item)
-        address = fieldValue[item]?.value || fieldValue[item]
-      return address
+    case 'address': {
+      let name = ''
+      if (value && item) name = value[item]?.value || value[item]
+      return name
+    }
+
+    case 'price': {
+      let name = value['first'] + '.' + value['last']
+      return name
+    }
+    case 'terms': {
+      let terms = ''
+      if (value) terms = 'checked'
+      else terms = 'not checked'
+      return terms
+    }
+    case 'file': {
+      let files = ''
+      for (let i = 0; i < value.length; i++) {
+        files += value[i].name + ' , '
+      }
+      return files.slice(0, -2)
+    }
     default:
-      return fieldValue?.value || fieldValue
+      return value
   }
 }
+
+// const getFieldValue = (type, fieldValue, item) => {
+//   switch (type) {
+//     case 'phone':
+//       let phone = ''
+//       if (fieldValue) phone = `${fieldValue.code}${fieldValue.phone}`
+//       return phone
+//     case 'date':
+//       let date = ''
+//       if (fieldValue)
+//         date = `${fieldValue.split('-')[2]}-${fieldValue.split('-')[1]}-${
+//           fieldValue.split('-')[0]
+//         }`
+//       return date
+//     case 'time':
+//       let time = ''
+//       if (fieldValue) {
+//         if (fieldValue.hour && fieldValue.minute && fieldValue.format) {
+//           time = timeConversion(
+//             `${fieldValue.hour}:${fieldValue.minute}${fieldValue.format.value}`
+//           )
+//           if (!time) return ''
+//         } else {
+//           if (fieldValue.hour && fieldValue.minute)
+//             time = `${fieldValue.hour}:${fieldValue.minute}`
+//         }
+//       }
+//       return time
+//     case 'scaleRating':
+//       let scaleRating = ''
+//       if (fieldValue)
+//         for (let i in fieldValue) {
+//           const { checked, value } = fieldValue[i]
+//           if (checked) scaleRating = value
+//         }
+//       return scaleRating
+//     case 'price':
+//       let price = ''
+//       if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
+//       return price
+//     case 'address':
+//     case 'name':
+//       let address = ''
+//       if (fieldValue && item)
+//         address = fieldValue[item]?.value || fieldValue[item]
+//       return address
+//     default:
+//       return fieldValue?.value || fieldValue
+//   }
+// }
