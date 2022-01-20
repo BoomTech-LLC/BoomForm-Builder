@@ -32,7 +32,7 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       else return false
     }
     case 'checked': {
-      if (!field) return false
+      if (!field || !field.options) return false
       for (let i in fieldValue)
         if (fieldValue[i]) {
           const [option] = field.options.filter((option) => option.key == i)
@@ -42,7 +42,7 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       return false
     }
     case 'doNotChecked': {
-      if (!field) return false
+      if (!field || !field.options) return false
       for (let i in fieldValue) {
         const [option] = field.options.filter((option) => option.key == i)
         if (option && !fieldValue[i] && option.value === value) return true
@@ -143,7 +143,7 @@ export const getFieldValue = (type, value, field, values, item) => {
     }
 
     case 'singleChoice': {
-      if (!field) return ''
+      if (!field || !field.options) return ''
       const [option] = field.options.filter(
         (option) => option.key === parseInt(value) || option.key === 'other'
       )
