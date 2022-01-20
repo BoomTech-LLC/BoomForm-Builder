@@ -24,7 +24,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Åland Islands',
-    dial_code: '+358',
+    dial_code: '+358 ',
     code: 'AX',
     name: 'Åland Islands',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/5/52/Flag_of_%C3%85land.svg',
@@ -80,7 +80,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Antarctica',
-    dial_code: '+672',
+    dial_code: '+672 ',
     code: 'AQ',
     name: 'Antarctica',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/b/bb/Proposed_flag_of_Antarctica_%28Graham_Bartram%29.svg',
@@ -120,7 +120,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Australia',
-    dial_code: '+61',
+    dial_code: '+61 ',
     code: 'AU',
     name: 'Australia',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_Australia_%28converted%29.svg',
@@ -328,7 +328,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Cayman Islands',
-    dial_code: '+ 345',
+    dial_code: '+345',
     code: 'KY',
     name: 'Cayman Islands',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_the_Cayman_Islands.svg',
@@ -368,7 +368,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Christmas Island',
-    dial_code: '+61',
+    dial_code: ' +61',
     code: 'CX',
     name: 'Christmas Island',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Flag_of_Christmas_Island.svg',
@@ -755,7 +755,7 @@ export const countryListForPhone = [
     dial_code: '+504',
     code: 'HN',
     name: 'Honduras',
-    flag: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Flag_of_Honduras.svg/1024px-Flag_of_Honduras.svg.png",
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Flag_of_Honduras.svg/1024px-Flag_of_Honduras.svg.png',
     key: 93
   },
   {
@@ -824,7 +824,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Isle of Man',
-    dial_code: '+44',
+    dial_code: '+44 ',
     code: 'IM',
     name: 'Isle of Man',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_the_Isle_of_Man.svg',
@@ -864,7 +864,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Jersey',
-    dial_code: '+44',
+    dial_code: ' +44',
     code: 'JE',
     name: 'Jersey',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/1/1c/Flag_of_Jersey.svg',
@@ -880,7 +880,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Kazakhstan',
-    dial_code: '+7',
+    dial_code: '+7 ',
     code: 'KZ',
     name: 'Kazakhstan',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kazakhstan.svg',
@@ -1296,7 +1296,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Norway',
-    dial_code: '+47',
+    dial_code: '+47 ',
     code: 'NO',
     name: 'Norway',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg',
@@ -1440,7 +1440,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Reunion',
-    dial_code: '+262',
+    dial_code: '+262 ',
     code: 'RE',
     name: 'Reunion',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Proposed_flag_of_R%C3%A9union_%28VAR%29.svg/900px-Proposed_flag_of_R%C3%A9union_%28VAR%29.svg.png',
@@ -1448,7 +1448,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Saint Barthelemy',
-    dial_code: '+590',
+    dial_code: '+590 ',
     code: 'BL',
     name: 'Saint Barthelemy',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Nuvola_Saint_Barth%C3%A9lemy_flag.svg',
@@ -1480,7 +1480,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Saint Martin',
-    dial_code: '+590',
+    dial_code: ' +590',
     code: 'MF',
     name: 'Saint Martin',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Sint_Maarten.svg/1280px-Flag_of_Sint_Maarten.svg.png',
@@ -1656,7 +1656,7 @@ export const countryListForPhone = [
   },
   {
     value: 'Svalbard and Jan Mayen',
-    dial_code: '+47',
+    dial_code: ' +47',
     code: 'SJ',
     name: 'Svalbard and Jan Mayen',
     flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Norway.svg/2000px-Flag_of_Norway.svg.png',
@@ -1832,7 +1832,7 @@ export const countryListForPhone = [
   },
   {
     value: 'United Kingdom',
-    dial_code: '+44',
+    dial_code: '+ 44',
     code: 'GB',
     name: 'United Kingdom',
     flag: 'https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg',
@@ -1840,7 +1840,7 @@ export const countryListForPhone = [
   },
   {
     value: 'United States',
-    dial_code: '+1',
+    dial_code: '+1 ',
     code: 'US',
     name: 'United States',
     flag: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
