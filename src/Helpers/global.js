@@ -1,11 +1,13 @@
 export const getPrintableFields = (fields, logic = [], pagination = []) => {
-  const printableFields = fields.flatMap(({ id }) =>
-    !logic.includes(id) ? id : []
-  )
-  return [printableFields, pagination].reduce((a, c) => {
-    if (!c.length) return a
-    return a.filter((i) => c.includes(i))
-  })
+  if (fields) {
+    const printableFields = fields.flatMap(({ id }) =>
+      !logic.includes(id) ? id : []
+    )
+    return [printableFields, pagination].reduce((a, c) => {
+      if (!c.length) return a
+      return a.filter((i) => c.includes(i))
+    })
+  } else return []
 }
 
 export const getPlaceholder = (placehodler, id) =>
