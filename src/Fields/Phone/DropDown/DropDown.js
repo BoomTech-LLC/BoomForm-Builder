@@ -2,18 +2,10 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Input, Custom } from 'boomform'
 import classNames from 'classnames/bind'
 import List from './List'
-import {
-  getPhoneCountryByCode,
-  getPhoneCountryByDialCode,
-  countryListForPhone
-} from '../../../Helpers/phone'
+import { countries, flagPrefix } from '../../../Helpers/countries'
 
 const DropDown = ({ id, defaultCountryCode }) => {
   const [isOpen, setIsOpen] = useState(false)
-
-  let [defaultCountry] = countryListForPhone
-  if (defaultCountryCode)
-    defaultCountry = getPhoneCountryByCode(defaultCountryCode)
 
   const handleClickClose = (e) => {
     if (e.target.classList.value.indexOf('country_code') === -1)
@@ -45,10 +37,12 @@ const DropDown = ({ id, defaultCountryCode }) => {
         country_code_picker_active: isOpen !== false
       })}
     >
-      <Custom initial={defaultCountry.dial_code} id={`${id}.code`}>
+      <Custom initial={defaultCountryCode.toLowerCase()} id={`${id}.code`}>
         {(state) => {
           const { handleChange, value, values } = state
-          const { flag, key } = getPhoneCountryByDialCode(value)
+          const { dial_code: dialCode } = countries[value?.toUpperCase()]
+
+          const flag = `${flagPrefix}${value}.svg`
           return (
             <>
               <div
@@ -65,7 +59,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
               >
                 <img src={flag} alt={flag} className='country_code_image' />
               </div>
-              <div>{value}</div>
+              <div>{dialCode}</div>
               {isOpen !== false && (
                 <div
                   className={classNames('country_code_dropdown', {
@@ -89,7 +83,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
                       id={id}
                       values={values}
                       setIsOpen={setIsOpen}
-                      selectedKey={key}
+                      // selectedKey={key}
                     />
                   </div>
                 </div>

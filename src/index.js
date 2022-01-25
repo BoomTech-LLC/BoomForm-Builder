@@ -4,8 +4,8 @@ import Header from './Header'
 import Footer from './Footer'
 import Fields from './Fields'
 import StateHandler from './StateHandler'
-
-//Pagination
+import { countries } from './Helpers/countries'
+// Pagination
 import PaginationFooter from './Pagination/Footer/Footer'
 import PaginationHeader from './Pagination/Header/Pagination'
 import PerPageHeader from './Pagination/Header/PerPageHeader'
@@ -96,5 +96,5 @@ const Builder = ({
     </BoomForm>
   )
 }
-
+export { countries }
 export default Builder
