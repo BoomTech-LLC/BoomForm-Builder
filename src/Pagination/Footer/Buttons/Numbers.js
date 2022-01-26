@@ -16,16 +16,24 @@ const Numbers = ({
   ...props
 }) => {
   const handleSetPage = (index) => {
-    function stepByStepChange(currentStep) {
-      if (currentPage + currentStep === index + 1) return null
+    if (index !== currentPage) {
+      function stepByStepChange(currentStep) {
+        if (currentStep > pages.length - 1) return null
 
-      if (formRef.current.checkValidity()) {
-        setCurrentPage(currentPage + currentStep)
-        setTimeout(() => stepByStepChange(currentStep + 1), 0)
-      } else formRef.current.reportValidity()
+        if (currentStep === index) {
+          setCurrentPage(index)
+          return null
+        }
+
+        if (formRef.current.checkValidity()) {
+          setCurrentPage(currentStep + 1)
+          setTimeout(() => stepByStepChange(currentStep + 1), 0)
+        } else formRef.current.reportValidity()
+      }
+
+      const step = 0
+      stepByStepChange(step)
     }
-    const step = 1
-    stepByStepChange(step)
   }
 
   return (
