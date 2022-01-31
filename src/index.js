@@ -91,7 +91,7 @@ const Builder = ({
             onSubmitFailed={onSubmitFailed}
           />
         )}
-        <StateHandler innerComponent={innerComponent} />
+        <StateHandler innerComponent={innerComponent} setCurrentPage={setCurrentPage} />
       </form>
     </BoomForm>
   )
