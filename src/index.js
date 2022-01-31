@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { BoomForm } from 'boomform'
 import Header from './Header'
 import Footer from './Footer'
@@ -10,6 +10,7 @@ import PaginationFooter from './Pagination/Footer/Footer'
 import PaginationHeader from './Pagination/Header/Pagination'
 import PerPageHeader from './Pagination/Header/PerPageHeader'
 import Counter from './Pagination/Counter'
+import usePagination from './Hooks/usePagination'
 
 const Builder = ({
   global = {},
@@ -24,7 +25,7 @@ const Builder = ({
     onSubmit,
     onSubmitFailed,
     logic: isLogicOn = false,
-    innerComponent = () => {},
+    innerComponent = () => { },
     print: isPrint = false,
     captcha
   } = global
@@ -33,11 +34,7 @@ const Builder = ({
   const isPagination = Object.keys(pagination).length !== 0
 
   const { pages, initial = 0, buttons, timeline, pageCounter } = pagination
-  const [currentPage, setCurrentPage] = useState(initial)
-
-  useEffect(() => {
-    setCurrentPage(initial)
-  }, [initial])
+  const { currentPage, onPageChange, onFirstPageOpen } = usePagination(initial)
 
   return (
     <BoomForm>
@@ -55,7 +52,7 @@ const Builder = ({
           fields={fields}
           pagination={isPagination ? pages[currentPage].fields : []}
           logic={isLogicOn ? logic : []}
-          setCurrentPage={setCurrentPage}
+          onPageChange={onPageChange}
         />
         {isPagination ? (
           <React.Fragment>
@@ -69,7 +66,7 @@ const Builder = ({
               paginationButtons={buttons}
               pages={pages}
               currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+              onPageChange={onPageChange}
               captcha={captcha}
               fields={fields}
               name={name}
@@ -91,7 +88,7 @@ const Builder = ({
             onSubmitFailed={onSubmitFailed}
           />
         )}
-        <StateHandler innerComponent={innerComponent} />
+        <StateHandler innerComponent={innerComponent} onFirstPageOpen={isPagination ? onFirstPageOpen : undefined} />
       </form>
     </BoomForm>
   )

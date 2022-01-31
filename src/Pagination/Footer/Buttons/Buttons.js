@@ -7,17 +7,17 @@ const Buttons = ({
   paginationButtons,
   currentPage,
   captcha,
-  setCurrentPage,
+  onPageChange,
   fields,
   formRef,
   ...props
 }) => {
   const handleNext = () => {
-    if (formRef.current.checkValidity()) setCurrentPage((prev) => prev + 1)
+    if (formRef.current.checkValidity()) onPageChange((prev) => prev + 1)
     else formRef.current.reportValidity()
   }
 
-  const handlePrev = () => setCurrentPage((prev) => prev - 1)
+  const handlePrev = () => onPageChange((prev) => prev - 1)
   const { prev = 'Prev', next = 'Next' } = paginationButtons
 
   return (
