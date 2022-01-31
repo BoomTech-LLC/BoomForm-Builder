@@ -36,7 +36,7 @@ const Builder = ({
   const [currentPage, setCurrentPage] = useState(initial)
 
   useEffect(() => {
-    setCurrentPage(initial || 0)
+    setCurrentPage(initial)
   }, [initial])
 
   return (
