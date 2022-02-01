@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Builder from 'boomform-builder'
 
 const App = () => {
@@ -8,7 +8,12 @@ const App = () => {
         print: true,
         name: '',
         description: '',
-        innerComponent: (state) => {}
+        onStateChange: (state) => {
+          console.log(state)
+        },
+        onFirstRender: (state) => {
+          console.log(state)
+        }
       }}
       fields={[
         {

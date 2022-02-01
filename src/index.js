@@ -24,7 +24,9 @@ const Builder = ({
     onSubmit,
     onSubmitFailed,
     logic: isLogicOn = false,
-    innerComponent = () => {},
+    onStateChange = () => {},
+    onFirstRender = () => {},
+    onDie = () => {},
     print: isPrint = false,
     captcha
   } = global
@@ -38,6 +40,14 @@ const Builder = ({
   useEffect(() => {
     setCurrentPage(initial)
   }, [initial])
+
+  useEffect(() => {
+    onFirstRender({ setCurrentPage })
+
+    return () => {
+      onDie({ setCurrentPage })
+    }
+  }, [])
 
   return (
     <BoomForm>
@@ -91,7 +101,12 @@ const Builder = ({
             onSubmitFailed={onSubmitFailed}
           />
         )}
-        <StateHandler innerComponent={innerComponent} />
+        <StateHandler
+          onStateChange={onStateChange}
+          formRef={formRef}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </form>
     </BoomForm>
   )

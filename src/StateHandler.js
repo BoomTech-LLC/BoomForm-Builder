@@ -1,9 +1,14 @@
 import React, { useContext } from 'react'
 import { Context } from 'boomform'
 
-const StateHandler = ({ innerComponent }) => {
+const StateHandler = ({
+  onStateChange,
+  formRef,
+  setCurrentPage,
+  currentPage
+}) => {
   const { state, actions } = useContext(Context)
-  innerComponent(state, actions)
+  onStateChange({ state, actions, formRef, setCurrentPage, currentPage })
 
   return null
 }
