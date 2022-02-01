@@ -92,9 +92,10 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
           className={classNames('boomForm-field__label', {
             [`${classnameprefix}__label`]: classnameprefix
           })}
-        >
-          {label}
-        </label>
+          dangerouslySetInnerHTML={{
+            __html: label
+          }}
+        ></label>
       )}
       <div
         className={classNames(`boomForm-${type}__content`, {

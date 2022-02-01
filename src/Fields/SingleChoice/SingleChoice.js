@@ -55,7 +55,11 @@ const SingleChoice = ({
                           className='boomForm-other__item'
                         />
                       ) : (
-                        <span>{placeholder}</span>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: placeholder
+                          }}
+                        ></span>
                       )
                     }}
                   </Viewer>
@@ -76,7 +80,11 @@ const SingleChoice = ({
                     value={value}
                     initial={checked}
                   />
-                  <span>{label}</span>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: label
+                    }}
+                  ></span>
                 </label>
               )
           }

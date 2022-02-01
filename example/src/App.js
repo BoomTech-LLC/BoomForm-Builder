@@ -19,7 +19,7 @@ const App = () => {
         {
           id: 1,
           type: 'text',
-          label: 'Please Type Your Favorit Color',
+          label: 'Please Type Your Favorit Color <b>Vazgenchik</b>',
           placeholder: 'Type ...',
           validation: {
             required: { msg: 'Text is required' },

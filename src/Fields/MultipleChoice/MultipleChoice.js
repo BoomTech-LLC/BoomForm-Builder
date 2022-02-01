@@ -84,7 +84,11 @@ const MultipleChoice = ({
                             }}
                           />
                         ) : (
-                          <span>{placeholder}</span>
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: placeholder
+                            }}
+                          ></span>
                         )}
                       </>
                     )
@@ -141,7 +145,11 @@ const MultipleChoice = ({
                       )
                   }}
                 />
-                <span>{label}</span>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: label
+                  }}
+                ></span>
                 {enabled && (
                   <Quantity
                     {...props}
