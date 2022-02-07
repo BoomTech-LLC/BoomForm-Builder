@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
+import { Radio } from 'boomform'
 import classNames from 'classnames/bind'
 import Quantity from './../Quantity/Quantity'
-import { Radio, Input, Viewer } from 'boomform'
+import Other from './Other'
 
 const SingleChoice = ({
   id,
@@ -44,25 +45,11 @@ const SingleChoice = ({
                     value={value || 'other'}
                     initial={checked}
                   />
-                  <Viewer>
-                    {({ values }) => {
-                      return values[id] === 'other' ? (
-                        <Input
-                          type={isNumber ? 'number' : 'text'}
-                          id={`other.${id}`}
-                          autoFocus={true}
-                          placeholder={placeholder}
-                          className='boomForm-other__item'
-                        />
-                      ) : (
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: placeholder
-                          }}
-                        ></span>
-                      )
-                    }}
-                  </Viewer>
+                  <Other
+                    id={id}
+                    placeholder={placeholder}
+                    isNumber={isNumber}
+                  />
                 </label>
               )
             else

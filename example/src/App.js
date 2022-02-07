@@ -10,94 +10,74 @@ const App = () => {
       }}
       fields={[
         {
-          type: 'text',
-          id: 12,
-          placeholder: '',
-          label: 'Textbox',
-          validation: { HTMLValidate: true }
-        },
-        {
-          type: 'text',
-          id: 13,
-          placeholder: '',
-          label: 'Somple Textbox',
-          validation: { HTMLValidate: true }
-        },
-        {
           type: 'multipleChoice',
-          id: 7,
+          id: 38,
           columns: 1,
           options: [
-            { key: 0, value: 'Yes', label: 'Yes  ', price: '', checked: false },
-            { key: 1, value: 'No', label: 'No  ', price: '', checked: false }
+            {
+              key: 0,
+              value: 'option1',
+              label: 'option1  ',
+              price: '',
+              checked: false
+            },
+            {
+              key: 1,
+              value: 'option2',
+              label: 'option2  ',
+              price: '',
+              checked: false
+            },
+            {
+              key: 2,
+              value: 'option3',
+              label: 'option3  ',
+              price: '',
+              checked: false
+            },
+            {
+              key: 'other',
+              value: 'other',
+              label: 'Other',
+              placeholder: 'Other',
+              checked: false
+            }
           ],
           label: 'Select Some Choices',
           validation: { HTMLValidate: true }
         },
         {
-          type: 'text',
-          id: 6,
-          placeholder: '',
-          label: 'SSC Yes',
-          validation: { HTMLValidate: true }
-        },
-        {
           type: 'singleChoice',
-          id: 8,
+          id: 39,
           columns: 1,
           options: [
-            { key: 0, value: '0', label: 'Yes', price: null, checked: false },
-            { key: 1, value: '1', label: 'No', price: null, checked: false }
+            { key: 0, value: '0', label: 'option1', price: '', checked: false },
+            { key: 1, value: '1', label: 'option2', price: '', checked: false },
+            { key: 2, value: '2', label: 'option3', price: '', checked: false },
+            {
+              key: 'other',
+              value: 'other',
+              label: 'Other',
+              placeholder: 'Other',
+              checked: false
+            }
           ],
           label: 'Select Single Choice',
           validation: { HTMLValidate: true }
         },
         {
-          type: 'text',
-          id: 11,
-          placeholder: '',
-          label: 'Radio SSC No',
+          type: 'select',
+          id: 40,
+          options: [
+            { key: 'placeholder', value: 'Please choose...' },
+            { key: 0, value: 'option1', label: 'option1  ', price: '' },
+            { key: 1, value: 'option2', label: 'option2  ', price: '' },
+            { key: 2, value: 'option3', label: 'option3  ', price: '' },
+            { key: 'other', value: 'Other' }
+          ],
+          payable: 1,
+          label: 'Dropdown',
           validation: { HTMLValidate: true }
-        },
-        {
-          type: 'name',
-          id: 9,
-          placeholders: { first: 'First', last: 'Last', middle: 'Middle' },
-          label: 'Name',
-          validations: {}
-        },
-        {
-          type: 'text',
-          id: 10,
-          placeholder: '',
-          label: 'Name First = Vazgen',
-          validation: { HTMLValidate: true }
-        }
-      ]}
-      logic={[
-        {
-          id: 13,
-          action: 'show',
-          operator: 'and',
-          conditions: [{ id: 12, rule: 'is', item: null, value: 'Somple' }]
-        },
-        {
-          id: 6,
-          action: 'hide',
-          operator: 'and',
-          conditions: [{ id: 7, rule: 'checked', item: null, value: 'No' }]
-        },
-        {
-          id: 11,
-          action: 'show',
-          operator: 'and',
-          conditions: [{ id: 8, rule: 'is', item: null, value: 'Yes' }]
-        },
-        {
-          id: 10,
-          action: 'show',
-          operator: 'and',
-          conditions: [{ id: 9, rule: 'is', item: 'first', value: 'Vazgen' }]
         }
       ]}
       button={{

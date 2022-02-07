@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
+import { Checkbox, Viewer, Input } from 'boomform'
 import classNames from 'classnames/bind'
 import Quantity from './../Quantity/Quantity'
-import { Checkbox, Viewer, Input } from 'boomform'
+import Other from './Other'
 
 const MultipleChoice = ({
   id,
@@ -47,14 +48,12 @@ const MultipleChoice = ({
 
                     const { values } = state
                     let isAnyChecked = false
-                    if (field.id === `${id}.other` && value) {
-                      isAnyChecked = true
-                    } else if (values[id]) {
+                    if (field.id === `${id}.other` && value) isAnyChecked = true
+                    else if (values[id])
                       options.map((option) => {
                         if (values[id][option.key] && option.key !== 'other')
                           isAnyChecked = true
                       })
-                    }
 
                     if (!value && !isAnyChecked)
                       setTimeout(() =>
@@ -62,38 +61,12 @@ const MultipleChoice = ({
                       )
                   }}
                 />
-                <Viewer>
-                  {({ values }) => {
-                    return (
-                      <>
-                        {values[id] !== undefined && values[id].other ? (
-                          <Input
-                            type={isNumber ? 'number' : 'text'}
-                            id={`other.${id}`}
-                            autoFocus={true}
-                            placeholder={placeholder}
-                            className='boomForm-other__item'
-                            onChange={(e) => {
-                              const { handleChange, field, state, value } = e
-                              setTimeout(() =>
-                                handleChange({
-                                  id: `${id}.error`,
-                                  value: value
-                                })
-                              )
-                            }}
-                          />
-                        ) : (
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: placeholder
-                            }}
-                          ></span>
-                        )}
-                      </>
-                    )
-                  }}
-                </Viewer>
+                <Other
+                  id={id}
+                  index={key}
+                  placeholder={placeholder}
+                  isNumber={isNumber}
+                />
                 {enabled && (
                   <Quantity
                     {...props}

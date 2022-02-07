@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import Quantity from './../Quantity/Quantity'
-import { Select as PrimarySelect, Viewer, Input } from 'boomform'
-import { getOtherKey } from '../../../Helpers/select'
+import { Select as PrimarySelect } from 'boomform'
+import Other from './Other'
 
 const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
@@ -9,26 +9,7 @@ const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
   return (
     <>
       <PrimarySelect id={id} {...props} />
-      <Viewer>
-        {({ values }) => {
-          const {
-            key: otherKey,
-            value: otherValue,
-            isNumber
-          } = getOtherKey(`${id}`, values)
-          return (
-            otherKey === 'other' && (
-              <Input
-                type={isNumber ? 'number' : 'text'}
-                id={`other.${id}`}
-                autoFocus={true}
-                placeholder={otherValue}
-                className='boomForm-other__item'
-              />
-            )
-          )
-        }}
-      </Viewer>
+      <Other id={id} />
       {enabled && (
         <Quantity
           {...props}
