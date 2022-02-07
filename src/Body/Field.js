@@ -1,6 +1,5 @@
 import React from 'react'
 import classNames from 'classnames/bind'
-import Error from './Error'
 
 import Name from './Fields/Name/Name'
 import Address from './Fields/Address/Address'

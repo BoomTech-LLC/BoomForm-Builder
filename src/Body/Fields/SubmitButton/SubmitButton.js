@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Context } from 'boomform'
-import Print from '../../Print/Print'
+import Print from '../../../Print/Print'
 
 const SubmitButton = ({
   onSubmit,

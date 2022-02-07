@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
-import Quantity from '../Quantity/Quantity'
+import Quantity from './../Quantity/Quantity'
 import { Radio, Input, Viewer } from 'boomform'
 
 const SingleChoice = ({

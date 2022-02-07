@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
 import { Radio } from 'boomform'
-import { getOptions } from '../../Helpers/scaleRating'
+import { getOptions } from '../../../Helpers/scaleRating'
 
 const ScaleRating = ({
   id,

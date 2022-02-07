@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import Quantity from '../Quantity/Quantity'
+import Quantity from './../Quantity/Quantity'
 import { Select as PrimarySelect, Viewer, Input } from 'boomform'
-import { getOtherKey } from '../../Helpers/select'
+import { getOtherKey } from '../../../Helpers/select'
 
 const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
   const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}

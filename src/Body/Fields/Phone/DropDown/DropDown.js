@@ -6,7 +6,7 @@ import {
   getPhoneCountryByCode,
   getPhoneCountryByDialCode,
   countryListForPhone
-} from '../../../Helpers/phone'
+} from '../../../../Helpers/phone'
 
 const DropDown = ({ id, defaultCountryCode }) => {
   const [isOpen, setIsOpen] = useState(false)

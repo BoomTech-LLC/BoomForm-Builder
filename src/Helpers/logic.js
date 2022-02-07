@@ -1,4 +1,4 @@
-import { getNestedValue, timeConversion } from '../Helpers/global'
+import { getNestedValue } from '../Helpers/global'
 
 const conditionalLogic = ({ fieldValue, value, rule, field }) => {
   switch (rule) {
@@ -75,8 +75,10 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
 
 export const getHiddenIds = ({ logic, values, fields }) => {
   let hiddenFields = []
+
   logic.map((option) => {
     const { action, conditions, operator = 'and', id } = option
+
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
       const fieldValue = key.toString().includes('.')
@@ -117,6 +119,7 @@ export const getHiddenIds = ({ logic, values, fields }) => {
       }
     }
   })
+
   return hiddenFields
 }
 

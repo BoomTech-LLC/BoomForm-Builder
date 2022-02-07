@@ -1,9 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import classNames from 'classnames'
-import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
-import Captcha from './../../../Fields/Captcha/Captcha'
-import { Context } from 'boomform'
-import { getErrorByType } from '../../../Helpers/global'
+import SubmitButton from './../../../Body/Fields/SubmitButton/SubmitButton'
+import Captcha from './../../../Body/Fields/Captcha/Captcha'
 
 const Numbers = ({
   button,

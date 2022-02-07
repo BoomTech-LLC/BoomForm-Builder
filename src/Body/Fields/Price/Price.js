@@ -4,7 +4,7 @@ import {
   getPlaceholder,
   getInitial,
   getValidation
-} from './../../Helpers/global'
+} from './../../../Helpers/global'
 
 const Price = ({
   id,

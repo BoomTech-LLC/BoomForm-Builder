@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
-import SubmitButton from './../../../Fields/SubmitButton/SubmitButton'
-import Captcha from './../../../Fields/Captcha/Captcha'
+import SubmitButton from './../../../Body/Fields/SubmitButton/SubmitButton'
+import Captcha from './../../../Body/Fields/Captcha/Captcha'
 
 const Buttons = ({
   pages,

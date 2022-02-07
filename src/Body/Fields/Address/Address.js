@@ -5,8 +5,8 @@ import {
   getPlaceholder,
   getInitial,
   getValidation
-} from './../../Helpers/global'
-import { getAddressFields, countryList } from './../../Helpers/address'
+} from './../../../Helpers/global'
+import { getAddressFields, countryList } from './../../../Helpers/address'
 
 const Address = ({
   id,

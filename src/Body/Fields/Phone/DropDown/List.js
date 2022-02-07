@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames/bind'
 
-import { countryListForPhone } from '../../../Helpers/phone'
+import { countryListForPhone } from '../../../../Helpers/phone'
 
 const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
   const handleCodeChange = (dial_code) => {
@@ -33,7 +33,9 @@ const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
       return (
         <div
           id={`country_item${id}`}
-          className={classNames('country_code_item', {selected: selectedKey === key} )}
+          className={classNames('country_code_item', {
+            selected: selectedKey === key
+          })}
           onClick={() => handleCodeChange(dial_code)}
           key={key}
         >

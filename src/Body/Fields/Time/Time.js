@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Input, Select } from 'boomform'
-import { getTimeFields } from './../../Helpers/time'
-import { getInitial, getValidation } from './../../Helpers/global'
+import { getTimeFields } from './../../../Helpers/time'
+import { getInitial, getValidation } from './../../../Helpers/global'
 
 const Time = ({
   id,

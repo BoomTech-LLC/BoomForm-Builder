@@ -4,8 +4,8 @@ import {
   getPlaceholder,
   getInitial,
   getValidation
-} from './../../Helpers/global'
-import { getNameFields } from './../../Helpers/name'
+} from './../../../Helpers/global'
+import { getNameFields } from './../../../Helpers/name'
 
 const Name = ({
   id,

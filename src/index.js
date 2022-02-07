@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { BoomForm } from 'boomform'
 import Header from './Header'
 import Footer from './Footer'
-import Fields from './Fields'
+import Body from './Body'
 import StateHandler from './StateHandler'
 
 //Pagination
@@ -16,14 +16,13 @@ const Builder = ({
   fields = [],
   button = {},
   pagination = {},
-  logic
+  logic = []
 }) => {
   const {
     name,
     description,
     onSubmit,
     onSubmitFailed,
-    logic: isLogicOn = false,
     onStateChange = () => {},
     onFirstRender = () => {},
     onDie = () => {},
@@ -32,15 +31,24 @@ const Builder = ({
   } = global
 
   const formRef = useRef(null)
+
   const isPagination = Object.keys(pagination).length !== 0
+  const isLogic = logic.length !== 0
 
   const { pages, initial = 0, buttons, timeline, pageCounter } = pagination
   const [currentPage, setCurrentPage] = useState(initial)
 
+  /*
+    Setting Inital Page For Pagination
+    ----- We need this when the pagination is turnned on 
+  */
   useEffect(() => {
     setCurrentPage(initial)
   }, [initial])
 
+  /*
+    Handling Form Lifecycle Callback Events
+  */
   useEffect(() => {
     onFirstRender({ setCurrentPage })
 
@@ -51,63 +59,71 @@ const Builder = ({
 
   return (
     <BoomForm>
-      <form ref={formRef} className='boomForm'>
-        <Header name={name} description={description} />
-        {isPagination && (
-          <PaginationHeader
-            timeline={timeline}
-            pagesLength={pages.length}
-            currentPage={currentPage}
-          />
-        )}
-        {isPagination && <PerPageHeader page={pages[currentPage]} />}
-        <Fields
-          fields={fields}
-          pagination={isPagination ? pages[currentPage].fields : []}
-          logic={isLogicOn ? logic : []}
-          setCurrentPage={setCurrentPage}
-        />
-        {isPagination ? (
-          <React.Fragment>
-            {pageCounter && (
-              <Counter currentPage={currentPage} pagesLangth={pages.length} />
-            )}
-            <PaginationFooter
-              formRef={formRef}
-              onSubmit={onSubmit}
-              button={button}
-              paginationButtons={buttons}
-              pages={pages}
+      {() => (
+        <form ref={formRef} className='boomForm'>
+          <Header name={name} description={description} />
+          {isPagination && (
+            <PaginationHeader
+              timeline={timeline}
+              pagesLength={pages.length}
               currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
+            />
+          )}
+          {isPagination && <PerPageHeader page={pages[currentPage]} />}
+
+          <Body
+            isLogic={isLogic}
+            logic={logic}
+            // Need Refactor
+            fields={fields}
+            isPagination={isPagination}
+            pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+
+          {isPagination ? (
+            <React.Fragment>
+              {pageCounter && (
+                <Counter currentPage={currentPage} pagesLangth={pages.length} />
+              )}
+              <PaginationFooter
+                formRef={formRef}
+                onSubmit={onSubmit}
+                button={button}
+                paginationButtons={buttons}
+                pages={pages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                captcha={captcha}
+                fields={fields}
+                name={name}
+                description={description}
+                isPrint={isPrint}
+                onSubmitFailed={onSubmitFailed}
+              />
+            </React.Fragment>
+          ) : (
+            <Footer
+              formRef={formRef}
               captcha={captcha}
+              button={button}
               fields={fields}
               name={name}
               description={description}
               isPrint={isPrint}
+              onSubmit={onSubmit}
               onSubmitFailed={onSubmitFailed}
             />
-          </React.Fragment>
-        ) : (
-          <Footer
+          )}
+          <StateHandler
+            onStateChange={onStateChange}
             formRef={formRef}
-            captcha={captcha}
-            button={button}
-            fields={fields}
-            name={name}
-            description={description}
-            isPrint={isPrint}
-            onSubmit={onSubmit}
-            onSubmitFailed={onSubmitFailed}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
-        )}
-        <StateHandler
-          onStateChange={onStateChange}
-          formRef={formRef}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        />
-      </form>
+        </form>
+      )}
     </BoomForm>
   )
 }
