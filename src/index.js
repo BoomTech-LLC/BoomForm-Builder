@@ -58,7 +58,13 @@ const Builder = ({
   }, [])
 
   return (
-    <BoomForm>
+    <BoomForm
+      global={global}
+      fields={fields}
+      button={button}
+      pagination={pagination}
+      logic={logic}
+    >
       {() => (
         <form ref={formRef} className='boomForm'>
           <Header name={name} description={description} />
