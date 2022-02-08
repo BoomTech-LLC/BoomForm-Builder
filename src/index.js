@@ -64,6 +64,7 @@ const Builder = ({
       button={button}
       pagination={pagination}
       logic={logic}
+      currentPage={currentPage}
     >
       {() => (
         <form ref={formRef} className='boomForm'>
