@@ -84,7 +84,6 @@ const File = ({
         const handleRemove = (fileId) => {
           const _value = value.filter((file) => file.id !== fileId)
           handleChange({ id, value: [..._value] })
-          if (fileInputRef.current) fileInputRef.current.reset()
         }
 
         return (
