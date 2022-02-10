@@ -12,7 +12,7 @@ const App = () => {
         {
           type: 'file',
           id: 6,
-          isMultiple: false,
+          isMultiple: true,
           inputContent: '',
           dropbox: {
             url: 'https://content.dropboxapi.com/2/files/upload',
@@ -29,6 +29,14 @@ const App = () => {
             }
           },
           label: 'Upload Your File',
+          validation: { HTMLValidate: true }
+        },
+        {
+          type: 'phone',
+          id: 7,
+          defaultCountryCode: 'AM',
+          placeholder: '',
+          label: 'Phone',
           validation: { HTMLValidate: true }
         }
       ]}

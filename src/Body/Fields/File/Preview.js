@@ -17,9 +17,10 @@ const Preview = ({ id, name, percentage, src, handleRemove, responce }) => {
       ) : (
         <>
           <span className='boomFileUpload-file__name'>{name}</span>
-          <span className='boomFileUpload-fileRemove__btn' onClick={onRemove}>
-            1
-          </span>
+          <span
+            className='boomFileUpload-fileRemove__btn'
+            onClick={onRemove}
+          ></span>
         </>
       )}
     </div>
