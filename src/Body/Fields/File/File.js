@@ -84,6 +84,7 @@ const File = ({
         const handleRemove = (fileId) => {
           const _value = value.filter((file) => file.id !== fileId)
           handleChange({ id, value: [..._value] })
+          if (fileInputRef.current) fileInputRef.current.reset()
         }
 
         return (
@@ -91,7 +92,7 @@ const File = ({
             <div>
               <div className='boomFileUpload-file__content'>
                 {value && <List value={value} handleRemove={handleRemove} />}
-                {isMultiple || (!isMultiple && !value) ? (
+                {isMultiple || (!isMultiple && (!value || !value.length)) ? (
                   <div
                     className='boomFileUpload-drop__content'
                     onDragOver={(e) => e.preventDefault()}
