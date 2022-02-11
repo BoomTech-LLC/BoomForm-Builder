@@ -38,7 +38,10 @@ const List = ({ id, values, selectedKey, handleCodeChange }) => {
               backgroundRepeat: 'no-repeat'
             }}
           ></div>
-          <span className='country_code_item_txt'>{name}</span>
+          <span className='country_code_item_txt'>
+            <span>{name}</span>
+            <span>({dial_code})</span>
+          </span>
         </div>
       )
     })
