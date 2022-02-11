@@ -52,6 +52,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
               value: key
             })
           }
+          console.log(value)
 
           return (
             <>

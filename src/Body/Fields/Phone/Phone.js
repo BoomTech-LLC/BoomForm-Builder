@@ -9,9 +9,11 @@ const Phone = ({
   defaultCountryCode,
   ...props
 }) => {
+  let _defaultCountryCode = 'AF'
+  if (defaultCountryCode) _defaultCountryCode = defaultCountryCode
   return (
     <>
-      <DropDown id={id} defaultCountryCode={defaultCountryCode} />
+      <DropDown id={id} defaultCountryCode={_defaultCountryCode} />
       <Input id={`${id}.phone`} type='phone' {...props} />
     </>
   )

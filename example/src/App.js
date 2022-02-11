@@ -12,7 +12,6 @@ const App = () => {
         {
           type: 'phone',
           id: 7,
-          defaultCountryCode: 'AM',
           placeholder: '',
           label: 'Phone',
           validation: { HTMLValidate: true }
