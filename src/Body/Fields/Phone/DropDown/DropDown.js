@@ -2,28 +2,15 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Input, Custom } from 'boomform'
 import classNames from 'classnames/bind'
 import List from './List'
-import {
-  getPhoneCountryByCode,
-  getPhoneCountryByDialCode,
-  countryListForPhone
-} from '../../../../Helpers/phone'
+import countries from '../../../../Helpers/countries'
 
 const DropDown = ({ id, defaultCountryCode }) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  let [defaultCountry] = countryListForPhone
-  if (defaultCountryCode)
-    defaultCountry = getPhoneCountryByCode(defaultCountryCode)
-
-  const handleClickClose = (e) => {
-    if (e.target.classList.value.indexOf('country_code') === -1)
-      setIsOpen(false)
-  }
-
   useEffect(() => {
-    window.addEventListener('click', handleClickClose)
+    window.addEventListener('click', handleClose)
 
-    return () => window.removeEventListener('click', handleClickClose)
+    return () => window.removeEventListener('click', handleClose)
   }, [])
 
   const onScrollCountriesList = (event) => {
@@ -39,33 +26,48 @@ const DropDown = ({ id, defaultCountryCode }) => {
           event.target.offsetTop - event.currentTarget.offsetTop
   }
 
+  const handleClose = (e) => {
+    if (e.target.classList.value.indexOf('country_code') === -1)
+      setIsOpen(false)
+  }
+
+  const handleOpen = (e) => {
+    setIsOpen(
+      isOpen === false ? (e.target?.offsetTop < 200 ? 'bottom' : 'top') : false
+    )
+  }
+
   return (
     <div
       className={classNames('country_code_picker', {
         country_code_picker_active: isOpen !== false
       })}
     >
-      <Custom initial={defaultCountry.dial_code} id={`${id}.code`}>
-        {(state) => {
-          const { handleChange, value, values } = state
-          const { flag, key } = getPhoneCountryByDialCode(value)
+      <Custom initial={defaultCountryCode} id={`${id}.code`}>
+        {({ handleChange, value, values }) => {
+          const handleCodeChange = (key) => {
+            setIsOpen(false)
+            handleChange({
+              id: `${id}.code`,
+              value: key
+            })
+          }
+
           return (
             <>
-              <div
-                className='country_code_action'
-                onClick={(event) =>
-                  setIsOpen(
-                    isOpen === false
-                      ? event.target?.offsetTop < 200
-                        ? 'bottom'
-                        : 'top'
-                      : false
-                  )
-                }
-              >
-                <img src={flag} alt={flag} className='country_code_image' />
+              <div className='country_code_action' onClick={handleOpen}>
+                <div
+                  className='country_code_image'
+                  style={{
+                    backgroundImage: `url(https://cdn.boomte.ch/images/flags/${value.toLowerCase()}.svg)`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat'
+                  }}
+                ></div>
+                <div className='country_code_value'>
+                  {countries[value].dial_code}
+                </div>
               </div>
-              <div>{value}</div>
               {isOpen !== false && (
                 <div
                   className={classNames('country_code_dropdown', {
@@ -85,11 +87,10 @@ const DropDown = ({ id, defaultCountryCode }) => {
                     className='country_code_list'
                   >
                     <List
-                      handleChange={handleChange}
+                      handleCodeChange={handleCodeChange}
                       id={id}
                       values={values}
-                      setIsOpen={setIsOpen}
-                      selectedKey={key}
+                      selectedKey={value}
                     />
                   </div>
                 </div>

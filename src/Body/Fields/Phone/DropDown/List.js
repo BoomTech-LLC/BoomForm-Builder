@@ -1,26 +1,17 @@
 import React from 'react'
 import classNames from 'classnames/bind'
 
-import { countryListForPhone } from '../../../../Helpers/phone'
+import countries from '../../../../Helpers/countries'
 
-const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
-  const handleCodeChange = (dial_code) => {
-    setIsOpen(false)
-    handleChange({
-      id: `${id}.code`,
-      value: dial_code,
-      field: { fieldType: 'custom', id: `${id}.code` }
-    })
-  }
-
-  return countryListForPhone
+const List = ({ id, values, selectedKey, handleCodeChange }) => {
+  return Object.values(countries)
     .filter((country) => {
       const searchTerm = values[id]?.search
       if (searchTerm === null || searchTerm === undefined) return true
 
       if (
         country.name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-        country.code.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        country.key.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
         country.dial_code.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
       )
         return true
@@ -28,7 +19,7 @@ const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
       return false
     })
     .map((country) => {
-      const { key, dial_code, flag, name } = country
+      const { key, dial_code, name } = country
 
       return (
         <div
@@ -36,10 +27,17 @@ const List = ({ id, setIsOpen, handleChange, values, selectedKey }) => {
           className={classNames('country_code_item', {
             selected: selectedKey === key
           })}
-          onClick={() => handleCodeChange(dial_code)}
+          onClick={() => handleCodeChange(key)}
           key={key}
         >
-          <img src={flag} alt={flag} className='country_code_item_img' />
+          <div
+            className='country_code_item_img'
+            style={{
+              backgroundImage: `url(https://cdn.boomte.ch/images/flags/${key.toLowerCase()}.svg)`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          ></div>
           <span className='country_code_item_txt'>{name}</span>
         </div>
       )
