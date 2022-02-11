@@ -4,6 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import Body from './Body'
 import StateHandler from './StateHandler'
+import countries from './Helpers/countries'
 
 //Pagination
 import PaginationFooter from './Pagination/Footer/Footer'
@@ -135,4 +136,4 @@ const Builder = ({
   )
 }
 
-export default Builder
+export { Builder, countries }

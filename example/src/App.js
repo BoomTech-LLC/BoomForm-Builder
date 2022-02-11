@@ -1,5 +1,5 @@
 import React from 'react'
-import Builder from 'boomform-builder'
+import { Builder } from 'boomform-builder'
 
 const App = () => {
   return (
