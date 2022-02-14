@@ -1,5 +1,6 @@
 import React from 'react'
 import { Radio } from 'boomform'
+import classNames from 'classnames'
 import Content from './Content'
 
 const Other = ({ id, option, classnameprefix }) => {
