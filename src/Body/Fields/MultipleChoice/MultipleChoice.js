@@ -8,52 +8,37 @@ const MultipleChoice = ({
   options,
   classnameprefix,
   quantity,
-  validation,
-  ...props
-}) => {
-  const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
+  validation
+}) => (
+  <>
+    {options.map((option) => {
+      const { key } = option
 
-  // {
-  //   key,
-  //   label,
-  //   placeholder,
-  //   value,
-  //   checked,
-  //   isNumber = false,
-  //   ...attr
-  // }
-
-  return (
-    <>
-      {options.map((option) => {
-        const { key } = option
-
-        if (key === 'other')
-          return (
-            <Other
-              key={`${id}.${key}`}
-              id={id}
-              options={options}
-              option={option}
-              quantity={quantity}
-              classnameprefix={classnameprefix}
-            />
-          )
-        else
-          return (
-            <Item
-              key={`${id}.${key}`}
-              id={id}
-              options={options}
-              option={option}
-              quantity={quantity}
-              classnameprefix={classnameprefix}
-            />
-          )
-      })}
-      <Input id={`${id}.error`} validation={validation} />
-    </>
-  )
-}
+      if (key === 'other')
+        return (
+          <Other
+            key={`${id}.${key}`}
+            id={id}
+            options={options}
+            option={option}
+            quantity={quantity}
+            classnameprefix={classnameprefix}
+          />
+        )
+      else
+        return (
+          <Item
+            key={`${id}.${key}`}
+            id={id}
+            options={options}
+            option={option}
+            quantity={quantity}
+            classnameprefix={classnameprefix}
+          />
+        )
+    })}
+    <Input id={`${id}.error`} validation={validation} />
+  </>
+)
 
 export default MultipleChoice

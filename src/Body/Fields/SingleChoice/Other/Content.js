@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, useField } from 'boomform'
 
-const Other = ({ id, isNumber, placeholder }) => {
+const Content = ({ id, isNumber, placeholder }) => {
   const field = useField([id])
 
   return field?.value === 'other' ? (
@@ -21,4 +21,4 @@ const Other = ({ id, isNumber, placeholder }) => {
   )
 }
 
-export default Other
+export default Content

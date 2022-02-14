@@ -3,24 +3,12 @@ import Quantity from './../Quantity/Quantity'
 import { Select as PrimarySelect } from 'boomform'
 import Other from './Other'
 
-const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => {
-  const { value: quantityValue, label: quantityLabel, enabled } = quantity || {}
-
-  return (
-    <>
-      <PrimarySelect id={id} {...props} />
-      <Other id={id} />
-      {enabled && (
-        <Quantity
-          {...props}
-          id={id}
-          label={quantityLabel}
-          value={quantityValue}
-          classnameprefix={classnameprefix}
-        />
-      )}
-    </>
-  )
-}
+const DropDown = ({ id, label, classnameprefix, quantity, ...props }) => (
+  <>
+    <PrimarySelect id={id} {...props} />
+    <Other id={id} />
+    <Quantity {...quantity} id={id} classnameprefix={classnameprefix} />
+  </>
+)
 
 export default DropDown
