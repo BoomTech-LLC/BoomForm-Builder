@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import SubmitButton from './../../SubmitButton/SubmitButton'
 import Captcha from './../../Captcha'
 
@@ -11,8 +11,8 @@ const Buttons = ({
   currentPage,
   setCurrentPage
 }) => {
-  const { paginationButtons, pages } = pagination
-  const { prev = 'Prev', next = 'Next' } = paginationButtons
+  const { buttons, pages } = pagination
+  const { prev = 'Prev', next = 'Next' } = buttons
   const { captcha } = global
 
   const handleNext = () => {

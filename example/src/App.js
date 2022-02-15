@@ -50,7 +50,7 @@ const App = () => {
           { title: '', description: '', fields: [24] }
         ],
         initial: 0,
-        buttons: { type: 1, next: 'Next', prev: 'Prev' },
+        buttons: { type: 0, next: 'Next', prev: 'Prev' },
         timeline: 1
       }}
       // payment={{
