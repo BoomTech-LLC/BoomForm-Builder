@@ -6,7 +6,8 @@ const App = () => {
     <Builder
       global={{
         name: 'Name',
-        description: 'Decription'
+        description: 'Decription',
+        captcha: '6LfLdQgeAAAAAAIAcsLtTxJJtSCY8jQ0K9uLgtOi'
       }}
       fields={[
         {

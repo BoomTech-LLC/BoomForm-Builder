@@ -12,7 +12,8 @@ const Pagination = ({
   currentPage,
   setCurrentPage
 }) => {
-  const { pageCounter, type, pages } = pagination
+  const { pageCounter, buttons, pages } = pagination
+  const { type } = buttons
 
   return (
     <>

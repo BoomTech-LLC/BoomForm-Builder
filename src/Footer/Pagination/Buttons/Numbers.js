@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import classNames from 'classnames'
 import SubmitButton from './../../SubmitButton/SubmitButton'
+import Captcha from '../../Captcha'
 
 const Numbers = ({
   formRef,
@@ -12,6 +13,7 @@ const Numbers = ({
   setCurrentPage
 }) => {
   const { pages } = pagination
+  const { captcha } = global
 
   const handleSetPage = (index) => {
     if (index !== currentPage) {
@@ -35,29 +37,36 @@ const Numbers = ({
   }
 
   return (
-    <div className='boomForm-paginationNumbers__content'>
-      {pages.map((page, index) => {
-        return (
-          <button
-            key={index}
-            type='button'
-            className={classNames('boomForm-paginationNumber__button', {
-              'boomForm-paginationNumber__button-active': index === currentPage
-            })}
-            onClick={() => handleSetPage(index)}
-          >
-            {index + 1}
-          </button>
-        )
-      })}
+    <>
+      {captcha !== undefined && currentPage === pages.length - 1 && (
+        <Captcha siteKey={captcha} />
+      )}
+      <div className='boomForm-paginationNumbers__content'>
+        {pages.map((page, index) => {
+          return (
+            <button
+              key={index}
+              type='button'
+              className={classNames('boomForm-paginationNumber__button', {
+                'boomForm-paginationNumber__button-active':
+                  index === currentPage
+              })}
+              onClick={() => handleSetPage(index)}
+            >
+              {index + 1}
+            </button>
+          )
+        })}
 
-      <SubmitButton
-        global={global}
-        button={button}
-        fields={fields}
-        formRef={formRef}
-      />
-    </div>
+        <SubmitButton
+          hide={currentPage !== pages.length - 1}
+          global={global}
+          button={button}
+          fields={fields}
+          formRef={formRef}
+        />
+      </div>
+    </>
   )
 }
 

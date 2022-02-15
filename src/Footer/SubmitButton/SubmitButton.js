@@ -1,7 +1,6 @@
 import React, { useContext, Fragment } from 'react'
 import { Context } from 'boomform'
 import Print from './../../Print/Print'
-import Captch from './Captcha'
 
 const SubmitButton = ({ global, button, fields, hide, formRef }) => {
   const { state, actions } = useContext(Context)
@@ -24,19 +23,16 @@ const SubmitButton = ({ global, button, fields, hide, formRef }) => {
   }
 
   return (
-    <>
-      {captcha !== undefined && <Captcha siteKey={captcha} />}
-      <div className={'boomForm-button__content'}>
-        {suffix}
-        <button onClick={handleClick}>
-          <span>{text}</span>
-        </button>
-        {prefix}
-        {isPrint && (
-          <Print fields={fields} name={name} description={description} />
-        )}
-      </div>
-    </>
+    <div className={'boomForm-button__content'}>
+      {suffix}
+      <button onClick={handleClick}>
+        <span>{text}</span>
+      </button>
+      {prefix}
+      {isPrint && (
+        <Print fields={fields} name={name} description={description} />
+      )}
+    </div>
   )
 }
 
