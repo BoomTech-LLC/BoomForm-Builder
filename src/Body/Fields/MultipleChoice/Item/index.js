@@ -2,9 +2,10 @@ import React from 'react'
 import { Checkbox } from 'boomform'
 import classNames from 'classnames'
 import Quantity from '../../Quantity/Quantity'
+import { formatPrice } from './../../../../Helpers/payment'
 
-const Item = ({ id, options, option, quantity, classnameprefix }) => {
-  const { key, value, checked, label } = option
+const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
+  const { key, value, checked, label, price } = option
 
   const handleOnChange = (e) => {
     const { handleChange, field, state, value } = e
@@ -38,7 +39,12 @@ const Item = ({ id, options, option, quantity, classnameprefix }) => {
       />
       <span
         dangerouslySetInnerHTML={{
-          __html: label
+          __html:
+            label +
+            formatPrice({
+              payment,
+              price
+            })
         }}
       ></span>
       <Quantity

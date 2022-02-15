@@ -9,89 +9,83 @@ const App = () => {
         description: 'Decription'
       }}
       fields={[
-        // {
-        //   type: 'number',
-        //   id: 10,
-        //   placeholder: '',
-        //   payable: 0,
-        //   label: 'Number',
-        //   validation: { HTMLValidate: true }
-        // },
-        // {
-        //   type: 'multipleChoice',
-        //   id: 11,
-        //   columns: 1,
-        //   options: [
-        //     {
-        //       key: 0,
-        //       value: 'option1',
-        //       label: 'option1  ',
-        //       price: '',
-        //       checked: false
-        //     },
-        //     {
-        //       key: 1,
-        //       value: 'option2',
-        //       label: 'option2  ',
-        //       price: '',
-        //       checked: false
-        //     },
-        //     {
-        //       key: 2,
-        //       value: 'option3',
-        //       label: 'option3  ',
-        //       price: '',
-        //       checked: false
-        //     },
-        //     {
-        //       key: 'other',
-        //       value: 'other',
-        //       label: 'Other 12',
-        //       placeholder: 'Other 123',
-        //       checked: false
-        //     }
-        //   ],
-        //   quantity: { enabled: true, label: 'Quantity 132', value: 132 },
-        //   label: 'Select Some Choices',
-        //   validation: { HTMLValidate: true }
-        // }
         {
-          type: 'singleChoice',
-          id: 12,
-          columns: 1,
-          options: [
-            { key: 0, value: '0', label: 'option1', price: '', checked: false },
-            { key: 1, value: '1', label: 'option2', price: '', checked: false },
-            { key: 2, value: '2', label: 'option3', price: '', checked: false }
-          ],
-          label: 'Select Single Choice',
+          type: 'price',
+          id: 22,
+          placeholders: { first: 'Dollars', last: 'Cents' },
+          payable: 'collect',
+          label: 'Price',
+          validations: {
+            first: { HTMLValidate: true },
+            last: { HTMLValidate: true }
+          }
+        },
+        {
+          type: 'text',
+          id: 23,
+          placeholder: '',
+          label: 'Textbox',
           validation: { HTMLValidate: true }
+        },
+        {
+          type: 'text',
+          id: 24,
+          placeholder: '',
+          label: 'Textbox',
+          validation: { HTMLValidate: true }
+        },
+        {
+          type: 'name',
+          id: 25,
+          placeholders: { first: 'First', last: 'Last', middle: 'Middle' },
+          label: 'Name',
+          validations: {}
         }
-        // {
-        //   type: 'select',
-        //   id: 13,
-        //   options: [
-        //     { key: 'placeholder', value: 'Please choose...' },
-        //     { key: 0, value: 'option1', label: 'option1  ', price: '' },
-        //     { key: 1, value: 'option2', label: 'option2  ', price: '' },
-        //     { key: 2, value: 'option3', label: 'option3  ', price: '' }
-        //   ],
-        //   payable: 1,
-        //   label: 'Dropdown',
-        //   validation: { HTMLValidate: true }
-        // }
-        // {
-        //   type: 'price',
-        //   id: 14,
-        //   placeholders: { first: 'Dollars', last: 'Cents' },
-        //   payable: 0,
-        //   label: 'Price',
-        //   validations: {
-        //     first: { HTMLValidate: true },
-        //     last: { HTMLValidate: true }
-        //   }
-        // }
       ]}
+      pagination={{
+        pages: [
+          { title: 'Page 1', description: '', fields: [22, 25] },
+          { title: 'Page 2', description: '', fields: [23] },
+          { title: '', description: '', fields: [24] }
+        ],
+        initial: 0,
+        buttons: { type: 1, next: 'Next', prev: 'Prev' },
+        timeline: 1
+      }}
+      // payment={{
+      //   currency: 'USD',
+      //   fee: 0,
+      //   format: '(+$100)',
+      //   showTotal: false,
+      //   label: 'Select Payment Method',
+      //   type: 'oneTime',
+      //   yearly: false,
+      //   selectedField: '',
+      //   showPrices: true,
+      //   redirectUrl: '',
+      //   methods: [
+      //     {
+      //       name: 'paypal',
+      //       title: 'PayPal',
+      //       enabled: true,
+      //       tax: 0,
+      //       email: '',
+      //       openIn: 'new',
+      //       yearlyDiscount: ''
+      //     },
+      //     {
+      //       name: 'stripe',
+      //       title: 'Credit Card',
+      //       enabled: false,
+      //       tax: '',
+      //       publishKey: '',
+      //       secretKey: '',
+      //       options: [],
+      //       isPromo: false,
+      //       openIn: 'same'
+      //     }
+      //   ]
+      // }}
       button={{
         text: 'submit'
       }}

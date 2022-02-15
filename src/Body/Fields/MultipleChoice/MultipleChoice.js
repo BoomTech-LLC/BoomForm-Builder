@@ -8,7 +8,8 @@ const MultipleChoice = ({
   options,
   classnameprefix,
   quantity,
-  validation
+  validation,
+  payment
 }) => (
   <>
     {options.map((option) => {
@@ -33,6 +34,7 @@ const MultipleChoice = ({
             options={options}
             option={option}
             quantity={quantity}
+            payment={payment}
             classnameprefix={classnameprefix}
           />
         )

@@ -4,12 +4,14 @@ import Fields from './Fields'
 const Body = ({
   isLogic,
   logic,
+  payment,
   fields,
   isPagination,
-  pages,
+  pagination,
   currentPage,
   setCurrentPage
 }) => {
+  const { pages } = pagination
   const updatableFields = []
 
   if (isLogic)
@@ -26,6 +28,7 @@ const Body = ({
       fields={fields}
       logic={logic}
       updatableFields={updatableFields}
+      payment={payment}
       pagination={isPagination ? pages[currentPage].fields : []}
       setCurrentPage={setCurrentPage}
     />

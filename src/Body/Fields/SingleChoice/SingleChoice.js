@@ -4,7 +4,7 @@ import Quantity from './../Quantity/Quantity'
 import Item from './Item'
 import Other from './Other'
 
-const SingleChoice = ({ id, options, classnameprefix, quantity }) => (
+const SingleChoice = ({ id, options, classnameprefix, quantity, payment }) => (
   <>
     <div
       className={classNames('boomForm-singleChoice__optionsContent', {
@@ -28,6 +28,7 @@ const SingleChoice = ({ id, options, classnameprefix, quantity }) => (
               key={`${id}.${key}`}
               id={id}
               option={option}
+              payment={payment}
               classnameprefix={classnameprefix}
             />
           )

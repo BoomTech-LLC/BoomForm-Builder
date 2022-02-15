@@ -9,7 +9,8 @@ const Fields = ({
   logic,
   pagination,
   setCurrentPage,
-  updatableFields
+  updatableFields,
+  payment
 }) => {
   const data = useField(updatableFields)
 
@@ -29,7 +30,7 @@ const Fields = ({
 
         if (!printableFields.includes(id)) return null
 
-        return <Field key={id} {...field} />
+        return <Field key={id} payment={payment} {...field} />
       })}
     </div>
   )
