@@ -14,7 +14,7 @@ const SubmitButton = ({ global, button, fields, hide, formRef, payment }) => {
   const formatedTotal = formatPrice({ payment, price: total })
 
   useEffect(() => {
-    setTotal(getTotalPrice({ values, fields, fee }))
+    setTotal && setTotal(getTotalPrice({ values, fields, fee }))
   }, [state])
 
   if (hide) return null

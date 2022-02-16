@@ -9,7 +9,6 @@ const App = () => {
     fee: 0,
     format: '(+$100)',
     showTotal: false,
-    yearly: false,
     showPrices: true,
     total,
     setTotal
