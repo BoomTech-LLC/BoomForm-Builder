@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 
 import SubmitButton from './SubmitButton/SubmitButton'
 import Pagination from './Pagination/Pagination'
+import Captcha from './Captcha'
 
 const Footer = ({
   formRef,
@@ -14,6 +15,9 @@ const Footer = ({
   setCurrentPage,
   payment
 }) => {
+  const { captcha } = global
+  const { pages } = pagination
+
   if (isPagination)
     return (
       <Pagination
@@ -29,13 +33,18 @@ const Footer = ({
     )
   else
     return (
-      <SubmitButton
-        global={global}
-        button={button}
-        fields={fields}
-        formRef={formRef}
-        payment={payment}
-      />
+      <>
+        {captcha !== undefined && currentPage === pages.length - 1 && (
+          <Captcha siteKey={captcha} />
+        )}
+        <SubmitButton
+          global={global}
+          button={button}
+          fields={fields}
+          formRef={formRef}
+          payment={payment}
+        />
+      </>
     )
 }
 
