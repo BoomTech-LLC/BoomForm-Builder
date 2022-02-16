@@ -16,7 +16,6 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
 
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
-  const [total, setTotal] = useState(0)
 
   const isPagination = Object.keys(pagination).length !== 0
   const isLogic = logic.length !== 0
@@ -61,6 +60,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         pagination={pagination}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
+        payment={payment}
       />
 
       <StateHandler
@@ -68,8 +68,6 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         formRef={formRef}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
-        payment={payment}
-        fields={fields}
       />
     </form>
   )

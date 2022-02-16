@@ -11,7 +11,8 @@ const Footer = ({
   isPagination,
   pagination,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
+  payment
 }) => {
   if (isPagination)
     return (
@@ -23,6 +24,7 @@ const Footer = ({
         pagination={pagination}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
+        payment={payment}
       />
     )
   else
@@ -32,6 +34,7 @@ const Footer = ({
         button={button}
         fields={fields}
         formRef={formRef}
+        payment={payment}
       />
     )
 }

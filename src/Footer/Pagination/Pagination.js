@@ -10,7 +10,8 @@ const Pagination = ({
   fields,
   pagination,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
+  payment
 }) => {
   const { pageCounter, buttons, pages } = pagination
   const { type } = buttons
@@ -29,6 +30,7 @@ const Pagination = ({
           pagination={pagination}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
+          payment={payment}
         />
       ) : (
         <Numbers
@@ -39,6 +41,7 @@ const Pagination = ({
           pagination={pagination}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
+          payment={payment}
         />
       )}
     </>

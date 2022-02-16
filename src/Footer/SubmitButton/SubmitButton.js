@@ -1,12 +1,21 @@
-import React, { useContext, Fragment } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Context } from 'boomform'
 import Print from './../../Print/Print'
+import { getTotalPrice, formatPrice } from './../../Helpers/payment'
 
-const SubmitButton = ({ global, button, fields, hide, formRef }) => {
+const SubmitButton = ({ global, button, fields, hide, formRef, payment }) => {
   const { state, actions } = useContext(Context)
+  const { values } = state
 
   const { text, prefix, suffix } = button || { text: 'Submit' }
-  const { name, description, captcha, isPrint } = global
+  const { name, description, isPrint } = global
+  const { fee, total, setTotal } = payment
+
+  const formatedTotal = formatPrice({ payment, price: total })
+
+  useEffect(() => {
+    setTotal(getTotalPrice({ values, fields, fee }))
+  }, [state])
 
   if (hide) return null
 
@@ -26,7 +35,10 @@ const SubmitButton = ({ global, button, fields, hide, formRef }) => {
     <div className={'boomForm-button__content'}>
       {suffix}
       <button onClick={handleClick}>
-        <span>{text}</span>
+        <span>
+          {text}
+          {formatedTotal}
+        </span>
       </button>
       {prefix}
       {isPrint && (

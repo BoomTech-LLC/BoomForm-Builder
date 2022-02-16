@@ -37,9 +37,8 @@ export const formatPrice = ({ payment, price }) => {
   else return ''
 }
 
-export const getTotalPrice = ({ values, fields, fee, type }) => {
-  const startPrice = type === 'oneTime' ? fee : null
-  let sum = startPrice || 0
+export const getTotalPrice = ({ values, fields, fee }) => {
+  let sum = fee || 0
 
   fields.map((field) => {
     let { type, id } = field
