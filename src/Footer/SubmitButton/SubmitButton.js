@@ -8,7 +8,7 @@ const SubmitButton = ({ global, button, fields, hide, formRef, payment }) => {
   const { values } = state
 
   const { text, prefix, suffix } = button || { text: 'Submit' }
-  const { name, description, isPrint, onSubmit } = global
+  const { name, description, isPrint, onSubmit, onSubmitFailed } = global
   const { fee, total, setTotal } = payment
 
   const formatedTotal = formatPrice({ payment, price: total })
