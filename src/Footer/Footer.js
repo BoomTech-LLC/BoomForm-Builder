@@ -34,9 +34,7 @@ const Footer = ({
   else
     return (
       <>
-        {captcha !== undefined && currentPage === pages.length - 1 && (
-          <Captcha siteKey={captcha} />
-        )}
+        {captcha !== undefined && <Captcha siteKey={captcha} />}
         <SubmitButton
           global={global}
           button={button}
