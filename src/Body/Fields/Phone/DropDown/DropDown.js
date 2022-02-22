@@ -37,13 +37,16 @@ const DropDown = ({ id, defaultCountryCode }) => {
     )
   }
 
+  let _defaultCountryCode = defaultCountryCode
+  if (!countries[defaultCountryCode]) _defaultCountryCode = 'US'
+
   return (
     <div
       className={classNames('country_code_picker', {
         country_code_picker_active: isOpen !== false
       })}
     >
-      <Custom initial={defaultCountryCode} id={`${id}.code`}>
+      <Custom initial={_defaultCountryCode} id={`${id}.code`}>
         {({ handleChange, value, values }) => {
           const handleCodeChange = (key) => {
             setIsOpen(false)
@@ -52,7 +55,6 @@ const DropDown = ({ id, defaultCountryCode }) => {
               value: key
             })
           }
-          console.log(value)
 
           return (
             <>
