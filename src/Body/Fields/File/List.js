@@ -10,7 +10,7 @@ const List = ({ value, handleRemove }) => {
         name={originalName}
         percentage={percentage}
         responce={responce}
-        src={type.startsWith('image/') && URL.createObjectURL(file)}
+        src={type && type.startsWith('image/') && URL.createObjectURL(file)}
         handleRemove={handleRemove}
       />
     )
