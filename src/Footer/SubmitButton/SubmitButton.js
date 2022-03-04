@@ -19,22 +19,40 @@ const SubmitButton = ({ global, button, fields, hide, formRef, payment }) => {
 
   if (hide) return null
 
+  const canSubmit = () => {
+    const fileIds = []
+    fields.map((field) => {
+      if (field.type === 'file') {
+        fileIds.push(field.id)
+      }
+    })
+
+    for (let i in fileIds) {
+      if (values[fileIds] && !values[fileIds][i]['responce']) {
+        return false
+      }
+    }
+
+    return true
+  }
+
   const handleClick = (e) => {
     e.preventDefault()
-
-    if (formRef.current.checkValidity()) {
-      if (onSubmit) onSubmit({ state, actions })
-      else console.log({ state, actions })
-    } else {
-      formRef.current.reportValidity()
-      if (onSubmitFailed) onSubmitFailed(state)
+    if (canSubmit()) {
+      if (formRef.current.checkValidity()) {
+        if (onSubmit) onSubmit({ state, actions })
+        else console.log({ state, actions })
+      } else {
+        formRef.current.reportValidity()
+        if (onSubmitFailed) onSubmitFailed(state)
+      }
     }
   }
 
   return (
     <div className={'boomForm-button__content'}>
       {suffix}
-      <button onClick={handleClick}>
+      <button disabled={!canSubmit()} onClick={handleClick}>
         <span>
           {text}
           {formatedTotal}

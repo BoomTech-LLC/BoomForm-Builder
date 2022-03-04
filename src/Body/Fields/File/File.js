@@ -83,7 +83,8 @@ const File = ({
 
         const handleRemove = (fileId) => {
           const _value = value.filter((file) => file.id !== fileId)
-          handleChange({ id, value: [..._value] })
+          if (_value && _value.length) handleChange({ id, value: [..._value] })
+          else handleChange({ id, value: null })
         }
 
         return (
@@ -133,22 +134,3 @@ const File = ({
 }
 
 export default File
-
-{
-  /* <FileUpload
-                {...props}
-                id={id}
-                classprefix={classnameprefix}
-                isMultiple={isMultiple}
-                initialValue={initial}
-                inputContent={inputContent}
-                autoUpload={autoUpload}
-                // getResult={handleGetResult}
-                // onRemove={handleRemove}
-                // getFiles={handleGetFiles}
-                // getErrors={getErrors}
-                url={url}
-                headers={headers}
-                dropbox={dropbox}
-              /> */
-}
