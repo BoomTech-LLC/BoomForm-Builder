@@ -14,7 +14,7 @@ const App = () => {
       fields={[
         {
           id: 1,
-          label: 'Phone',
+          label: 'Phone <span>sdf asmkdfasdf </span>',
           type: 'phone',
           defaultCountryCode: 'AM',
           validation: { required: { msg: 'Phone Is required' } }

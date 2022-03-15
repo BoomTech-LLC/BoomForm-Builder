@@ -87,9 +87,9 @@ const Table = ({ fields }) => {
 
                 return (
                   <tr key={id}>
-                    <th style={{ textAlign: 'right' }}>{label}</th>
+                    <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th>
                     <td style={{ textAlign: 'left', paddingLeft: '28px' }}>
-                      {stripHtml(getValues({ values, type, id }))}
+                      {getValues({ values, type, id })}
                     </td>
                   </tr>
                 )
