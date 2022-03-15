@@ -8,7 +8,8 @@ const App = () => {
     <Builder
       global={{
         name: 'Name',
-        description: 'Decription'
+        description: 'Decription',
+        isPrint: true
       }}
       fields={[
         {

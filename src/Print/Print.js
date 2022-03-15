@@ -1,21 +1,22 @@
 import React, { useRef } from 'react'
-import { useReactToPrint } from 'react-to-print'
 import ComponentToPrint from './ComponentToPrint'
 
 const Print = ({ fields, name, description }) => {
-  const componentRef = useRef(null)
-
-  const handlePrint = useReactToPrint({
-    bodyClass: 'boomForm__print',
-    pageStyle: 'background: #fff',
-    content: () => componentRef.current
-  })
+  const handlePrint = () => {
+    let content = document.getElementById('componentToPrint')
+    let pri = document.getElementById('ifmcontentstoprint').contentWindow
+    pri.document.open()
+    pri.document.write(content.innerHTML)
+    pri.document.close()
+    pri.focus()
+    pri.print()
+  }
 
   return (
     <div className='boomForm-print__content'>
       <div style={{ display: 'none' }}>
+        <iframe id='ifmcontentstoprint'></iframe>
         <ComponentToPrint
-          ref={componentRef}
           fields={fields}
           name={name}
           description={description}
