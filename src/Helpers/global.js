@@ -45,3 +45,9 @@ export const timeConversion = (s) => {
   }
   return false
 }
+
+export const stripHtml = (label) => {
+  let tmp = document.createElement('DIV')
+  tmp.innerHTML = label
+  return tmp.textContent || tmp.innerText || ''
+}

@@ -1,5 +1,7 @@
 import React, { memo } from 'react'
 import { Viewer } from 'boomform'
+import { stripHtml } from './../Helpers/global'
+import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
   const getValues = ({ values, type, id }) => {
@@ -19,7 +21,9 @@ const Table = ({ fields }) => {
         return checkbox.slice(0, -1)
       }
       case 'phone': {
-        return `${values[id]?.code} ${values[id]?.phone || ''}`
+        return `${countries[values[id]?.code].dial_code} ${
+          values[id]?.phone || ''
+        }`
       }
       case 'time': {
         return `${values[id]?.hour || ''} : ${values[id]?.minute || ''} ${
@@ -83,8 +87,10 @@ const Table = ({ fields }) => {
 
                 return (
                   <tr key={id}>
-                    <th>{label}</th>
-                    <td>{getValues({ values, type, id })}</td>
+                    <th style={{ textAlign: 'right' }}>{label}</th>
+                    <td style={{ textAlign: 'left', paddingLeft: '28px' }}>
+                      {stripHtml(getValues({ values, type, id }))}
+                    </td>
                   </tr>
                 )
               })}
