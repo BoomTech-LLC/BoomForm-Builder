@@ -110,8 +110,6 @@ export const getTotalPrice = ({ values, fields, fee }) => {
           newPrice += parseFloat(values['other'][id]) * quantity
         } else if (sid !== 'other' && option) {
           if (option.price) newPrice += option.price * quantity
-          else if (parseFloat(option.value))
-            newPrice += parseFloat(option.value) * quantity
         }
       })
       sum += newPrice
@@ -129,8 +127,6 @@ export const getTotalPrice = ({ values, fields, fee }) => {
       } else if (key !== 'other') {
         if (price !== undefined && price !== null && price !== '') {
           sum = sum + price * quantity
-        } else if (parseFloat(value)) {
-          sum = sum + parseFloat(value) * quantity
         }
       }
     }
