@@ -11,7 +11,8 @@ const Numbers = ({
   pagination,
   currentPage,
   setCurrentPage,
-  payment
+  payment,
+  logic
 }) => {
   const { pages } = pagination
   const { captcha } = global
@@ -66,6 +67,7 @@ const Numbers = ({
           fields={fields}
           formRef={formRef}
           payment={payment}
+          logic={logic}
         />
       </div>
     </>

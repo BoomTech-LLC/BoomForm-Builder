@@ -61,6 +61,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         payment={payment}
+        logic={logic}
       />
 
       <StateHandler

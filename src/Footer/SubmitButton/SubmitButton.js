@@ -3,7 +3,15 @@ import { Context } from 'boomform'
 import Print from './../../Print/Print'
 import { getTotalPrice, formatPrice } from './../../Helpers/payment'
 
-const SubmitButton = ({ global, button, fields, hide, formRef, payment }) => {
+const SubmitButton = ({
+  global,
+  button,
+  fields,
+  hide,
+  formRef,
+  payment,
+  logic
+}) => {
   const { state, actions } = useContext(Context)
   const { values } = state
 
@@ -14,7 +22,7 @@ const SubmitButton = ({ global, button, fields, hide, formRef, payment }) => {
   const formatedTotal = formatPrice({ payment, price: total })
 
   useEffect(() => {
-    setTotal && setTotal(getTotalPrice({ values, fields, fee }))
+    setTotal && setTotal(getTotalPrice({ values, fields, fee, logic }))
   }, [state])
 
   if (hide) return null

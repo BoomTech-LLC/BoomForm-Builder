@@ -10,7 +10,8 @@ const Buttons = ({
   pagination,
   currentPage,
   setCurrentPage,
-  payment
+  payment,
+  logic
 }) => {
   const { buttons, pages } = pagination
   const { prev = 'Prev', next = 'Next' } = buttons
@@ -46,6 +47,7 @@ const Buttons = ({
           fields={fields}
           formRef={formRef}
           payment={payment}
+          logic={logic}
         />
 
         {currentPage !== pages.length - 1 && (

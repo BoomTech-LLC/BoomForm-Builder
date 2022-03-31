@@ -1,3 +1,5 @@
+import { getHiddenIds } from './logic'
+
 export const currencys = {
   USD: '$',
   THB: '฿',
@@ -37,11 +39,20 @@ export const formatPrice = ({ payment, price }) => {
   else return ''
 }
 
-export const getTotalPrice = ({ values, fields, fee }) => {
+export const getTotalPrice = ({ values, fields, fee, logic }) => {
   let sum = fee || 0
+
+  const logicIds = getHiddenIds({
+    logic,
+    values,
+    fields
+  })
 
   fields.map((field) => {
     let { type, id } = field
+
+    if (logicIds.includes(id)) return null
+
     if (type === 'number' && field.payable === 'collect')
       sum += parseFloat(values[id]) || 0
 
