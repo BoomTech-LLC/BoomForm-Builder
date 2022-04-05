@@ -10,37 +10,45 @@ const MultipleChoice = ({
   quantity,
   validation,
   payment
-}) => (
-  <>
-    {options.map((option) => {
-      const { key } = option
+}) => {
+  const [hasInitial] = options.filter((option) => option.checked)
 
-      if (key === 'other')
-        return (
-          <Other
-            key={`${id}.${key}`}
-            id={id}
-            options={options}
-            option={option}
-            quantity={quantity}
-            classnameprefix={classnameprefix}
-          />
-        )
-      else
-        return (
-          <Item
-            key={`${id}.${key}`}
-            id={id}
-            options={options}
-            option={option}
-            quantity={quantity}
-            payment={payment}
-            classnameprefix={classnameprefix}
-          />
-        )
-    })}
-    <Input id={`${id}.error`} validation={validation} />
-  </>
-)
+  return (
+    <>
+      {options.map((option) => {
+        const { key } = option
+
+        if (key === 'other')
+          return (
+            <Other
+              key={`${id}.${key}`}
+              id={id}
+              options={options}
+              option={option}
+              quantity={quantity}
+              classnameprefix={classnameprefix}
+            />
+          )
+        else
+          return (
+            <Item
+              key={`${id}.${key}`}
+              id={id}
+              options={options}
+              option={option}
+              quantity={quantity}
+              payment={payment}
+              classnameprefix={classnameprefix}
+            />
+          )
+      })}
+      <Input
+        id={`${id}.error`}
+        validation={validation}
+        initial={hasInitial ? 'Checked' : ''}
+      />
+    </>
+  )
+}
 
 export default MultipleChoice
