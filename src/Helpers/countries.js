@@ -200,6 +200,7 @@ const countries = {
   PL: { name: 'Poland', key: 'PL', dial_code: '+48' },
   PT: { name: 'Portugal', key: 'PT', dial_code: '+351' },
   PR: { name: 'Puerto Rico', key: 'PR', dial_code: '+1939' },
+  PRI: { name: 'Puerto Rico', key: 'PRI', dial_code: '+1787' },
   QA: { name: 'Qatar', key: 'QA', dial_code: '+974' },
   CG: { name: 'Republic of the Congo', key: 'CG', dial_code: '+242' },
   RO: { name: 'Romania', key: 'RO', dial_code: '+40' },
