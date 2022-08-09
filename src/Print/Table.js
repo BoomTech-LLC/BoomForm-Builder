@@ -4,8 +4,7 @@ import { stripHtml } from './../Helpers/global'
 import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
-  const allValues1 = useContext(Context)
-  console.log(allValues1)
+  const allValues = useContext(Context)
 
   const getValues = ({ values, type, id }) => {
     switch (type) {
@@ -68,40 +67,36 @@ const Table = ({ fields }) => {
         return values[id]
     }
   }
-  return <div>123</div>
-  return (
-    <Viewer>
-      {({ values }) => {
-        return (
-          <table>
-            <tbody>
-              {fields.map((field) => {
-                const { id, label, type } = field
-                if (
-                  !type ||
-                  type === 'terms' ||
-                  type === 'map' ||
-                  type === 'custom' ||
-                  type === 'file' ||
-                  type === 'just' ||
-                  values[id] === undefined
-                )
-                  return null
 
-                return (
-                  <tr key={id}>
-                    <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th>
-                    <td style={{ textAlign: 'left', paddingLeft: '28px' }}>
-                      {getValues({ values, type, id })}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        )
-      }}
-    </Viewer>
+  console.log('allValues.state.values', allValues.state.values)
+
+  return (
+    <table>
+      <tbody>
+        {fields.map((field) => {
+          const { id, label, type } = field
+          if (
+            !type ||
+            type === 'terms' ||
+            type === 'map' ||
+            type === 'custom' ||
+            type === 'file' ||
+            type === 'just' ||
+            allValues.state.values[id] === undefined
+          )
+            return null
+
+          return (
+            <tr key={id}>
+              <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th>
+              <td style={{ textAlign: 'left', paddingLeft: '28px' }}>
+                {getValues({ values: allValues.state.values, type, id })}
+              </td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
   )
 }
 export default memo(Table)
