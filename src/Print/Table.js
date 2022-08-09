@@ -20,11 +20,11 @@ const Table = ({ fields }) => {
         }
         return checkbox.slice(0, -1)
       }
-      case 'phone': {
-        return `${countries[values[id]?.code].dial_code} ${
-          values[id]?.phone || ''
-        }`
-      }
+      // case 'phone': {
+      //   return `${countries[values[id]?.code].dial_code} ${
+      //     values[id]?.phone || ''
+      //   }`
+      // }
       case 'time': {
         return `${values[id]?.hour || ''} : ${values[id]?.minute || ''} ${
           values[id]?.format ? values[id].format?.value : ''
