@@ -6,7 +6,7 @@ const ComponentToPrint = ({ fields, name, description }) => {
     <div id='componentToPrint'>
       <h2>{name}</h2>
       <h3>{description}</h3>
-      <Table fields={fields} />
+      {/* <Table fields={fields} /> */}
     </div>
   )
 }
