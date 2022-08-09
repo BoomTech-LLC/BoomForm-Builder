@@ -67,6 +67,8 @@ const Table = ({ fields }) => {
     }
   }
 
+  return <div>123</div>
+
   return (
     <Viewer>
       {({ values }) => {
