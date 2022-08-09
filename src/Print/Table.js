@@ -1,11 +1,15 @@
 import React, { memo } from 'react'
-import { Viewer } from 'boomform'
+import { useField } from 'boomform'
 import { stripHtml } from './../Helpers/global'
 import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
+  const allValues = useField()
+  const allValues1 = useField([])
+  console.log(allValues)
+  console.log(allValues1)
+  1
   const getValues = ({ values, type, id }) => {
-    console.log('getValues', values, type, id)
     switch (type) {
       case 'select': {
         if (values[id]?.key === 'placeholder') return ''
@@ -66,9 +70,7 @@ const Table = ({ fields }) => {
         return values[id]
     }
   }
-
   return <div>123</div>
-
   return (
     <Viewer>
       {({ values }) => {
@@ -90,7 +92,7 @@ const Table = ({ fields }) => {
 
                 return (
                   <tr key={id}>
-                    {/* <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th> */}
+                    <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th>
                     <td style={{ textAlign: 'left', paddingLeft: '28px' }}>
                       {getValues({ values, type, id })}
                     </td>
