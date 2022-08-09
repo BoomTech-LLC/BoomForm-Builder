@@ -39,13 +39,13 @@ const Table = ({ fields }) => {
         }
         return scaleRating
       }
-      case 'signature': {
-        return values[id] ? (
-          <img width='100' height='30' src={values[id]} />
-        ) : (
-          ''
-        )
-      }
+      // case 'signature': {
+      //   return values[id] ? (
+      //     <img width='100' height='30' src={values[id]} />
+      //   ) : (
+      //     ''
+      //   )
+      // }
       case 'name':
       case 'price': {
         let name = ''
