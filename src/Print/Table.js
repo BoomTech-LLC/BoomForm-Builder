@@ -43,7 +43,7 @@ const Table = ({ fields }) => {
       }
       case 'signature': {
         return values[id] ? (
-          <img width='100' height='30' src={values[id]} />
+          <img width='100' height='30' src={values[id] && values[id].url} />
         ) : (
           ''
         )
