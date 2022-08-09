@@ -4,8 +4,6 @@ import { stripHtml } from './../Helpers/global'
 import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
-  console.log('Fields', fields)
-
   const getValues = ({ values, type, id }) => {
     console.log('getValues', values, type, id)
     switch (type) {
@@ -42,13 +40,13 @@ const Table = ({ fields }) => {
         }
         return scaleRating
       }
-      // case 'signature': {
-      //   return values[id] ? (
-      //     <img width='100' height='30' src={values[id]} />
-      //   ) : (
-      //     ''
-      //   )
-      // }
+      case 'signature': {
+        return values[id] ? (
+          <img width='100' height='30' src={values[id]} />
+        ) : (
+          ''
+        )
+      }
       case 'name':
       case 'price': {
         let name = ''
@@ -65,8 +63,7 @@ const Table = ({ fields }) => {
         return address
       }
       default:
-        // return values[id]
-        return 'kdsfjsdf'
+        return values[id]
     }
   }
 
@@ -91,7 +88,7 @@ const Table = ({ fields }) => {
 
                 return (
                   <tr key={id}>
-                    <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th>
+                    {/* <th style={{ textAlign: 'right' }}>{stripHtml(label)}</th> */}
                     <td style={{ textAlign: 'left', paddingLeft: '28px' }}>
                       {getValues({ values, type, id })}
                     </td>
