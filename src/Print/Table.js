@@ -66,7 +66,7 @@ const Table = ({ fields }) => {
       }
       default:
         // return values[id]
-        return undefined
+        return 'kdsfjsdf'
     }
   }
 
