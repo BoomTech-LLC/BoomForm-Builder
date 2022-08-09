@@ -4,9 +4,7 @@ import { stripHtml } from './../Helpers/global'
 import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
-  const allValues = useField()
   const allValues1 = useField([])
-  console.log(allValues)
   console.log(allValues1)
   1
   const getValues = ({ values, type, id }) => {
