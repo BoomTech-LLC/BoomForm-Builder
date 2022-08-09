@@ -4,7 +4,10 @@ import { stripHtml } from './../Helpers/global'
 import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
+  console.log('Fields', fields)
+
   const getValues = ({ values, type, id }) => {
+    console.log('getValues', values, type, id)
     switch (type) {
       case 'select': {
         if (values[id]?.key === 'placeholder') return ''
