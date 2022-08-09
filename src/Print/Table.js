@@ -1,12 +1,12 @@
-import React, { memo } from 'react'
-import { useField } from 'boomform'
+import React, { memo, useContext } from 'react'
+import { Context } from 'boomform'
 import { stripHtml } from './../Helpers/global'
 import countries from './../Helpers/countries'
 
 const Table = ({ fields }) => {
-  const allValues1 = useField([])
+  const allValues1 = useContext(Context)
   console.log(allValues1)
-  1
+
   const getValues = ({ values, type, id }) => {
     switch (type) {
       case 'select': {
