@@ -12,11 +12,7 @@ const Fields = ({
   updatableFields,
   payment
 }) => {
-  console.log(1, updatableFields)
-
   const data = useField(updatableFields)
-
-  console.log(2, data)
 
   const logicIds = getHiddenIds({
     logic,
@@ -24,10 +20,8 @@ const Fields = ({
     fields
   })
 
-  console.log(3, logicIds)
   const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-  console.log(4, printableFields)
   if (printableFields.length === 0) setCurrentPage((prev) => prev + 1)
 
   return (
