@@ -52,7 +52,8 @@ const SubmitButton = ({
         else console.log({ state, actions })
       } else {
         formRef.current.reportValidity()
-        if (onSubmitFailed) onSubmitFailed(state)
+        if (onSubmitFailed)
+          onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'))
       }
     }
   }

@@ -13,6 +13,16 @@ const App = () => {
       }}
       fields={[
         {
+          type: 'text',
+          id: 8,
+          placeholder: '',
+          label: "Textbox <span class='boomForm-field__label-star'>*</span>",
+          validation: {
+            HTMLValidate: true,
+            required: { msg: 'This field is required.' }
+          }
+        },
+        {
           type: 'singleChoice',
           id: 7,
           columns: 1,
@@ -26,29 +36,6 @@ const App = () => {
             HTMLValidate: true,
             required: { msg: 'This field is required.' }
           }
-        },
-        {
-          type: 'multipleChoice',
-          id: 10,
-          columns: 1,
-          options: [
-            {
-              key: 0,
-              value: 'option1',
-              label: 'option1',
-              price: '',
-              checked: false
-            },
-            {
-              key: 1,
-              value: 'option2',
-              label: 'option2',
-              price: '',
-              checked: false
-            }
-          ],
-          label: 'Select Some Choices',
-          validation: { HTMLValidate: true }
         }
       ]}
       button={{
