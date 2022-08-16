@@ -3,7 +3,7 @@ import { Radio } from 'boomform'
 import classNames from 'classnames'
 import { formatPrice } from './../../../../Helpers/payment'
 
-const Item = ({ id, option, payment, classnameprefix }) => {
+const Item = ({ id, option, payment, classnameprefix, validation }) => {
   const { key, label, value, checked, price } = option
 
   return (
@@ -13,7 +13,7 @@ const Item = ({ id, option, payment, classnameprefix }) => {
       })}
       key={`${id}.${key}`}
     >
-      <Radio id={id} value={value} initial={checked} />
+      <Radio id={id} value={value} initial={checked} validation={validation} />
       <span
         dangerouslySetInnerHTML={{
           __html:
