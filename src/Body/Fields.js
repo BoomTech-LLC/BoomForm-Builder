@@ -22,7 +22,12 @@ const Fields = ({
 
   const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-  if (printableFields.length === 0) setCurrentPage((prev) => prev + 1)
+  if (printableFields.length === 0) {
+    const { onPageChange } = pagination
+
+    setCurrentPage((prev) => prev + 1)
+    if (onPageChange) onPageChange()
+  }
 
   return (
     <div className='boomForm-fields'>

@@ -22,6 +22,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
 
   useEffect(() => {
     setCurrentPage(initial)
+    if (onPageChange) onPageChange()
   }, [initial])
 
   useEffect(() => {

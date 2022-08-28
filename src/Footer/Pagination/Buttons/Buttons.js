@@ -13,16 +13,22 @@ const Buttons = ({
   payment,
   logic
 }) => {
-  const { buttons, pages } = pagination
+  const { buttons, pages, onPageChange } = pagination
   const { prev = 'Prev', next = 'Next' } = buttons
   const { captcha } = global
 
   const handleNext = () => {
-    if (formRef.current.checkValidity()) setCurrentPage((prev) => prev + 1)
-    else formRef.current.reportValidity()
+    if (formRef.current.checkValidity()) {
+      setCurrentPage((prev) => prev + 1)
+
+      if (onPageChange) onPageChange()
+    } else formRef.current.reportValidity()
   }
 
-  const handlePrev = () => setCurrentPage((prev) => prev - 1)
+  const handlePrev = () => {
+    setCurrentPage((prev) => prev - 1)
+    if (onPageChange) onPageChange()
+  }
 
   return (
     <>
