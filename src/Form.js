@@ -12,7 +12,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
     onFirstRender = () => {},
     onDie = () => {}
   } = global
-  const { initial = 0, onPageChange } = pagination
+  const { initial = 0 } = pagination
 
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
@@ -22,7 +22,6 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
 
   useEffect(() => {
     setCurrentPage(initial)
-    if (onPageChange) onPageChange()
   }, [initial])
 
   useEffect(() => {
