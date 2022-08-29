@@ -9,7 +9,8 @@ const Body = ({
   isPagination,
   pagination,
   currentPage,
-  setCurrentPage
+  setCurrentPage,
+  global
 }) => {
   const { pages } = pagination
   const updatableFields = []
@@ -31,6 +32,7 @@ const Body = ({
       payment={payment}
       pagination={isPagination ? pages[currentPage].fields : []}
       setCurrentPage={setCurrentPage}
+      global={global}
     />
   )
 }

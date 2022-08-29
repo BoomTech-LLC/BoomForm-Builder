@@ -13,9 +13,9 @@ const Buttons = ({
   payment,
   logic
 }) => {
-  const { buttons, pages, onPageChange } = pagination
+  const { buttons, pages } = pagination
   const { prev = 'Prev', next = 'Next' } = buttons
-  const { captcha } = global
+  const { captcha, onPageChange } = global
 
   const handleNext = () => {
     if (formRef.current.checkValidity()) {

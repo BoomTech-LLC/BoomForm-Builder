@@ -14,8 +14,8 @@ const Numbers = ({
   payment,
   logic
 }) => {
-  const { pages, onPageChange } = pagination
-  const { captcha } = global
+  const { pages } = pagination
+  const { captcha, onPageChange } = global
 
   const handleSetPage = (index) => {
     if (index !== currentPage) {
