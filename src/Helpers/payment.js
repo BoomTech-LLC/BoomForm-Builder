@@ -142,5 +142,6 @@ export const getTotalPrice = ({ values, fields, fee, logic }) => {
       }
     }
   })
-  return sum
+
+  return Math.round((sum + Number.EPSILON) * 100) / 100
 }
