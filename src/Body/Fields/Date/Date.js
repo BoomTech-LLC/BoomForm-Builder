@@ -7,8 +7,11 @@ const Date = ({ validation = {}, ...props }) => {
     validation = {
       ...validation,
       custom: (value) => {
-        if (min?.value > value) return min?.msg
-        if (max?.value < value) return max?.msg
+        if (value) {
+          if (min?.value > value) return min?.msg
+          if (max?.value < value) return max?.msg
+        }
+        return false
       }
     }
   }
