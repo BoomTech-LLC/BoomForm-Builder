@@ -27,7 +27,7 @@ const DropDown = ({
       })
 
     set_Options(newOptions)
-  }, [])
+  }, [options])
 
   if (!_options) return null
 
