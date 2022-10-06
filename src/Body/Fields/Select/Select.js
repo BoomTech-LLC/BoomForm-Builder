@@ -27,7 +27,7 @@ const DropDown = ({
       })
 
     set_Options(newOptions)
-  }, [options])
+  }, [options,showPrices])
 
   if (!_options) return null
 
