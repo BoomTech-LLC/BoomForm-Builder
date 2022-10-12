@@ -4,7 +4,7 @@
   "description": "Simple Form Builder",
   "author": "BoomTechLLC",
   "license": "MIT",
-  "repository": "https://github.com/devboomtech/BoomForm-Builder",
+  "repository": "https://github.com/BoomTech-LLC/BoomForm-Builder",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
