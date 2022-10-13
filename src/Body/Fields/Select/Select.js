@@ -14,9 +14,9 @@ const DropDown = ({
   ...props
 }) => {
   const [_options, set_Options] = useState(null)
-
+  const { showPrices } = payment
   useEffect(() => {
-    const { showPrices } = payment
+    
     const newOptions = [...options]
 
     if (showPrices)
