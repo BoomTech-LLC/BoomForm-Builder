@@ -48,7 +48,7 @@ const Signature = (props) => {
       field: props
     })
   }
-console.log("renderrr",onRefSet);
+
   return (
     <Custom id={id} {...props}>
       {({ handleChange, handleBlur,value}) => {
