@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react'
+import React, { useState, useEffect, useCallback, useContext, Fragment } from 'react'
+import { Context } from 'boomform'
 import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
@@ -6,10 +7,14 @@ const Signature = (props) => {
   const { id, initial, validation } = props
 
   const [sigPadRef, setSigPadRef] = useState(null)
+  const { state } = useContext(Context);
 
   useEffect(() => {
     if (initial && sigPadRef) sigPadRef.fromData(initial.data)
-  }, [initial, sigPadRef])
+    if (state.values[id] === null) {
+      sigPadRef?.clear()
+    }
+  }, [initial, sigPadRef,state.values[id]])
 
   const onRefSet = useCallback((ref) => {
     setSigPadRef(ref)
