@@ -23,7 +23,7 @@ const SubmitButton = ({
 
   useEffect(() => {
     setTotal && setTotal(getTotalPrice({ values, fields, fee, logic }))
-  }, [state])
+  }, [state,total])
 
   if (hide) return null
 
