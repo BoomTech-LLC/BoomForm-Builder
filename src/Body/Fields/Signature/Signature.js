@@ -7,8 +7,10 @@ const Signature = (props) => {
 
   const [sigPadRef, setSigPadRef] = useState(null)
 
+
   useEffect(() => {
     if (initial && sigPadRef) sigPadRef.fromData(initial.data)
+   
   }, [initial, sigPadRef])
 
   const onRefSet = useCallback((ref) => {
@@ -49,7 +51,10 @@ const Signature = (props) => {
 
   return (
     <Custom id={id} {...props}>
-      {({ handleChange, handleBlur }) => {
+      {({ handleChange, handleBlur,value}) => {
+        if (value === null && !sigPadRef?.isEmpty()) {
+         sigPadRef?.clear()
+        }
         return (
           <div onClick={() => handleOnBlur(handleBlur)}>
             <SignatureCanvas
