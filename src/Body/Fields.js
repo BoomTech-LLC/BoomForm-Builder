@@ -22,9 +22,9 @@ const Fields = ({
     fields
   })
 
-  const printableFields = getPrintableFields(fields, logicIds, pagination,isPagination)
+  const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-  if (printableFields.length === 0) {
+  if (printableFields.length === 0 && !isPagination) {
     const { onPageChange } = global
 
     setCurrentPage((prev) => prev + 1)
