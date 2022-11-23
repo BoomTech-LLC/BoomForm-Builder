@@ -11,7 +11,8 @@ const Fields = ({
   setCurrentPage,
   updatableFields,
   payment,
-  global
+  global,
+  isPagination
 }) => {
   const data = useField(updatableFields)
 
@@ -21,7 +22,7 @@ const Fields = ({
     fields
   })
 
-  const printableFields = getPrintableFields(fields, logicIds, pagination)
+  const printableFields = getPrintableFields(fields, logicIds, pagination,isPagination)
 
   if (printableFields.length === 0) {
     const { onPageChange } = global

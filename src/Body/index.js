@@ -33,6 +33,7 @@ const Body = ({
       pagination={isPagination ? pages[currentPage].fields : []}
       setCurrentPage={setCurrentPage}
       global={global}
+      isPagination={isPagination}
     />
   )
 }

@@ -1,10 +1,11 @@
-export const getPrintableFields = (fields, logic = [], pagination = []) => {
+export const getPrintableFields = (fields, logic = [], pagination = [],isPagination) => {
   if (fields) {
     const printableFields = fields.flatMap(({ id }) =>
       !logic.includes(id) ? id : []
     )
     return [printableFields, pagination].reduce((a, c) => {
-      if (!c.length) return a
+      if (!isPagination) return a
+      if(isPagination && !c.length) return ['emptyPage']
       return a.filter((i) => c.includes(i))
     })
   } else return []
