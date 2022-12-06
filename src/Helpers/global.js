@@ -51,3 +51,9 @@ export const stripHtml = (label) => {
   tmp.innerHTML = label
   return tmp.textContent || tmp.innerText || ''
 }
+
+export const isIphone = () => {
+  if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+
+  return /iPhone/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
+};

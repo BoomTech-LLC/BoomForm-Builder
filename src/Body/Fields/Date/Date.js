@@ -1,5 +1,6 @@
 import React from 'react'
 import { Input } from 'boomform'
+import { isIphone } from '../../../Helpers/global'
 
 const Date = ({ validation = {}, ...props }) => {
   const { min, max } = validation
@@ -15,6 +16,14 @@ const Date = ({ validation = {}, ...props }) => {
       }
     }
   }
+  const handleChange = ({ ref }) => {
+    if (isIphone()) {
+      setTimeout(() => {
+        ref.current.value = '';
+        
+      })
+}
+  }
   return (
     <Input
       {...props}
@@ -22,6 +31,7 @@ const Date = ({ validation = {}, ...props }) => {
       validation={validation}
       min={min?.value}
       max={max?.value}
+      onChange={handleChange}
     />
   )
 }
