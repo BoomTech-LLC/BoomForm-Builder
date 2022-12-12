@@ -17,7 +17,7 @@ const Fields = ({
   formRef
 }) => {
   const data = useField(updatableFields)
-console.log(formRef);
+
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
