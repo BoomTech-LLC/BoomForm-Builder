@@ -1,5 +1,6 @@
 import React from 'react'
 import { Input } from 'boomform'
+import { iphoneCheck } from '../../../Helpers/global'
 
 const Date = ({ validation = {}, ...props }) => {
   const { min, max } = validation
@@ -16,10 +17,13 @@ const Date = ({ validation = {}, ...props }) => {
     }
   }
 
-  const handleChange = ({ ref, event }) => {
-    setTimeout(() => {
-      event.target.defaultValue = ''
-    }, 100)
+  const handleChange = ({ event }) => {
+    if (iphoneCheck()) {
+      setTimeout(() => {
+        event.target.defaultValue = ''
+      }, 100)
+    }
+ 
   }
 
   return (

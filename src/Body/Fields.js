@@ -14,9 +14,10 @@ const Fields = ({
   global,
   pages,
   currentPage,
+  formRef
 }) => {
   const data = useField(updatableFields)
-
+console.log(formRef);
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
@@ -32,7 +33,7 @@ const Fields = ({
     if (onPageChange) onPageChange()
   }
   useEffect(() => {
-    const formElement = document.querySelector('form');
+   
     const submitHandler = (e) => {
       if (printableFields.length === 1 && currentPage < pages.length - 1) {
         e.preventDefault();
@@ -41,9 +42,9 @@ const Fields = ({
         }
       }
     }
-    formElement?.addEventListener('submit', submitHandler)
+   formRef?.current.addEventListener('submit', submitHandler)
     return () => {
-      formElement.removeEventListener('submit',submitHandler)
+      formRef?.current.removeEventListener('submit',submitHandler)
     }
   }, [])
 
