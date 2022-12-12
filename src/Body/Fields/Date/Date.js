@@ -15,6 +15,13 @@ const Date = ({ validation = {}, ...props }) => {
       }
     }
   }
+
+  const handleChange = ({ ref, event }) => {
+    setTimeout(() => {
+      event.target.defaultValue = ''
+    }, 100)
+  }
+
   return (
     <Input
       {...props}
@@ -22,6 +29,7 @@ const Date = ({ validation = {}, ...props }) => {
       validation={validation}
       min={min?.value}
       max={max?.value}
+      onChange={handleChange}
     />
   )
 }
