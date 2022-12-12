@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import { useField } from 'boomform'
 import Field from './Field'
 import { getPrintableFields } from './../Helpers/global'
@@ -11,7 +11,10 @@ const Fields = ({
   setCurrentPage,
   updatableFields,
   payment,
-  global
+  global,
+  pages,
+  currentPage,
+  formRef
 }) => {
   const data = useField(updatableFields)
 
@@ -23,12 +26,27 @@ const Fields = ({
 
   const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-  if (printableFields.length === 0) {
+  if (printableFields.length === 0 && pages.length - 1 > currentPage) {
     const { onPageChange } = global
 
     setCurrentPage((prev) => prev + 1)
     if (onPageChange) onPageChange()
   }
+  useEffect(() => {
+   
+    const submitHandler = (e) => {
+      if (printableFields.length === 1 && currentPage < pages.length - 1) {
+        e.preventDefault();
+        if (pages.length - 1 > currentPage) {
+          setCurrentPage(prev => prev + 1)
+        }
+      }
+    }
+   formRef?.current.addEventListener('submit', submitHandler)
+    return () => {
+      formRef?.current.removeEventListener('submit',submitHandler)
+    }
+  }, [])
 
   return (
     <div className='boomForm-fields'>

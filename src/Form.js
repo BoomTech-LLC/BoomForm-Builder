@@ -51,6 +51,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         setCurrentPage={setCurrentPage}
         payment={payment}
         global={global}
+        formRef={formRef}
       />
       <Footer
         formRef={formRef}
