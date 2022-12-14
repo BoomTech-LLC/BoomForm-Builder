@@ -20,7 +20,7 @@
   <p align="center">
     Building a form is as easy as making coffee. :coffee:
     <br />
-    <a href="https://form-builder.boomform.com"><strong>Explore the docs »</strong></a>
+    <a href="https://boomform-builder.boomform.com/"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://codesandbox.io/s/stoic-darkness-e34ej">View Demo</a>
@@ -38,7 +38,7 @@
 😎 It’s pretty simple. <br />
 You just need to pass an object with the parameters you want and the form builder will automatically create all fields for you. 
 
-[Full documentation here](https://form-builder.boomform.com)
+[Full documentation here](https://boomform-builder.boomform.com/)
 
 ## Code Example
 
