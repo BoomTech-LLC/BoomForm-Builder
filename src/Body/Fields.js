@@ -16,7 +16,7 @@ const Fields = ({
   currentPage,
   formRef
 }) => {
-  const ref = useRef(currentPage)
+  const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
 
   const logicIds = getHiddenIds({
@@ -30,12 +30,12 @@ const Fields = ({
   if (printableFields.length === 0 && pages.length - 1 > currentPage) {
     const { onPageChange } = global
 
-    if (ref.current < currentPage) {
+    if (prevCurrent.current < currentPage) {
       setCurrentPage((prev) => prev + 1)
-      ref.current = currentPage + 1
+      prevCurrent.current = currentPage + 1
     } else {
       setCurrentPage((prev) => prev - 1)
-      ref.current = currentPage - 1
+      prevCurrent.current = currentPage - 1
     }
 
     if (onPageChange) onPageChange()
