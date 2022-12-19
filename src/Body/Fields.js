@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import { useField } from 'boomform'
 import Field from './Field'
 import { getPrintableFields } from './../Helpers/global'
@@ -16,6 +16,7 @@ const Fields = ({
   currentPage,
   formRef
 }) => {
+  const ref = useRef(currentPage)
   const data = useField(updatableFields)
 
   const logicIds = getHiddenIds({
@@ -29,22 +30,29 @@ const Fields = ({
   if (printableFields.length === 0 && pages.length - 1 > currentPage) {
     const { onPageChange } = global
 
-    setCurrentPage((prev) => prev + 1)
+    if (ref.current < currentPage) {
+      setCurrentPage((prev) => prev + 1)
+      ref.current = currentPage + 1
+    } else {
+      setCurrentPage((prev) => prev - 1)
+      ref.current = currentPage - 1
+    }
+
     if (onPageChange) onPageChange()
   }
+
   useEffect(() => {
-   
     const submitHandler = (e) => {
       if (printableFields.length === 1 && currentPage < pages.length - 1) {
-        e.preventDefault();
+        e.preventDefault()
         if (pages.length - 1 > currentPage) {
-          setCurrentPage(prev => prev + 1)
+          setCurrentPage((prev) => prev + 1)
         }
       }
     }
-   formRef?.current.addEventListener('submit', submitHandler)
+    formRef?.current.addEventListener('submit', submitHandler)
     return () => {
-      formRef?.current.removeEventListener('submit',submitHandler)
+      formRef?.current.removeEventListener('submit', submitHandler)
     }
   }, [])
 
