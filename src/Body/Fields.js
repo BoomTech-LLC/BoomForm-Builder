@@ -24,22 +24,22 @@ const Fields = ({
     values: data?.neededValues ? data?.neededValues : {},
     fields
   })
-
+  
   const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-  if (printableFields.length === 0 && pages.length - 1 > currentPage) {
-    const { onPageChange } = global
-
-    if (prevCurrent.current < currentPage) {
-      setCurrentPage((prev) => prev + 1)
-      prevCurrent.current = currentPage + 1
-    } else {
-      setCurrentPage((prev) => prev - 1)
-      prevCurrent.current = currentPage - 1
+    if (printableFields.length === 0 && pages.length - 1 > currentPage) {
+      const { onPageChange } = global
+ 
+      if (prevCurrent.current < currentPage) {
+        setCurrentPage((prev) => prev + 1)
+        prevCurrent.current = currentPage
+      } else {
+        setCurrentPage((prev) => prev - 1)
+        prevCurrent.current = prevCurrent.current - 1
+      }
+  
+      if (onPageChange) onPageChange()
     }
-
-    if (onPageChange) onPageChange()
-  }
 
   useEffect(() => {
     const submitHandler = (e) => {
