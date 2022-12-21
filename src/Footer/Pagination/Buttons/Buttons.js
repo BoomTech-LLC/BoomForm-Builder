@@ -11,7 +11,8 @@ const Buttons = ({
   currentPage,
   setCurrentPage,
   payment,
-  logic
+  logic,
+  prevCurrent
 }) => {
   const { buttons, pages } = pagination
   const { prev = 'Prev', next = 'Next' } = buttons
@@ -20,13 +21,14 @@ const Buttons = ({
   const handleNext = () => {
     if (formRef.current.checkValidity()) {
       setCurrentPage((prev) => prev + 1)
-
+      prevCurrent.current = currentPage
       if (onPageChange) onPageChange()
     } else formRef.current.reportValidity()
   }
 
   const handlePrev = () => {
     setCurrentPage((prev) => prev - 1)
+    prevCurrent.current = currentPage
     if (onPageChange) onPageChange()
   }
 

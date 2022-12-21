@@ -14,9 +14,10 @@ const Fields = ({
   global,
   pages,
   currentPage,
-  formRef
+  formRef,
+  prevCurrent,
 }) => {
-  const prevCurrent = useRef(currentPage)
+
   const data = useField(updatableFields)
 
   const logicIds = getHiddenIds({

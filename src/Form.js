@@ -13,10 +13,9 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
     onDie = () => {}
   } = global
   const { initial = 0 } = pagination
-
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
-
+  const prevCurrent = useRef(currentPage);
   const isPagination = Object.keys(pagination).length !== 0
   const isLogic = logic.length !== 0
 
@@ -52,6 +51,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         payment={payment}
         global={global}
         formRef={formRef}
+        prevCurrent={prevCurrent}
       />
       <Footer
         formRef={formRef}
@@ -64,6 +64,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         setCurrentPage={setCurrentPage}
         payment={payment}
         logic={logic}
+        prevCurrent={prevCurrent}
       />
 
       <StateHandler
