@@ -12,7 +12,8 @@ const Numbers = ({
   currentPage,
   setCurrentPage,
   payment,
-  logic
+  logic,
+  prevCurrent
 }) => {
   const { pages } = pagination
   const { captcha, onPageChange } = global
@@ -24,12 +25,14 @@ const Numbers = ({
 
         if (currentStep === index) {
           setCurrentPage(index)
+          prevCurrent.current = currentPage;
           if (onPageChange) onPageChange()
           return null
         }
 
         if (formRef.current.checkValidity()) {
           setCurrentPage(currentStep + 1)
+          prevCurrent.current = currentPage
           if (onPageChange) onPageChange()
           setTimeout(() => stepByStepChange(currentStep + 1), 0)
         } else formRef.current.reportValidity()
