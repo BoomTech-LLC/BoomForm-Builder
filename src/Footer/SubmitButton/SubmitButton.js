@@ -28,7 +28,8 @@ const SubmitButton = ({
   if (hide) return null
 
   const canSubmit = () => {
-    let isDisabled = true;
+    console.log("===============================================");
+   
     for (let i = 0; i < fields.length; i++){
       if (fields[i].type === 'file') {
         const filesArray = values[fields[i].id];  
@@ -36,18 +37,17 @@ const SubmitButton = ({
           for (let j = 0; j < filesArray.length; j++){
             let { percentage } = filesArray[j];
             if (percentage < 100 && !filesArray[j]['responce']) {  
-              isDisabled = false;
-            } else if(filesArray[j].precentage === 100 && filesArray[j]['responce']){
-              isDisabled = true;
-            }
+              return false
+            } 
           }
         }
     
       }
     }
-    return isDisabled
+    
+    return true
   }
-  
+
   const handleClick = (e) => {
     e.preventDefault()
     if (canSubmit()) {
