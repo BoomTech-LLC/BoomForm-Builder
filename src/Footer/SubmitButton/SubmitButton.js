@@ -28,19 +28,21 @@ const SubmitButton = ({
   if (hide) return null
 
   const canSubmit = () => {
-    const fileIds = []
-    fields.map((field) => {
-      if (field.type === 'file') {
-        fileIds.push(field.id)
-      }
-    })
-
-    for (let i in fileIds) {
-      if (values[fileIds] && !values[fileIds][i]['responce']) {
-        return false
+    
+    for (let i = 0; i < fields.length; i++){
+      if (fields[i].type === 'file') {
+        const filesArray = values[fields[i].id];  
+        if (filesArray) {
+          for (let j = 0; j < filesArray.length; j++){
+            let { percentage } = filesArray[j];
+            if (percentage < 100 && !filesArray[j]['responce']) {  
+              return false
+            } 
+          }
+        }
+    
       }
     }
-
     return true
   }
 
