@@ -28,8 +28,7 @@ const SubmitButton = ({
   if (hide) return null
 
   const canSubmit = () => {
-    console.log("===============================================");
-   
+    
     for (let i = 0; i < fields.length; i++){
       if (fields[i].type === 'file') {
         const filesArray = values[fields[i].id];  
@@ -44,7 +43,6 @@ const SubmitButton = ({
     
       }
     }
-    
     return true
   }
 
