@@ -39,8 +39,7 @@ const Preview = ({ id, name, percentage, src, handleRemove, responce ,videoType,
           <span
             className='boomFileUpload-fileRemove__btn'
             onClick={onRemove}
-            style={{ backgroundColor: 'red', cursor:'pointer'}}
-          >X</span>
+          ></span>
         </>
       )}
     </div>
