@@ -12,6 +12,8 @@ const List = ({ value, handleRemove }) => {
         responce={responce}
         src={type && type.startsWith('image/') && URL.createObjectURL(file)}
         handleRemove={handleRemove}
+        videoType={type && type.startsWith('video/') && URL.createObjectURL(file)}
+        type={type}
       />
     )
   })

@@ -18,7 +18,7 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
-
+  const deleteFileIds = useRef([]);
   return (
     <Custom id={id} validation={validation} {...props}>
       {({ handleChange, value }) => {
@@ -27,30 +27,34 @@ const File = ({
             newValues.map((newValue) => {
               if (newValue.id === fileId) newValue.responce = responce
             })
+     
+            const newFilesArray = newValues.filter((file) => !deleteFileIds?.current?.includes(file.id));
             handleChange({
               id,
-              value: newValues
+              value: newFilesArray
             })
           } else {
             const incorrectFile = newValues.find((item) => item.id === fileId)
             const _newValues = newValues.filter((item) => item.id !== fileId)
+            const newFilesArray = _newValues.filter((file) => !deleteFileIds?.current?.includes(file.id));
             handleChange({
               id,
-              value: _newValues
+              value: newFilesArray
             })
             alert(
               `We are unable to upload your file named ${incorrectFile.name}. Please if it’s possible try to rename it, otherwise contact us.`
             )
           }
         }
-
+  
         const handleLoading = (fileId, percentage, newValues) => {
-          newValues.map((newValue) => {
+          const newFilesArray = newValues.filter((file) => !deleteFileIds?.current?.includes(file.id));
+          newFilesArray.map((newValue) => {
             if (newValue.id === fileId) newValue.percentage = percentage
-          })
+          })   
           handleChange({
             id,
-            value: newValues
+            value: newFilesArray
           })
         }
 
@@ -62,8 +66,10 @@ const File = ({
             dropbox,
             handleCallback,
             handleLoading,
-            newValues
+            newValues,
+            deleteFileIds,
           )
+    
           handleChange({
             id: id,
             value: newValues
@@ -83,6 +89,7 @@ const File = ({
 
         const handleRemove = (fileId) => {
           const _value = value.filter((file) => file.id !== fileId)
+          deleteFileIds.current.push(fileId)
           if (_value && _value.length) handleChange({ id, value: [..._value] })
           else handleChange({ id, value: null })
         }

@@ -14,7 +14,7 @@ const addAdditionalParams = (file, i) => {
   return newFile
 }
 
-const uploadFile = (file, dropbox, callback, handleLoading, newValues) => {
+const uploadFile = (file, dropbox, callback, handleLoading, newValues,deleteFileIds) => {
   const { headers: dropBoxHeaders, dropboxAPIArg, url } = dropbox
   const { path } = dropboxAPIArg
   const headers = {
@@ -24,10 +24,15 @@ const uploadFile = (file, dropbox, callback, handleLoading, newValues) => {
       path: `${path}/${file.name}`
     })
   }
-
+  const CanselToken = axios.CancelToken
+  const source = CanselToken.source();
   axios
     .post(url, file, {
+      cancelToken: source.token,
       onUploadProgress: (event) => {
+        if (deleteFileIds?.current?.includes(file.id)) {
+          source.cancel()
+        }
         handleLoading(
           file.id,
           Math.round((100 * event.loaded) / event.total),
@@ -57,8 +62,9 @@ export const uploadFiles = (
   dropbox,
   callback,
   handleLoading,
-  newValues
+  newValues,
+  deleteFileIds,
 ) => {
   for (let i = 0; i < files.length; i++)
-    uploadFile(files[i], dropbox, callback, handleLoading, newValues)
+    uploadFile(files[i], dropbox, callback, handleLoading, newValues,deleteFileIds)
 }
