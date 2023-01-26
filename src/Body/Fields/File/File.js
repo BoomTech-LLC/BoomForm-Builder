@@ -23,14 +23,10 @@ const File = ({
   const [newValues, setNewValues] = useState(null);
 
   useEffect(() => {
-    if (newValues) {
-      for (let i = 0; i < newValues.length; i++){
-        if (deleteFileIds.includes(newValues[i].id) && !newValues[i].responce) {
-          source.cancel()
-        }
-      }
-    }
-   
+    if (newValues)
+      for (let i = 0; i < newValues.length; i++)
+        if (deleteFileIds.includes(newValues[i].id) && !newValues[i].responce)
+          source.cancel()  
   }, [deleteFileIds,newValues])
 
   return (
