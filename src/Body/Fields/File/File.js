@@ -114,7 +114,7 @@ const File = ({
           <>
             <div>
               <div className='boomFileUpload-file__content'>
-                {value && <List value={value} handleRemove={handleRemove} deleteFileIds={ deleteFileIds} />}
+                {value && <List value={value} handleRemove={handleRemove} />}
                 {isMultiple || (!isMultiple && (!value || !value.length)) ? (
                   <div
                     className='boomFileUpload-drop__content'
