@@ -1,6 +1,6 @@
 import axios from 'axios'
-const CanselToken = axios.CancelToken
-export const source = CanselToken.source();
+const CancelToken = axios.CancelToken
+export const source = CancelToken.source();
 
 
 const addAdditionalParams = (file, i) => {
