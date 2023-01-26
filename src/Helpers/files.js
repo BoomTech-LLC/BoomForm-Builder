@@ -1,4 +1,7 @@
 import axios from 'axios'
+const CanselToken = axios.CancelToken
+export const source = CanselToken.source();
+
 
 const addAdditionalParams = (file, i) => {
   const extension = file.name.split('.').pop()
@@ -24,15 +27,11 @@ const uploadFile = (file, dropbox, callback, handleLoading, newValues,deleteFile
       path: `${path}/${file.name}`
     })
   }
-  const CanselToken = axios.CancelToken
-  const source = CanselToken.source();
+  
   axios
     .post(url, file, {
       cancelToken: source.token,
       onUploadProgress: (event) => {
-        if (deleteFileIds?.current?.includes(file.id)) {
-          source.cancel()
-        }
         handleLoading(
           file.id,
           Math.round((100 * event.loaded) / event.total),

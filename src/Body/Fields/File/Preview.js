@@ -12,7 +12,7 @@ const Preview = ({ id, name, percentage, src, handleRemove, responce ,videoType,
       if (typeof videoTage.canPlayType == 'function') {
         return (
           <div>
-            <video className='boomFile_upload-vide-tag'>
+            <video className='boomFile_upload-video-tag'>
               <source src={videoType} type={type} />
            </video>
          </div>

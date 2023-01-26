@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { uploadFiles, correctFiles } from './../../../Helpers/files'
 import List from './List'
-import { Custom, Input } from 'boomform'
+import { Custom, Input, useField } from 'boomform'
+import { source } from './../../../Helpers/files'
 
 const File = ({
   id,
@@ -18,7 +19,21 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
-  const deleteFileIds = useRef([]);
+  const [deleteFileIds, setDeleteFileIds] = useState([]);
+  const [newValues, setNewValues] = useState(null);
+  const {neededValues} = useField([id]);
+
+  useEffect(() => {
+    if (newValues) {
+      for (let i = 0; i < newValues.length; i++){
+        if (deleteFileIds.includes(newValues[i].id) && !newValues[i].responce) {
+          source.cancel()
+        }
+      }
+    }
+   
+  }, [deleteFileIds,newValues])
+
   return (
     <Custom id={id} validation={validation} {...props}>
       {({ handleChange, value }) => {
@@ -27,8 +42,7 @@ const File = ({
             newValues.map((newValue) => {
               if (newValue.id === fileId) newValue.responce = responce
             })
-     
-            const newFilesArray = newValues.filter((file) => !deleteFileIds?.current?.includes(file.id));
+            const newFilesArray = newValues.filter((file) => !deleteFileIds.includes(file.id));
             handleChange({
               id,
               value: newFilesArray
@@ -36,7 +50,7 @@ const File = ({
           } else {
             const incorrectFile = newValues.find((item) => item.id === fileId)
             const _newValues = newValues.filter((item) => item.id !== fileId)
-            const newFilesArray = _newValues.filter((file) => !deleteFileIds?.current?.includes(file.id));
+            const newFilesArray = _newValues.filter((file) => !deleteFileIds.includes(file.id));
             handleChange({
               id,
               value: newFilesArray
@@ -48,7 +62,7 @@ const File = ({
         }
   
         const handleLoading = (fileId, percentage, newValues) => {
-          const newFilesArray = newValues.filter((file) => !deleteFileIds?.current?.includes(file.id));
+          const newFilesArray = newValues.filter((file) => !deleteFileIds.includes(file.id));
           newFilesArray.map((newValue) => {
             if (newValue.id === fileId) newValue.percentage = percentage
           })   
@@ -61,6 +75,7 @@ const File = ({
         const acceptFiles = (files) => {
           const newFiles = correctFiles(files)
           const newValues = value ? [...value, ...newFiles] : newFiles
+          setNewValues(newValues)
           uploadFiles(
             newFiles,
             dropbox,
@@ -89,7 +104,8 @@ const File = ({
 
         const handleRemove = (fileId) => {
           const _value = value.filter((file) => file.id !== fileId)
-          deleteFileIds.current.push(fileId)
+          deleteFileIds.push(fileId)
+          setDeleteFileIds([...deleteFileIds]);
           if (_value && _value.length) handleChange({ id, value: [..._value] })
           else handleChange({ id, value: null })
         }
@@ -98,7 +114,7 @@ const File = ({
           <>
             <div>
               <div className='boomFileUpload-file__content'>
-                {value && <List value={value} handleRemove={handleRemove} />}
+                {value && <List value={value} handleRemove={handleRemove} deleteFileIds={ deleteFileIds} />}
                 {isMultiple || (!isMultiple && (!value || !value.length)) ? (
                   <div
                     className='boomFileUpload-drop__content'
