@@ -1,4 +1,9 @@
 import axios from 'axios'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+
+const CancelToken = axios.CancelToken
+const source = [];
+let del = [];
 
 const addAdditionalParams = (file, i) => {
   const extension = file.name.split('.').pop()
@@ -24,10 +29,17 @@ const uploadFile = (file, dropbox, callback, handleLoading, newValues) => {
       path: `${path}/${file.name}`
     })
   }
-
+  source[file.id] = CancelToken.source()
   axios
     .post(url, file, {
+      cancelToken: source[file.id].token,
       onUploadProgress: (event) => {
+        console.log(newValues,"35435")
+       console.log(del, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"); 
+         newValues = newValues.filter((file) => !del.includes(file.id))
+         console.log(newValues, "bbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        
+        
         handleLoading(
           file.id,
           Math.round((100 * event.loaded) / event.total),
@@ -44,6 +56,10 @@ const uploadFile = (file, dropbox, callback, handleLoading, newValues) => {
     .catch((error) => callback(file.id, 0, error, newValues))
 }
 
+export const cancelUpload = (fileId) => {
+  del = [...del, fileId];
+  source[fileId] && source[fileId].cancel()
+}
 export const correctFiles = (files) => {
   let newFiles = []
   for (let i = 0; i < files.length; i++)

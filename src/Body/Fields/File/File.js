@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { uploadFiles, correctFiles } from './../../../Helpers/files'
+import { uploadFiles, correctFiles, cancelUpload } from './../../../Helpers/files'
 import List from './List'
 import { Custom, Input } from 'boomform'
 
@@ -18,6 +18,11 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
+  const [deleteFile, setDeleteFile] = useState(null);
+
+  useEffect(() => {
+    deleteFile && cancelUpload(deleteFile)
+  }, [deleteFile])
 
   return (
     <Custom id={id} validation={validation} {...props}>
@@ -83,6 +88,7 @@ const File = ({
 
         const handleRemove = (fileId) => {
           const _value = value.filter((file) => file.id !== fileId)
+          setDeleteFile(fileId);
           if (_value && _value.length) handleChange({ id, value: [..._value] })
           else handleChange({ id, value: null })
         }
@@ -104,7 +110,7 @@ const File = ({
                     <div className='boomFileUpload-input__content'>
                       {inputContent ||
                         `Drag File${isMultiple ? `s` : ``} or Click to Browse`}
-                    </div>
+                    </div> {deleteFile}
                     <input
                       ref={fileInputRef}
                       multiple={isMultiple}

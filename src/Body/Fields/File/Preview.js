@@ -12,17 +12,12 @@ const Preview = ({ id, name, percentage, src, handleRemove, responce }) => {
   return (
     <div className='boomFileUpload__preview'>
       {img}
-      {percentage && !responce ? (
-        <progress value={percentage} max='100'></progress>
-      ) : (
-        <>
-          <span className='boomFileUpload-file__name'>{name}</span>
-          <span
-            className='boomFileUpload-fileRemove__btn'
-            onClick={onRemove}
-          ></span>
-        </>
-      )}
+      {percentage && !responce && <progress value={percentage} max='100' className='boomFileUpload-progress'></progress>}
+      <span className='boomFileUpload-file__name'>{name}</span>
+      <span
+        className='boomFileUpload-fileRemove__btn'
+        onClick={onRemove}
+      >x</span>      
     </div>
   )
 }
