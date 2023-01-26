@@ -21,7 +21,6 @@ const File = ({
   const fileInputRef = useRef(null)
   const [deleteFileIds, setDeleteFileIds] = useState([]);
   const [newValues, setNewValues] = useState(null);
-  const {neededValues} = useField([id]);
 
   useEffect(() => {
     if (newValues) {
