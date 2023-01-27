@@ -18,6 +18,7 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
+  const [loadings, setLoadings] = useState({})
 
   return (
     <Custom id={id} validation={validation} {...props}>
@@ -44,14 +45,9 @@ const File = ({
           }
         }
 
-        const handleLoading = (fileId, percentage, newValues) => {
-          newValues.map((newValue) => {
-            if (newValue.id === fileId) newValue.percentage = percentage
-          })
-          handleChange({
-            id,
-            value: newValues
-          })
+
+        const handleLoading = (fileId, percentage) => {
+          setLoadings(prev => ({...prev, [fileId]: percentage}))
         }
 
         const acceptFiles = (files) => {
@@ -91,7 +87,7 @@ const File = ({
           <>
             <div>
               <div className='boomFileUpload-file__content'>
-                {value && <List value={value} handleRemove={handleRemove} />}
+                {value && <List value={value} loadings={loadings} handleRemove={handleRemove} />}
                 {isMultiple || (!isMultiple && (!value || !value.length)) ? (
                   <div
                     className='boomFileUpload-drop__content'
