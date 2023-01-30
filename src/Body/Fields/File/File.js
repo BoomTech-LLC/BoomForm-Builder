@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { uploadFiles, correctFiles } from './../../../Helpers/files'
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { uploadFiles, correctFiles, ABORT_CONTROLLERS, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
 import List from './List'
-import { Custom, Input, useField } from 'boomform'
-import { source } from './../../../Helpers/files'
+import { Input } from 'boomform'
 
 const File = ({
   id,
@@ -19,102 +18,82 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
-  const [deleteFileIds, setDeleteFileIds] = useState([]);
-  const [newValues, setNewValues] = useState(null);
-  const {neededValues} = useField([id]);
+  const [fileList, setFileList] = useState([])
+  const [canselRequestId, setCanselRequestId] = useState('')
 
   useEffect(() => {
-    if (newValues) {
-      for (let i = 0; i < newValues.length; i++){
-        if (deleteFileIds.includes(newValues[i].id) && !newValues[i].responce) {
-          source.cancel()
-        }
-      }
-    }
-   
-  }, [deleteFileIds,newValues])
-
-  return (
-    <Custom id={id} validation={validation} {...props}>
-      {({ handleChange, value }) => {
-        const handleCallback = (fileId, status, responce, newValues) => {
-          if (status === 200) {
-            newValues.map((newValue) => {
-              if (newValue.id === fileId) newValue.responce = responce
-            })
-            const newFilesArray = newValues.filter((file) => !deleteFileIds.includes(file.id));
-            handleChange({
-              id,
-              value: newFilesArray
-            })
-          } else {
-            const incorrectFile = newValues.find((item) => item.id === fileId)
-            const _newValues = newValues.filter((item) => item.id !== fileId)
-            const newFilesArray = _newValues.filter((file) => !deleteFileIds.includes(file.id));
-            handleChange({
-              id,
-              value: newFilesArray
-            })
-            alert(
-              `We are unable to upload your file named ${incorrectFile.name}. Please if it’s possible try to rename it, otherwise contact us.`
-            )
-          }
-        }
+    ABORT_REQUEST_CONTROLLERS.get(canselRequestId)?.abort()
+    window._handleChange({ id, value: fileList.length === 0 ? null : fileList })
+  }, [fileList, canselRequestId])
   
-        const handleLoading = (fileId, percentage, newValues) => {
-          const newFilesArray = newValues.filter((file) => !deleteFileIds.includes(file.id));
-          newFilesArray.map((newValue) => {
-            if (newValue.id === fileId) newValue.percentage = percentage
-          })   
-          handleChange({
-            id,
-            value: newFilesArray
-          })
+  const handleCallback = (fileId,status,responce,fileName) => {
+    if (status === 200) {
+      setFileList((prev) => prev.map((file) => {
+        if (fileId === file.id) {
+          file.responce = responce
+          return file
+        } else {
+          return file
         }
+        }))
+    }
+    if (responce?.message === 'canceled') {
+     alert(`You are canseled ${fileName} file upload`)
+    } else if (status === 0) {
+      const incorrectFile = fileList.find((item) => item.id === fileId)
+      alert(
+        `We are unable to upload your file named ${incorrectFile.name}. Please if it’s possible try to rename it, otherwise contact us.`
+      )
+    } 
+  }
 
-        const acceptFiles = (files) => {
-          const newFiles = correctFiles(files)
-          const newValues = value ? [...value, ...newFiles] : newFiles
-          setNewValues(newValues)
-          uploadFiles(
-            newFiles,
-            dropbox,
-            handleCallback,
-            handleLoading,
-            newValues,
-            deleteFileIds,
-          )
-    
-          handleChange({
-            id: id,
-            value: newValues
-          })
+  const handleLoading = (fileId, percentage) => {
+ 
+    setFileList((prev) => {
+      return prev.map((file) => {
+        if (fileId === file.id) {
+          file.percentage = percentage
+          return file
+        } else {
+          return file
         }
+      })
+    })
+  }
 
-        const handleFileUpload = (e) => {
-          const files = e.target.files
-          acceptFiles(files)
-        }
+  const acceptFiles = (files) => {
 
-        const handleFileDrop = (e) => {
-          e.preventDefault()
-          const files = e.dataTransfer.files
-          acceptFiles(files)
-        }
+    const newFiles = correctFiles(files)
+    setFileList((prev) => [...prev, ...newFiles])
 
-        const handleRemove = (fileId) => {
-          const _value = value.filter((file) => file.id !== fileId)
-          deleteFileIds.push(fileId)
-          setDeleteFileIds([...deleteFileIds]);
-          if (_value && _value.length) handleChange({ id, value: [..._value] })
-          else handleChange({ id, value: null })
-        }
+    uploadFiles(
+      newFiles,
+      dropbox,
+      handleCallback,
+      handleLoading,
+    )
+  }
 
+  const handleFileUpload = (e) => {
+    const files = e.target.files
+    acceptFiles(files)
+  }
+
+  const handleFileDrop = (e) => {
+    e.preventDefault()
+    const files = e.dataTransfer.files
+    acceptFiles(files)
+  }
+
+  const handleRemove = (fileId) => {
+    setFileList((prev) => prev.filter((file) => fileId !== file.id))
+    setCanselRequestId(fileId) 
+  }
         return (
           <>
             <div>
               <div className='boomFileUpload-file__content'>
-                {value && <List value={value} handleRemove={handleRemove} deleteFileIds={ deleteFileIds} />}
+                {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
                 {isMultiple || (!isMultiple && (!value || !value.length)) ? (
                   <div
                     className='boomFileUpload-drop__content'
@@ -151,9 +130,7 @@ const File = ({
             )}
           </>
         )
-      }}
-    </Custom>
-  )
+
 }
 
 export default File

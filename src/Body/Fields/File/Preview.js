@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo } from 'react'
 
-const Preview = ({ id, name, percentage, src, handleRemove, responce ,videoType,type}) => {
+const Preview = ({ id, name, percentage, src, handleRemove,videoType,type}) => {
   const onRemove = () => handleRemove(id)
 
   const getimage = () => {
@@ -39,7 +39,8 @@ const Preview = ({ id, name, percentage, src, handleRemove, responce ,videoType,
           <span
             className='boomFileUpload-fileRemove__btn'
             onClick={onRemove}
-          ></span>
+            style={{background:"red"}}
+          >X</span>
         </>
       )}
     </div>
