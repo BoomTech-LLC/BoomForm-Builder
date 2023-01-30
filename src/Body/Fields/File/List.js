@@ -9,9 +9,8 @@ const List = ({ value, handleRemove }) => {
         id={id}
         name={originalName}
         percentage={percentage}
-        src={type && type.startsWith('image/') && URL.createObjectURL(file)}
+        url={type && URL.createObjectURL(file)}
         handleRemove={handleRemove}
-        videoType={type && type.startsWith('video/') && URL.createObjectURL(file)}
         type={type}
       />
     )

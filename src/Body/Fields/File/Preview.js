@@ -1,48 +1,30 @@
 import React, { Fragment, useMemo } from 'react'
 
-const Preview = ({ id, name, percentage, src, handleRemove,videoType,type}) => {
+const Preview = ({ id, name, percentage, url, handleRemove, type }) => {
   const onRemove = () => handleRemove(id)
 
-  const getimage = () => {
-    if (src) {
-      return src && <img src={src} />
-    }
-    if (videoType) {
-      let videoTage = document.createElement('video');
-      if (typeof videoTage.canPlayType == 'function') {
-        return (
-          <div>
-            <video className='boomFile_upload-video-tag'>
-              <source src={videoType} type={type} />
-           </video>
-         </div>
-         
-        )
-      } else {
-       return <div className='boomFile_upload-video-image'></div>
-      }
-     
-      
-    }
-   
+  const getPreview = () => {
+    if (type.startsWith('image/'))
+      return <img src={url} />
+
+    if (type.startsWith('video/'))
+      return <video><source src={url} type={type} /></video>
+
+    return <div className='boomFile_upload-no-preview'></div>
   }
 
-  const img = useMemo(() => getimage(), [id])
+  const preview = useMemo(() => getPreview(), [id])
 
   return (
     <div className='boomFileUpload__preview'>
-      {img}
-      {percentage &&(
-          <>
-        <progress value={percentage} max='100'></progress>  
-          <span className='boomFileUpload-file__name'>{name}</span>
-          <span
-            className='boomFileUpload-fileRemove__btn'
-            onClick={onRemove}
-            style={{background:"red"}}
-          >X</span>
-        </>
-      )}
+      {preview}
+      {percentage && <progress value={percentage} max='100'></progress>}
+      <span className='boomFileUpload-file__name'>{name}</span>
+      <span
+        className='boomFileUpload-fileRemove__btn'
+        onClick={onRemove}
+      >x</span>
+
     </div>
   )
 }

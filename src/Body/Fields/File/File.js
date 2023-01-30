@@ -1,4 +1,4 @@
-import React, { Fragment,useEffect, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { uploadFiles, correctFiles, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
 import List from './List'
 import { Input } from 'boomform'
@@ -19,34 +19,34 @@ const File = ({
 }) => {
   const fileInputRef = useRef(null)
   const [fileList, setFileList] = useState([])
-  const [canselRequestId, setCanselRequestId] = useState('')
+  const [cancelRequestId, setCancelRequestId] = useState('')
 
   useEffect(() => {
-    ABORT_REQUEST_CONTROLLERS.get(canselRequestId)?.abort()
+    ABORT_REQUEST_CONTROLLERS.get(cancelRequestId)?.abort()
     window._handleChange({ id, value: fileList.length === 0 ? null : fileList })
-  }, [fileList, canselRequestId])
-  
-  const handleCallback = (fileId,status,responce,fileName) => {
+  }, [fileList, cancelRequestId])
+
+  const handleCallback = (fileId, status, responce, fileName) => {
 
     if (status === 200) {
       setFileList((prev) => prev.map((file) => {
-          if (fileId === file.id) file.responce = responce
-          return file
-        }))
+        if (fileId === file.id) file.responce = responce
+        return file
+      }))
     }
 
     if (responce?.message === 'canceled') {
-     console.log(`You have canceled ${fileName} file upload`)
+      console.log(`You have canceled ${fileName} file upload`)
     } else if (status === 0) {
       const incorrectFile = fileList.find((item) => item.id === fileId)
       console.log(
         `We are unable to upload your file named ${incorrectFile.name}. Please if it’s possible try to rename it, otherwise contact us.`
       )
-    } 
+    }
   }
 
   const handleLoading = (fileId, percentage) => {
- 
+
     setFileList((prev) => {
       return prev.map((file) => {
         if (fileId === file.id) file.percentage = percentage
@@ -81,49 +81,49 @@ const File = ({
 
   const handleRemove = (fileId) => {
     setFileList((prev) => prev.filter((file) => fileId !== file.id))
-    setCanselRequestId(fileId) 
+    setCancelRequestId(fileId)
   }
-        return (
-          <>
-            <div>
-              <div className='boomFileUpload-file__content'>
-                {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
-                {isMultiple || (!isMultiple && (!value || !value.length)) ? (
-                  <div
-                    className='boomFileUpload-drop__content'
-                    onDragOver={(e) => e.preventDefault()}
-                    onDragEnter={(e) => e.preventDefault()}
-                    onDragLeave={(e) => e.preventDefault()}
-                    onDrop={handleFileDrop}
-                    onClick={() => fileInputRef.current.click()}
-                  >
-                    <div className='boomFileUpload-input__content'>
-                      {inputContent ||
-                        `Drag File${isMultiple ? `s` : ``} or Click to Browse`}
-                    </div>
-                    <input
-                      ref={fileInputRef}
-                      multiple={isMultiple}
-                      type='file'
-                      onChange={handleFileUpload}
-                    />
-                  </div>
-                ) : null}
+  return (
+    <>
+      <div>
+        <div className='boomFileUpload-file__content'>
+          {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
+          {isMultiple || (!isMultiple && (!value || !value.length)) ? (
+            <div
+              className='boomFileUpload-drop__content'
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnter={(e) => e.preventDefault()}
+              onDragLeave={(e) => e.preventDefault()}
+              onDrop={handleFileDrop}
+              onClick={() => fileInputRef.current.click()}
+            >
+              <div className='boomFileUpload-input__content'>
+                {inputContent ||
+                  `Drag File${isMultiple ? `s` : ``} or Click to Browse`}
               </div>
+              <input
+                ref={fileInputRef}
+                multiple={isMultiple}
+                type='file'
+                onChange={handleFileUpload}
+              />
             </div>
-            {validation?.HTMLValidate === true && (
-              <div style={{ overflow: 'hidden', height: 0 }}>
-                <Input
-                  id={id}
-                  validation={validation}
-                  maxLength='0'
-                  {...props}
-                  type='text'
-                />
-              </div>
-            )}
-          </>
-        )
+          ) : null}
+        </div>
+      </div>
+      {validation?.HTMLValidate === true && (
+        <div style={{ overflow: 'hidden', height: 0 }}>
+          <Input
+            id={id}
+            validation={validation}
+            maxLength='0'
+            {...props}
+            type='text'
+          />
+        </div>
+      )}
+    </>
+  )
 
 }
 
