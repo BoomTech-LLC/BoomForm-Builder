@@ -8,7 +8,7 @@ const StateHandler = ({
   currentPage
 }) => {
   const { state, actions } = useContext(Context)
-
+  window._handleChange = actions.handleChange
   onStateChange({ state, actions, formRef, setCurrentPage, currentPage })
   return null
 }

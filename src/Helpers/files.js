@@ -1,4 +1,5 @@
 import axios from 'axios'
+export const ABORT_REQUEST_CONTROLLERS = new Map()
 
 const addAdditionalParams = (file, i) => {
   const extension = file.name.split('.').pop()
@@ -14,7 +15,7 @@ const addAdditionalParams = (file, i) => {
   return newFile
 }
 
-const uploadFile = (file, dropbox, callback, handleLoading, newValues) => {
+const uploadFile = (file, dropbox, callback, handleLoading,signal,) => {
   const { headers: dropBoxHeaders, dropboxAPIArg, url } = dropbox
   const { path } = dropboxAPIArg
   const headers = {
@@ -24,24 +25,24 @@ const uploadFile = (file, dropbox, callback, handleLoading, newValues) => {
       path: `${path}/${file.name}`
     })
   }
-
+  
   axios
     .post(url, file, {
+      signal,
       onUploadProgress: (event) => {
         handleLoading(
           file.id,
           Math.round((100 * event.loaded) / event.total),
-          newValues
         )
       },
       headers: headers
     })
     .then((response) => {
       const { status } = response
-      if (status === 200) callback(file.id, 200, response?.data, newValues)
-      else callback(file.id, status, response, newValues)
+      if (status === 200) callback(file.id, 200, response?.data)
+      else callback(file.id, status, response)
     })
-    .catch((error) => callback(file.id, 0, error, newValues))
+    .catch((error) => callback(file.id, 0, error,file?.originalName))
 }
 
 export const correctFiles = (files) => {
@@ -53,12 +54,16 @@ export const correctFiles = (files) => {
 }
 
 export const uploadFiles = (
-  files,
+  fileList,
   dropbox,
   callback,
   handleLoading,
-  newValues
 ) => {
-  for (let i = 0; i < files.length; i++)
-    uploadFile(files[i], dropbox, callback, handleLoading, newValues)
+ 
+  for (let i = 0; i < fileList.length; i++){
+    const controller = new AbortController()
+    ABORT_REQUEST_CONTROLLERS.set(fileList[i].id, controller)
+    uploadFile(fileList[i], dropbox, callback, handleLoading,controller.signal)
+  }
+   
 }
