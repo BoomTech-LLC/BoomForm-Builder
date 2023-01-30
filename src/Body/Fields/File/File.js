@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
-import { uploadFiles, correctFiles, ABORT_CONTROLLERS, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
+import { uploadFiles, correctFiles, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
 import List from './List'
 import { Input } from 'boomform'
 
