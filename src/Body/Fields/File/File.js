@@ -88,7 +88,7 @@ const File = ({
       <div>
         <div className='boomFileUpload-file__content'>
           {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
-          {isMultiple || (!isMultiple && (!value || !value.length)) ? (
+          {isMultiple || (!isMultiple && (!fileList || !fileList.length)) ? (
             <div
               className='boomFileUpload-drop__content'
               onDragOver={(e) => e.preventDefault()}
