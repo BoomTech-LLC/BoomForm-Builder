@@ -27,21 +27,19 @@ const File = ({
   }, [fileList, canselRequestId])
   
   const handleCallback = (fileId,status,responce,fileName) => {
+
     if (status === 200) {
       setFileList((prev) => prev.map((file) => {
-        if (fileId === file.id) {
-          file.responce = responce
+          if (fileId === file.id) file.responce = responce
           return file
-        } else {
-          return file
-        }
         }))
     }
+
     if (responce?.message === 'canceled') {
-     alert(`You are canseled ${fileName} file upload`)
+     console.log(`You have canceled ${fileName} file upload`)
     } else if (status === 0) {
       const incorrectFile = fileList.find((item) => item.id === fileId)
-      alert(
+      console.log(
         `We are unable to upload your file named ${incorrectFile.name}. Please if it’s possible try to rename it, otherwise contact us.`
       )
     } 
@@ -51,12 +49,8 @@ const File = ({
  
     setFileList((prev) => {
       return prev.map((file) => {
-        if (fileId === file.id) {
-          file.percentage = percentage
-          return file
-        } else {
-          return file
-        }
+        if (fileId === file.id) file.percentage = percentage
+        return file
       })
     })
   }
