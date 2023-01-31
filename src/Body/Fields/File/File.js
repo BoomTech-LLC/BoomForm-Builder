@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { uploadFiles, correctFiles, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
 import List from './List'
-import { Input } from 'boomform'
+import { Input, useField } from 'boomform'
 
 const File = ({
   id,
@@ -20,7 +20,7 @@ const File = ({
   const fileInputRef = useRef(null)
   const [fileList, setFileList] = useState([])
   const [cancelRequestId, setCancelRequestId] = useState('')
-
+  const { neededValues } = useField([id])
   useEffect(() => {
     ABORT_REQUEST_CONTROLLERS.get(cancelRequestId)?.abort()
     window._handleChange({ id, value: fileList.length === 0 ? null : fileList })
@@ -87,7 +87,7 @@ const File = ({
     <>
       <div>
         <div className='boomFileUpload-file__content'>
-          {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
+          {(fileList.length !== 0) && <List value={neededValues[id]||[]} handleRemove={handleRemove} />}
           {isMultiple || (!isMultiple && (!fileList || !fileList.length)) ? (
             <div
               className='boomFileUpload-drop__content'
