@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { uploadFiles, correctFiles, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
 import List from './List'
-import { Input, useField } from 'boomform'
+import { Context, Input, useField } from 'boomform'
 
 const File = ({
   id,
@@ -15,16 +15,22 @@ const File = ({
   },
   dropbox,
   validation,
+  isSubmited,
   ...props
 }) => {
   const fileInputRef = useRef(null)
   const [fileList, setFileList] = useState([])
-  const [cancelRequestId, setCancelRequestId] = useState('')
-  const { neededValues } = useField([id])
+
   useEffect(() => {
-    ABORT_REQUEST_CONTROLLERS.get(cancelRequestId)?.abort()
     window._handleChange({ id, value: fileList.length === 0 ? null : fileList })
-  }, [fileList, cancelRequestId])
+  }, [fileList])
+
+
+  useEffect(() => {
+
+    setFileList([])
+    
+  }, [isSubmited])
 
   const handleCallback = (fileId, status, responce, fileName) => {
 
@@ -40,7 +46,7 @@ const File = ({
     } else if (status === 0) {
       const incorrectFile = fileList.find((item) => item.id === fileId)
       console.log(
-        `We are unable to upload your file named ${incorrectFile.name}. Please if it’s possible try to rename it, otherwise contact us.`
+        `We are unable to upload your file named ${incorrectFile?.name}. Please if it’s possible try to rename it, otherwise contact us.`
       )
     }
   }
@@ -81,13 +87,13 @@ const File = ({
 
   const handleRemove = (fileId) => {
     setFileList((prev) => prev.filter((file) => fileId !== file.id))
-    setCancelRequestId(fileId)
+    ABORT_REQUEST_CONTROLLERS.get(fileId)?.abort()
   }
   return (
     <>
       <div>
         <div className='boomFileUpload-file__content'>
-          {(fileList.length !== 0) && <List value={neededValues[id]||[]} handleRemove={handleRemove} />}
+          {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
           {isMultiple || (!isMultiple && (!fileList || !fileList.length)) ? (
             <div
               className='boomFileUpload-drop__content'

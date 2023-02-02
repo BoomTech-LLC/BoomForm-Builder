@@ -10,7 +10,8 @@ const SubmitButton = ({
   hide,
   formRef,
   payment,
-  logic
+  logic,
+  setIsSubmited,
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
@@ -47,10 +48,13 @@ const SubmitButton = ({
   }
 
   const handleClick = (e) => {
-    e.preventDefault()
     if (canSubmit()) {
       if (formRef.current.checkValidity()) {
-        if (onSubmit) onSubmit({ state, actions })
+        e.preventDefault()
+        if (onSubmit) {
+          onSubmit({ state, actions })
+          setIsSubmited(prev => !prev)
+        }
         else console.log({ state, actions })
       } else {
         formRef.current.reportValidity()

@@ -13,10 +13,10 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
     onDie = () => {}
   } = global
   const { initial = 0 } = pagination
-
+  const [fileList, setFileList] = useState([]);
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
-
+  const [isSubmited, setIsSubmited] = useState(false);
   const isPagination = Object.keys(pagination).length !== 0
   const isLogic = logic.length !== 0
 
@@ -52,6 +52,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         payment={payment}
         global={global}
         formRef={formRef}
+        isSubmited={isSubmited}
       />
       <Footer
         formRef={formRef}
@@ -64,6 +65,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         setCurrentPage={setCurrentPage}
         payment={payment}
         logic={logic}
+        setIsSubmited={setIsSubmited}
       />
 
       <StateHandler

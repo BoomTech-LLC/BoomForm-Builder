@@ -14,7 +14,8 @@ const Fields = ({
   global,
   pages,
   currentPage,
-  formRef
+  formRef,
+  isSubmited
 }) => {
   const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
@@ -63,7 +64,7 @@ const Fields = ({
 
         if (!printableFields.includes(id)) return null
 
-        return <Field key={id} payment={payment} {...field} />
+        return <Field key={id} payment={payment} {...field} isSubmited={isSubmited} />
       })}
     </div>
   )
