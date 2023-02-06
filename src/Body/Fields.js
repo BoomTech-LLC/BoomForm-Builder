@@ -15,7 +15,8 @@ const Fields = ({
   pages,
   currentPage,
   formRef,
-  isSubmited
+  fileList,
+  setFileList
 }) => {
   const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
@@ -57,6 +58,15 @@ const Fields = ({
     }
   }, [])
 
+  useEffect(() => {
+    for (let i = 0; i < fields.length; i++) {
+      const field = fields[i]
+      if (field.type === 'file') {
+        fileList[field.id] = null
+      }
+    }
+  }, [fields])
+
   return (
     <div className='boomForm-fields'>
       {fields.map((field) => {
@@ -64,7 +74,7 @@ const Fields = ({
 
         if (!printableFields.includes(id)) return null
 
-        return <Field key={id} payment={payment} {...field} isSubmited={isSubmited} />
+        return <Field key={id} payment={payment} {...field} fileList={fileList} setFileList={setFileList} />
       })}
     </div>
   )

@@ -11,7 +11,7 @@ const SubmitButton = ({
   formRef,
   payment,
   logic,
-  setIsSubmited,
+  setFileList
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
@@ -53,7 +53,7 @@ const SubmitButton = ({
         e.preventDefault()
         if (onSubmit) {
           onSubmit({ state, actions })
-          setIsSubmited(prev => !prev)
+          setFileList({})
         }
         else console.log({ state, actions })
       } else {

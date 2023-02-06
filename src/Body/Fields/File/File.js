@@ -1,7 +1,7 @@
-import React, { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { uploadFiles, correctFiles, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
 import List from './List'
-import { Context, Input, useField } from 'boomform'
+import { Input } from 'boomform'
 
 const File = ({
   id,
@@ -15,36 +15,38 @@ const File = ({
   },
   dropbox,
   validation,
-  isSubmited,
+  fileList,
+  setFileList,
   ...props
 }) => {
   const fileInputRef = useRef(null)
-  const [fileList, setFileList] = useState([])
 
   useEffect(() => {
-    window._handleChange({ id, value: fileList.length === 0 ? null : fileList })
+    window._handleChange({ id, value: fileList[id]?.length === 0 ? null : fileList[id] })
   }, [fileList])
 
-
-  useEffect(() => {
-
-    setFileList([])
-    
-  }, [isSubmited])
 
   const handleCallback = (fileId, status, responce, fileName) => {
 
     if (status === 200) {
-      setFileList((prev) => prev.map((file) => {
-        if (fileId === file.id) file.responce = responce
-        return file
-      }))
+      setFileList((prev) => {
+        let fileResponce = prev[id].map((file) => {
+          if (file.id === fileId) {
+            file.responce = responce
+          }
+          return file
+        })
+        return {
+         ...prev,
+          [id]:[...fileResponce]
+       }
+     })
     }
 
     if (responce?.message === 'canceled') {
       console.log(`You have canceled ${fileName} file upload`)
     } else if (status === 0) {
-      const incorrectFile = fileList.find((item) => item.id === fileId)
+      const incorrectFile = fileList[id].find((item) => item.id === fileId)
       console.log(
         `We are unable to upload your file named ${incorrectFile?.name}. Please if it’s possible try to rename it, otherwise contact us.`
       )
@@ -52,20 +54,42 @@ const File = ({
   }
 
   const handleLoading = (fileId, percentage) => {
-
-    setFileList((prev) => {
-      return prev.map((file) => {
-        if (fileId === file.id) file.percentage = percentage
-        return file
+    if ((percentage === 100 || percentage === 0)) {
+      
+      setFileList((prev) => {
+        let filePrecentage = prev[id].map((file) => {
+          if (file.id === fileId) {
+            file.percentage = percentage
+          }
+          return file
+        })
+        return {
+          ...prev,
+          [id]: [...filePrecentage],
+        }
       })
-    })
+
+    }
+      
+  
   }
 
   const acceptFiles = (files) => {
 
     const newFiles = correctFiles(files)
-    setFileList((prev) => [...prev, ...newFiles])
-
+    setFileList((prev) => {
+      for (let key in prev) {
+        if (key == id) {
+          if (prev[key]) {
+            prev[key]=[...prev[key],...newFiles]
+          } else {
+            prev[key]=[...newFiles]
+          }
+       
+       }
+      }
+      return prev
+    })
     uploadFiles(
       newFiles,
       dropbox,
@@ -86,15 +110,24 @@ const File = ({
   }
 
   const handleRemove = (fileId) => {
-    setFileList((prev) => prev.filter((file) => fileId !== file.id))
+    setFileList((prev) => {
+      let filteredFiles = prev[id].filter((file) => {
+        return file.id !== fileId
+      })
+      return {
+        ...prev,
+        [id]: [...filteredFiles]
+      }
+    })
+
     ABORT_REQUEST_CONTROLLERS.get(fileId)?.abort()
   }
   return (
     <>
       <div>
         <div className='boomFileUpload-file__content'>
-          {(fileList.length !== 0) && <List value={fileList} handleRemove={handleRemove} />}
-          {isMultiple || (!isMultiple && (!fileList || !fileList.length)) ? (
+          {(fileList[id]) && <List value={fileList[id] || []} handleRemove={handleRemove} />}
+          {isMultiple || (!isMultiple && (!fileList[id] || !fileList[id].length)) ? (
             <div
               className='boomFileUpload-drop__content'
               onDragOver={(e) => e.preventDefault()}
