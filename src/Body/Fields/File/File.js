@@ -1,5 +1,9 @@
-import React, { Fragment, useEffect, useRef } from 'react'
-import { uploadFiles, correctFiles, ABORT_REQUEST_CONTROLLERS } from './../../../Helpers/files'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+import {
+  uploadFiles,
+  correctFiles,
+  ABORT_REQUEST_CONTROLLERS
+} from './../../../Helpers/files'
 import List from './List'
 import { Input } from 'boomform'
 
@@ -20,27 +24,28 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
-
+  const [loadingState, setLoadingState] = useState({})
   useEffect(() => {
-    window._handleChange({ id, value: fileList[id]?.length === 0 ? null : fileList[id] })
+    window._handleChange({
+      id,
+      value: fileList[id]?.length === 0 ? null : fileList[id]
+    })
   }, [fileList])
 
-
   const handleCallback = (fileId, status, responce, fileName) => {
-
     if (status === 200) {
       setFileList((prev) => {
-        let fileResponce = prev[id].map((file) => {
+        const fileResponce = prev[id].map((file) => {
           if (file.id === fileId) {
             file.responce = responce
           }
           return file
         })
         return {
-         ...prev,
-          [id]:[...fileResponce]
-       }
-     })
+          ...prev,
+          [id]: [...fileResponce]
+        }
+      })
     }
 
     if (responce?.message === 'canceled') {
@@ -54,48 +59,31 @@ const File = ({
   }
 
   const handleLoading = (fileId, percentage) => {
-    if ((percentage === 100 || percentage === 0)) {
-      
-      setFileList((prev) => {
-        let filePrecentage = prev[id].map((file) => {
-          if (file.id === fileId) {
-            file.percentage = percentage
-          }
-          return file
-        })
-        return {
-          ...prev,
-          [id]: [...filePrecentage],
-        }
-      })
-
-    }
-      
-  
+    setLoadingState((prev) => {
+      return {
+        ...prev,
+        [fileId]: percentage
+      }
+    })
   }
 
   const acceptFiles = (files) => {
-
     const newFiles = correctFiles(files)
     setFileList((prev) => {
-      for (let key in prev) {
-        if (key == id) {
-          if (prev[key]) {
-            prev[key]=[...prev[key],...newFiles]
-          } else {
-            prev[key]=[...newFiles]
-          }
-       
-       }
+      if (prev[id]) {
+        return {
+          ...prev,
+          [id]: [...prev[id], ...newFiles]
+        }
+      } else {
+        return {
+          ...prev,
+          [id]: [...newFiles]
+        }
       }
-      return prev
     })
-    uploadFiles(
-      newFiles,
-      dropbox,
-      handleCallback,
-      handleLoading,
-    )
+
+    uploadFiles(newFiles, dropbox, handleCallback, handleLoading)
   }
 
   const handleFileUpload = (e) => {
@@ -126,8 +114,15 @@ const File = ({
     <>
       <div>
         <div className='boomFileUpload-file__content'>
-          {(fileList[id]) && <List value={fileList[id] || []} handleRemove={handleRemove} />}
-          {isMultiple || (!isMultiple && (!fileList[id] || !fileList[id].length)) ? (
+          {fileList[id] && (
+            <List
+              value={fileList[id] || []}
+              handleRemove={handleRemove}
+              loadingState={loadingState}
+            />
+          )}
+          {isMultiple ||
+          (!isMultiple && (!fileList[id] || !fileList[id].length)) ? (
             <div
               className='boomFileUpload-drop__content'
               onDragOver={(e) => e.preventDefault()}
@@ -163,7 +158,6 @@ const File = ({
       )}
     </>
   )
-
 }
 
 export default File

@@ -1,6 +1,5 @@
 import axios from 'axios'
 export const ABORT_REQUEST_CONTROLLERS = new Map()
-
 const addAdditionalParams = (file, i) => {
   const extension = file.name.split('.').pop()
   const originalName = file.name.split('.').slice(0, -1).join('.')
@@ -15,7 +14,7 @@ const addAdditionalParams = (file, i) => {
   return newFile
 }
 
-const uploadFile = (file, dropbox, callback, handleLoading,signal,) => {
+const uploadFile = (file, dropbox, callback, handleLoading, signal) => {
   const { headers: dropBoxHeaders, dropboxAPIArg, url } = dropbox
   const { path } = dropboxAPIArg
   const headers = {
@@ -25,15 +24,12 @@ const uploadFile = (file, dropbox, callback, handleLoading,signal,) => {
       path: `${path}/${file.name}`
     })
   }
-  
+
   axios
     .post(url, file, {
       signal,
       onUploadProgress: (event) => {
-        handleLoading(
-          file.id,
-          Math.round((100 * event.loaded) / event.total),
-        )
+        handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
       },
       headers: headers
     })
@@ -42,7 +38,7 @@ const uploadFile = (file, dropbox, callback, handleLoading,signal,) => {
       if (status === 200) callback(file.id, 200, response?.data)
       else callback(file.id, status, response)
     })
-    .catch((error) => callback(file.id, 0, error,file?.originalName))
+    .catch((error) => callback(file.id, 0, error, file?.originalName))
 }
 
 export const correctFiles = (files) => {
@@ -53,17 +49,10 @@ export const correctFiles = (files) => {
   return newFiles
 }
 
-export const uploadFiles = (
-  fileList,
-  dropbox,
-  callback,
-  handleLoading,
-) => {
- 
-  for (let i = 0; i < fileList.length; i++){
+export const uploadFiles = (fileList, dropbox, callback, handleLoading) => {
+  for (let i = 0; i < fileList.length; i++) {
     const controller = new AbortController()
     ABORT_REQUEST_CONTROLLERS.set(fileList[i].id, controller)
-    uploadFile(fileList[i], dropbox, callback, handleLoading,controller.signal)
+    uploadFile(fileList[i], dropbox, callback, handleLoading, controller.signal)
   }
-   
 }

@@ -26,22 +26,22 @@ const Fields = ({
     values: data?.neededValues ? data?.neededValues : {},
     fields
   })
-  
+
   const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-    if (printableFields.length === 0 && pages.length - 1 > currentPage) {
-      const { onPageChange } = global
- 
-      if (prevCurrent.current < currentPage) {
-        setCurrentPage((prev) => prev + 1)
-        prevCurrent.current = currentPage
-      } else {
-        setCurrentPage((prev) => prev - 1)
-        prevCurrent.current = prevCurrent.current - 1
-      }
-  
-      if (onPageChange) onPageChange()
+  if (printableFields.length === 0 && pages.length - 1 > currentPage) {
+    const { onPageChange } = global
+
+    if (prevCurrent.current < currentPage) {
+      setCurrentPage((prev) => prev + 1)
+      prevCurrent.current = currentPage
+    } else {
+      setCurrentPage((prev) => prev - 1)
+      prevCurrent.current = prevCurrent.current - 1
     }
+
+    if (onPageChange) onPageChange()
+  }
 
   useEffect(() => {
     const submitHandler = (e) => {
@@ -58,15 +58,6 @@ const Fields = ({
     }
   }, [])
 
-  useEffect(() => {
-    for (let i = 0; i < fields.length; i++) {
-      const field = fields[i]
-      if (field.type === 'file') {
-        fileList[field.id] = null
-      }
-    }
-  }, [fields])
-
   return (
     <div className='boomForm-fields'>
       {fields.map((field) => {
@@ -74,7 +65,15 @@ const Fields = ({
 
         if (!printableFields.includes(id)) return null
 
-        return <Field key={id} payment={payment} {...field} fileList={fileList} setFileList={setFileList} />
+        return (
+          <Field
+            key={id}
+            payment={payment}
+            {...field}
+            fileList={fileList}
+            setFileList={setFileList}
+          />
+        )
       })}
     </div>
   )
