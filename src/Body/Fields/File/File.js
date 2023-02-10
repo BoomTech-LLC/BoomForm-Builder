@@ -32,14 +32,18 @@ const File = ({
     })
   }, [fileList])
 
-  const handleCallback = (fileId, status, responce, fileName) => {
+  const handleCallback = (fileId, status, responce, fileName, size) => {
     if (status === 200) {
       setFileList((prev) => {
         const fileResponce = prev[id].map((file) => {
           if (file.id === fileId) {
-            file.responce = responce
+            return {
+              ...file,
+              size: file.size,
+              responce: { ...responce }
+            }
           }
-          return file
+          return { ...file, size: file.size }
         })
         return {
           ...prev,
