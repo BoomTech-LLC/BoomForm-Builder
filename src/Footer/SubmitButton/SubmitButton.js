@@ -23,47 +23,26 @@ const SubmitButton = ({
 
   useEffect(() => {
     setTotal && setTotal(getTotalPrice({ values, fields, fee, logic }))
-  }, [state,total])
+  }, [state, total])
 
   if (hide) return null
 
-  const canSubmit = () => {
-    
-    for (let i = 0; i < fields.length; i++){
-      if (fields[i].type === 'file') {
-        const filesArray = values[fields[i].id];  
-        if (filesArray) {
-          for (let j = 0; j < filesArray.length; j++){
-            let { percentage } = filesArray[j];
-            if (percentage < 100 && !filesArray[j]['responce']) {  
-              return false
-            } 
-          }
-        }
-    
-      }
-    }
-    return true
-  }
-
   const handleClick = (e) => {
     e.preventDefault()
-    if (canSubmit()) {
-      if (formRef.current.checkValidity()) {
-        if (onSubmit) onSubmit({ state, actions })
-        else console.log({ state, actions })
-      } else {
-        formRef.current.reportValidity()
-        if (onSubmitFailed)
-          onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'))
-      }
+    if (formRef.current.checkValidity()) {
+      if (onSubmit) onSubmit({ state, actions })
+      else console.log({ state, actions })
+    } else {
+      formRef.current.reportValidity()
+      if (onSubmitFailed)
+        onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'))
     }
   }
 
   return (
     <div className={'boomForm-button__content'}>
       {suffix}
-      <button disabled={!canSubmit()} onClick={handleClick}>
+      <button onClick={handleClick}>
         <span>
           {text}
           {formatedTotal}
