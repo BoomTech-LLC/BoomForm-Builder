@@ -52,13 +52,11 @@ const Preview = ({
         <span className='boomFileUpload-fileRemove__btn' onClick={onRemove}>
           x
         </span>
-        {listType === 'loading' && (
-          <progress value={percentage} max='100'></progress>
-        )}
+        <progress value={percentage} max='100'></progress>
         <span className='boomFileUpload-file__size'>
-          {makeSize((size * percentage) / 100)} of {makeSize(size)}
+          {makeSize((size * percentage) / 100)}{percentage!=100 && `of ${makeSize(size)}`}
         </span>
-        <span className='boomFileUpload-file_progress'>{percentage}%</span>
+        {percentage!=100 && <span className='boomFileUpload-file_progress'>{percentage}%</span>}
       </div>
     </div>
   )
