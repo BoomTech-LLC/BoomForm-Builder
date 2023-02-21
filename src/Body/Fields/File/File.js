@@ -30,7 +30,7 @@ const File = ({
     HTMLValidate: true,
     custom: (value) => {
       if (value === 'Loading') {
-        return 'you have upload loading'
+        return 'Upload in progress, please wait'
       } else {
         return
       }
