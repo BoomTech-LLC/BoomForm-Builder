@@ -23,14 +23,12 @@ const Table = ({ fields }) => {
         return checkbox.slice(0, -1)
       }
       case 'phone': {
-        return `${countries[values[id]?.code].dial_code} ${
-          values[id]?.phone || ''
-        }`
+        return `${countries[values[id]?.code].dial_code} ${values[id]?.phone || ''
+          }`
       }
       case 'time': {
-        return `${values[id]?.hour || ''} : ${values[id]?.minute || ''} ${
-          values[id]?.format ? values[id].format?.value : ''
-        }`
+        return `${values[id]?.hour || ''} : ${values[id]?.minute || ''} ${values[id]?.format ? values[id].format?.value : ''
+          }`
       }
       case 'singleChoice':
       case 'scaleRating': {
@@ -67,8 +65,6 @@ const Table = ({ fields }) => {
         return values[id]
     }
   }
-
-  console.log('allValues.state.values', allValues.state.values)
 
   return (
     <table>

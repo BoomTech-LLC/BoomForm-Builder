@@ -156,8 +156,7 @@ const File = ({
                     >
                       <div className='boomFileUpload-input__content'>
                         {inputContent ||
-                          `Drag File${
-                            isMultiple ? `s` : ``
+                          `Drag File${isMultiple ? `s` : ``
                           } or Click to Browse`}
                       </div>
                       <input

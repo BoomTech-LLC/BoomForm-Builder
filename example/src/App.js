@@ -51,7 +51,7 @@ const App = () => {
             "dropbox": {
               "url": "https://content.dropboxapi.com/2/files/upload",
               "headers": {
-                "Authorization": "Bearer sl.BZSE1wTMffOJ8figsFKxeOs14HlKEerSaLCuk5OpM9Ff902jtnbIKT3B4p7wN6NpR26F34NvuI7d47dORlr6hbEL7AuG80VwPbs259Swv5oX5ImNwNVhcMKNKbypnYZVqAM3Zi8",
+                "Authorization": "Bearer sl.BZX4eUyGRmCoRR3lAjokvL5UB6Y5sV_q8BT--zff_WTRwUa_xkIe38R6DxgN_Lqqb5KtIf5GvoiIGi2ml6ZPPSXAX7unkglCKrNysIVFt8shT3pXl9JbdUXyMSTi_92RFZmr8pI",
                 "Content-Type": "application/octet-stream"
               },
               "dropboxAPIArg": {

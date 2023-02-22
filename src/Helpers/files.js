@@ -15,12 +15,12 @@ const addAdditionalParams = (file, i) => {
   return newFile
 }
 
-const uploadFile = (
+const uploadFile = async (
   file,
   dropbox,
   callback,
   handleLoading,
-  newValues,
+  allFiles,
   signal
 ) => {
   const { headers: dropBoxHeaders, dropboxAPIArg, url } = dropbox
@@ -33,20 +33,32 @@ const uploadFile = (
     })
   }
 
-  axios
-    .post(url, file, {
-      signal,
-      onUploadProgress: (event) => {
-        handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
-      },
-      headers: headers
-    })
-    .then((response) => {
+  let retries = 3;
+  let uploadSucceeded = false;
+
+  while (retries > 0 && !uploadSucceeded) {
+    try {
+      const response = await axios
+      .post(url, file, {
+        signal,
+        onUploadProgress: (event) => {
+          handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
+        },
+        headers: headers
+      })
       const { status } = response
-      if (status === 200) callback(file.id, 200, response?.data, newValues)
-      else callback(file.id, status, response)
-    })
-    .catch((error) => callback(file.id, 0, error, file?.originalName))
+      if (status === 200) callback(file.id, 200, response?.data, allFiles)
+      else callback(file.id, status, response, file)
+      uploadSucceeded = true;
+    } catch (error) {
+      if(error.message && error.message=="canceled") break;
+      console.error(error);
+      retries--;
+      if(retries==0) callback(file.id, 0, error, file)
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+
 }
 
 export const correctFiles = (files) => {
