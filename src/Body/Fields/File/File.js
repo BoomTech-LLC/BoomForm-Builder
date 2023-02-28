@@ -22,8 +22,10 @@ const File = ({
   ...props
 }) => {
   const fileInputRef = useRef(null)
+  const loading = useRef('')
+  const allFiles = useRef([])
+
   const [fileList, setFileList] = useState([])
-  const [loading, setLoading] = useState('')
   const [loadingState, setLoadingState] = useState({})
 
   const fileSubmitValidation = {
@@ -43,7 +45,7 @@ const File = ({
         {({ handleChange, value }) => {
           const handleCallback = (fileId, status, responce, newValues) => {
             if (status === 200) {
-              setLoading('Done')
+              loading.current = 'Done'
               setFileList((prev) => {
                 return prev.filter((file) => {
                   return file.id !== fileId && !file.responce
@@ -60,7 +62,7 @@ const File = ({
               handleChange({ id: id, value: newFiles })
             }
             if (responce?.message === 'canceled') {
-              setLoading('Canceled')
+              loading.current = 'Canceled'
               handleChange({ id: `${id}error`, value: 'Canceled' })
               console.log(`You have canceled ${newValues} file upload`)
             } else if (status === 0) {
@@ -72,39 +74,28 @@ const File = ({
           }
 
           const handleLoading = (fileId, percentage) => {
-            setLoading((prev) => {
-              if (prev !== 'Loading') {
-                handleChange({ id: `${id}error`, value: 'Loading' })
-                return 'Loading'
-              }
-              return prev
-            })
+            if (loading.current !== 'Loading') {
+              loading.current = 'Loading'
+              handleChange({ id: `${id}error`, value: 'Loading' })
+            }
 
             setLoadingState((prev) => ({ ...prev, [fileId]: percentage }))
           }
           const acceptFiles = (files) => {
             const newFiles = correctFiles(files)
-            const newValues = value ? [...value, ...newFiles] : newFiles
-            setLoading('Loading')
+            allFiles.current.push(...newFiles)
+            loading.current = 'Start'
             setFileList((prev) => [...prev, ...newFiles])
 
-            handleChange({ id: `${id}error`, value: 'Loading' })
             uploadFiles(
               newFiles,
               dropbox,
               handleCallback,
               handleLoading,
-              newValues
+              allFiles.current
             )
-          }
-          const handleFileDrop = (e) => {
-            e.preventDefault()
-            const files = e.dataTransfer.files
-            acceptFiles(files)
-          }
-          const handleFileUpload = (e) => {
-            const files = e.target.files
-            acceptFiles(files)
+
+            handleChange({ id: `${id}error`, value: 'Loading' })
           }
           const handleRemove = (fileId) => {
             setFileList((prev) => {
@@ -119,6 +110,15 @@ const File = ({
             ABORT_REQUEST_CONTROLLERS.get(fileId)?.abort()
           }
 
+          const handleFileDrop = (e) => {
+            e.preventDefault()
+            const files = e.dataTransfer.files
+            acceptFiles(files)
+          }
+          const handleFileUpload = (e) => {
+            const files = e.target.files
+            acceptFiles(files)
+          }
           return (
             <>
               <div>
