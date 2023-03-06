@@ -33,13 +33,12 @@ const uploadFile = async (
     })
   }
 
-  let retries = 3;
-  let uploadSucceeded = false;
+  let retries = 3
+  let uploadSucceeded = false
 
   while (retries > 0 && !uploadSucceeded) {
     try {
-      const response = await axios
-      .post(url, file, {
+      const response = await axios.post(url, file, {
         signal,
         onUploadProgress: (event) => {
           handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
@@ -49,16 +48,17 @@ const uploadFile = async (
       const { status } = response
       if (status === 200) callback(file.id, 200, response?.data, allFiles)
       else callback(file.id, status, response, file)
-      uploadSucceeded = true;
+      uploadSucceeded = true
     } catch (error) {
-      if(error.message && error.message=="canceled") break;
-      console.error(error);
-      retries--;
-      if(retries==0) callback(file.id, 0, error, file)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (error.message && error.message == 'canceled') {
+        callback(file.id, error.message, error, file)
+        break
+      }
+      retries--
+      if (retries == 0) callback(file.id, 0, error, file)
+      await new Promise((resolve) => setTimeout(resolve, 2000))
     }
   }
-
 }
 
 export const correctFiles = (files) => {
