@@ -122,7 +122,6 @@ const File = ({
                   {value && (
                     <div
                       className='fileDone__content'
-                      style={{ background: 'red' }}
                     >
                       <List
                         value={value}
@@ -136,7 +135,6 @@ const File = ({
                   {!!fileList.length && (
                     <div
                       className='fileLoading__content'
-                      style={{ background: 'blue' }}
                     >
                       <List
                         value={fileList}
