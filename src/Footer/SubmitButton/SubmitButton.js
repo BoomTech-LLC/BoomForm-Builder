@@ -10,7 +10,8 @@ const SubmitButton = ({
   hide,
   formRef,
   payment,
-  logic
+  logic,
+  allFiles
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
@@ -26,12 +27,15 @@ const SubmitButton = ({
   }, [state, total])
 
   if (hide) return null
-
   const handleClick = (e) => {
     e.preventDefault()
     if (formRef.current.checkValidity()) {
-      if (onSubmit) onSubmit({ state, actions })
-      else console.log({ state, actions })
+      if (onSubmit) {
+        onSubmit({ state, actions })
+        if (allFiles.current) {
+          allFiles.current = []
+        }
+      } else console.log({ state, actions })
     } else {
       formRef.current.reportValidity()
       if (onSubmitFailed)

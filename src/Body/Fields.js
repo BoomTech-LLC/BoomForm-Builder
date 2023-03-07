@@ -14,7 +14,8 @@ const Fields = ({
   global,
   pages,
   currentPage,
-  formRef
+  formRef,
+  allFiles
 }) => {
   const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
@@ -24,22 +25,22 @@ const Fields = ({
     values: data?.neededValues ? data?.neededValues : {},
     fields
   })
-  
+
   const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-    if (printableFields.length === 0 && pages.length - 1 > currentPage) {
-      const { onPageChange } = global
- 
-      if (prevCurrent.current < currentPage) {
-        setCurrentPage((prev) => prev + 1)
-        prevCurrent.current = currentPage
-      } else {
-        setCurrentPage((prev) => prev - 1)
-        prevCurrent.current = prevCurrent.current - 1
-      }
-  
-      if (onPageChange) onPageChange()
+  if (printableFields.length === 0 && pages.length - 1 > currentPage) {
+    const { onPageChange } = global
+
+    if (prevCurrent.current < currentPage) {
+      setCurrentPage((prev) => prev + 1)
+      prevCurrent.current = currentPage
+    } else {
+      setCurrentPage((prev) => prev - 1)
+      prevCurrent.current = prevCurrent.current - 1
     }
+
+    if (onPageChange) onPageChange()
+  }
 
   useEffect(() => {
     const submitHandler = (e) => {
@@ -63,7 +64,9 @@ const Fields = ({
 
         if (!printableFields.includes(id)) return null
 
-        return <Field key={id} payment={payment} {...field} />
+        return (
+          <Field key={id} payment={payment} {...field} allFiles={allFiles} />
+        )
       })}
     </div>
   )

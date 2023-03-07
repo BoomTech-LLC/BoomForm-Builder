@@ -19,11 +19,12 @@ const File = ({
   },
   dropbox,
   validation,
+  allFiles,
   ...props
 }) => {
   const fileInputRef = useRef(null)
   const loading = useRef('')
-  const allFiles = useRef([])
+  // const allFiles = useRef([])
   const [fileList, setFileList] = useState([])
   const [loadingState, setLoadingState] = useState({})
 
@@ -120,9 +121,7 @@ const File = ({
               <div>
                 <div className='boomFileUpload-file__content'>
                   {value && (
-                    <div
-                      className='fileDone__content'
-                    >
+                    <div className='fileDone__content'>
                       <List
                         value={value}
                         handleRemove={handleRemove}
@@ -133,9 +132,7 @@ const File = ({
                   )}
 
                   {!!fileList.length && (
-                    <div
-                      className='fileLoading__content'
-                    >
+                    <div className='fileLoading__content'>
                       <List
                         value={fileList}
                         handleRemove={handleRemove}
