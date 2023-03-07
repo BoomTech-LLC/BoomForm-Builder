@@ -24,7 +24,6 @@ const File = ({
 }) => {
   const fileInputRef = useRef(null)
   const loading = useRef('')
-  // const allFiles = useRef([])
   const [fileList, setFileList] = useState([])
   const [loadingState, setLoadingState] = useState({})
 
