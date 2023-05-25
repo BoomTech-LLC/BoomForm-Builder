@@ -41,7 +41,7 @@ const Map = ({
         })
       })
     })
-  }, [])
+  }, [zoom])
   return <div style={{ height }} ref={mapRef} />
 }
 
