@@ -17,7 +17,7 @@ const SubmitButton = ({
 
   const { text, prefix, suffix } = button || { text: 'Submit' }
   const { name, description, isPrint, onSubmit, onSubmitFailed } = global
-  const { fee, total, setTotal } = payment
+  const { fee, total, setTotal, showTotal } = payment
 
   const formatedTotal = formatPrice({ payment, price: total })
 
@@ -45,7 +45,7 @@ const SubmitButton = ({
       <button onClick={handleClick}>
         <span>
           {text}
-          {formatedTotal}
+          {showTotal && formatedTotal}
         </span>
       </button>
       {prefix}

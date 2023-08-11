@@ -24,7 +24,6 @@ export const currencys = {
 
 export const formatPrice = ({ payment, price }) => {
   const { showPrices, currency, format } = payment
-
   if (
     showPrices &&
     price !== '' &&
