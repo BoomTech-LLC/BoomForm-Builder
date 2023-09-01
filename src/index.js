@@ -2,7 +2,6 @@ import React from 'react'
 import { BoomForm } from 'boomform'
 import Form from './Form'
 import countries from './Helpers/countries'
-import Pages from './Pages/Pages'
 
 const Builder = ({
   global = {},
@@ -27,17 +26,7 @@ const Builder = ({
       pages={pages}
     >
       {() =>
-        pagination && pagination.mode === 'section' ? (
-          <Pages
-            global={global}
-            fields={fields}
-            button={button}
-            payment={payment}
-            pagination={pagination}
-            logic={logic}
-            layout={layout}
-          />
-        ) : (
+        (
           <Form
             global={global}
             fields={fields}
