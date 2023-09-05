@@ -10,9 +10,7 @@ const Builder = ({
   pagination = {},
   logic = [],
   payment = {},
-  layout = {},
-  pages = {},
-  isEditor = false
+  pages = {}
 }) => {
   return (
     <BoomForm
@@ -22,24 +20,19 @@ const Builder = ({
       payment={payment}
       pagination={pagination}
       logic={logic}
-      isEditor={isEditor}
       pages={pages}
     >
-      {() =>
-        (
-          <Form
-            global={global}
-            fields={fields}
-            button={button}
-            payment={payment}
-            pagination={pagination}
-            logic={logic}
-            layout={layout}
-            pages={pages}
-            isEditor={isEditor}
-          />
-        )
-      }
+      {() => (
+        <Form
+          global={global}
+          fields={fields}
+          button={button}
+          payment={payment}
+          pagination={pagination}
+          logic={logic}
+          pages={pages}
+        />
+      )}
     </BoomForm>
   )
 }

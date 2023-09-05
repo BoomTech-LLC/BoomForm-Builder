@@ -18,6 +18,7 @@ const Fields = ({
 }) => {
   const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
+  const { onPageChange } = global
 
   const logicIds = getHiddenIds({
     logic,
@@ -25,22 +26,13 @@ const Fields = ({
     fields
   })
 
-  const printableFields = getPrintableFields(fields, logicIds, pagination[0])
+  const printableFields = getRendableData(
+    fields,
+    logicIds,
+    pagination,
+    currentPage
+  )
 
-  if (printableFields.length === 0 && pages.length - 1 > currentPage) {
-    const { onPageChange } = global
-
-    if (prevCurrent.current < currentPage) {
-      setCurrentPage((prev) => prev + 1)
-      prevCurrent.current = currentPage
-    } else {
-      setCurrentPage((prev) => prev - 1)
-      prevCurrent.current = prevCurrent.current - 1
-    }
-
-    if (onPageChange) onPageChange()
-  }
-  const printableData = getRendableData(fields , logicIds , pagination , currentPage)
   useEffect(() => {
     const submitHandler = (e) => {
       if (printableFields.length === 1 && currentPage < pages.length - 1) {
@@ -58,27 +50,33 @@ const Fields = ({
 
   return (
     <>
-      {printableData.map((pageFields, index) => {
+      {printableFields.map((pageFields, index) => {
+        if (pageFields.length === 0 && pages.length - 1 > currentPage) {
+          if (prevCurrent.current < currentPage) {
+            setCurrentPage((prev) => prev + 1)
+            prevCurrent.current = currentPage
+          } else {
+            setCurrentPage((prev) => prev - 1)
+            prevCurrent.current = prevCurrent.current - 1
+          }
+
+          if (onPageChange) onPageChange()
+        }
+
         return (
-          <div key={"page" + index} className='boomForm-fields' style={{border:"2px dashed red"}}>
+          <div
+            key={'page' + index}
+            className='boomForm-fields'
+            style={{ border: '2px dashed red' }}
+          >
             {fields.map((field) => {
-              if(!pageFields.includes(field.id)) return null;
+              if (!pageFields.includes(field.id)) return null
               return <Field key={field.id} payment={payment} {...field} />
             })}
           </div>
         )
       })}
     </>
-
-    // <div className='boomForm-fields'>
-    //   {fields.map((field) => {
-    //     const { id } = field
-
-    //     if (!printableFields.includes(id)) return null
-
-    //     return <Field key={id} payment={payment} {...field} />
-    //   })}
-    // </div>
   )
 }
 
