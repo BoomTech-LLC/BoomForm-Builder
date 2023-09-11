@@ -1,7 +1,7 @@
-import React, { memo, useEffect, useRef } from 'react'
+import React, { memo, useEffect, useRef, Fragment } from 'react'
 import { useField } from 'boomform'
 import Field from './Field'
-import { getPrintableFields } from './../Helpers/global'
+import { getPrintableFields, getRendableData } from './../Helpers/global'
 import { getHiddenIds } from './../Helpers/logic'
 
 const Fields = ({
@@ -18,28 +18,20 @@ const Fields = ({
 }) => {
   const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
+  const { onPageChange } = global
 
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
     fields
   })
-  
-  const printableFields = getPrintableFields(fields, logicIds, pagination)
 
-    if (printableFields.length === 0 && pages.length - 1 > currentPage) {
-      const { onPageChange } = global
- 
-      if (prevCurrent.current < currentPage) {
-        setCurrentPage((prev) => prev + 1)
-        prevCurrent.current = currentPage
-      } else {
-        setCurrentPage((prev) => prev - 1)
-        prevCurrent.current = prevCurrent.current - 1
-      }
-  
-      if (onPageChange) onPageChange()
-    }
+  const printableFields = getRendableData(
+    fields,
+    logicIds,
+    pagination,
+    currentPage
+  )
 
   useEffect(() => {
     const submitHandler = (e) => {
@@ -57,15 +49,34 @@ const Fields = ({
   }, [])
 
   return (
-    <div className='boomForm-fields'>
-      {fields.map((field) => {
-        const { id } = field
+    <>
+      {printableFields.map((pageFields, index) => {
+        if (pageFields.length === 0 && pages.length - 1 > currentPage) {
+          if (prevCurrent.current < currentPage) {
+            setCurrentPage((prev) => prev + 1)
+            prevCurrent.current = currentPage
+          } else {
+            setCurrentPage((prev) => prev - 1)
+            prevCurrent.current = prevCurrent.current - 1
+          }
 
-        if (!printableFields.includes(id)) return null
+          if (onPageChange) onPageChange()
+        }
 
-        return <Field key={id} payment={payment} {...field} />
+        return (
+          <div
+            key={'page' + index}
+            className='boomForm-fields'
+            style={{ border: '2px dashed red' }}
+          >
+            {fields.map((field) => {
+              if (!pageFields.includes(field.id)) return null
+              return <Field key={field.id} payment={payment} {...field} />
+            })}
+          </div>
+        )
       })}
-    </div>
+    </>
   )
 }
 

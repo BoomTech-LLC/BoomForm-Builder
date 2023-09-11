@@ -4,9 +4,12 @@ import PerPageHeader from './PerPageHeader'
 
 const Pagination = ({ isPagination, pagination, currentPage }) => {
   if (!isPagination) return null
+  const { timeline, pages, mode } = pagination
 
-  const { timeline, pages } = pagination
-
+  //Need to have separated prop for timeline 
+  // This needs for BoomForm Platform app
+  
+  if (mode === 'section') return null
   return (
     <>
       <Timeline

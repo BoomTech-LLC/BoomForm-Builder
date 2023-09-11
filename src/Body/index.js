@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Fields from './Fields'
 
 const Body = ({
@@ -11,7 +11,7 @@ const Body = ({
   currentPage,
   setCurrentPage,
   global,
-  formRef,
+  formRef
 }) => {
   const { pages } = pagination
   const updatableFields = []
@@ -31,7 +31,7 @@ const Body = ({
       logic={logic}
       updatableFields={updatableFields}
       payment={payment}
-      pagination={isPagination ? pages[currentPage].fields : []}
+      pagination={pagination}
       setCurrentPage={setCurrentPage}
       global={global}
       pages={pages}
