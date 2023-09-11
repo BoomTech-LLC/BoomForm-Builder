@@ -10,6 +10,38 @@ export const getPrintableFields = (fields, logic = [], pagination = []) => {
   } else return []
 }
 
+export const getRendableData = (
+  fields,
+  hiddenFieldIds = [],
+  pagination = {},
+  currentPage
+) => {
+  const rendableData = []
+
+  if (pagination && pagination.pages && pagination.pages.length !== 0) {
+    if (pagination.mode === 'section') {
+      pagination.pages.forEach((page, index) => {
+        rendableData.push(
+          getPrintableFields(fields, hiddenFieldIds, page.fields)
+        )
+      })
+      return rendableData
+    } else {
+      rendableData.push(
+        getPrintableFields(
+          fields,
+          hiddenFieldIds,
+          pagination.pages[currentPage].fields
+        )
+      )
+      return rendableData
+    }
+  } else {
+    rendableData.push(getPrintableFields(fields, hiddenFieldIds, []))
+  }
+  return rendableData
+}
+
 export const getPlaceholder = (placehodler, id) =>
   placehodler !== undefined && placehodler[id] ? placehodler[id] : undefined
 
@@ -53,7 +85,12 @@ export const stripHtml = (label) => {
 }
 
 export const iphoneCheck = () => {
-  if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+  if (typeof window === `undefined` || typeof navigator === `undefined`)
+    return false
 
-  return /iPhone/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
-};
+  return /iPhone/i.test(
+    navigator.userAgent ||
+      navigator.vendor ||
+      (window.opera && opera.toString() === `[object Opera]`)
+  )
+}

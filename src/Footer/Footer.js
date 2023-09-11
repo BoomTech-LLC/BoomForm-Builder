@@ -17,36 +17,33 @@ const Footer = ({
   logic
 }) => {
   const { captcha } = global
-  const { pages } = pagination
+  const { mode } = pagination
 
-  if (isPagination)
-    return (
-      <Pagination
+  return !isPagination || mode === 'section' ? (
+    <>
+      {captcha !== undefined && <Captcha siteKey={captcha} />}
+      <SubmitButton
         global={global}
         button={button}
         fields={fields}
         formRef={formRef}
-        pagination={pagination}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
         payment={payment}
         logic={logic}
       />
-    )
-  else
-    return (
-      <>
-        {captcha !== undefined && <Captcha siteKey={captcha} />}
-        <SubmitButton
-          global={global}
-          button={button}
-          fields={fields}
-          formRef={formRef}
-          payment={payment}
-          logic={logic}
-        />
-      </>
-    )
+    </>
+  ) : (
+    <Pagination
+      global={global}
+      button={button}
+      fields={fields}
+      formRef={formRef}
+      pagination={pagination}
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      payment={payment}
+      logic={logic}
+    />
+  )
 }
 
 export default Footer
