@@ -17,34 +17,47 @@ const addAdditionalParams = (file, i) => {
 
 const uploadFile = async (
   file,
-  dropbox,
+  upLoadData,
   callback,
   handleLoading,
   allFiles,
   signal
 ) => {
-  const { headers: dropBoxHeaders, dropboxAPIArg, url } = dropbox
-  const { path } = dropboxAPIArg
-  const headers = {
-    ...dropBoxHeaders,
-    'Dropbox-API-Arg': JSON.stringify({
-      ...dropboxAPIArg,
-      path: `${path}/${file.name}`
-    })
-  }
+  const { headers, queries, url } = upLoadData
+  let requestURL = url
 
   let retries = 3
   let uploadSucceeded = false
 
+  if (queries) {
+    let iteration = 0
+    Object.keys(queries).forEach((query) => {
+      if (iteration === 0) {
+        iteration++
+        requestURL += `?${query}=${queries[query]}`
+      } else {
+        requestURL += `&${query}=${queries[query]}`
+      }
+    })
+  }
+
   while (retries > 0 && !uploadSucceeded) {
     try {
-      const response = await axios.post(url, file, {
-        signal,
+      const formatedFiles = new FormData()
+      formatedFiles.append('file', file)
+
+      const response = await axios.post(requestURL, formatedFiles, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Origin': '*',
+          Accept: '*/*',
+          ...headers,
+        },
         onUploadProgress: (event) => {
           handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
-        },
-        headers: headers
+        }
       })
+      
       const { status } = response
       if (status === 200) callback(file.id, 200, response?.data, allFiles)
       else callback(file.id, status, response, file)
@@ -71,7 +84,7 @@ export const correctFiles = (files) => {
 
 export const uploadFiles = (
   fileList,
-  dropbox,
+  upLoadData,
   callback,
   handleLoading,
   newValues
@@ -81,7 +94,7 @@ export const uploadFiles = (
     ABORT_REQUEST_CONTROLLERS.set(fileList[i].id, controller)
     uploadFile(
       fileList[i],
-      dropbox,
+      upLoadData,
       callback,
       handleLoading,
       newValues,
