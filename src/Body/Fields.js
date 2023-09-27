@@ -67,7 +67,6 @@ const Fields = ({
           <div
             key={'page' + index}
             className='boomForm-fields'
-            style={{ border: '2px dashed red' }}
           >
             {fields.map((field) => {
               if (!pageFields.includes(field.id)) return null
