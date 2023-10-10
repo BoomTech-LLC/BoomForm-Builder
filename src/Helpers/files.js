@@ -48,16 +48,13 @@ const uploadFile = async (
 
       const response = await axios.post(requestURL, formatedFiles, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': '*',
-          Accept: '*/*',
-          ...headers,
+          ...headers
         },
         onUploadProgress: (event) => {
           handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
         }
       })
-      
+
       const { status } = response
       if (status === 200) callback(file.id, 200, response?.data, allFiles)
       else callback(file.id, status, response, file)
