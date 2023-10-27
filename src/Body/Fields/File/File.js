@@ -40,6 +40,26 @@ const File = ({
     }
   }
 
+  const checkFileValidity = (files) => {
+    if (accept && accept.trim()) {
+      let isValid = true
+      for (let element of files) {
+        if (element.name && !accept.includes(element.name.split('.').pop())) {
+          isValid = false
+          break
+        }
+      }
+      if (!isValid) {
+        fileInputRef.current.setCustomValidity(
+          `Please choose only ${accept} files`
+        )
+        fileInputRef.current.reportValidity()
+        return true
+      }
+    }
+    return false
+  }
+
   return (
     <div>
       <Custom id={id} validation={validation} {...props}>
@@ -116,48 +136,17 @@ const File = ({
           const handleFileDrop = (e) => {
             e.preventDefault()
             const files = e.dataTransfer.files
-            if (accept && accept.trim()) {
-              let isValid = true
-              for (let element of files) {
-                if (
-                  element.name &&
-                  !accept.includes(element.name.split('.').pop())
-                ) {
-                  isValid = false
-                  break
-                }
-              }
-              if (!isValid) {
-                fileInputRef.current.setCustomValidity(
-                  `Please choose only ${accept} files`
-                )
-                fileInputRef.current.reportValidity()
-                return
-              }
+            if (checkFileValidity(files)) {
+              return
             }
             acceptFiles(files)
           }
 
           const handleFileUpload = (e) => {
             const files = e.target.files
-            if (accept && accept.trim()) {
-              let isValid = true
-              for (let element of files) {
-                if (
-                  element.name &&
-                  !accept.includes(element.name.split('.').pop())
-                ) {
-                  isValid = false
-                  break
-                }
-              }
-              if (!isValid) {
-                e.target.setCustomValidity(`Please choose only ${accept} files`)
-                fileInputRef.current.reportValidity()
-                return
-              }
+            if (checkFileValidity(files)) {
+              return
             }
-
             acceptFiles(files)
           }
           return (
@@ -204,6 +193,7 @@ const File = ({
                       <input
                         ref={fileInputRef}
                         {...props}
+                        onClick={(e) => e.stopPropagation()}
                         multiple={isMultiple}
                         type='file'
                         onChange={handleFileUpload}
