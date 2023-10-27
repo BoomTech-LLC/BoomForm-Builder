@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import {
   uploadFiles,
@@ -109,7 +109,9 @@ const File = ({
             const newFiles = correctFiles(files)
             allFiles.current.push(...newFiles)
             loading.current = 'Start'
-            setFileList((prev) => [...prev, ...newFiles])
+            setFileList((prev) => {
+              return [...prev, ...newFiles]
+            })
             handleChange({ id: `${id}error`, value: 'Loading' })
             uploadFiles(
               newFiles,
@@ -125,6 +127,15 @@ const File = ({
               return prev.filter((file) => {
                 return file.id !== fileId
               })
+            })
+            setLoadingState((prev) => {
+              if (!!prev[fileId]) {
+                delete prev[fileId]
+                return { ...prev }
+              }
+            })
+            allFiles.current = allFiles.current.filter((file) => {
+              return file.id !== fileId
             })
             const _value = value?.filter((file) => file.id !== fileId)
             if (_value && _value.length)
