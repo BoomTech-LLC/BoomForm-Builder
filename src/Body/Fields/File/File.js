@@ -28,6 +28,7 @@ const File = ({
   const allFiles = useRef([])
   const [fileList, setFileList] = useState([])
   const [loadingState, setLoadingState] = useState({})
+  const { accept } = props
   const fileSubmitValidation = {
     HTMLValidate: true,
     custom: (value) => {
@@ -115,14 +116,50 @@ const File = ({
           const handleFileDrop = (e) => {
             e.preventDefault()
             const files = e.dataTransfer.files
+            if (accept && accept.trim()) {
+              let isValid = true
+              for (let element of files) {
+                if (
+                  element.name &&
+                  !accept.includes(element.name.split('.').pop())
+                ) {
+                  isValid = false
+                  break
+                }
+              }
+              if (!isValid) {
+                fileInputRef.current.setCustomValidity(
+                  `Please choose only ${accept} files`
+                )
+                fileInputRef.current.reportValidity()
+                return
+              }
+            }
             acceptFiles(files)
           }
 
           const handleFileUpload = (e) => {
             const files = e.target.files
+            if (accept && accept.trim()) {
+              let isValid = true
+              for (let element of files) {
+                if (
+                  element.name &&
+                  !accept.includes(element.name.split('.').pop())
+                ) {
+                  isValid = false
+                  break
+                }
+              }
+              if (!isValid) {
+                e.target.setCustomValidity(`Please choose only ${accept} files`)
+                fileInputRef.current.reportValidity()
+                return
+              }
+            }
+
             acceptFiles(files)
           }
-
           return (
             <>
               <div>
@@ -166,6 +203,7 @@ const File = ({
                       </div>
                       <input
                         ref={fileInputRef}
+                        {...props}
                         multiple={isMultiple}
                         type='file'
                         onChange={handleFileUpload}
