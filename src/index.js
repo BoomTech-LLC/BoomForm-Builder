@@ -2,7 +2,6 @@ import React from 'react'
 import { BoomForm } from 'boomform'
 import Form from './Form'
 import countries from './Helpers/countries'
-import GridForm from './Grid'
 
 const Builder = ({
   global = {},
@@ -25,33 +24,18 @@ const Builder = ({
       pages={pages}
       gridOptions={gridOptions}
     >
-      {() => {
-        if (gridOptions && gridOptions.layout) {
-          return (
-            <GridForm
-              global={global}
-              fields={fields}
-              button={button}
-              payment={payment}
-              pagination={pagination}
-              logic={logic}
-              pages={pages}
-              gridOptions={gridOptions}
-            />
-          )
-        } else
-          return (
-            <Form
-              global={global}
-              fields={fields}
-              button={button}
-              payment={payment}
-              pagination={pagination}
-              logic={logic}
-              pages={pages}
-            />
-          )
-      }}
+      {() => (
+        <Form
+          global={global}
+          fields={fields}
+          button={button}
+          payment={payment}
+          pagination={pagination}
+          logic={logic}
+          pages={pages}
+          gridOptions={gridOptions}
+        />
+      )}
     </BoomForm>
   )
 }
