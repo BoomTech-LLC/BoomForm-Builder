@@ -90,6 +90,23 @@ const App = () => {
       //     }
       //   }
       // }}
+      // pagination={{
+      //   buttons: { type: 0, next: 'Next', prev: 'Prev' },
+      //   initial: 0,
+      //   mode: 'section',
+      //   pages: [
+      //     {
+      //       title: 'Page 1',
+      //       description: '',
+      //       fields: [1, 2]
+      //     },
+      //     {
+      //       title: 'Page 2',
+      //       description: '',
+      //       fields: [3, 4]
+      //     }
+      //   ]
+      // }}
     />
   )
 }
