@@ -3,6 +3,7 @@ import { useField } from 'boomform'
 import Field from './Field'
 import { getPrintableFields, getRendableData } from './../Helpers/global'
 import { getHiddenIds } from './../Helpers/logic'
+import GridForm from '../Grid'
 
 const Fields = ({
   fields,
@@ -14,7 +15,8 @@ const Fields = ({
   global,
   pages,
   currentPage,
-  formRef
+  formRef,
+  gridOptions
 }) => {
   const prevCurrent = useRef(currentPage)
   const data = useField(updatableFields)
@@ -48,6 +50,21 @@ const Fields = ({
     }
   }, [])
 
+  if (gridOptions && gridOptions.layout) {
+    return (
+      <GridForm
+        fields={fields}
+        setCurrentPage={setCurrentPage}
+        payment={payment}
+        pages={pages}
+        currentPage={currentPage}
+        gridOptions={gridOptions}
+        printableFields={printableFields}
+        prevCurrent={prevCurrent}
+        onPageChange={onPageChange}
+      />
+    )
+  }
   return (
     <>
       {printableFields.map((pageFields, index) => {
@@ -64,10 +81,7 @@ const Fields = ({
         }
 
         return (
-          <div
-            key={'page' + index}
-            className='boomForm-fields'
-          >
+          <div key={'page' + index} className='boomForm-fields'>
             {fields.map((field) => {
               if (!pageFields.includes(field.id)) return null
               return <Field key={field.id} payment={payment} {...field} />
