@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, Fragment } from 'react'
 import { useField } from 'boomform'
 import Field from './Field'
-import { getPrintableFields, getRendableData } from './../Helpers/global'
+import { getRendableData } from './../Helpers/global'
 import { getHiddenIds } from './../Helpers/logic'
 
 const Fields = ({
@@ -64,13 +64,32 @@ const Fields = ({
         }
 
         return (
-          <div
-            key={'page' + index}
-            className='boomForm-fields'
-          >
+          <div key={'page' + index} className='boomForm-fields'>
             {fields.map((field) => {
               if (!pageFields.includes(field.id)) return null
-              return <Field key={field.id} payment={payment} {...field} />
+              const { preFix, postFix } = field
+
+              return (
+                <div class='boomForm_field'>
+                  {preFix && (
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: preFix
+                      }}
+                    />
+                  )}
+
+                  <Field key={field.id} payment={payment} {...field} />
+
+                  {postFix && (
+                    <span
+                      dangerouslySetInnerHTML={{
+                        __html: postFix
+                      }}
+                    />
+                  )}
+                </div>
+              )
             })}
           </div>
         )

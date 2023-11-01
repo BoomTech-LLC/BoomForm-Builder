@@ -7,15 +7,15 @@ const ScaleRating = ({
   id,
   max = 5,
   min = 0,
-  preFix,
-  postFix,
+  start,
+  end,
   classnameprefix,
   initial,
   ...props
 }) => {
   return (
     <>
-      <span>{preFix}</span>
+      <span>{start}</span>
       {getOptions({ min, max }).map((value) => {
         return (
           <div
@@ -35,7 +35,7 @@ const ScaleRating = ({
           </div>
         )
       })}
-      <span>{postFix}</span>
+      <span>{end}</span>
     </>
   )
 }

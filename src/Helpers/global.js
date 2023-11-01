@@ -20,7 +20,7 @@ export const getRendableData = (
 
   if (pagination && pagination.pages && pagination.pages.length !== 0) {
     if (pagination.mode === 'section') {
-      pagination.pages.forEach((page, index) => {
+      pagination.pages.forEach((page) => {
         rendableData.push(
           getPrintableFields(fields, hiddenFieldIds, page.fields)
         )
