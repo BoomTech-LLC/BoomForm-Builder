@@ -20,10 +20,11 @@ const Date = ({ validation = {}, ...props }) => {
   const handleChange = ({ event }) => {
     if (iphoneCheck()) {
       setTimeout(() => {
-        event.target.defaultValue = ''
+        if (event && event.target) {
+          event.target.defaultValue = ''
+        }
       }, 100)
     }
- 
   }
 
   return (
