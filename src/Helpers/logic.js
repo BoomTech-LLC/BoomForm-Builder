@@ -74,8 +74,10 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
 }
 
 export const getHiddenIds = ({ logic, values, fields }) => {
-  let hiddenFields = []
-
+  let hiddenFields = {
+    fields: [],
+    pages: []
+  }
   logic.map((option) => {
     const { action, conditions, operator = 'and', id } = option
 
@@ -96,27 +98,33 @@ export const getHiddenIds = ({ logic, values, fields }) => {
         field
       })
 
-      if (action === 'show') hiddenFields.push(id)
+      if (actionHandler(id, action, operator, isMatch, hiddenFields)) break
 
-      if (isMatch) {
-        if (action === 'show') {
-          if (operator === 'or') {
-            hiddenFields = hiddenFields.filter((item) => item !== id)
-            break
-          } else {
-            const index = hiddenFields.indexOf(id)
-            hiddenFields.splice(index, 1)
-          }
-        } else {
-          hiddenFields.push(id)
-          if (operator === 'or') break
-        }
-      } else {
-        if (operator === 'and' && action === 'hide') {
-          hiddenFields = hiddenFields.filter((item) => item !== id)
-          break
-        }
-      }
+      // if (action === 'show') hiddenFields.fields.push(id)
+
+      // if (isMatch) {
+      //   if (action === 'show') {
+      //     if (operator === 'or') {
+      //       hiddenFields.fields = hiddenFields.fields.filter(
+      //         (item) => item !== id
+      //       )
+      //       break
+      //     } else {
+      //       const index = hiddenFields.fields.indexOf(id)
+      //       hiddenFields.fields.splice(index, 1)
+      //     }
+      //   } else {
+      //     hiddenFields.fields.push(id)
+      //     if (operator === 'or') break
+      //   }
+      // } else {
+      //   if (operator === 'and' && action === 'hide') {
+      //     hiddenFields.fields = hiddenFields.fields.filter(
+      //       (item) => item !== id
+      //     )
+      //     break
+      //   }
+      // }
     }
   })
 
@@ -232,3 +240,40 @@ export const getFieldValue = (type, value, field, values, item) => {
 //       return fieldValue?.value || fieldValue
 //   }
 // }
+
+export const actionHandler = (id, action, operator, isMatch, hiddenFields) => {
+  if (action === 'show') hiddenFields.fields.push(id)
+  if (action === 'show_page') hiddenFields.pages.push(id)
+  if (isMatch) {
+    switch (action) {
+      case 'show':
+        debugger
+        if (operator === 'or') {
+          hiddenFields.fields = hiddenFields.fields.filter(
+            (item) => item !== id
+          )
+          return true
+        } else {
+          const index = hiddenFields.fields.indexOf(id)
+          hiddenFields.fields.splice(index, 1)
+        }
+        break
+      case 'hide_page':
+        hiddenFields.pages.push(id)
+        break
+      case 'show_page':
+        hiddenFields.pages = hiddenFields.pages.filter(
+          (_hiddenId) => _hiddenId !== id
+        )
+        break
+      default:
+        hiddenFields.fields.push(id)
+        if (operator === 'or') return true
+    }
+  } else {
+    if (operator === 'and' && action === 'hide') {
+      hiddenFields.fields = hiddenFields.fields.filter((item) => item !== id)
+      return true
+    }
+  }
+}
