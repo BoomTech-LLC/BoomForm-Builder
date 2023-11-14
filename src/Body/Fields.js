@@ -51,7 +51,11 @@ const Fields = ({
   return (
     <>
       {printableFields.map((pageFields, index) => {
-        if (pageFields.length === 0 && pages.length - 1 > currentPage) {
+        if (
+          pageFields &&
+          pageFields.length === 0 &&
+          pages.length - 1 > currentPage
+        ) {
           if (prevCurrent.current < currentPage) {
             setCurrentPage((prev) => prev + 1)
             prevCurrent.current = currentPage
@@ -64,10 +68,7 @@ const Fields = ({
         }
 
         return (
-          <div
-            key={'page' + index}
-            className='boomForm-fields'
-          >
+          <div key={'page' + index} className='boomForm-fields'>
             {fields.map((field) => {
               if (!pageFields.includes(field.id)) return null
               return <Field key={field.id} payment={payment} {...field} />
