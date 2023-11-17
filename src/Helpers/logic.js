@@ -68,6 +68,18 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (count === parseInt(value)) return true
       return false
     }
+    case 'doesNotContain': {
+      if (fieldValue && fieldValue.indexOf(value) === -1) return true
+      else return false
+    }
+    case 'isEmpty': {
+      if (!fieldValue) return true
+      else return false
+    }
+    case 'isFilled': {
+      if (fieldValue) return true
+      else return false
+    }
     default:
       return null
   }
@@ -79,7 +91,7 @@ export const getHiddenIds = ({ logic, values, fields }) => {
     pages: []
   }
   logic.map((option) => {
-    const { action, conditions, operator = 'and', id } = option
+    const { action, conditions, operator = 'and', id, handler } = option
 
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
@@ -98,7 +110,8 @@ export const getHiddenIds = ({ logic, values, fields }) => {
         field
       })
 
-      if (actionHandler(id, action, operator, isMatch, hiddenFields)) break
+      if (actionHandler(id, action, operator, isMatch, hiddenFields, handler))
+        break
 
       // if (action === 'show') hiddenFields.fields.push(id)
 
@@ -241,7 +254,14 @@ export const getFieldValue = (type, value, field, values, item) => {
 //   }
 // }
 
-export const actionHandler = (id, action, operator, isMatch, hiddenFields) => {
+export const actionHandler = (
+  id,
+  action,
+  operator,
+  isMatch,
+  hiddenFields,
+  handler
+) => {
   if (action === 'show') hiddenFields.fields.push(id)
   if (action === 'show_page') hiddenFields.pages.push(id)
   if (isMatch) {
@@ -265,6 +285,11 @@ export const actionHandler = (id, action, operator, isMatch, hiddenFields) => {
         hiddenFields.pages = hiddenFields.pages.filter(
           (_hiddenId) => _hiddenId !== id
         )
+        break
+      case 'callback':
+        if (handler) {
+          handler()
+        }
         break
       default:
         hiddenFields.fields.push(id)

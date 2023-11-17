@@ -16,8 +16,17 @@ export const getRendableData = (
   fields,
   hiddenFieldIds = {},
   pagination = {},
-  currentPage
+  currentPage,
+  prevCurrent,
+  setCurrentPage
 ) => {
+  console.log(
+    'Get rendable called , pagination',
+    pagination,
+    'currentPage , prevCurrent.current',
+    currentPage,
+    prevCurrent.current
+  )
   const rendableData = []
   if (pagination && pagination.pages && pagination.pages.length !== 0) {
     if (pagination.mode === 'section') {
@@ -27,7 +36,27 @@ export const getRendableData = (
       })
       return rendableData
     } else {
-      if (hiddenFieldIds.pages.includes(pagination.pages[currentPage].id)) return //needs to be changed
+      console.log('====================================')
+      console.log(
+        'pagination.pages[currentPage].id',
+        currentPage,
+        pagination.pages
+      )
+      console.log('====================================')
+      if (hiddenFieldIds.pages.includes(pagination.pages[currentPage].id)) {
+        console.log('returning nothing , currentPage', currentPage)
+        console.log('prevCurrent', prevCurrent.current)
+        if (prevCurrent.current > currentPage) {
+          setCurrentPage((prev) => (prev - 1 === -1 ? 1 : prev - 1))
+        } else {
+          setCurrentPage((prev) =>
+            prev + 1 === pagination.pages.length
+              ? pagination.pages.length - 1
+              : prev + 1
+          )
+        }
+        return [] //needs to be changed
+      }
       rendableData.push(
         getPrintableFields(
           fields,
@@ -38,6 +67,9 @@ export const getRendableData = (
       return rendableData
     }
   } else {
+    console.log('====================================')
+    console.log('Else block', fields, hiddenFieldIds)
+    console.log('====================================')
     rendableData.push(getPrintableFields(fields, hiddenFieldIds, []))
   }
   return rendableData

@@ -6,7 +6,8 @@ const Header = ({
   description,
   isPagination,
   pagination,
-  currentPage
+  currentPage,
+  logicIds
 }) => {
   return (
     <>
@@ -18,6 +19,7 @@ const Header = ({
         isPagination={isPagination}
         pagination={pagination}
         currentPage={currentPage}
+        logicIds={logicIds}
       />
     </>
   )

@@ -23,78 +23,84 @@ const App = () => {
       }}
       fields={[
         {
-          type: 'textarea',
+          id: 1,
+          type: 'text',
+          label: 'Single line1'
+        },
+        {
+          id: 2,
+          type: 'text',
+          label: 'Single line1'
+        },
+        {
           id: 3,
-          height: '60px',
-          placeholder: 'Your Comments',
-          label: 'Your Comments',
-          validation: {
-            HTMLValidate: true,
-            min: {
-              msg: 'Please enter a value between {0} and {1}.',
-              value: null,
-              type: 'length'
-            },
-            max: {
-              msg: 'Please enter a value between {0} and {1}.',
-              value: null,
-              type: 'length'
-            }
-          }
-        },
-        {
-          type: 'file',
-          id: 10,
-          isMultiple: true,
-          inputContent: '',
-          upLoadData: {
-            url: 'https://storage.apiboomtech.com/file',
-            headers: {
-              Authorization:
-                'Bearer sl.BZX4eUyGRmCoRR3lAjokvL5UB6Y5sV_q8BT--zff_WTRwUa_xkIe38R6DxgN_Lqqb5KtIf5GvoiIGi2ml6ZPPSXAX7unkglCKrNysIVFt8shT3pXl9JbdUXyMSTi_92RFZmr8pI',
-              'Content-Type': 'multipart/form-data',
-              'Access-Control-Allow-Origin': '*'
-            },
-            queries: {
-              platform: 'form',
-              folder: 'wix'
-            },
-            onPostSuccess: (responce) => {
-              console.log(
-                'File uploaded successfully  and got responce :',
-                responce
-              )
-            },
-            onPostFail: (status, error) => {
-              console.log('Posting status is : ', status, 'error : ', error)
-            }
-          },
-
-          label: 'Upload Your File ',
-          validation: {
-            HTMLValidate: true
-          }
-        },
-        {
           type: 'textarea',
-          id: 55,
-          height: '600px',
-          placeholder: 'Your Comments',
-          label: 'Your Comments',
-          validation: {
-            HTMLValidate: true,
-            min: {
-              msg: 'Please enter a value between {0} and {1}.',
-              value: null,
-              type: 'length'
-            },
-            max: {
-              msg: 'Please enter a value between {0} and {1}.',
-              value: null,
-              type: 'length'
-            }
-          }
+          label: 'Multi Line1'
+        },
+
+        {
+          id: 4,
+          type: 'textarea',
+          label: 'Multi Line2'
+        },
+        {
+          id: 5,
+          type: 'textarea',
+          label: 'Multi Line2'
+        },
+        {
+          id: 6,
+          type: 'text',
+          label: 'Single line2'
+        },
+        {
+          id: 7,
+          type: 'date',
+          label: 'Single line2'
+        },
+        {
+          id: 9,
+          type: 'text',
+          label: 'Single line3'
+        },
+        ,
+        {
+          id: 10,
+          type: 'text',
+          label: 'Single line4'
         }
+      ]}
+      logic={[
+        {
+          id: 2,
+          action: 'hide_page',
+          conditions: [{ id: 1, rule: 'is', value: 'Pashik' }]
+        },
+        {
+          id: 9,
+          action: 'hide',
+          conditions: [{ id: 2, rule: 'is', value: 'John' }]
+        },
+
+        {
+          id: 1,
+          action: 'hide_page',
+          conditions: [{ id: 5, rule: 'is', value: 'John' }]
+        },
+
+        {
+          id: 10,
+          action: 'hide',
+          conditions: [{ id: 5, rule: 'is', value: 'John' }]
+        }
+        // {
+        //   id: 1,
+        //   action: 'callback',
+        //   handler: () => {
+        //     console.log('Write your code here')
+        //   },
+        //   conditions: [{ id: 6, rule: 'is', value: 'John' }]
+        // }
       ]}
       // logic={[
       //   {
@@ -131,6 +137,33 @@ const App = () => {
       //   timeline:1,
       // }}
       // pagination={singleField}
+      pagination={{
+        buttons: { type: 0 },
+        mode: 'section',
+        pageCounter: true,
+        pages: [
+          {
+            title: 'Page 1',
+            id: 1,
+            fields: [1, 2, 3, 7]
+          },
+          {
+            id: 2,
+            title: 'Page 2',
+            fields: [4, 5, 6]
+          },
+          {
+            id: 3,
+            title: 'Page 3',
+            fields: [9]
+          },
+          {
+            id: 4,
+            title: 'Page 4',
+            fields: [10]
+          }
+        ]
+      }}
       button={{
         text: 'submit'
       }}

@@ -14,7 +14,7 @@ const SubmitButton = ({
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
-
+  console.log('%cSubmitButton', 'font-size:25px;')
   const { text, prefix, suffix } = button || { text: 'Submit' }
   const { name, description, isPrint, onSubmit, onSubmitFailed } = global
   const { fee, total, setTotal } = payment

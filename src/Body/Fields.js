@@ -1,37 +1,22 @@
-import React, { memo, useEffect, useRef, Fragment } from 'react'
-import { useField } from 'boomform'
+import React, { memo, useEffect, Fragment } from 'react'
 import Field from './Field'
-import { getPrintableFields, getRendableData } from './../Helpers/global'
-import { getHiddenIds } from './../Helpers/logic'
+
 
 const Fields = ({
   fields,
-  logic,
-  pagination,
   setCurrentPage,
-  updatableFields,
   payment,
   global,
   pages,
   currentPage,
-  formRef
+  formRef,
+  printableFields,
+  prevCurrent
 }) => {
-  const prevCurrent = useRef(currentPage)
-  const data = useField(updatableFields)
-  const { onPageChange } = global
 
-  const logicIds = getHiddenIds({
-    logic,
-    values: data?.neededValues ? data?.neededValues : {},
-    fields
-  })
-
-  const printableFields = getRendableData(
-    fields,
-    logicIds,
-    pagination,
-    currentPage
-  )
+  console.log('====================================')
+  console.log('Printable fields inside FieldsJs', printableFields)
+  console.log('====================================')
 
   useEffect(() => {
     const submitHandler = (e) => {
@@ -42,9 +27,13 @@ const Fields = ({
         }
       }
     }
-    formRef?.current.addEventListener('submit', submitHandler)
+    if (formRef && formRef.current) {
+      formRef?.current.addEventListener('submit', submitHandler)
+    }
     return () => {
-      formRef?.current.removeEventListener('submit', submitHandler)
+      if (formRef && formRef.current) {
+        formRef?.current.removeEventListener('submit', submitHandler)
+      }
     }
   }, [])
 
@@ -57,16 +46,22 @@ const Fields = ({
           pages.length - 1 > currentPage
         ) {
           if (prevCurrent.current < currentPage) {
+            console.log('====================================');
+            console.log("SETTCURRRENTTTTPAAGGGEEE");
+            console.log('====================================');
             setCurrentPage((prev) => prev + 1)
             prevCurrent.current = currentPage
           } else {
+            console.log('====================================');
+            console.log("ELSE :  SETTCURRRENTTTTPAAGGGEEE");
+            console.log('====================================');
             setCurrentPage((prev) => prev - 1)
             prevCurrent.current = prevCurrent.current - 1
           }
-
-          if (onPageChange) onPageChange()
         }
-
+        console.log('====================================')
+        console.log('Returning fields')
+        console.log('====================================')
         return (
           <div key={'page' + index} className='boomForm-fields'>
             {fields.map((field) => {
