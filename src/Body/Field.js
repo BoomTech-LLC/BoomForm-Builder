@@ -79,18 +79,6 @@ const FieldByType = ({ type, ...props }) => {
 }
 
 const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
-  console.log('====================================')
-  console.log(
-    'Field got this props',
-    id,
-    type,
-    classnameprefix,
-    label,
-    instruction,
-    'and props',
-    props
-  )
-  console.log('====================================')
   return (
     <div
       id={`field-${id}`}
@@ -113,7 +101,6 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
           [`${classnameprefix}-${type}__content`]: classnameprefix
         })}
       >
-        <span> {id} </span>
         <FieldByType
           id={id}
           type={type}

@@ -33,16 +33,13 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
 
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
-  const prevCurrent = useRef(currentPage)
   const isPagination = Object.keys(pagination).length !== 0
   const data = useField(updatableFields)
-
-  const { pages } = pagination
 
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
-    fields
+    fields,
   })
   
   const printableFields = getRendableData(
@@ -50,21 +47,10 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
     logicIds,
     pagination,
     currentPage,
-    prevCurrent,
-    setCurrentPage
   )
-  console.log('====================================')
-  console.log('Printable FIelds got value', printableFields)
-  console.log('====================================')
   useEffect(() => {
     setCurrentPage(initial)
   }, [initial])
-
-  useEffect(() => {
-    console.log('====================================')
-    console.log(`%cCurrent page changed : ${currentPage} `, 'font-size:30px')
-    console.log('====================================')
-  }, [currentPage])
 
   useEffect(() => {
     onFirstRender({ setCurrentPage })
@@ -86,14 +72,8 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
       />
       <Body
         fields={fields}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
         payment={payment}
-        global={global}
-        formRef={formRef}
-        pages={pages}
         printableFields={printableFields}
-        prevCurrent={prevCurrent}
       />
       <Footer
         formRef={formRef}
@@ -107,7 +87,6 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         payment={payment}
         logic={logic}
         logicIds={logicIds}
-        prevCurrent={prevCurrent}
       />
 
       <StateHandler
