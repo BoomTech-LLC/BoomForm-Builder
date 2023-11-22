@@ -40,3 +40,20 @@ export const getPrevPageIndex = ({ pagination, logicIds, currentPage }) => {
   }
   return prevPage
 }
+
+export const getShowableData = ({ logicIds, pagination, currentPage }) => {
+  if (!pagination) return { currentPage, pagesLength: 0 }
+  const showableData = {
+    showableCurrentPage: 0,
+    pagesLength: 0
+  }
+  for (let i = 0; i <= pagination.pages.length - 1; i++) {
+    if (!logicIds.pages.includes(i)) {
+      showableData.pagesLength += 1
+      if (currentPage === i) {
+        showableData.showableCurrentPage = showableData.pagesLength
+      }
+    }
+  }
+  return showableData
+}
