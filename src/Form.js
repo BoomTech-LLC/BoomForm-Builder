@@ -6,7 +6,7 @@ import StateHandler from './StateHandler'
 
 import { useField } from 'boomform'
 
-import { getHiddenIds } from './Helpers/logic'
+import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
 import { getRendableData } from './Helpers/global'
 
 const Form = ({ global, fields, button, payment, pagination, logic }) => {
@@ -17,20 +17,9 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
     onFirstRender = () => {},
     onDie = () => {}
   } = global
-  const isLogic = logic.length !== 0
-  const updatableFields = []
 
-  if (isLogic)
-    for (let i = 0; i < logic.length; i++)
-      for (let j = 0; j < logic[i].conditions.length; j++)
-        logic[i].conditions[j].item
-          ? updatableFields.push(
-              `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
-            )
-          : updatableFields.push(logic[i].conditions[j].id)
-
+  const updatableFields = getUpdatableFields({ logic })
   const { initial = 0 } = pagination
-
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
   const isPagination = Object.keys(pagination).length !== 0
@@ -40,13 +29,14 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
     logic,
     values: data?.neededValues ? data?.neededValues : {},
     fields,
+    formRef
   })
-  
+
   const printableFields = getRendableData(
     fields,
     logicIds,
     pagination,
-    currentPage,
+    currentPage
   )
   useEffect(() => {
     setCurrentPage(initial)
