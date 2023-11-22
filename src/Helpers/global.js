@@ -1,6 +1,6 @@
 export const getPrintableFields = (fields, logic = {}, page = {}) => {
-  const { fields: hiddenFields = [], pages: hiddenPages = [] } = logic // Its more effective to handle hidden pages ids here , but for now its imposable
-  const { fields: pagination, id: pageId } = page
+  const { fields: hiddenFields = [] } = logic
+  const { fields: pagination } = page
   if (fields) {
     const printableFields = fields.flatMap(({ id }) =>
       !hiddenFields.includes(id) ? id : []
@@ -16,47 +16,17 @@ export const getRendableData = (
   fields,
   hiddenFieldIds = {},
   pagination = {},
-  currentPage,
-  prevCurrent,
-  setCurrentPage
+  currentPage
 ) => {
-  console.log(
-    'Get rendable called , pagination',
-    pagination,
-    'currentPage , prevCurrent.current',
-    currentPage,
-    prevCurrent.current
-  )
   const rendableData = []
   if (pagination && pagination.pages && pagination.pages.length !== 0) {
     if (pagination.mode === 'section') {
       pagination.pages.forEach((page, index) => {
-        if (hiddenFieldIds.pages.includes(page.id)) return //needs to be changed
+        if (hiddenFieldIds.pages.includes(index)) return
         rendableData.push(getPrintableFields(fields, hiddenFieldIds, page))
       })
       return rendableData
     } else {
-      console.log('====================================')
-      console.log(
-        'pagination.pages[currentPage].id',
-        currentPage,
-        pagination.pages
-      )
-      console.log('====================================')
-      if (hiddenFieldIds.pages.includes(pagination.pages[currentPage].id)) {
-        console.log('returning nothing , currentPage', currentPage)
-        console.log('prevCurrent', prevCurrent.current)
-        if (prevCurrent.current > currentPage) {
-          setCurrentPage((prev) => (prev - 1 === -1 ? 1 : prev - 1))
-        } else {
-          setCurrentPage((prev) =>
-            prev + 1 === pagination.pages.length
-              ? pagination.pages.length - 1
-              : prev + 1
-          )
-        }
-        return [] //needs to be changed
-      }
       rendableData.push(
         getPrintableFields(
           fields,
@@ -67,9 +37,6 @@ export const getRendableData = (
       return rendableData
     }
   } else {
-    console.log('====================================')
-    console.log('Else block', fields, hiddenFieldIds)
-    console.log('====================================')
     rendableData.push(getPrintableFields(fields, hiddenFieldIds, []))
   }
   return rendableData
