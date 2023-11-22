@@ -14,19 +14,14 @@ const Pagination = ({
   payment,
   logic,
   logicIds,
-  prevCurrent
 
 }) => {
   const { pageCounter, buttons, pages } = pagination
   const { type } = buttons
-
-  console.log("%cPagination" , "font-size:25px;");
-  console.log('logicIds', logicIds)
-
   return (
     <>
       {pageCounter && (
-        <Counter currentPage={currentPage} pagesLangth={pages.length} />
+        <Counter currentPage={currentPage} pagesLangth={pages.filter((_,index)=> !logicIds.pages.includes(index)).length} />
       )}
       {type === 0 ? (
         <Buttons
@@ -39,7 +34,7 @@ const Pagination = ({
           setCurrentPage={setCurrentPage}
           payment={payment}
           logic={logic}
-          prevCurrent={prevCurrent}
+          logicIds={logicIds}
         />
       ) : (
         <Numbers

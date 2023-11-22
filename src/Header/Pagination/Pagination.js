@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import Timeline from './Timeline/Timeline'
 import PerPageHeader from './PerPageHeader'
 
-const Pagination = ({ isPagination, pagination, currentPage }) => {
+const Pagination = ({ isPagination, pagination, currentPage , logicIds }) => {
   if (!isPagination) return null
   const { timeline, pages, mode } = pagination
 
@@ -14,7 +14,7 @@ const Pagination = ({ isPagination, pagination, currentPage }) => {
     <>
       <Timeline
         timeline={timeline}
-        pagesLength={pages.length}
+        pagesLength={pages.filter((_,index)=> !logicIds.pages.includes(index)).length}
         currentPage={currentPage}
       />
       <PerPageHeader page={pages[currentPage]} />

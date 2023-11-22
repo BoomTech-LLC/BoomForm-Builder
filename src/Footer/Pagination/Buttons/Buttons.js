@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import SubmitButton from './../../SubmitButton/SubmitButton'
 import Captcha from './../../Captcha'
+import { getNextPageIndex, getPrevPageIndex } from '../../../Helpers/pagination'
 
 const Buttons = ({
   formRef,
@@ -12,25 +13,31 @@ const Buttons = ({
   setCurrentPage,
   payment,
   logic,
-  prevCurrent
+  logicIds
 }) => {
   const { buttons, pages } = pagination
   const { prev = 'Prev', next = 'Next' } = buttons
   const { captcha, onPageChange } = global
+  const prevPageIndex = getPrevPageIndex({
+    pagination,
+    currentPage,
+    logicIds
+  })
+  const nextPageIndex = getNextPageIndex({
+    pagination,
+    currentPage,
+    logicIds
+  })
 
   const handleNext = () => {
     if (formRef.current.checkValidity()) {
-      setCurrentPage((prev) => prev + 1)
-      prevCurrent.current = currentPage
-
+      setCurrentPage(+nextPageIndex)
       if (onPageChange) onPageChange()
     } else formRef.current.reportValidity()
   }
 
   const handlePrev = () => {
-    setCurrentPage((prev) => prev - 1)
-    prevCurrent.current = currentPage
-
+    setCurrentPage(+prevPageIndex)
     if (onPageChange) onPageChange()
   }
 
@@ -40,7 +47,7 @@ const Buttons = ({
         <Captcha siteKey={captcha} />
       )}
       <div className='boomForm-paginationButtons__content'>
-        {currentPage !== 0 ? (
+        {prevPageIndex && (
           <button
             type='button'
             className='boomForm-paginationButton boomForm-paginationButton-prev'
@@ -48,10 +55,10 @@ const Buttons = ({
           >
             {prev}
           </button>
-        ) : null}
+        )}
 
         <SubmitButton
-          hide={currentPage !== pages.length - 1}
+          hide={nextPageIndex}
           global={global}
           button={button}
           fields={fields}
@@ -60,7 +67,7 @@ const Buttons = ({
           logic={logic}
         />
 
-        {currentPage !== pages.length - 1 && (
+        {nextPageIndex && (
           <button
             type='button'
             className='boomForm-paginationButton boomForm-paginationButton-next'
