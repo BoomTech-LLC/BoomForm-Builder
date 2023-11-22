@@ -1,11 +1,7 @@
 import React, { memo, Fragment } from 'react'
 import Field from './Field'
 
-const Fields = ({
-  fields,
-  payment,
-  printableFields,
-}) => {
+const Fields = ({ fields, payment, printableFields }) => {
   return (
     <>
       {printableFields.map((pageFields, index) => {

@@ -65,6 +65,9 @@ const Buttons = ({
           formRef={formRef}
           payment={payment}
           logic={logic}
+          logicIds={logicIds}
+          pagination={pagination}
+          setCurrentPage={setCurrentPage}
         />
 
         {nextPageIndex && (
