@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Context } from 'boomform'
 import Print from './../../Print/Print'
 import { getTotalPrice, formatPrice } from './../../Helpers/payment'
+import { formValueCheker } from '../../Helpers/logic'
 
 const SubmitButton = ({
   global,
@@ -10,7 +11,10 @@ const SubmitButton = ({
   hide,
   formRef,
   payment,
-  logic
+  logic,
+  logicIds,
+  pagination,
+  setCurrentPage
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
@@ -29,6 +33,14 @@ const SubmitButton = ({
   const handleClick = (e) => {
     e.preventDefault()
     if (formRef.current.checkValidity()) {
+      const reddirectPage = formValueCheker({ fields, logicIds, pagination })
+      if (reddirectPage) {
+        setCurrentPage(+reddirectPage)
+        setTimeout(() => {
+          formRef.current.reportValidity()
+        }, 0)
+        return
+      }
       if (onSubmit) onSubmit({ state, actions })
       else console.log({ state, actions })
     } else {
