@@ -85,13 +85,13 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
   }
 }
 
-export const getHiddenIds = ({ logic, values, fields }) => {
+export const getHiddenIds = ({ logic, values, fields, formRef }) => {
   let hiddenFields = {
     fields: [],
     pages: []
   }
   logic.map((option) => {
-    const { action, conditions, operator = 'and', id, handler } = option
+    const { action, conditions, operator = 'and', id, handlers } = option
 
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
@@ -110,34 +110,18 @@ export const getHiddenIds = ({ logic, values, fields }) => {
         field
       })
 
-      if (actionHandler(id, action, operator, isMatch, hiddenFields, handler))
+      if (
+        actionHandler(
+          id,
+          action,
+          operator,
+          isMatch,
+          hiddenFields,
+          handlers,
+          formRef
+        )
+      )
         break
-
-      // if (action === 'show') hiddenFields.fields.push(id)
-
-      // if (isMatch) {
-      //   if (action === 'show') {
-      //     if (operator === 'or') {
-      //       hiddenFields.fields = hiddenFields.fields.filter(
-      //         (item) => item !== id
-      //       )
-      //       break
-      //     } else {
-      //       const index = hiddenFields.fields.indexOf(id)
-      //       hiddenFields.fields.splice(index, 1)
-      //     }
-      //   } else {
-      //     hiddenFields.fields.push(id)
-      //     if (operator === 'or') break
-      //   }
-      // } else {
-      //   if (operator === 'and' && action === 'hide') {
-      //     hiddenFields.fields = hiddenFields.fields.filter(
-      //       (item) => item !== id
-      //     )
-      //     break
-      //   }
-      // }
     }
   })
 
@@ -260,14 +244,14 @@ export const actionHandler = (
   operator,
   isMatch,
   hiddenFields,
-  handler
+  handlers,
+  formRef
 ) => {
   if (action === 'show') hiddenFields.fields.push(id)
   if (action === 'show_page') hiddenFields.pages.push(id)
   if (isMatch) {
     switch (action) {
       case 'show':
-        debugger
         if (operator === 'or') {
           hiddenFields.fields = hiddenFields.fields.filter(
             (item) => item !== id
@@ -287,8 +271,11 @@ export const actionHandler = (
         )
         break
       case 'callback':
-        if (handler) {
-          handler()
+        if (handlers) {
+          const { onConditionTrue } = handlers
+          if (onConditionTrue) {
+            onConditionTrue(formRef.current)
+          }
         }
         break
       default:
@@ -300,5 +287,57 @@ export const actionHandler = (
       hiddenFields.fields = hiddenFields.fields.filter((item) => item !== id)
       return true
     }
+    if (action === 'callback') {
+      const { onConditionFalse } = handlers
+      if (onConditionFalse) {
+        onConditionFalse(formRef.current)
+      }
+    }
   }
+}
+
+export const getUpdatableFields = ({ logic }) => {
+  const updatableFields = []
+  if (logic.length > 0) {
+    for (let i = 0; i < logic.length; i++)
+      for (let j = 0; j < logic[i].conditions.length; j++)
+        logic[i].conditions[j].item
+          ? updatableFields.push(
+              `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
+            )
+          : updatableFields.push(logic[i].conditions[j].id)
+  }
+  return updatableFields
+}
+
+export const formValueCheker = ({ logicIds, pagination, fields }) => {
+  if (!pagination) return
+  const { pages: hiddenPages, fields: hiddenFields } = logicIds
+  const filtredPages = pagination.pages.filter(
+    (_, index) => !hiddenPages.includes(index)
+  )
+  const requiredFields = fields.filter(
+    (field) => field.required && !hiddenFields.includes(field.id)
+  )
+  const { values: stateValues } = window.__current_form_state
+  let reddirectPage = undefined
+
+  const getPageIndex = (fieldId) => {
+    for (let i = 0; i < filtredPages.length; i++) {
+      if (filtredPages[i].fields.includes(fieldId)) {
+        reddirectPage = String(i)
+        break
+      }
+    }
+  }
+  for (let i = 0; i < requiredFields.length; i++) {
+    if (
+      stateValues[requiredFields[i].id] === null ||
+      stateValues[requiredFields[i].id] === undefined
+    ) {
+      getPageIndex(requiredFields[i].id)
+      break
+    }
+  }
+  return reddirectPage
 }
