@@ -341,6 +341,5 @@ export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
       break
     }
   }
-  console.log('REturn of redirect page', reddirectPage)
   return reddirectPage
 }
