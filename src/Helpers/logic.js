@@ -310,11 +310,13 @@ export const getUpdatableFields = ({ logic }) => {
   return updatableFields
 }
 
-export const formValueCheker = ({ logicIds, pagination, fields }) => {
+export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
   if (Object.keys(pagination).length === 0) return
   const { pages: hiddenPages, fields: hiddenFields } = logicIds
   const filtredPages = pagination.pages.filter(
-    (_, index) => !hiddenPages.includes(index)
+    (page, index) =>
+      !hiddenPages.includes(index) &&
+      page.fields.filter((id) => !hiddenFields.includes(id)).length !== 0
   )
   const requiredFields = fields.filter(
     (field) => field.required && !hiddenFields.includes(field.id)
@@ -339,5 +341,6 @@ export const formValueCheker = ({ logicIds, pagination, fields }) => {
       break
     }
   }
+  console.log('REturn of redirect page', reddirectPage)
   return reddirectPage
 }

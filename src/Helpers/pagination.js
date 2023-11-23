@@ -49,7 +49,7 @@ export const getShowableData = ({ logicIds, pagination, currentPage }) => {
     actualPages: []
   }
   pagination.pages.forEach((page, index) => {
-    if (!logicIds.pages.includes(index)) {
+    if (!logicIds.pages.includes(index) && page.fields.filter((id) => !logicIds.fields.includes(id)).length !== 0) {
       showableData.pagesLength += 1
       showableData.actualPages.push(index)
 
