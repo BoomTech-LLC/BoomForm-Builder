@@ -38,7 +38,7 @@ const SubmitButton = ({
         setCurrentPage(+reddirectPage)
         setTimeout(() => {
           formRef.current.reportValidity()
-        }, 0)
+        }, 30)
         return
       }
       if (onSubmit) onSubmit({ state, actions })
