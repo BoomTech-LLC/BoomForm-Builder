@@ -42,18 +42,22 @@ export const getPrevPageIndex = ({ pagination, logicIds, currentPage }) => {
 }
 
 export const getShowableData = ({ logicIds, pagination, currentPage }) => {
-  if (!pagination) return { currentPage, pagesLength: 0 }
+  if (!pagination) return { currentPage, pagesLength: 0, actualPages: [] }
   const showableData = {
     showableCurrentPage: 0,
-    pagesLength: 0
+    pagesLength: 0,
+    actualPages: []
   }
-  for (let i = 0; i <= pagination.pages.length - 1; i++) {
-    if (!logicIds.pages.includes(i)) {
+  pagination.pages.forEach((page, index) => {
+    if (!logicIds.pages.includes(index)) {
       showableData.pagesLength += 1
-      if (currentPage === i) {
+      showableData.actualPages.push(index)
+
+      if (currentPage === index) {
         showableData.showableCurrentPage = showableData.pagesLength
       }
     }
-  }
+  })
+
   return showableData
 }
