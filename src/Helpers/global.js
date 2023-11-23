@@ -1,6 +1,6 @@
 export const getPrintableFields = (fields, logic = {}, page = {}) => {
   const { fields: hiddenFields = [] } = logic
-  const { fields: pagination } = page
+  const { fields: pagination = [] } = page
   if (fields) {
     const printableFields = fields.flatMap(({ id }) =>
       !hiddenFields.includes(id) ? id : []
