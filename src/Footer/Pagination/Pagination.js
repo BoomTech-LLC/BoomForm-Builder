@@ -52,6 +52,7 @@ const Pagination = ({
           setCurrentPage={setCurrentPage}
           payment={payment}
           logic={logic}
+          logicIds={logicIds}
         />
       )}
     </>
