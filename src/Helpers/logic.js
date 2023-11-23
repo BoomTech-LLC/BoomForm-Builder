@@ -311,7 +311,7 @@ export const getUpdatableFields = ({ logic }) => {
 }
 
 export const formValueCheker = ({ logicIds, pagination, fields }) => {
-  if (!pagination) return
+  if (Object.keys(pagination).length === 0) return
   const { pages: hiddenPages, fields: hiddenFields } = logicIds
   const filtredPages = pagination.pages.filter(
     (_, index) => !hiddenPages.includes(index)
