@@ -20,6 +20,7 @@ const File = ({
   },
   upLoadData,
   validation,
+  dropbox,
   ...props
 }) => {
   const { onPostSuccess, onPostFail } = upLoadData
@@ -118,7 +119,8 @@ const File = ({
               upLoadData,
               handleCallback,
               handleLoading,
-              allFiles.current
+              allFiles.current,
+              dropbox
             )
           }
 
