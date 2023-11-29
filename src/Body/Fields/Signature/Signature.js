@@ -3,14 +3,12 @@ import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
 const Signature = (props) => {
-  const { id, initial, validation } = props
+  const { id, initial, validation, underline } = props
 
   const [sigPadRef, setSigPadRef] = useState(null)
 
-
   useEffect(() => {
     if (initial && sigPadRef) sigPadRef.fromData(initial.data)
-   
   }, [initial, sigPadRef])
 
   const onRefSet = useCallback((ref) => {
@@ -51,12 +49,15 @@ const Signature = (props) => {
 
   return (
     <Custom id={id} {...props}>
-      {({ handleChange, handleBlur,value}) => {
+      {({ handleChange, handleBlur, value }) => {
         if (value === null && !sigPadRef?.isEmpty()) {
-         sigPadRef?.clear()
+          sigPadRef?.clear()
         }
         return (
-          <div onClick={() => handleOnBlur(handleBlur)}>
+          <div
+            onClick={() => handleOnBlur(handleBlur)}
+            className='boomForm-signature__wrapper'
+          >
             <SignatureCanvas
               ref={onRefSet}
               penColor='#000'
@@ -67,6 +68,9 @@ const Signature = (props) => {
               onEnd={() => handleTrim(handleChange)}
               clearOnResize={false}
             />
+
+            {underline && <div className={'boomForm-signatureUnderline'}></div>}
+
             <div
               className={'boomForm-signatureButton'}
               onClick={() => handleClear(handleChange)}
