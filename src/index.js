@@ -10,8 +10,7 @@ const Builder = ({
   pagination = {},
   logic = [],
   payment = {},
-  pages = {},
-  gridOptions = {}
+  pages = {}
 }) => {
   return (
     <BoomForm
@@ -22,7 +21,6 @@ const Builder = ({
       pagination={pagination}
       logic={logic}
       pages={pages}
-      gridOptions={gridOptions}
     >
       {() => (
         <Form
@@ -33,7 +31,6 @@ const Builder = ({
           pagination={pagination}
           logic={logic}
           pages={pages}
-          gridOptions={gridOptions}
         />
       )}
     </BoomForm>
