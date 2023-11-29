@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import axios from 'axios'
 import {
   uploadFiles,
@@ -20,7 +20,6 @@ const File = ({
   },
   upLoadData,
   validation,
-  dropbox,
   ...props
 }) => {
   const { onPostSuccess, onPostFail } = upLoadData
@@ -39,26 +38,6 @@ const File = ({
         return
       }
     }
-  }
-
-  const checkFileValidity = (files) => {
-    if (accept && accept.trim()) {
-      let isValid = true
-      for (let element of files) {
-        if (element.name && !accept.includes(element.name.split('.').pop())) {
-          isValid = false
-          break
-        }
-      }
-      if (!isValid) {
-        fileInputRef.current.setCustomValidity(
-          `Please choose only ${accept} files`
-        )
-        fileInputRef.current.reportValidity()
-        return true
-      }
-    }
-    return false
   }
 
   return (
@@ -110,17 +89,14 @@ const File = ({
             const newFiles = correctFiles(files)
             allFiles.current.push(...newFiles)
             loading.current = 'Start'
-            setFileList((prev) => {
-              return [...prev, ...newFiles]
-            })
+            setFileList((prev) => [...prev, ...newFiles])
             handleChange({ id: `${id}error`, value: 'Loading' })
             uploadFiles(
               newFiles,
               upLoadData,
               handleCallback,
               handleLoading,
-              allFiles.current,
-              dropbox
+              allFiles.current
             )
           }
 
@@ -129,15 +105,6 @@ const File = ({
               return prev.filter((file) => {
                 return file.id !== fileId
               })
-            })
-            setLoadingState((prev) => {
-              if (!!prev[fileId]) {
-                delete prev[fileId]
-                return { ...prev }
-              }
-            })
-            allFiles.current = allFiles.current.filter((file) => {
-              return file.id !== fileId
             })
             const _value = value?.filter((file) => file.id !== fileId)
             if (_value && _value.length)
@@ -149,17 +116,48 @@ const File = ({
           const handleFileDrop = (e) => {
             e.preventDefault()
             const files = e.dataTransfer.files
-            if (checkFileValidity(files)) {
-              return
+            if (accept && accept.trim()) {
+              let isValid = true
+              for (let element of files) {
+                if (
+                  element.name &&
+                  !accept.includes(element.name.split('.').pop())
+                ) {
+                  isValid = false
+                  break
+                }
+              }
+              if (!isValid) {
+                fileInputRef.current.setCustomValidity(
+                  `Please choose only ${accept} files`
+                )
+                fileInputRef.current.reportValidity()
+                return
+              }
             }
             acceptFiles(files)
           }
 
           const handleFileUpload = (e) => {
             const files = e.target.files
-            if (checkFileValidity(files)) {
-              return
+            if (accept && accept.trim()) {
+              let isValid = true
+              for (let element of files) {
+                if (
+                  element.name &&
+                  !accept.includes(element.name.split('.').pop())
+                ) {
+                  isValid = false
+                  break
+                }
+              }
+              if (!isValid) {
+                e.target.setCustomValidity(`Please choose only ${accept} files`)
+                fileInputRef.current.reportValidity()
+                return
+              }
             }
+
             acceptFiles(files)
           }
           return (
@@ -206,7 +204,6 @@ const File = ({
                       <input
                         ref={fileInputRef}
                         {...props}
-                        onClick={(e) => e.stopPropagation()}
                         multiple={isMultiple}
                         type='file'
                         onChange={handleFileUpload}
