@@ -11,12 +11,11 @@ const Time = ({
   classnamepreFix,
   validations,
   initials,
-  placeholders,
   ...props
 }) => {
   return (
     <>
-      {getTimeFields(format, placeholders).map((item) => {
+      {getTimeFields(format).map((item) => {
         const { key, placeholder } = item
         return (
           <Fragment key={`${id}.${key}`}>

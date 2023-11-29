@@ -1,8 +1,8 @@
-export const getTimeFields = (format, placeholders) => {
+export const getTimeFields = (format) => {
   const fields = [
-    { key: 'hour', placeholder: placeholders?.hour || 'HH' },
-    { key: 'minute', placeholder: placeholders?.minute || 'MM' },
+    { key: 'hour', placeholder: 'HH' },
+    { key: 'minute', placeholder: 'MM' },
     { key: 'format' }
-  ];
-  return format === '24h' ? fields.splice(0, 2) : fields;
-};
+  ]
+  return format === '24h' ? fields.splice(0, 2) : fields
+}
