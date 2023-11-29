@@ -4,7 +4,15 @@ import Footer from './Footer/Footer'
 import Body from './Body'
 import StateHandler from './StateHandler'
 
-const Form = ({ global, fields, button, payment, pagination, logic }) => {
+const Form = ({
+  global,
+  fields,
+  button,
+  payment,
+  pagination,
+  logic,
+  gridOptions
+}) => {
   const {
     name,
     description,
@@ -52,6 +60,7 @@ const Form = ({ global, fields, button, payment, pagination, logic }) => {
         payment={payment}
         global={global}
         formRef={formRef}
+        gridOptions={gridOptions}
       />
       <Footer
         formRef={formRef}

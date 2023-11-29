@@ -1,6 +1,6 @@
 {
   "name": "boomform-builder",
-  "version": "1.14.4",
+  "version": "1.14.3",
   "description": "Simple Form Builder",
   "author": "BoomTechLLC",
   "license": "MIT",
@@ -56,6 +56,7 @@
     "boomform": "^3.5.12",
     "classnames": "^2.3.1",
     "react-google-recaptcha": "^2.1.0",
+    "react-grid-layout": "^1.4.2",
     "react-quill": "^1.3.5",
     "react-signature-canvas": "^1.0.5"
   }
