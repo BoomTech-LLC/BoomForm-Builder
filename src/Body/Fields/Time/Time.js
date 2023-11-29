@@ -33,6 +33,7 @@ const Time = ({
             )}
 
             {key === 'hour' && <span>:</span>}
+            
             {key === 'format' && (
               <Select
                 {...props}
