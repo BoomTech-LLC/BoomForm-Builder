@@ -11,7 +11,7 @@ const App = () => {
       }}
       fields={[
         {
-          type: 'text',
+          type: 'url',
           id: 1,
           placeholder: 'Single Line',
           label: 'Single Line'
