@@ -11,7 +11,8 @@ const Body = ({
   currentPage,
   setCurrentPage,
   global,
-  formRef
+  formRef,
+  gridOptions
 }) => {
   const { pages } = pagination
   const updatableFields = []
@@ -37,6 +38,7 @@ const Body = ({
       pages={pages}
       currentPage={currentPage}
       formRef={formRef}
+      gridOptions={gridOptions}
     />
   )
 }
