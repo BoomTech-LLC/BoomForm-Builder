@@ -201,6 +201,7 @@ const File = ({
                         {...props}
                         multiple={isMultiple}
                         type='file'
+                        onClick={(e)=>{e.stopPropagation()}}
                         onChange={handleFileUpload}
                       />
                     </div>
