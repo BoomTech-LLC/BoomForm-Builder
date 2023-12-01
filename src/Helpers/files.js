@@ -33,8 +33,8 @@ export const uploadHandler = async ({
         if (status === 200) callback(file.id, 200, response?.data, allFiles)
         else callback(file.id, status, response, file)
 
-        if (requestsArray[i].onPostSuccess) {
-          requestsArray[i].onPostSuccess(response)
+        if (requestsArray[i].onSuccess) {
+          requestsArray[i].onSuccess(response)
         }
       }
       const onRequestFail = (error, retries) => {
@@ -43,8 +43,8 @@ export const uploadHandler = async ({
           return
         }
         if (retries == 0) callback(file.id, 0, error, file)
-        if (requestsArray[i].onPostFail) {
-          requestsArray[i].onPostFail(error.status, error)
+        if (requestsArray[i].onFail) {
+          requestsArray[i].onFail(error.status, error)
         }
       }
       await customUpload({
