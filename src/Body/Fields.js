@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, Fragment } from 'react'
 import { useField } from 'boomform'
 import Field from './Field'
-import { getPrintableFields, getRendableData } from './../Helpers/global'
+import { getRendableData } from './../Helpers/global'
 import { getHiddenIds } from './../Helpers/logic'
 import GridLayout from "react-grid-layout";
 import PageItems from './PageItems'

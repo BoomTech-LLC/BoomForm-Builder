@@ -7,10 +7,29 @@ const PageItems = ({ fields, pageFields, payment }) => {
     <>
       {fields.map((field) => {
         if (!pageFields.includes(field.id)) return null
+        const { preFix, postFix } = field
         return (
-          <div key={field.id}>
-            <Field key={field.id} payment={payment} {...field} />
-          </div>
+          (
+            <div class='boomForm_field'>
+              {preFix && (
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: preFix
+                  }}
+                />
+              )}
+
+              <Field key={field.id} payment={payment} {...field} />
+
+              {postFix && (
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: postFix
+                  }}
+                />
+              )}
+            </div>
+          )
         )
       })}
     </>
