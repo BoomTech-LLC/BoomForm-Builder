@@ -11,11 +11,12 @@ const Time = ({
   classnamepreFix,
   validations,
   initials,
+  placeholders,
   ...props
 }) => {
   return (
     <>
-      {getTimeFields(format).map((item) => {
+      {getTimeFields(format, placeholders).map((item) => {
         const { key, placeholder } = item
         return (
           <Fragment key={`${id}.${key}`}>
@@ -32,6 +33,7 @@ const Time = ({
             )}
 
             {key === 'hour' && <span>:</span>}
+            
             {key === 'format' && (
               <Select
                 {...props}
