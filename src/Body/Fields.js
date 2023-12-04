@@ -3,8 +3,9 @@ import { useField } from 'boomform'
 import Field from './Field'
 import { getRendableData } from './../Helpers/global'
 import { getHiddenIds } from './../Helpers/logic'
-import GridForm from '../Grid'
+import GridLayout from "react-grid-layout";
 import PageItems from './PageItems'
+import "react-grid-layout/css/styles.css";
 
 const Fields = ({
   fields,
@@ -85,7 +86,6 @@ const Fields = ({
 
           if (onPageChange) onPageChange()
         }
-
         return (
           <div key={'page' + index} className='boomForm-fields'>
             {gridOptions && gridOptions.layout ? (

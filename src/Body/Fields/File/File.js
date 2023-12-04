@@ -1,9 +1,8 @@
 import React, { Fragment, useRef, useState } from 'react'
-import axios from 'axios'
 import {
   uploadFiles,
   correctFiles,
-  ABORT_REQUEST_CONTROLLERS
+  ABORT_REQUEST_CONTROLLERS,
 } from './../../../Helpers/files'
 import List from './List'
 import { Custom, Input } from 'boomform'
@@ -18,11 +17,10 @@ const File = ({
   getErrors = (error) => {
     // console.log(error)
   },
-  upLoadData,
   validation,
+  uploadOptions,
   ...props
 }) => {
-  const { onPostSuccess, onPostFail } = upLoadData
   const fileInputRef = useRef(null)
   const loading = useRef('')
   const allFiles = useRef([])
@@ -60,19 +58,16 @@ const File = ({
                 return file
               })
               handleChange({ id: id, value: newFiles })
-              if (onPostSuccess) onPostSuccess(responce)
             }
             if (status === 'canceled') {
               loading.current = 'Canceled'
               handleChange({ id: `${id}error`, value: 'Canceled' })
               console.log(`You have canceled ${newValues?.name} file upload`)
-              if (onPostFail) onPostFail(status, responce)
             } else if (status === 0) {
               const incorrectFile = fileList.find((item) => item.id === fileId)
               console.log(
                 `We are unable to upload your file named ${incorrectFile?.name}. Please if it’s possible try to rename it, otherwise contact us.`
               )
-              if (onPostFail) onPostFail(status, responce)
             }
           }
 
@@ -93,10 +88,10 @@ const File = ({
             handleChange({ id: `${id}error`, value: 'Loading' })
             uploadFiles(
               newFiles,
-              upLoadData,
               handleCallback,
               handleLoading,
-              allFiles.current
+              allFiles.current,
+              uploadOptions
             )
           }
 
@@ -206,6 +201,7 @@ const File = ({
                         {...props}
                         multiple={isMultiple}
                         type='file'
+                        onClick={(e)=>{e.stopPropagation()}}
                         onChange={handleFileUpload}
                       />
                     </div>
