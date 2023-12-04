@@ -15,25 +15,68 @@ const addAdditionalParams = (file, i) => {
   return newFile
 }
 
-const uploadFile = async (
+export const uploadHandler = async ({
   file,
-  upLoadData,
   callback,
   handleLoading,
   allFiles,
-  signal
-) => {
-  const { headers, queries, url } = upLoadData
-  let requestURL = url
+  signal,
+  uploadOptions
+}) => {
+  const requestsArray = uploadOptions(file)
+  if (requestsArray && requestsArray.length > 0) {
+    let isUploadSuccess = false
+    for (let i = 0; i < requestsArray.length && !isUploadSuccess; i++) {
+      const onRequestSuccess = (response) => {
+        isUploadSuccess = true
+        const { status } = response
+        if (status === 200) callback(file.id, 200, response?.data, allFiles)
+        else callback(file.id, status, response, file)
 
+        if (requestsArray[i].onSuccess) {
+          requestsArray[i].onSuccess(response)
+        }
+      }
+      const onRequestFail = (error, retries) => {
+        if (error.message && error.message == 'canceled') {
+          callback(file.id, error.message, error, file)
+          return
+        }
+        if (retries == 0) callback(file.id, 0, error, file)
+        if (requestsArray[i].onFail) {
+          requestsArray[i].onFail(error.status, error)
+        }
+      }
+      await customUpload({
+        file,
+        upLoadData: requestsArray[i],
+        handleLoading,
+        allFiles,
+        signal,
+        onRequestSuccess,
+        onRequestFail
+      })
+    }
+  }
+}
+
+const customUpload = async ({
+  file,
+  upLoadData,
+  handleLoading,
+  allFiles,
+  signal,
+  onRequestSuccess,
+  onRequestFail
+}) => {
+  const { headers, queries, url, method } = upLoadData
+  let requestURL = url
   let retries = 3
   let uploadSucceeded = false
 
   if (queries) {
-    let iteration = 0
-    Object.keys(queries).forEach((query) => {
-      if (iteration === 0) {
-        iteration++
+    Object.keys(queries).forEach((query, index) => {
+      if (index === 0) {
         requestURL += `?${query}=${queries[query]}`
       } else {
         requestURL += `&${query}=${queries[query]}`
@@ -43,10 +86,14 @@ const uploadFile = async (
 
   while (retries > 0 && !uploadSucceeded) {
     try {
-      const formatedFiles = new FormData()
-      formatedFiles.append('file', file)
-
-      const response = await axios.post(requestURL, formatedFiles, {
+      let requestData = file
+      if (upLoadData.formatBeforeSend) {
+        requestData = upLoadData.formatBeforeSend(file)
+      }
+      const response = await axios({
+        url: requestURL,
+        method: method || 'POST',
+        data: requestData,
         headers: {
           ...headers
         },
@@ -54,19 +101,11 @@ const uploadFile = async (
           handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
         }
       })
-
-      const { status } = response
-      if (status === 200) callback(file.id, 200, response?.data, allFiles)
-      else callback(file.id, status, response, file)
+      onRequestSuccess(response)
       uploadSucceeded = true
     } catch (error) {
-      if (error.message && error.message == 'canceled') {
-        callback(file.id, error.message, error, file)
-        break
-      }
       retries--
-      if (retries == 0) callback(file.id, 0, error, file)
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      onRequestFail(error, retries)
     }
   }
 }
@@ -81,21 +120,21 @@ export const correctFiles = (files) => {
 
 export const uploadFiles = (
   fileList,
-  upLoadData,
   callback,
   handleLoading,
-  newValues
+  newValues,
+  uploadOptions
 ) => {
   for (let i = 0; i < fileList.length; i++) {
     const controller = new AbortController()
     ABORT_REQUEST_CONTROLLERS.set(fileList[i].id, controller)
-    uploadFile(
-      fileList[i],
-      upLoadData,
+    uploadHandler({
+      file: fileList[i],
+      uploadOptions: uploadOptions,
+      allFiles: newValues,
       callback,
       handleLoading,
-      newValues,
-      controller.signal
-    )
+      signal: controller.signal
+    })
   }
 }
