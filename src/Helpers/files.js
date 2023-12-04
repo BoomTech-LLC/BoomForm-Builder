@@ -90,7 +90,7 @@ const customUpload = async ({
       if (upLoadData.formatBeforeSend) {
         requestData = upLoadData.formatBeforeSend(file)
       }
-      const response = await await axios({
+      const response = await axios({
         url: requestURL,
         method: method || 'POST',
         data: requestData,
