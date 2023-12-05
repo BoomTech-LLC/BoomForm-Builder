@@ -35,10 +35,8 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (!field || !field.options) return false
       for (let i in fieldValue)
         if (fieldValue[i]) {
-          const [option] = field.options.filter((option) => option.key == i)
-          if (option && option.value === value) return true
+          if (fieldValue[i].value && fieldValue[i].value == value) return true
         }
-
       return false
     }
     case 'doNotChecked': {
@@ -52,7 +50,6 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
     case 'checkedMore': {
       let count = 0
       for (let i in fieldValue) if (fieldValue[i]) count++
-
       if (count > parseInt(value)) return true
       return false
     }
@@ -149,16 +146,11 @@ export const getFieldValue = (type, value, field, values, item) => {
     case 'signature': {
       return value?.url
     }
-
     case 'singleChoice': {
       if (!field || !field.options) return ''
-      const [option] = field.options.filter(
-        (option) => option.key === parseInt(value) || option.key === 'other'
-      )
-
-      return option && option.label
+      const options = field.options.filter((option) => option.value == value)
+      return options
     }
-
     case 'name':
     case 'address': {
       let name = ''
@@ -182,6 +174,17 @@ export const getFieldValue = (type, value, field, values, item) => {
         files += value[i].name + ' , '
       }
       return files.slice(0, -2)
+    }
+    case 'multipleChoice': {
+      if (!field && !field.options) return ''
+      if (value && values) {
+        const checkedOptions = field.options.filter((option) => {
+          if (value[option.key]) {
+            return true
+          } else return false
+        })
+        return checkedOptions
+      }
     }
     default:
       return value
