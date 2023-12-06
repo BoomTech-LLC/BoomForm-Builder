@@ -1,7 +1,9 @@
-export const getPrintableFields = (fields, logic = [], pagination = []) => {
+export const getPrintableFields = (fields, logic = {}, page = {}) => {
+  const { fields: hiddenFields = [] } = logic
+  const { fields: pagination = [] } = page
   if (fields) {
     const printableFields = fields.flatMap(({ id }) =>
-      !logic.includes(id) ? id : []
+      !hiddenFields.includes(id) ? id : []
     )
     return [printableFields, pagination].reduce((a, c) => {
       if (!c.length) return a
@@ -12,12 +14,11 @@ export const getPrintableFields = (fields, logic = [], pagination = []) => {
 
 export const getRendableData = (
   fields,
-  hiddenFieldIds = [],
+  hiddenFieldIds = {},
   pagination = {},
   currentPage
 ) => {
   const rendableData = []
-
   if (pagination && pagination.pages && pagination.pages.length !== 0) {
     if (pagination.mode === 'section') {
       pagination.pages.forEach((page) => {
@@ -31,7 +32,7 @@ export const getRendableData = (
         getPrintableFields(
           fields,
           hiddenFieldIds,
-          pagination.pages[currentPage].fields
+          pagination.pages[currentPage]
         )
       )
       return rendableData
@@ -43,7 +44,7 @@ export const getRendableData = (
 }
 
 export const getPlaceholder = (placehodler, id) =>
-  placehodler !== undefined && placehodler[id] ? placehodler[id] : undefined
+  placehodler !== undefined && placehodler[id] ? placehodler[id] : ''
 
 export const getInitial = (initials, id) =>
   initials !== undefined && initials[id] !== null ? initials[id] : undefined
