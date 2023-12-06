@@ -9,10 +9,6 @@ import { useField } from 'boomform'
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
 import { getRendableData } from './Helpers/global'
 
-import { useField } from 'boomform'
-
-import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
-import { getRendableData } from './Helpers/global'
 
 const Form = ({
   global,
