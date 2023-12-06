@@ -7,21 +7,21 @@ const generatePageItems = (fields, pageFields, payment) => {
   return fields
     .filter((field) => pageFields.includes(field.id))
     .map((field) => {
-      const { preFix, postFix } = field
+      const { prefix, postfix } = field
       return (
         <div class='boomForm_field' key={field.id}>
-          {preFix && (
+          {prefix && (
             <span
               dangerouslySetInnerHTML={{
-                __html: preFix
+                __html: prefix
               }}
             />
           )}
           <Field key={field.id} payment={payment} {...field} />
-          {postFix && (
+          {postfix && (
             <span
               dangerouslySetInnerHTML={{
-                __html: postFix
+                __html: postfix
               }}
             />
           )}
@@ -68,7 +68,7 @@ const Fields = ({ fields, payment, printableFields, gridOptions }) => {
                 isResizable={isResizable}
                 layout={layout_}
               >
-                {generatePageItems(fields, pageFields, payment)} 
+                {generatePageItems(fields, pageFields, payment)}
               </GridLayout>
             ) : (
               <>{generatePageItems(fields, pageFields, payment)}</>
