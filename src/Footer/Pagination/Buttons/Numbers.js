@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react'
 import classNames from 'classnames'
 import SubmitButton from './../../SubmitButton/SubmitButton'
 import Captcha from '../../Captcha'
+import { getShowableData } from '../../../Helpers/pagination'
 
 const Numbers = ({
   formRef,
@@ -12,11 +13,21 @@ const Numbers = ({
   currentPage,
   setCurrentPage,
   payment,
-  logic
+  logic,
+  logicIds
 }) => {
   const { pages } = pagination
   const { captcha, onPageChange } = global
 
+  const { showableCurrentPage, pagesLength, actualPages } = getShowableData({
+    currentPage,
+    logicIds,
+    pagination
+  })
+  const pageButtons = Array.from(
+    { length: pagesLength },
+    (_, index) => index + 1
+  )
   const handleSetPage = (index) => {
     if (index !== currentPage) {
       function stepByStepChange(currentStep) {
@@ -39,23 +50,22 @@ const Numbers = ({
       stepByStepChange(step)
     }
   }
-
   return (
     <>
       {captcha !== undefined && currentPage === pages.length - 1 && (
         <Captcha siteKey={captcha} />
       )}
       <div className='boomForm-paginationNumbers__content'>
-        {pages.map((page, index) => {
+        {pageButtons.map((page, index) => {
           return (
             <button
               key={index}
               type='button'
               className={classNames('boomForm-paginationNumber__button', {
                 'boomForm-paginationNumber__button-active':
-                  index === currentPage
+                  index === showableCurrentPage -1
               })}
-              onClick={() => handleSetPage(index)}
+              onClick={() => handleSetPage(actualPages[index])}
             >
               {index + 1}
             </button>
@@ -63,13 +73,16 @@ const Numbers = ({
         })}
 
         <SubmitButton
-          hide={currentPage !== pages.length - 1}
+          hide={showableCurrentPage !== pagesLength}
           global={global}
           button={button}
           fields={fields}
           formRef={formRef}
           payment={payment}
           logic={logic}
+          logicIds={logicIds}
+          pagination={pagination}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </>

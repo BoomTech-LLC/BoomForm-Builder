@@ -4,6 +4,12 @@ import Footer from './Footer/Footer'
 import Body from './Body'
 import StateHandler from './StateHandler'
 
+import { useField } from 'boomform'
+
+import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
+import { getRendableData } from './Helpers/global'
+
+
 const Form = ({
   global,
   fields,
@@ -20,14 +26,27 @@ const Form = ({
     onFirstRender = () => {},
     onDie = () => {}
   } = global
-  const { initial = 0 } = pagination
 
+  const updatableFields = getUpdatableFields({ logic })
+  const { initial = 0 } = pagination
   const formRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(initial)
-
   const isPagination = Object.keys(pagination).length !== 0
-  const isLogic = logic.length !== 0
+  const data = useField(updatableFields)
 
+  const logicIds = getHiddenIds({
+    logic,
+    values: data?.neededValues ? data?.neededValues : {},
+    fields,
+    formRef
+  })
+
+  const printableFields = getRendableData(
+    fields,
+    logicIds,
+    pagination,
+    currentPage
+  )
   useEffect(() => {
     setCurrentPage(initial)
   }, [initial])
@@ -48,18 +67,12 @@ const Form = ({
         isPagination={isPagination}
         pagination={pagination}
         currentPage={currentPage}
+        logicIds={logicIds}
       />
       <Body
         fields={fields}
-        isLogic={isLogic}
-        logic={logic}
-        isPagination={isPagination}
-        pagination={pagination}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
         payment={payment}
-        global={global}
-        formRef={formRef}
+        printableFields={printableFields}
         gridOptions={gridOptions}
       />
       <Footer
@@ -73,6 +86,7 @@ const Form = ({
         setCurrentPage={setCurrentPage}
         payment={payment}
         logic={logic}
+        logicIds={logicIds}
       />
 
       <StateHandler

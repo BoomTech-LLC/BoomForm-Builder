@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 const Progress = ({ pagesLength, currentPage }) => {
+
   return (
     <div className='boomForm-paginationProgressBar'>
       {Array.from(Array(pagesLength).keys()).map((item) => {
