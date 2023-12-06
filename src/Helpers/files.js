@@ -75,9 +75,6 @@ const customUpload = async ({
   let requestURL = url
   let retries = (retriesCount && !isNaN(retriesCount) && retriesCount) || 1
   let uploadSucceeded = false
-  console.log('====================================')
-  console.log('Setted retries ', retries, 'Prop was', retriesCount)
-  console.log('====================================')
 
   if (queries) {
     Object.keys(queries).forEach((query, index) => {
