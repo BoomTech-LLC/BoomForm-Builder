@@ -54,7 +54,8 @@ export const uploadHandler = async ({
         allFiles,
         signal,
         onRequestSuccess,
-        onRequestFail
+        onRequestFail,
+        retriesCount: requestsArray[i].retries
       })
     }
   }
@@ -67,11 +68,12 @@ const customUpload = async ({
   allFiles,
   signal,
   onRequestSuccess,
-  onRequestFail
+  onRequestFail,
+  retriesCount
 }) => {
   const { headers, queries, url, method } = upLoadData
   let requestURL = url
-  let retries = 3
+  let retries = (retriesCount && !isNaN(retriesCount) && retriesCount) || 1
   let uploadSucceeded = false
 
   if (queries) {
