@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useField } from 'boomform'
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import Body from './Body'
 import StateHandler from './StateHandler'
-
-import { useField } from 'boomform'
 
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
 import { getRendableData } from './Helpers/global'
