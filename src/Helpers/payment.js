@@ -51,7 +51,7 @@ export const getTotalPrice = ({ values, fields, fee, logic }) => {
   fields.map((field) => {
     let { type, id } = field
 
-    if (logicIds.includes(id)) return null
+    if (logicIds.fields.includes(id)) return null 
 
     if (type === 'number' && field.payable === 'collect')
       sum += parseFloat(values[id]) || 0
