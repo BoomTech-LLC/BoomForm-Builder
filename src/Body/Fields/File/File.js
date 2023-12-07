@@ -2,7 +2,7 @@ import React, { Fragment, useRef, useState } from 'react'
 import {
   uploadFiles,
   correctFiles,
-  ABORT_REQUEST_CONTROLLERS,
+  ABORT_REQUEST_CONTROLLERS
 } from './../../../Helpers/files'
 import List from './List'
 import { Custom, Input } from 'boomform'
@@ -27,6 +27,28 @@ const File = ({
   const [fileList, setFileList] = useState([])
   const [loadingState, setLoadingState] = useState({})
   const { accept } = props
+
+  const checkFileValidity = (files) => {
+    if (accept && accept.trim()) {
+      let isValid = true
+      for (let element of files) {
+        if (element.name && !accept.includes(element.name.split('.').pop())) {
+          isValid = false
+          break
+        }
+      }
+      if (!isValid) {
+        fileInputRef.current.setCustomValidity(
+          `Please choose only ${accept} files`
+        )
+        fileInputRef.current.reportValidity()
+        return true
+      }
+    }
+    fileInputRef.current.setCustomValidity('')
+    fileInputRef.current.reportValidity()
+    return false
+  }
   const fileSubmitValidation = {
     HTMLValidate: true,
     custom: (value) => {
@@ -111,48 +133,13 @@ const File = ({
           const handleFileDrop = (e) => {
             e.preventDefault()
             const files = e.dataTransfer.files
-            if (accept && accept.trim()) {
-              let isValid = true
-              for (let element of files) {
-                if (
-                  element.name &&
-                  !accept.includes(element.name.split('.').pop())
-                ) {
-                  isValid = false
-                  break
-                }
-              }
-              if (!isValid) {
-                fileInputRef.current.setCustomValidity(
-                  `Please choose only ${accept} files`
-                )
-                fileInputRef.current.reportValidity()
-                return
-              }
-            }
+            if (checkFileValidity(files)) return
             acceptFiles(files)
           }
 
           const handleFileUpload = (e) => {
             const files = e.target.files
-            if (accept && accept.trim()) {
-              let isValid = true
-              for (let element of files) {
-                if (
-                  element.name &&
-                  !accept.includes(element.name.split('.').pop())
-                ) {
-                  isValid = false
-                  break
-                }
-              }
-              if (!isValid) {
-                e.target.setCustomValidity(`Please choose only ${accept} files`)
-                fileInputRef.current.reportValidity()
-                return
-              }
-            }
-
+            if (checkFileValidity(files)) return
             acceptFiles(files)
           }
           return (
@@ -201,7 +188,9 @@ const File = ({
                         {...props}
                         multiple={isMultiple}
                         type='file'
-                        onClick={(e)=>{e.stopPropagation()}}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                        }}
                         onChange={handleFileUpload}
                       />
                     </div>
