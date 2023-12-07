@@ -14,7 +14,8 @@ const Footer = ({
   currentPage,
   setCurrentPage,
   payment,
-  logic
+  logic,
+  logicIds
 }) => {
   const { captcha } = global
   const { mode } = pagination
@@ -29,6 +30,9 @@ const Footer = ({
         formRef={formRef}
         payment={payment}
         logic={logic}
+        logicIds={logicIds}
+        pagination={pagination}
+        setCurrentPage={setCurrentPage}
       />
     </>
   ) : (
@@ -42,6 +46,7 @@ const Footer = ({
       setCurrentPage={setCurrentPage}
       payment={payment}
       logic={logic}
+      logicIds={logicIds}
     />
   )
 }

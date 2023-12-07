@@ -1,5 +1,4 @@
 import React, { Fragment, useRef, useState } from 'react'
-import axios from 'axios'
 import {
   uploadFiles,
   correctFiles,
@@ -18,17 +17,38 @@ const File = ({
   getErrors = (error) => {
     // console.log(error)
   },
-  upLoadData,
   validation,
+  uploadOptions,
   ...props
 }) => {
-  const { onPostSuccess, onPostFail } = upLoadData
   const fileInputRef = useRef(null)
   const loading = useRef('')
   const allFiles = useRef([])
   const [fileList, setFileList] = useState([])
   const [loadingState, setLoadingState] = useState({})
   const { accept } = props
+
+  const checkFileValidity = (files) => {
+    if (accept && accept.trim()) {
+      let isValid = true
+      for (let element of files) {
+        if (element.name && !accept.includes(element.name.split('.').pop())) {
+          isValid = false
+          break
+        }
+      }
+      if (!isValid) {
+        fileInputRef.current.setCustomValidity(
+          `Please choose only ${accept} files`
+        )
+        fileInputRef.current.reportValidity()
+        return true
+      }
+    }
+    fileInputRef.current.setCustomValidity('')
+    fileInputRef.current.reportValidity()
+    return false
+  }
   const fileSubmitValidation = {
     HTMLValidate: true,
     custom: (value) => {
@@ -60,19 +80,16 @@ const File = ({
                 return file
               })
               handleChange({ id: id, value: newFiles })
-              if (onPostSuccess) onPostSuccess(responce)
             }
             if (status === 'canceled') {
               loading.current = 'Canceled'
               handleChange({ id: `${id}error`, value: 'Canceled' })
               console.log(`You have canceled ${newValues?.name} file upload`)
-              if (onPostFail) onPostFail(status, responce)
             } else if (status === 0) {
               const incorrectFile = fileList.find((item) => item.id === fileId)
               console.log(
                 `We are unable to upload your file named ${incorrectFile?.name}. Please if it’s possible try to rename it, otherwise contact us.`
               )
-              if (onPostFail) onPostFail(status, responce)
             }
           }
 
@@ -93,10 +110,10 @@ const File = ({
             handleChange({ id: `${id}error`, value: 'Loading' })
             uploadFiles(
               newFiles,
-              upLoadData,
               handleCallback,
               handleLoading,
-              allFiles.current
+              allFiles.current,
+              uploadOptions
             )
           }
 
@@ -116,48 +133,13 @@ const File = ({
           const handleFileDrop = (e) => {
             e.preventDefault()
             const files = e.dataTransfer.files
-            if (accept && accept.trim()) {
-              let isValid = true
-              for (let element of files) {
-                if (
-                  element.name &&
-                  !accept.includes(element.name.split('.').pop())
-                ) {
-                  isValid = false
-                  break
-                }
-              }
-              if (!isValid) {
-                fileInputRef.current.setCustomValidity(
-                  `Please choose only ${accept} files`
-                )
-                fileInputRef.current.reportValidity()
-                return
-              }
-            }
+            if (checkFileValidity(files)) return
             acceptFiles(files)
           }
 
           const handleFileUpload = (e) => {
             const files = e.target.files
-            if (accept && accept.trim()) {
-              let isValid = true
-              for (let element of files) {
-                if (
-                  element.name &&
-                  !accept.includes(element.name.split('.').pop())
-                ) {
-                  isValid = false
-                  break
-                }
-              }
-              if (!isValid) {
-                e.target.setCustomValidity(`Please choose only ${accept} files`)
-                fileInputRef.current.reportValidity()
-                return
-              }
-            }
-
+            if (checkFileValidity(files)) return
             acceptFiles(files)
           }
           return (
@@ -206,6 +188,9 @@ const File = ({
                         {...props}
                         multiple={isMultiple}
                         type='file'
+                        onClick={(e) => {
+                          e.stopPropagation()
+                        }}
                         onChange={handleFileUpload}
                       />
                     </div>

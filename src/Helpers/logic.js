@@ -35,10 +35,8 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (!field || !field.options) return false
       for (let i in fieldValue)
         if (fieldValue[i]) {
-          const [option] = field.options.filter((option) => option.key == i)
-          if (option && option.value === value) return true
+          if (fieldValue[i].value && fieldValue[i].value == value) return true
         }
-
       return false
     }
     case 'doNotChecked': {
@@ -52,7 +50,6 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
     case 'checkedMore': {
       let count = 0
       for (let i in fieldValue) if (fieldValue[i]) count++
-
       if (count > parseInt(value)) return true
       return false
     }
@@ -68,16 +65,30 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (count === parseInt(value)) return true
       return false
     }
+    case 'doesNotContain': {
+      if (fieldValue && fieldValue.indexOf(value) === -1) return true
+      else return false
+    }
+    case 'isEmpty': {
+      if (!fieldValue) return true
+      else return false
+    }
+    case 'isFilled': {
+      if (fieldValue) return true
+      else return false
+    }
     default:
       return null
   }
 }
 
-export const getHiddenIds = ({ logic, values, fields }) => {
-  let hiddenFields = []
-
+export const getHiddenIds = ({ logic, values, fields, formRef }) => {
+  let hiddenFields = {
+    fields: [],
+    pages: []
+  }
   logic.map((option) => {
-    const { action, conditions, operator = 'and', id } = option
+    const { action, conditions, operator = 'and', id, handlers } = option
 
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
@@ -96,27 +107,18 @@ export const getHiddenIds = ({ logic, values, fields }) => {
         field
       })
 
-      if (action === 'show') hiddenFields.push(id)
-
-      if (isMatch) {
-        if (action === 'show') {
-          if (operator === 'or') {
-            hiddenFields = hiddenFields.filter((item) => item !== id)
-            break
-          } else {
-            const index = hiddenFields.indexOf(id)
-            hiddenFields.splice(index, 1)
-          }
-        } else {
-          hiddenFields.push(id)
-          if (operator === 'or') break
-        }
-      } else {
-        if (operator === 'and' && action === 'hide') {
-          hiddenFields = hiddenFields.filter((item) => item !== id)
-          break
-        }
-      }
+      if (
+        actionHandler(
+          id,
+          action,
+          operator,
+          isMatch,
+          hiddenFields,
+          handlers,
+          formRef
+        )
+      )
+        break
     }
   })
 
@@ -144,16 +146,11 @@ export const getFieldValue = (type, value, field, values, item) => {
     case 'signature': {
       return value?.url
     }
-
     case 'singleChoice': {
       if (!field || !field.options) return ''
-      const [option] = field.options.filter(
-        (option) => option.key === parseInt(value) || option.key === 'other'
-      )
-
-      return option && option.label
+      const options = field.options.filter((option) => option.value == value)
+      return options
     }
-
     case 'name':
     case 'address': {
       let name = ''
@@ -177,6 +174,17 @@ export const getFieldValue = (type, value, field, values, item) => {
         files += value[i].name + ' , '
       }
       return files.slice(0, -2)
+    }
+    case 'multipleChoice': {
+      if (!field && !field.options) return ''
+      if (value && values) {
+        const checkedOptions = field.options.filter((option) => {
+          if (value[option.key]) {
+            return true
+          } else return false
+        })
+        return checkedOptions
+      }
     }
     default:
       return value
@@ -232,3 +240,109 @@ export const getFieldValue = (type, value, field, values, item) => {
 //       return fieldValue?.value || fieldValue
 //   }
 // }
+
+export const actionHandler = (
+  id,
+  action,
+  operator,
+  isMatch,
+  hiddenFields,
+  handlers,
+  formRef
+) => {
+  if (action === 'show') hiddenFields.fields.push(id)
+  if (action === 'show_page') hiddenFields.pages.push(id)
+  if (isMatch) {
+    switch (action) {
+      case 'show':
+        if (operator === 'or') {
+          hiddenFields.fields = hiddenFields.fields.filter(
+            (item) => item !== id
+          )
+          return true
+        } else {
+          const index = hiddenFields.fields.indexOf(id)
+          hiddenFields.fields.splice(index, 1)
+        }
+        break
+      case 'hide_page':
+        hiddenFields.pages.push(id)
+        break
+      case 'show_page':
+        hiddenFields.pages = hiddenFields.pages.filter(
+          (_hiddenId) => _hiddenId !== id
+        )
+        break
+      case 'callback':
+        if (handlers) {
+          const { onConditionTrue } = handlers
+          if (onConditionTrue) {
+            onConditionTrue(formRef.current)
+          }
+        }
+        break
+      default:
+        hiddenFields.fields.push(id)
+        if (operator === 'or') return true
+    }
+  } else {
+    if (operator === 'and' && action === 'hide') {
+      hiddenFields.fields = hiddenFields.fields.filter((item) => item !== id)
+      return true
+    }
+    if (action === 'callback') {
+      const { onConditionFalse } = handlers
+      if (onConditionFalse) {
+        onConditionFalse(formRef.current)
+      }
+    }
+  }
+}
+
+export const getUpdatableFields = ({ logic }) => {
+  const updatableFields = []
+  if (logic.length > 0) {
+    for (let i = 0; i < logic.length; i++)
+      for (let j = 0; j < logic[i].conditions.length; j++)
+        logic[i].conditions[j].item
+          ? updatableFields.push(
+              `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
+            )
+          : updatableFields.push(logic[i].conditions[j].id)
+  }
+  return updatableFields
+}
+
+export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
+  if (Object.keys(pagination).length === 0) return
+  const { pages: hiddenPages, fields: hiddenFields } = logicIds
+  const filtredPages = pagination.pages.filter(
+    (page, index) =>
+      !hiddenPages.includes(index) &&
+      page.fields.filter((id) => !hiddenFields.includes(id)).length !== 0
+  )
+  const requiredFields = fields.filter(
+    (field) => field.required && !hiddenFields.includes(field.id)
+  )
+  const { values: stateValues } = window.__current_form_state
+  let reddirectPage = undefined
+
+  const getPageIndex = (fieldId) => {
+    for (let i = 0; i < filtredPages.length; i++) {
+      if (filtredPages[i].fields.includes(fieldId)) {
+        reddirectPage = String(i)
+        break
+      }
+    }
+  }
+  for (let i = 0; i < requiredFields.length; i++) {
+    if (
+      stateValues[requiredFields[i].id] === null ||
+      stateValues[requiredFields[i].id] === undefined
+    ) {
+      getPageIndex(requiredFields[i].id)
+      break
+    }
+  }
+  return reddirectPage
+}

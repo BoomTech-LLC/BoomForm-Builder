@@ -3,7 +3,7 @@ import React from 'react'
 const Text = ({ pagesLength, currentPage }) => {
   return (
     <div className='boomForm-paginationTimeLineText'>{`Page ${
-      currentPage + 1
+      currentPage
     } of ${pagesLength}`}</div>
   )
 }
