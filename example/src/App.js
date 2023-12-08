@@ -10,29 +10,33 @@ const App = () => {
         isPrint: true
       }}
       fields={[
+        // {
+        //   type: 'url',
+        //   id: 1,
+        //   placeholder: 'Single Line',
+        //   label: 'Single Line'
+        // },
+        // {
+        //   type: 'text',
+        //   id: 2,
+        //   placeholder: 'Single Line',
+        //   label: 'Single Line'
+        // },
+        // {
+        //   type: 'textarea',
+        //   id: 3,
+        //   placeholder: 'Enter your long text',
+        //   label: 'Multi Line'
+        // },
         {
-          type: 'url',
-          id: 1,
-          placeholder: 'Single Line',
-          label: 'Single Line'
-        },
-        {
-          type: 'text',
-          id: 2,
-          placeholder: 'Single Line',
-          label: 'Single Line'
-        },
-        {
-          type: 'textarea',
-          id: 3,
-          placeholder: 'Enter your long text',
-          label: 'Multi Line'
-        },
-        {
-          type: 'textarea',
+          type: 'starRating',
           id: 4,
           placeholder: 'Your Comments',
-          label: 'Multi Line'
+          count: 25,
+          initial: 5.5,
+          // shape: 'circle',
+          label: 'Multi Line',
+          validation: {}
         }
       ]}
       button={{

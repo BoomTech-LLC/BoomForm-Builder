@@ -1,9 +1,7 @@
 import React, { memo, useEffect, useRef, Fragment } from 'react'
 import { useField } from 'boomform'
-import Field from './Field'
 import { getPrintableFields, getRendableData } from './../Helpers/global'
 import { getHiddenIds } from './../Helpers/logic'
-import GridForm from '../Grid'
 import PageItems from './PageItems'
 
 const Fields = ({
