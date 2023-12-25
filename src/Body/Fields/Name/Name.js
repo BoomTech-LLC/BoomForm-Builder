@@ -22,15 +22,17 @@ const Name = ({
   return (
     <>
       {fields.map((item) => (
-        <Input
-          {...props}
-          key={`${id}.${item}`}
-          id={`${id}.${item}`}
-          type='text'
-          placeholder={getPlaceholder(placeholders, item)}
-          initial={getInitial(initials, item)}
-          validation={getValidation(validations, item)}
-        />
+        <span className={`name__${item}`} key={`${id}.${item}`}>
+          <Input
+            {...props}
+            key={`${id}.${item}`}
+            id={`${id}.${item}`}
+            type='text'
+            placeholder={getPlaceholder(placeholders, item)}
+            initial={getInitial(initials, item)}
+            validation={getValidation(validations, item)}
+          />
+        </span>
       ))}
     </>
   )

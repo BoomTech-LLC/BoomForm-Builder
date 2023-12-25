@@ -21,19 +21,21 @@ const Time = ({
         return (
           <Fragment key={`${id}.${key}`}>
             {key !== 'format' && (
-              <Input
-                {...props}
-                id={`${id}.${key}`}
-                type='text'
-                maxLength='2'
-                placeholder={placeholder}
-                validation={getValidation(validations, key)}
-                initial={getInitial(initials, key)}
-              />
+              <span className={`time__${key}`}>
+                <Input
+                  {...props}
+                  id={`${id}.${key}`}
+                  type='text'
+                  maxLength='2'
+                  placeholder={placeholder}
+                  validation={getValidation(validations, key)}
+                  initial={getInitial(initials, key)}
+                />
+              </span>
             )}
 
             {key === 'hour' && <span>:</span>}
-            
+
             {key === 'format' && (
               <Select
                 {...props}
