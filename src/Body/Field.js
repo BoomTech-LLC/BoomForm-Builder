@@ -80,12 +80,7 @@ const FieldByType = ({ type, ...props }) => {
 
 const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
   return (
-    <div
-      id={`field-${id}`}
-      className={classNames('boomForm-field__content', {
-        [`${classnameprefix}-field__content`]: classnameprefix
-      })}
-    >
+    <div className='boomForm-field__content'>
       {label !== undefined && (
         <label
           className={classNames('boomForm-field__label', {
