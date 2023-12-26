@@ -54,7 +54,7 @@ export const getShowableData = ({ logicIds, pagination, currentPage }) => {
       showableData.actualPages.push(index)
 
       if (currentPage === index) {
-        showableData.showableCurrentPage = showableData.pagesLength
+        showableData.showableCurrentPage = showableData.pagesLength - 1
       }
     }
   })

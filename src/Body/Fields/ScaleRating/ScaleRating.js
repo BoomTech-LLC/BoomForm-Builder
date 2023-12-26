@@ -8,7 +8,6 @@ const ScaleRating = ({
   max = 5,
   min = 0,
   preFix,
-  middleFix,
   postFix,
   classnameprefix,
   initial,
@@ -16,33 +15,27 @@ const ScaleRating = ({
 }) => {
   return (
     <div className='boomForm-scaleRating__wrapper'>
-      <div className='scaleRating-option__wrapper'>
-        {getOptions({ min, max }).map((value) => {
-          return (
-            <div
-              key={value}
-              className={classNames('boomForm-scaleRating-option__content', {
-                [`${classnameprefix}-scaleRating-option__content`]:
-                  classnameprefix
-              })}
-            >
-              <span>{value}</span>
-              <Radio
-                {...props}
-                id={id}
-                value={`${value}`}
-                initial={initial === value ? true : false}
-              />
-            </div>
-          )
-        })}
-      </div>
-
-      <div className='boomForm-scaleRating__inputs'>
-        {preFix && <span>{preFix}</span>}
-        {middleFix && <span>{middleFix}</span>}
-        {postFix && <span>{postFix}</span>}
-      </div>
+      <span>{preFix}</span>
+      {getOptions({ min, max }).map((value) => {
+        return (
+          <div
+            key={value}
+            className={classNames('boomForm-scaleRating-option__content', {
+              [`${classnameprefix}-scaleRating-option__content`]:
+                classnameprefix
+            })}
+          >
+            <span>{value}</span>
+            <Radio
+              {...props}
+              id={id}
+              value={`${value}`}
+              initial={initial === value ? true : false}
+            />
+          </div>
+        )
+      })}
+      <span>{postFix}</span>
     </div>
   )
 }

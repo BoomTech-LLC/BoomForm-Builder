@@ -80,16 +80,13 @@ const FieldByType = ({ type, ...props }) => {
 
 const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
   return (
-    <div
-      id={`field-${id}`}
-      className={classNames('boomForm-field__content', {
-        [`${classnameprefix}-field__content`]: classnameprefix
-      })}
-    >
+    <div className='boomForm-field__content'>
       {label !== undefined && (
         <label
           className={classNames('boomForm-field__label', {
-            [`${classnameprefix}__label`]: classnameprefix
+            [classnameprefix &&
+            classnameprefix.map((value) => `${value}__label`).join(' ')]:
+              classnameprefix && classnameprefix.length
           })}
           dangerouslySetInnerHTML={{
             __html: label
@@ -98,7 +95,9 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
       )}
       <div
         className={classNames(`boomForm-${type}__content`, {
-          [`${classnameprefix}-${type}__content`]: classnameprefix
+          [classnameprefix &&
+          classnameprefix.map((value) => `${value}__content`).join(' ')]:
+            classnameprefix && classnameprefix.length
         })}
       >
         <FieldByType
@@ -113,7 +112,10 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
       {instruction !== undefined ? (
         <div
           className={classNames(`boomForm-field__instruction`, {
-            [`${classnameprefix}-field__instruction`]: classnameprefix
+            [classnameprefix &&
+            classnameprefix
+              .map((value) => `${value}-field__instruction`)
+              .join(' ')]: classnameprefix && classnameprefix.length
           })}
         >
           {instruction}

@@ -1,4 +1,5 @@
 import React, { memo, Fragment } from 'react'
+import classNames from 'classnames/bind'
 import GridLayout from 'react-grid-layout'
 import Field from './Field'
 import 'react-grid-layout/css/styles.css'
@@ -7,9 +8,18 @@ const generatePageItems = (fields, pageFields, payment) => {
   return fields
     .filter((field) => pageFields.includes(field.id))
     .map((field) => {
-      const { prefix, postfix } = field
+      const { prefix, postfix, classnameprefix, id } = field
       return (
-        <div class='boomForm_field' key={field.id}>
+        <div
+          id={`field-${id}`}
+          className={classNames('boomForm_field', {
+            [classnameprefix &&
+            classnameprefix
+              .map((value) => `${value}-field__content`)
+              .join(' ')]: classnameprefix && classnameprefix.length
+          })}
+          key={field.id}
+        >
           {prefix && (
             <span
               dangerouslySetInnerHTML={{
