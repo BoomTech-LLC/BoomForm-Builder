@@ -13,7 +13,10 @@ const generatePageItems = (fields, pageFields, payment) => {
         <div
           id={`field-${id}`}
           className={classNames('boomForm_field', {
-            [`${classnameprefix}-field__content`]: classnameprefix
+            [classnameprefix &&
+            classnameprefix
+              .map((value) => `${value}-field__content`)
+              .join(' ')]: classnameprefix && classnameprefix.length
           })}
           key={field.id}
         >
