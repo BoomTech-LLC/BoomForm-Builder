@@ -20,23 +20,27 @@ const Price = ({
   return (
     <>
       <span>{prefix}</span>
-      <Input
-        {...props}
-        id={`${id}.first`}
-        type='number'
-        placeholder={getPlaceholder(placeholders, 'first')}
-        initial={getInitial(initials, 'first')}
-        validation={getValidation(validations, 'first')}
-      />
+      <span className='price__first'>
+        <Input
+          {...props}
+          id={`${id}.first`}
+          type='number'
+          placeholder={getPlaceholder(placeholders, 'first')}
+          initial={getInitial(initials, 'first')}
+          validation={getValidation(validations, 'first')}
+        />
+      </span>
       <span>{separator}</span>
-      <Input
-        {...props}
-        id={`${id}.last`}
-        type='number'
-        placeholder={getPlaceholder(placeholders, 'last')}
-        initial={getInitial(initials, 'last')}
-        validation={getValidation(validations, 'last')}
-      />
+      <span className='price__last'>
+        <Input
+          {...props}
+          id={`${id}.last`}
+          type='number'
+          placeholder={getPlaceholder(placeholders, 'last')}
+          initial={getInitial(initials, 'last')}
+          validation={getValidation(validations, 'last')}
+        />
+      </span>
     </>
   )
 }
