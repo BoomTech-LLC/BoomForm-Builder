@@ -76,9 +76,9 @@ export default App
 
 <img src="https://cdn.boomte.ch/images/boomtechdeveloper/logo.svg" height="100">
 
-![This is an image](https://cdn.boomte.ch/images/TikoN.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/TikoP.png?x=1) | ![This is an image](https://cdn.boomte.ch/images/SahakS.png?x=2) 
--- | -- | -- 
-Tigran Nazaryan | Tigran Paployan | Sahak Sahakyan
+![This is an image](https://cdn.boomte.ch/images/TikoN.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/TikoP.png?x=1) | ![This is an image](https://cdn.boomte.ch/images/SahakS.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/HrachB.jpeg) | ![This is an image](https://cdn.boomte.ch/images/TigranV.jpeg) 
+-- | -- | -- | -- | -- 
+Tigran Nazaryan | Tigran Paployan | Sahak Sahakyan | Hrach Bekejyan | Tigran Vardanyan
 
 --- 
 
