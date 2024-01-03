@@ -53,7 +53,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.13.9",
     "axios": "^0.25.0",
-    "boomform": "^3.5.12",
+    "boomform": "^3.6.2",
     "classnames": "^2.3.1",
     "react-google-recaptcha": "^2.1.0",
     "react-grid-layout": "^1.4.2",
