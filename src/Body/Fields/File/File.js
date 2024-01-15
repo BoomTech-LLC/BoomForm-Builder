@@ -118,14 +118,11 @@ const File = ({
           }
 
           const handleRemove = (fileId) => {
-            setFileList((prev) =>
-              prev.filter((file) => {
+            setFileList((prev) => {
+              return prev.filter((file) => {
                 return file.id !== fileId
               })
-            )
-            allFiles.current =
-              allFiles.current &&
-              allFiles.current.filter((file) => file.id !== fileId)
+            })
             const _value = value?.filter((file) => file.id !== fileId)
             if (_value && _value.length)
               handleChange({ id, value: [..._value] })
