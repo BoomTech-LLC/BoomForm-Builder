@@ -32,7 +32,8 @@ const File = ({
     if (accept && accept.trim()) {
       let isValid = true
       for (let element of files) {
-        if (element.name && !accept.includes(element.name.split('.').pop())) {
+        const fileName = element.name?.toLowerCase()
+        if (fileName && !accept.includes(fileName.split('.').pop())) {
           isValid = false
           break
         }
@@ -123,6 +124,9 @@ const File = ({
                 return file.id !== fileId
               })
             })
+            allFiles.current =
+              allFiles.current &&
+              allFiles.current.filter((file) => file.id !== fileId)
             const _value = value?.filter((file) => file.id !== fileId)
             if (_value && _value.length)
               handleChange({ id, value: [..._value] })
