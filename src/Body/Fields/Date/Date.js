@@ -2,7 +2,7 @@ import React from 'react'
 import { Input } from 'boomform'
 import { iphoneCheck } from '../../../Helpers/global'
 
-const Date = ({ validation = {}, ...props }) => {
+const Date = ({ validation = {}, payment, ...props }) => {
   const { min, max } = validation
   if (min || max) {
     validation = {
@@ -23,7 +23,6 @@ const Date = ({ validation = {}, ...props }) => {
         event.target.defaultValue = ''
       }, 100)
     }
- 
   }
 
   return (
