@@ -78,7 +78,16 @@ const FieldByType = ({ type, ...props }) => {
   }
 }
 
-const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
+const Field = ({
+  id,
+  type,
+  classnameprefix,
+  label,
+  instruction,
+  prefix,
+  postfix,
+  ...props
+}) => {
   return (
     <div className='boomForm-field__content'>
       {label !== undefined && (
@@ -105,7 +114,6 @@ const Field = ({ id, type, classnameprefix, label, instruction, ...props }) => {
           type={type}
           classnameprefix={classnameprefix}
           label={label}
-          instruction={instruction}
           {...props}
         />
       </div>
