@@ -33,10 +33,15 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
     }
     case 'checked': {
       if (!field || !field.options) return false
-      for (let i in fieldValue)
+      for (let i in fieldValue) {
         if (fieldValue[i]) {
-          if (fieldValue[i].value && fieldValue[i].value == value) return true
+          if (
+            Object.keys(fieldValue[i]).includes('value') &&
+            fieldValue[i].value == value
+          )
+            return true
         }
+      }
       return false
     }
     case 'doNotChecked': {
