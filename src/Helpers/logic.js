@@ -149,7 +149,7 @@ export const getFieldValue = (type, value, field, values, item) => {
     case 'singleChoice': {
       if (!field || !field.options) return ''
       const options = field.options.filter((option) => option.value == value)
-      return options
+      return options[0]?.label
     }
     case 'name':
     case 'address': {
