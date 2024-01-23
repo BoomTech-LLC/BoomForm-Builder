@@ -15,6 +15,7 @@ const Name = ({
   placeholders,
   initials,
   validations,
+  payment,
   ...props
 }) => {
   const fields = getNameFields(middleName)

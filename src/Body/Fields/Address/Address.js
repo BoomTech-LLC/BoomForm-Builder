@@ -17,6 +17,7 @@ const Address = ({
   initials,
   validations,
   defaultCountry,
+  payment,
   ...props
 }) => {
   const fields = getAddressFields()
