@@ -11,6 +11,7 @@ const ScaleRating = ({
   postFix,
   classnameprefix,
   initial,
+  payment,
   ...props
 }) => {
   return (

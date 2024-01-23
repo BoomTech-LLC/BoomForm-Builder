@@ -19,6 +19,7 @@ const File = ({
   },
   validation,
   uploadOptions,
+  payment,
   ...props
 }) => {
   const fileInputRef = useRef(null)

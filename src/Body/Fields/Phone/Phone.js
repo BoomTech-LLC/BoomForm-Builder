@@ -7,6 +7,7 @@ const Phone = ({
   classnameprefix,
   id,
   defaultCountryCode,
+  payment,
   ...props
 }) => {
   let _defaultCountryCode = 'AF'

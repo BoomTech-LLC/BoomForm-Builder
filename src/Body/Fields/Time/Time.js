@@ -12,6 +12,7 @@ const Time = ({
   validations,
   initials,
   placeholders,
+  payment,
   ...props
 }) => {
   return (

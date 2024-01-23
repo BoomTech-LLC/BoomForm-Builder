@@ -15,7 +15,7 @@ export const linkToTermsLabel = (text, url, openIn) => {
   return text
 }
 
-const Terms = ({ id, text, url, openIn, ...props }) => {
+const Terms = ({ id, text, url, openIn, payment, ...props }) => {
   return (
     <>
       <Checkbox id={id} name={id} value={id} {...props} />
