@@ -2,9 +2,10 @@ import React from 'react'
 import { Input, useField } from 'boomform'
 
 const Content = ({ id, isNumber, placeholder }) => {
-  const field = useField([id])
+  const {neededValues} = useField([id])
+  const fieldValue = neededValues[id]
 
-  return field?.value === 'other' ? (
+  return fieldValue === 'other' ? (
     <Input
       type={isNumber ? 'number' : 'text'}
       id={`other.${id}`}
