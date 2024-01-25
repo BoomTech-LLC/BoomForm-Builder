@@ -8,7 +8,6 @@ import StateHandler from './StateHandler'
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
 import { getRendableData } from './Helpers/global'
 
-
 const Form = ({
   global,
   fields,
@@ -25,7 +24,6 @@ const Form = ({
     onFirstRender = () => {},
     onDie = () => {}
   } = global
-
   const updatableFields = getUpdatableFields({ logic })
   const { initial = 0 } = pagination
   const formRef = useRef(null)
@@ -46,6 +44,7 @@ const Form = ({
     pagination,
     currentPage
   )
+
   useEffect(() => {
     setCurrentPage(initial)
   }, [initial])
