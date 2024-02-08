@@ -14,7 +14,12 @@ const Other = ({ id, option, classnameprefix }) => {
       key={`${id}.${key}`}
     >
       <Radio id={id} value={value || 'other'} initial={checked} />
-      <Content id={id} placeholder={placeholder} isNumber={isNumber} />
+      <Content
+        id={id}
+        value={value}
+        isNumber={isNumber}
+        placeholder={placeholder}
+      />
     </label>
   )
 }

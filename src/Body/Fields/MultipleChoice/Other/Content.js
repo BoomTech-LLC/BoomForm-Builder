@@ -2,8 +2,7 @@ import React from 'react'
 import { Input, useField } from 'boomform'
 
 const Content = ({ id, index, placeholder, isNumber }) => {
-  const { neededValues } = useField([`${id}.${index}`])
-  const isChecked = neededValues[id]?.other || false
+  const field = useField([`${id}.${index}`])
   const handleOnChange = (e) => {
     const { handleChange, value } = e
 
@@ -15,7 +14,7 @@ const Content = ({ id, index, placeholder, isNumber }) => {
     )
   }
 
-  if (isChecked)
+  if (field?.value)
     return (
       <Input
         type={isNumber ? 'number' : 'text'}
