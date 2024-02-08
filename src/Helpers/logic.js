@@ -35,11 +35,18 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (!field || !field.options) return false
       for (let i in fieldValue) {
         if (fieldValue[i]) {
-          if (
+          if (fieldValue[i].key === 'other') {
+            if (
+              fieldValue[i]?.value === value ||
+              fieldValue[i]?.label === value
+            )
+              return true
+          } else if (
             Object.keys(fieldValue[i]).includes('value') &&
             fieldValue[i].value == value
-          )
+          ) {
             return true
+          }
         }
       }
       return false
