@@ -2,28 +2,48 @@ const defaultOptions = {
   logic: {
     fields: [
       {
-        type: 'url',
-        id: 1,
-        placeholder: 'Single Line',
-        label: 'Single Line'
+        id: 'password',
+        type: 'password',
+        label: 'Please Type Your Password',
+        placeholder: 'Type ...',
+        validation: {
+          required: { msg: 'Password is required' },
+          min: {
+            value: 5,
+            type: 'length',
+            msg: 'Password Shoul Be More then 5 characters'
+          }
+        }
       },
       {
-        type: 'text',
-        id: 2,
-        placeholder: 'Single Line',
-        label: 'Single Line'
-      },
+        id: 'name',
+        type: 'name',
+        label: 'Please Type Your name',
+        placeholders: {
+          first: 'First Name',
+          last: 'Last Name'
+        }
+      }
+    ],
+    logic: [
       {
-        type: 'textarea',
-        id: 3,
-        placeholder: 'Enter your long text',
-        label: 'Multi Line'
-      },
-      {
-        type: 'textarea',
-        id: 4,
-        placeholder: 'Your Comments',
-        label: 'Multi Line'
+        id: 'password',
+        action: 'show',
+        operator: 'and',
+        conditions: [
+          {
+            id: 'name',
+            value: 'John',
+            rule: 'is',
+            item: 'first'
+          },
+          {
+            id: 'name',
+            value: 'Doe',
+            rule: 'is',
+            item: 'last'
+          }
+        ]
       }
     ]
   },
@@ -31,7 +51,7 @@ const defaultOptions = {
     pagination: {
       buttons: { type: 0, next: 'Next', prev: 'Prev' },
       initial: 0,
-      // mode: 'section',
+      mode: 'page',
       pages: [
         {
           title: 'Page 1',
@@ -432,7 +452,120 @@ const defaultOptions = {
         },
         {
           title: 'Page 3',
-          fields: [9]
+          fields: [8, 9]
+        },
+        {
+          title: 'Page 4',
+          fields: [10]
+        }
+      ]
+    },
+    logic: [
+      {
+        id: 4,
+        action: 'show',
+        conditions: [{ id: 10, rule: 'is', value: 'aaa' }]
+      },
+      {
+        id: 5,
+        action: 'show',
+        conditions: [{ id: 10, rule: 'is', value: 'aaa' }]
+      },
+      {
+        id: 6,
+        action: 'show',
+        conditions: [{ id: 10, rule: 'is', value: 'aaa' }]
+      },
+      {
+        id: 1,
+        action: 'show',
+        conditions: [
+          {
+            id: 2,
+            rule: 'is',
+            value: 'aaa'
+          }
+        ]
+      },
+      {
+        id: 3,
+        action: 'hide_page',
+        conditions: [{ id: 1, rule: 'is', value: 'Pashik' }]
+      }
+    ]
+  },
+  gridPaginationLogic: {
+    fields: [
+      {
+        id: 1,
+        type: 'text',
+        label: 'Single line1',
+        required: true
+      },
+      {
+        id: 2,
+        type: 'text',
+        label: 'Single line2'
+      },
+      {
+        id: 3,
+        type: 'text',
+        label: 'Multi Line3'
+      },
+
+      {
+        id: 4,
+        type: 'text',
+        label: 'Multi Line4',
+        required: true
+      },
+      {
+        id: 5,
+        type: 'text',
+        label: 'Multi Line5',
+        required: true
+      },
+      {
+        id: 6,
+        type: 'text',
+        label: 'Single line6',
+        required: true
+      },
+      {
+        id: 7,
+        type: 'date',
+        label: 'Single line7',
+        required: true
+      },
+      {
+        id: 9,
+        type: 'text',
+        label: 'Single line9',
+        required: true
+      },
+      {
+        id: 10,
+        type: 'text',
+        label: 'Single line10'
+      }
+    ],
+    pagination: {
+      timeline: 0,
+      buttons: { type: 0 },
+      mode: 'page',
+      pageCounter: true,
+      pages: [
+        {
+          title: 'Page 1',
+          fields: [1, 2, 3, 7]
+        },
+        {
+          title: 'Page 2',
+          fields: [4, 5, 6]
+        },
+        {
+          title: 'Page 3',
+          fields: [8, 9]
         },
         {
           title: 'Page 4',

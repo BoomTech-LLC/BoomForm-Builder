@@ -4,11 +4,11 @@ function Sidebar({ example, setExample }) {
   const listItems = [
     { name: 'Logic', option: 'logic' },
     { name: 'Pagination', option: 'pagination' },
-    { name: 'Pagination / Logic', option: 'paginationAndLogic' },
     {
       name: 'Grid Options',
       option: 'grid'
     },
+    { name: 'Pagination / Logic', option: 'paginationAndLogic' },
     {
       name: 'Grid / Logic',
       option: 'gridAndLogic'
@@ -19,7 +19,7 @@ function Sidebar({ example, setExample }) {
     },
     {
       name: 'Grid / Pagination / Logic',
-      option: 'gridAndPagination'
+      option: 'gridPaginationLogic'
     }
   ]
 
