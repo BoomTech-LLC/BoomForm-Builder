@@ -1,11 +1,11 @@
-import React, { useRef, Fragment } from 'react'
 import { Custom, Input } from 'boomform'
+import React, { useRef } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { modules, formats } from './../../../../Helpers/textarea'
+import { formats, modules } from './../../../../Helpers/textarea'
 
 const RichTextEditor = (props) => {
-  const { id, placeholder, validation } = props
+  const { id, placeholder, validation, editorFormats, editorModules } = props
 
   const validationField = useRef()
 
@@ -38,8 +38,8 @@ const RichTextEditor = (props) => {
                   })
                 }}
                 value={value}
-                modules={modules}
-                formats={formats}
+                modules={editorModules || modules}
+                formats={editorFormats || formats}
               />
             </div>
             {validation.HTMLValidate === true && (

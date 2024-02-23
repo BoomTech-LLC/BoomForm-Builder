@@ -11,28 +11,32 @@ const App = () => {
       }}
       fields={[
         {
-          type: 'url',
           id: 1,
-          placeholder: 'Single Line',
-          label: 'Single Line'
-        },
-        {
-          type: 'text',
-          id: 2,
-          placeholder: 'Single Line',
-          label: 'Single Line'
-        },
-        {
           type: 'textarea',
-          id: 3,
-          placeholder: 'Enter your long text',
-          label: 'Multi Line'
-        },
-        {
-          type: 'textarea',
-          id: 4,
-          placeholder: 'Your Comments',
-          label: 'Multi Line'
+          richTextEditor: true,
+          validation: { required: { msg: 'this field is required' } },
+          editorFormats: [
+            'bold',
+            'italic',
+            'underline',
+            'strike',
+            'align',
+            'direction',
+            'list'
+          ],
+          editorModules: {
+            toolbar: [
+              ['italic', 'bold', 'underline', 'strike'],
+              [
+                { align: '' },
+                { align: 'center' },
+                { align: 'right' },
+                { align: 'justify' }
+              ],
+              [{ list: 'ordered' }, { list: 'bullet' }],
+              ['link']
+            ],
+          }
         }
       ]}
       button={{
