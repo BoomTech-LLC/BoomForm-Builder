@@ -25,7 +25,6 @@ const Map = ({
           'marker'
         )
         return {
-          Map,
           AdvancedMarkerElement
         }
       })
