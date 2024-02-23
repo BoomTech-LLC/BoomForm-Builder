@@ -1,5 +1,5 @@
-import { Custom, Input } from 'boomform'
 import React, { useRef } from 'react'
+import { Custom, Input } from 'boomform'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { formats, modules } from './../../../../Helpers/textarea'
@@ -13,7 +13,7 @@ const RichTextEditor = (props) => {
     <Custom id={id} {...props}>
       {({ handleChange, handleBlur, value }) => {
         return (
-          <>
+          <React.Fragment>
             <div
               onBlur={(e) => {
                 if (validation.HTMLValidate === true) {
@@ -55,7 +55,7 @@ const RichTextEditor = (props) => {
                 <Input maxLength='0' {...props} type='text' />
               </div>
             )}
-          </>
+          </React.Fragment>
         )
       }}
     </Custom>

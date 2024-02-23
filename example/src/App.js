@@ -15,18 +15,18 @@ const App = () => {
           type: 'textarea',
           richTextEditor: true,
           validation: { required: { msg: 'this field is required' } },
-          editorFormats: [
-            'bold',
-            'italic',
-            'underline',
-            'strike',
-            'align',
-            'direction',
-            'list'
-          ],
+
           editorModules: {
             toolbar: [
-              ['italic', 'bold', 'underline', 'strike'],
+              ['bold', 'italic', 'underline', 'strike'],
+              ['blockquote', 'code-block'],
+              ['link', 'image', 'video', 'formula'],
+              [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+              [{ indent: '-1' }, { indent: '+1' }],
+              [{ direction: 'rtl' }],
+              [{ size: ['small', false, 'large', 'huge'] }],
+              [{ font: [] }],
+              [{ align: [] }],
               [
                 { align: '' },
                 { align: 'center' },
@@ -34,8 +34,7 @@ const App = () => {
                 { align: 'justify' }
               ],
               [{ list: 'ordered' }, { list: 'bullet' }],
-              ['link']
-            ],
+            ]
           }
         }
       ]}
