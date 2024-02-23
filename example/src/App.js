@@ -33,7 +33,7 @@ const App = () => {
                 { align: 'right' },
                 { align: 'justify' }
               ],
-              [{ list: 'ordered' }, { list: 'bullet' }],
+              [{ list: 'ordered' }, { list: 'bullet' }]
             ]
           }
         }
