@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css'
 import { formats, modules } from './../../../../Helpers/textarea'
 
 const RichTextEditor = (props) => {
-  const { id, placeholder, validation, editorFormats, editorModules } = props
+  const { id, placeholder, validation, editorModules } = props
 
   const validationField = useRef()
 
@@ -39,7 +39,7 @@ const RichTextEditor = (props) => {
                 }}
                 value={value}
                 modules={editorModules || modules}
-                formats={editorFormats || formats}
+                formats={formats}
               />
             </div>
             {validation.HTMLValidate === true && (
