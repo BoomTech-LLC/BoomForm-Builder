@@ -12,33 +12,20 @@ const App = () => {
       fields={[
         {
           id: 1,
-          type: 'textarea',
-          richTextEditor: true,
-          validation: { required: { msg: 'this field is required' } },
-          editorFormats: [
-            'bold',
-            'italic',
-            'underline',
-            'strike',
-            'align',
-            'direction',
-            'list'
+          type: 'map',
+          markers: [
+            {
+              id: 1,
+              description: 'Dream City',
+              position: { lat: -22.908333, lng: -43.196388 }
+            }
           ],
-          editorModules: {
-            toolbar: [
-              ['italic', 'bold', 'underline', 'strike'],
-              [
-                { align: '' },
-                { align: 'center' },
-                { align: 'right' },
-                { align: 'justify' }
-              ],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              ['link']
-            ],
-          }
+          lat: -21.8926266,
+          lng: -41.3909684,
+          zoom: 4
         }
       ]}
+
       button={{
         text: 'submit'
       }}
