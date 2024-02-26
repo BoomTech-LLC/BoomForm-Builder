@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
+import { mapIdGenerator } from '../../../Helpers/global'
 
 const Map = ({
   apiKey,
@@ -32,7 +33,7 @@ const Map = ({
         const map = new google.maps.Map(mapRef.current, {
           center: { lat, lng },
           zoom: zoom,
-          mapId: '534h245343as54864564d46'
+          mapId: mapIdGenerator()
         })
         markers.map((item) => {
           const { position, description } = item
