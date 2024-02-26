@@ -10,12 +10,6 @@
   "env": {
     "node": true
   },
-  "prettier/prettier": [
-    "error",
-    {
-      "endOfLine": "auto"
-    }
-  ],
   "parserOptions": {
     "ecmaVersion": 2020,
     "ecmaFeatures": {
