@@ -1,5 +1,5 @@
 import { Custom, Input } from 'boomform'
-import React, { useRef } from 'react'
+import React, { useRef, Fragment } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { formats, modules } from './../../../../Helpers/textarea'
