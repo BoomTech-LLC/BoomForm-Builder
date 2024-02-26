@@ -94,10 +94,3 @@ export const iphoneCheck = () => {
       (window.opera && opera.toString() === `[object Opera]`)
   )
 }
-
-export const mapIdGenerator = () => {
-  var timestamp = new Date().getTime()
-  var randomSuffix = Math.floor(Math.random() * 1000000)
-
-  return 'map_' + timestamp + '_' + randomSuffix
-}

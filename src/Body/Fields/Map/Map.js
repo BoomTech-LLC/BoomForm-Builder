@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react'
 import { Loader } from '@googlemaps/js-api-loader'
-import { mapIdGenerator } from '../../../Helpers/global'
+import React, { useEffect, useRef } from 'react'
 
 const Map = ({
   apiKey,
@@ -33,7 +32,8 @@ const Map = ({
         const map = new google.maps.Map(mapRef.current, {
           center: { lat, lng },
           zoom: zoom,
-          mapId: mapIdGenerator()
+          mapId:  Math.floor(Math.random() * 1000000)
+
         })
         markers.map((item) => {
           const { position, description } = item
