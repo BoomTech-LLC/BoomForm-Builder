@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "start": "set GENERATE_SOURCEMAP=false && microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -53,7 +53,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
     "axios": "^0.25.0",
-    "boomform": "^3.6.6",
+    "boomform": "^3.6.7",
     "classnames": "^2.3.1",
     "dotenv": "^16.4.5",
     "react-google-recaptcha": "^2.1.0",
