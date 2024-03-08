@@ -30,7 +30,7 @@ const Other = ({ id, option, classnameprefix, isPerOption }) => {
       />
       {isPerOption && optionQuantity && (
         <Quantity
-          id={id}
+          id={`${id}.${key}`}
           quantity={optionQuantity}
           classnameprefix={classnameprefix}
         />
