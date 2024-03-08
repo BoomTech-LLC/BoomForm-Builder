@@ -72,11 +72,12 @@ export const stockedValidation = (validation) => {
           msg: value.msg.replace('%S%', value.value),
           value: newRegExPattern
         })
-      } else if (value.msg) {
-        initialRegEx.push({
-          msg: value.msg
-        })
-      }
+      } 
+      // else if (value.msg) {
+      //   initialRegEx.push({
+      //     msg: value.msg
+      //   })
+      // }
     })
     return initialRegEx
   }
