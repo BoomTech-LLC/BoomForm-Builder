@@ -8,25 +8,28 @@ const defaultOptions = {
         placeholder: 'Type ...',
         validation: {
           HTMLValidate:true,
+          required: {
+            msg: 'Password is required'
+          },
           lowercase: {
             msg: 'Minimum %S% lowercase',
             value: 5
+          },
+          symbol:{
+            msg:'Minimum %S% symbol',
+            value: 2
           },
           uppercase: {
             msg: 'Minimum %S% uppercase',
             value: 2
           },
-          required: {
-            msg: 'Password is required'
-          },
-           number:{
+          number:{
             msg: 'Minimum %S% numbers',
             value: 4
-           },
-           symbol:{
-            msg: 'Include %S% symbol',
-            value: "%"
-           }
+          },
+          regEx:{
+            msg:'Password is required',
+          }
         }
       },
       {

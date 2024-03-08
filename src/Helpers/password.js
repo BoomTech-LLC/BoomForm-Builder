@@ -5,27 +5,19 @@ const validationOptions = {
   number: '[0-9]'
 }
 
-export const Validation = (validation) => {
+export const stockedValidation = (validation) => {
   const {
-    HTMLValidate = 0,
-    required = 0,
-    min = 0,
-    max = 0,
-    email = 0,
-    phone = 0,
-    url = 0,
-    ...restValidations
+    lowercase = 0,
+    uppercase = 0,
+    symbol = 0,
+    number = 0
   } = validation
 
   const properties = [
-    HTMLValidate,
-    required,
-    min,
-    max,
-    email,
-    phone,
-    url,
-    ...Object.values(restValidations)
+    lowercase,
+    uppercase,
+    symbol,
+    number
   ]
 
   const existingProperties = []
@@ -34,31 +26,19 @@ export const Validation = (validation) => {
     if (property !== 0) {
       let stringProperty
       switch (property) {
-        case HTMLValidate:
-          stringProperty = 'HTMLValidate'
+        case lowercase:
+          stringProperty = 'lowercase'
           break
-        case required:
-          stringProperty = 'required'
+        case uppercase:
+          stringProperty = 'uppercase'
           break
-        case min:
-          stringProperty = 'min'
+        case symbol:
+          stringProperty = 'symbol'
           break
-        case max:
-          stringProperty = 'max'
-          break
-        case email:
-          stringProperty = 'email'
-          break
-        case phone:
-          stringProperty = 'phone'
-          break
-        case url:
-          stringProperty = 'url'
+        case number:
+          stringProperty = 'number'
           break
         default:
-          stringProperty = Object.keys(restValidations).find(
-            (key) => restValidations[key] === property
-          )
           break
       }
 
@@ -75,7 +55,6 @@ export const Validation = (validation) => {
     }
   })
 
-  console.log('Existing Properties:', existingProperties)
 
   const addToRegEx = (existingProps, initialRegEx) => {
     if (existingProps.length === 0) {
@@ -87,10 +66,7 @@ export const Validation = (validation) => {
       const checkValue = validationOptions[key]
 
       if (checkValue && value.value) {
-        let newRegExPattern
-        checkValue === '[^a-zA-Z0-9]'
-          ? (newRegExPattern = `(?:.*${checkValue})`)
-          : (newRegExPattern = `(?:.*${checkValue}){${value.value},}`)
+        let newRegExPattern= `(?:.*${checkValue}){${value.value},}`
 
         initialRegEx.push({
           msg: value.msg.replace('%S%', value.value),
@@ -106,29 +82,10 @@ export const Validation = (validation) => {
   }
 
   if (!validation.regEx) {
-    if (existingProperties.length === 1) {
-      const { key, value } = existingProperties[0]
-      const checkValue = validationOptions[key]
-
-      if (checkValue && value) {
-        checkValue === '[^a-zA-Z0-9]'
-          ? (newRegExPattern = `(?:.*${checkValue})`)
-          : (newRegExPattern = `(?:.*${checkValue}){${value.value},}`)
-
-        validation.regEx = {
-          msg: value.msg?.replace('%S%', value.value),
-          value: newRegExPattern
-        }
-      } else if (value.msg) {
-        validation.regEx = {
-          msg: value.msg
-        }
-      }
-    } else {
-      validation.regEx = []
-      addToRegEx(existingProperties, validation.regEx)
+    if (existingProperties.length > 0) {
+      validation.regEx = addToRegEx(existingProperties , []);
     }
-  } else if (existingProperties.length > 0) {
+  } else{
     let regExArray = []
 
     if (Array.isArray(validation.regEx)) {
@@ -146,6 +103,5 @@ export const Validation = (validation) => {
       delete validation[key]
     }
   }
-
   return validation
 }
