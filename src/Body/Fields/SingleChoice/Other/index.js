@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import Content from './Content'
 import Quantity from '../../Quantity/Quantity'
 
-const Other = ({ id, option, classnameprefix }) => {
+const Other = ({ id, option, classnameprefix, isPerOption }) => {
   const {
     key,
     value,
@@ -28,7 +28,7 @@ const Other = ({ id, option, classnameprefix }) => {
         isNumber={isNumber}
         placeholder={placeholder}
       />
-      {optionQuantity && (
+      {isPerOption && optionQuantity && (
         <Quantity
           id={id}
           quantity={optionQuantity}
