@@ -73,11 +73,6 @@ export const stockedValidation = (validation) => {
           value: newRegExPattern
         })
       } 
-      // else if (value.msg) {
-      //   initialRegEx.push({
-      //     msg: value.msg
-      //   })
-      // }
     })
     return initialRegEx
   }
