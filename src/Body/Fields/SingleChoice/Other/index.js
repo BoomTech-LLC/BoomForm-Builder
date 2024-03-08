@@ -2,9 +2,17 @@ import React from 'react'
 import { Radio } from 'boomform'
 import classNames from 'classnames'
 import Content from './Content'
+import Quantity from '../../Quantity/Quantity'
 
 const Other = ({ id, option, classnameprefix }) => {
-  const { key, value, checked, isNumber, placeholder } = option
+  const {
+    key,
+    value,
+    checked,
+    isNumber,
+    placeholder,
+    quantity: optionQuantity
+  } = option
 
   return (
     <label
@@ -20,6 +28,13 @@ const Other = ({ id, option, classnameprefix }) => {
         isNumber={isNumber}
         placeholder={placeholder}
       />
+      {optionQuantity && (
+        <Quantity
+          id={id}
+          quantity={optionQuantity}
+          classnameprefix={classnameprefix}
+        />
+      )}
     </label>
   )
 }
