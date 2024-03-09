@@ -35,7 +35,7 @@ const DropDown = ({
     <>
       <PrimarySelect id={id} options={_options} {...props} />
       <Other id={id} />
-      <Quantity {...quantity} id={id} classnameprefix={classnameprefix} />
+      <Quantity quantity={quantity} id={id} classnameprefix={classnameprefix} />
     </>
   )
 }
