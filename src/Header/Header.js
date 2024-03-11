@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import Pagination from './Pagination/Pagination'
+import React, { Fragment } from 'react';
+import Pagination from './Pagination/Pagination';
 
 const Header = ({
   name,
@@ -20,21 +20,30 @@ const Header = ({
           <div
             onClick={() => {
               onStorageButtonClick(
-                localStorageStatus === 'reset' ? 'upload' : 'reset'
-              )
+                localStorageStatus === 'reseted' ? 'loaded' : 'reseted'
+              );
             }}
             className='boomForm__reset'
             dangerouslySetInnerHTML={{
               __html:
                 localStorageStatus === 'active'
-                  ? storeProgres.resetButton || '<span>Reset</span>'
-                  : localStorageStatus === 'upload'
-                  ? storeProgres.resetButton || '<span>Reset</span>'
-                  : localStorageStatus === 'reset'
-                  ? storeProgres.uploadButton || '<span>Upload</span>'
+                  ? storeProgres.resetButton.HTML || '<span>Reset</span>'
+                  : localStorageStatus === 'loaded'
+                  ? storeProgres.resetButton.HTML || '<span>Reset</span>'
+                  : localStorageStatus === 'reseted'
+                  ? storeProgres.loadButton.HTML || '<span>Load</span>'
                   : null
             }}
           />
+          {localStorageStatus === 'active' &&
+            storeProgres.loadButton.instruction &&
+            storeProgres.resetButton.instruction && (
+              <span className='boomForm-field__instruction'>
+                {localStorageStatus === 'reseted'
+                  ? storeProgres.loadButton.instruction
+                  : storeProgres.resetButton.instruction}
+              </span>
+            )}
         </div>
         <h4 className='boomForm__description'>{description}</h4>
       </div>
@@ -45,7 +54,7 @@ const Header = ({
         logicIds={logicIds}
       />
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

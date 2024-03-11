@@ -3,37 +3,41 @@ export const storeProgresStore = (
   localStorageFormData,
   localStorageStatus
 ) => {
-  const initials = localStorageFormData[field.id];
+  const localStorageFormData = localStorageFormData[field.id];
   const handleChange = ({ id, value }) =>
     window._handleChange && window._handleChange({ id, value });
 
-  if (field && initials && localStorageStatus !== ('reset' || null))
+  if (
+    field &&
+    localStorageFormData &&
+    localStorageStatus !== ('reseted' || null)
+  )
     switch (field.type) {
       case 'name':
         ['first', 'middle', 'last'].forEach(part =>
           handleChange({
             id: `${field.id}.${part}`,
-            value: initials[part]
+            value: localStorageFormData[part]
           })
         );
         return {
           ...field,
-          initials
+          localStorageFormData
         };
 
       case 'address':
         ['city', 'country', 'street', 'street2', 'zip'].forEach(part =>
           handleChange({
             id: `${field.id}.${part}`,
-            value: initials[part]
+            value: localStorageFormData[part]
           })
         );
 
         return {
           ...field,
-          defaultCountry: initials.country.key,
-          initials: {
-            ...initials
+          defaultCountry: localStorageFormData.country.key,
+          localStorageFormData: {
+            ...localStorageFormData
           }
         };
 
@@ -41,54 +45,54 @@ export const storeProgresStore = (
         window._handleChange &&
           window._handleChange({
             id: `${field.id}.format`,
-            value: initials.format
+            value: localStorageFormData.format
           });
 
         window._handleChange &&
           window._handleChange({
             id: `${field.id}.hour`,
-            value: initials.hour
+            value: localStorageFormData.hour
           });
 
         window._handleChange &&
           window._handleChange({
             id: `${field.id}.minute`,
-            value: initials.minute
+            value: localStorageFormData.minute
           });
 
         return {
           ...field,
-          initials
+          localStorageFormData
         };
 
       case 'price ':
         window._handleChange &&
           window._handleChange({
             id: `${field.id}.first`,
-            value: initials.first
+            value: localStorageFormData.first
           });
 
         window._handleChange &&
           window._handleChange({
             id: `${field.id}.last`,
-            value: initials.last
+            value: localStorageFormData.last
           });
 
         return {
           ...field,
-          initials
+          localStorageFormData
         };
 
       case 'multipleChoice':
         const multipleChoiceOpitons = field.options.map(option => ({
           ...option,
-          checked: initials[option.key]
+          checked: localStorageFormData[option.key]
         }));
 
         window._handleChange &&
           window._handleChange({
             id: `${field.id}`,
-            value: initials
+            value: localStorageFormData
           });
 
         return {
@@ -109,37 +113,37 @@ export const storeProgresStore = (
         window._handleChange &&
           window._handleChange({
             id: `${field.id}`,
-            value: initials
+            value: localStorageFormData
           });
         return {
           ...field,
-          initial: initials
+          initial: localStorageFormData
         };
 
       case 'select':
         window._handleChange &&
           window._handleChange({
             id: `${field.id}.size`,
-            value: initials.key
+            value: localStorageFormData.key
           });
 
         return {
           ...field,
-          initial: initials.key
+          initial: localStorageFormData.key
         };
 
       case 'singleChoice':
         const singleChoiceOptions = field.options.map(option => {
           return {
             ...option,
-            checked: option.value === initials
+            checked: option.value === localStorageFormData
           };
         });
 
         window._handleChange &&
           window._handleChange({
             id: `${field.id}`,
-            value: initials
+            value: localStorageFormData
           });
 
         return { ...field, options: singleChoiceOptions };
@@ -148,14 +152,14 @@ export const storeProgresStore = (
         ['code', 'phone'].forEach(part =>
           handleChange({
             id: `${field.id}.${part}`,
-            value: initials[part]
+            value: localStorageFormData[part]
           })
         );
 
         return {
           ...field,
-          defaultCountryCode: initials.code,
-          initial: initials.phone
+          defaultCountryCode: localStorageFormData.code,
+          initial: localStorageFormData.phone
         };
     }
   else {

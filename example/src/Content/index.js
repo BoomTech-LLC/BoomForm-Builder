@@ -1,31 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Builder } from 'boomform-builder'
-import Editor from '@monaco-editor/react'
-import defaultOptions from './options'
-import { debounce } from '../Helpers/debounce'
-import './index.css'
+import React, { useEffect, useRef, useState } from 'react';
+import { Builder } from 'boomform-builder';
+import Editor from '@monaco-editor/react';
+import defaultOptions from './options';
+import { debounce } from '../Helpers/debounce';
+import './index.css';
 
 function Content({ example }) {
-  const { name, option } = example
-  const outputRef = useRef(null)
-  const [options, setOptions] = useState(defaultOptions[option])
-  const [autoSave, setAutoSave] = useState(false)
+  const { name, option } = example;
+  const outputRef = useRef(null);
+  const [options, setOptions] = useState(defaultOptions[option]);
+  const [autoSave, setAutoSave] = useState(false);
 
   function handleSave() {
     try {
-      const parsData = JSON.parse(outputRef.current)
-      setOptions(parsData)
+      const parsData = JSON.parse(outputRef.current);
+      setOptions(parsData);
     } catch (e) {
-      if (autoSave) return
-      alert(`There is an error in JSON :) `)
+      if (autoSave) return;
+      alert(`There is an error in JSON :) `);
     }
   }
 
   useEffect(() => {
-    setOptions(defaultOptions[option])
-    outputRef.current = JSON.stringify(defaultOptions[option], null, 3)
+    setOptions(defaultOptions[option]);
+    outputRef.current = JSON.stringify(defaultOptions[option], null, 3);
     // eslint-disable-next-line
-  }, [example.name])
+  }, [example.name]);
 
   return (
     <div className='content'>
@@ -48,16 +48,16 @@ function Content({ example }) {
             width={'500px'}
             defaultLanguage='json'
             value={JSON.stringify(options, null, 3)}
-            onChange={(value) => {
-              outputRef.current = value
+            onChange={value => {
+              outputRef.current = value;
               if (autoSave) {
                 debounce(
                   'code_editor_change',
                   () => {
-                    handleSave()
+                    handleSave();
                   },
                   500
-                )
+                );
               }
             }}
             theme='vs-dark'
@@ -66,8 +66,14 @@ function Content({ example }) {
         <div className='preview'>
           <Builder
             global={{
-              name: name
+              name: name,
+              storeProgres: {
+                enabled: true,
+                resetButton: { HTML: '<p>Reset</p>', instruction: 'reset' },
+                loadButton: { HTML: '<p>Load</p>', instruction: 'load' }
+              }
             }}
+            formId='asdasdasd'
             button={{
               text: 'Submit'
             }}
@@ -76,6 +82,6 @@ function Content({ example }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default Content
+export default Content;
