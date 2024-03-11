@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
 
-import SubmitButton from './SubmitButton/SubmitButton'
-import Pagination from './Pagination/Pagination'
-import Captcha from './Captcha'
+import SubmitButton from './SubmitButton/SubmitButton';
+import Pagination from './Pagination/Pagination';
+import Captcha from './Captcha';
 
 const Footer = ({
   formRef,
@@ -15,10 +15,14 @@ const Footer = ({
   setCurrentPage,
   payment,
   logic,
-  logicIds
+  logicIds,
+  formId,
+  onStorageButtonClick,
+  localStorageFormData,
+  onLocalStorageFormDataChange
 }) => {
-  const { captcha } = global
-  const { mode } = pagination
+  const { captcha } = global;
+  const { mode } = pagination;
 
   return !isPagination || mode === 'section' ? (
     <>
@@ -33,6 +37,10 @@ const Footer = ({
         logicIds={logicIds}
         pagination={pagination}
         setCurrentPage={setCurrentPage}
+        formId={formId}
+        onStorageButtonClick={onStorageButtonClick}
+        localStorageFormData={localStorageFormData}
+        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
       />
     </>
   ) : (
@@ -47,8 +55,11 @@ const Footer = ({
       payment={payment}
       logic={logic}
       logicIds={logicIds}
+      formId={formId}
+      onStorageButtonClick={onStorageButtonClick}
+      onLocalStorageFormDataChange={onLocalStorageFormDataChange}
     />
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
