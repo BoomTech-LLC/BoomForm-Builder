@@ -12,6 +12,34 @@ const Header = ({
   localStorageStatus,
   onStorageButtonClick
 }) => {
+  const getStorageButton = () => {
+    if (localStorageStatus === 'active') {
+      return storeProgres.resetButton.HTML || '<span>Reset</span>';
+    } else if (localStorageStatus === 'loaded') {
+      return storeProgres.resetButton.HTML || '<span>Reset</span>';
+    } else if (localStorageStatus === 'reseted') {
+      return storeProgres.loadButton.HTML || '<span>Load</span>';
+    } else {
+      return null;
+    }
+  };
+
+  const getInstructionButton = () => {
+    if (
+      localStorageStatus === 'active' &&
+      storeProgres.loadButton.instruction &&
+      storeProgres.resetButton.instruction
+    ) {
+      return (
+        <span className='boomForm-field__instruction'>
+          {localStorageStatus === 'reseted'
+            ? storeProgres.loadButton.instruction
+            : storeProgres.resetButton.instruction}
+        </span>
+      );
+    }
+  };
+
   return (
     <>
       <div className='boomForm__header'>
@@ -25,25 +53,10 @@ const Header = ({
             }}
             className='boomForm__reset'
             dangerouslySetInnerHTML={{
-              __html:
-                localStorageStatus === 'active'
-                  ? storeProgres.resetButton.HTML || '<span>Reset</span>'
-                  : localStorageStatus === 'loaded'
-                  ? storeProgres.resetButton.HTML || '<span>Reset</span>'
-                  : localStorageStatus === 'reseted'
-                  ? storeProgres.loadButton.HTML || '<span>Load</span>'
-                  : null
+              __html: getStorageButton()
             }}
           />
-          {localStorageStatus === 'active' &&
-            storeProgres.loadButton.instruction &&
-            storeProgres.resetButton.instruction && (
-              <span className='boomForm-field__instruction'>
-                {localStorageStatus === 'reseted'
-                  ? storeProgres.loadButton.instruction
-                  : storeProgres.resetButton.instruction}
-              </span>
-            )}
+          {getInstructionButton()}
         </div>
         <h4 className='boomForm__description'>{description}</h4>
       </div>

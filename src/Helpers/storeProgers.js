@@ -38,23 +38,20 @@ export const storeProgresStore = (
         };
 
       case 'time':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.format`,
-            value: formData.format
-          });
+        handleChange({
+          id: `${field.id}.format`,
+          value: formData.format
+        });
 
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.hour`,
-            value: formData.hour
-          });
+        handleChange({
+          id: `${field.id}.hour`,
+          value: formData.hour
+        });
 
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.minute`,
-            value: formData.minute
-          });
+        handleChange({
+          id: `${field.id}.minute`,
+          value: formData.minute
+        });
 
         return {
           ...field,
@@ -62,17 +59,15 @@ export const storeProgresStore = (
         };
 
       case 'price ':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.first`,
-            value: formData.first
-          });
+        handleChange({
+          id: `${field.id}.first`,
+          value: formData.first
+        });
 
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.last`,
-            value: formData.last
-          });
+        handleChange({
+          id: `${field.id}.last`,
+          value: formData.last
+        });
 
         return {
           ...field,
@@ -85,11 +80,10 @@ export const storeProgresStore = (
           checked: formData[option.key]
         }));
 
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}`,
-            value: formData
-          });
+        handleChange({
+          id: `${field.id}`,
+          value: formData
+        });
 
         return {
           ...field,
@@ -106,22 +100,20 @@ export const storeProgresStore = (
       case 'starRating':
       case 'textarea':
       case 'terms':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}`,
-            value: formData
-          });
+        handleChange({
+          id: `${field.id}`,
+          value: formData
+        });
         return {
           ...field,
           initial: formData
         };
 
       case 'select':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.size`,
-            value: formData.key
-          });
+        handleChange({
+          id: `${field.id}.size`,
+          value: formData.key
+        });
 
         return {
           ...field,
@@ -136,11 +128,10 @@ export const storeProgresStore = (
           };
         });
 
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}`,
-            value: formData
-          });
+        handleChange({
+          id: `${field.id}`,
+          value: formData
+        });
 
         return { ...field, options: singleChoiceOptions };
 
@@ -180,18 +171,17 @@ export const storeProgresStore = (
           })
         );
 
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.country`,
-            value: {
-              code: 'US',
-              dial_code: '+1',
-              flag: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
-              key: 229,
-              name: 'United States',
-              value: 'United States'
-            }
-          });
+        handleChange({
+          id: `${field.id}.country`,
+          value: {
+            code: 'US',
+            dial_code: '+1',
+            flag: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
+            key: 229,
+            name: 'United States',
+            value: 'United States'
+          }
+        });
 
         return {
           ...field
@@ -204,11 +194,10 @@ export const storeProgresStore = (
             value: null
           })
         );
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.format`,
-            value: {}
-          });
+        handleChange({
+          id: `${field.id}.format`,
+          value: {}
+        });
 
       case 'price ':
         ['first', 'last'].forEach(part =>
@@ -218,20 +207,18 @@ export const storeProgresStore = (
           })
         );
       case 'select':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}.size`,
-            value: null
-          });
+        handleChange({
+          id: `${field.id}.size`,
+          value: null
+        });
 
         return { ...field };
 
       case 'multipleChoice':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}`,
-            value: null
-          });
+        handleChange({
+          id: `${field.id}`,
+          value: null
+        });
 
         return { ...field };
 
@@ -255,11 +242,10 @@ export const storeProgresStore = (
       case 'textarea':
       case 'terms':
       case 'singleChoice':
-        window._handleChange &&
-          window._handleChange({
-            id: `${field.id}`,
-            value: null
-          });
+        handleChange({
+          id: `${field.id}`,
+          value: null
+        });
 
         return {
           ...field
