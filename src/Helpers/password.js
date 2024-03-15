@@ -7,97 +7,47 @@ const validationOptions = {
 
 export const stockedValidation = (validation) => {
   const {
-    lowercase = 0,
-    uppercase = 0,
-    symbol = 0,
-    number = 0
-  } = validation
-
-  const properties = [
     lowercase,
     uppercase,
     symbol,
     number
-  ]
-
-  const existingProperties = []
-
-  properties.forEach((property) => {
-    if (property !== 0) {
-      let stringProperty
-      switch (property) {
-        case lowercase:
-          stringProperty = 'lowercase'
-          break
-        case uppercase:
-          stringProperty = 'uppercase'
-          break
-        case symbol:
-          stringProperty = 'symbol'
-          break
-        case number:
-          stringProperty = 'number'
-          break
-        default:
-          break
-      }
-
-      const isExisting = existingProperties.some(
-        (existingProp) => existingProp.key === stringProperty
-      )
-
-      if (!isExisting) {
-        existingProperties.push({
-          key: stringProperty,
-          value: property
-        })
-      }
-    }
-  })
-
-
+  } = validation;
+  
+  const existingProperties = [
+    { key: 'lowercase', value: lowercase },
+    { key: 'uppercase', value: uppercase },
+    { key: 'symbol', value: symbol },
+    { key: 'number', value: number }
+  ].filter(prop => prop.value);
+  
+  
   const addToRegEx = (existingProps, initialRegEx) => {
     if (existingProps.length === 0) {
       return initialRegEx
     }
-
-    existingProps.forEach((existingProp) => {
-      const { key, value } = existingProp
-      const checkValue = validationOptions[key]
-
-      if (checkValue && value.value) {
-        let newRegExPattern= `(?:.*${checkValue}){${value.value},}`
-
+    existingProps.forEach(({key , value}) => {
+      if (validationOptions[key] && value.value) {
         initialRegEx.push({
           msg: value.msg.replace('%S%', value.value),
-          value: newRegExPattern
+          value: `(?:.*${validationOptions[key]}){${value.value},}`
         })
       } 
     })
     return initialRegEx
   }
 
-  if (!validation.regEx) {
-    if (existingProperties.length > 0) {
-      validation.regEx = addToRegEx(existingProperties , []);
-    }
-  } else{
-    let regExArray = []
-
-    if (Array.isArray(validation.regEx)) {
-      regExArray = [...validation.regEx]
-    } else {
-      regExArray.push(validation.regEx)
-    }
-
-    const regEx = addToRegEx(existingProperties, regExArray)
-    validation.regEx = regEx
+  if (!validation.regEx && existingProperties.length > 0) {
+    validation.regEx = addToRegEx(existingProperties, []);
+  } else if (validation.regEx) {
+    const regExArray = Array.isArray(validation.regEx) ? [...validation.regEx] : [validation.regEx];
+    validation.regEx = addToRegEx(existingProperties, regExArray);
   }
 
-  for (let key in validation) {
+  Object.keys(validation).forEach((key) => {
     if (validationOptions[key]) {
-      delete validation[key]
+      delete validation[key];
     }
-  }
+  });
+
   return validation
 }
