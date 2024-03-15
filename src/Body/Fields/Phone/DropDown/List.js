@@ -36,7 +36,7 @@ const List = ({
 
       return (
         <div
-          ref={isSelected ? itemRefCallback : null}
+          ref={itemRefCallback}
           id={`country_item${id}`}
           className={classNames('country_code_item', {
             selected: isSelected

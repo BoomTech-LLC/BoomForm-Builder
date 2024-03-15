@@ -88,15 +88,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
                         placeholder='Search ...'
                       />
                     </div>
-                    <div
-                      style={{
-                        maxHeight: '600px',
-                        overflowY: 'auto',
-                        overscrollBehavior: 'unset'
-                      }}
-                      className='country_code_list'
-                      ref={listRef}
-                    >
+                    <div className='country_code_list' ref={listRef}>
                       <List
                         onClick={(event) => event.stopPropagation()}
                         handleCodeChange={handleCodeChange}
