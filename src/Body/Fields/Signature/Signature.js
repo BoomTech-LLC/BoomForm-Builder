@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
 const Signature = (props) => {
-  const { id, initial, validation, clearBtnContent } = props
+  const { id, initial, validation, clearBtnContent = 'Clear' } = props
 
   const [sigPadRef, setSigPadRef] = useState(null)
 
