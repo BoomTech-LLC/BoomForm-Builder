@@ -7,11 +7,28 @@ const defaultOptions = {
         label: 'Please Type Your Password',
         placeholder: 'Type ...',
         validation: {
-          required: { msg: 'Password is required' },
-          min: {
-            value: 5,
-            type: 'length',
-            msg: 'Password Shoul Be More then 5 characters'
+          HTMLValidate:true,
+          required: {
+            msg: 'Password is required'
+          },
+          lowercase: {
+            msg: 'Minimum %S% lowercase',
+            value: 5
+          },
+          symbol:{
+            msg:'Minimum %S% symbol',
+            value: 2
+          },
+          uppercase: {
+            msg: 'Minimum %S% uppercase',
+            value: 2
+          },
+          number:{
+            msg: 'Minimum %S% numbers',
+            value: 4
+          },
+          regEx:{
+            msg:'Password is required',
           }
         }
       },
@@ -24,27 +41,6 @@ const defaultOptions = {
           last: 'Last Name'
         }
       }
-    ],
-    logic: [
-      {
-        id: 'password',
-        action: 'show',
-        operator: 'and',
-        conditions: [
-          {
-            id: 'name',
-            value: 'John',
-            rule: 'is',
-            item: 'first'
-          },
-          {
-            id: 'name',
-            value: 'Doe',
-            rule: 'is',
-            item: 'last'
-          }
-        ]
-      }
     ]
   },
   pagination: {
@@ -56,7 +52,7 @@ const defaultOptions = {
         {
           title: 'Page 1',
           description: '',
-          fields: [1, 2, 3]
+          fields: [0, 1, 2, 3]
         },
         {
           title: 'Page 2',

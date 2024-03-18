@@ -20,12 +20,13 @@ const SubmitButton = ({
   const { values } = state
   const { text, prefix, suffix } = button || { text: 'Submit' }
   const { name, description, isPrint, onSubmit, onSubmitFailed } = global
-  const { fee, total, setTotal } = payment
+  const { fee, total, setTotal, getTotalValue } = payment
 
   const formatedTotal = formatPrice({ payment, price: total })
 
   useEffect(() => {
-    setTotal && setTotal(getTotalPrice({ values, fields, fee, logic }))
+    setTotal &&
+      setTotal(getTotalPrice({ values, fields, fee, logic, getTotalValue }))
   }, [state, total])
 
   if (hide) return null
