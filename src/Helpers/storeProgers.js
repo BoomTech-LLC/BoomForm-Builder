@@ -7,7 +7,7 @@ export const storeProgresStore = (
   const handleChange = ({ id, value }) =>
     window._handleChange && window._handleChange({ id, value });
 
-  if (field && formData && localStorageStatus !== ('reseted' || null))
+  if (field && formData && localStorageStatus !== 'reseted')
     switch (field.type) {
       case 'name':
         ['first', 'middle', 'last'].forEach(part =>

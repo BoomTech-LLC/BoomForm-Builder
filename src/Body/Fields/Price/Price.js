@@ -12,7 +12,7 @@ const Price = ({
   initials,
   validations,
   label,
-  prefix = '$',
+  currency = '$',
   separator = '.',
   classnamepreFix,
   isDecimal = true,
@@ -20,7 +20,7 @@ const Price = ({
 }) => {
   return (
     <>
-      <span>{prefix}</span>
+      <span>{currency}</span>
       <span className='price__first'>
         <Input
           {...props}
