@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { Context } from 'boomform'
-import Print from './../../Print/Print'
-import { getTotalPrice, formatPrice } from './../../Helpers/payment'
-import { formValueCheker } from '../../Helpers/logic'
+import React, { useContext, useState, useEffect } from 'react';
+import { Context } from 'boomform';
+import Print from './../../Print/Print';
+import { getTotalPrice, formatPrice } from './../../Helpers/payment';
+import { formValueCheker } from '../../Helpers/logic';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const SubmitButton = ({
   global,
@@ -14,7 +15,10 @@ const SubmitButton = ({
   logic,
   logicIds,
   pagination,
-  setCurrentPage
+  setCurrentPage,
+  formId,
+  onStorageButtonClick,
+  onLocalStorageFormDataChange
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
@@ -22,34 +26,39 @@ const SubmitButton = ({
   const { name, description, isPrint, onSubmit, onSubmitFailed } = global
   const { fee, total, setTotal, getTotalValue } = payment
 
-  const formatedTotal = formatPrice({ payment, price: total })
+  const formatedTotal = formatPrice({ payment, price: total });
 
   useEffect(() => {
     setTotal &&
       setTotal(getTotalPrice({ values, fields, fee, logic, getTotalValue }))
   }, [state, total])
 
-  if (hide) return null
+  if (hide) return null;
 
-  const handleClick = (e) => {
-    e.preventDefault()
+  const handleClick = e => {
+    e.preventDefault();
     if (formRef.current.checkValidity()) {
-      const reddirectPage = formValueCheker({ fields, logicIds, pagination })
+      const reddirectPage = formValueCheker({ fields, logicIds, pagination });
       if (reddirectPage) {
-        setCurrentPage(+reddirectPage)
+        setCurrentPage(+reddirectPage);
         setTimeout(() => {
-          formRef.current.reportValidity()
-        }, 30)
-        return
+          formRef.current.reportValidity();
+        }, 30);
+        return;
       }
-      if (onSubmit) onSubmit({ state, actions })
-      else console.log({ state, actions })
+      if (onSubmit) onSubmit({ state, actions });
+      else console.log({ state, actions });
     } else {
-      formRef.current.reportValidity()
+      formRef.current.reportValidity();
       if (onSubmitFailed)
-        onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'))
+        onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'));
     }
-  }
+
+    if (global.storeProgres?.enabled && formId) {
+      onLocalStorageFormDataChange(state.values);
+      onStorageButtonClick('active');
+    }
+  };
 
   return (
     <div className={'boomForm-button__content'}>
@@ -65,7 +74,7 @@ const SubmitButton = ({
         <Print fields={fields} name={name} description={description} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SubmitButton
+export default SubmitButton;

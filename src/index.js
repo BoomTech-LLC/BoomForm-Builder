@@ -1,7 +1,7 @@
-import React from 'react'
-import { BoomForm } from 'boomform'
-import Form from './Form'
-import countries from './Helpers/countries'
+import React from 'react';
+import { BoomForm } from 'boomform';
+import Form from './Form';
+import countries from './Helpers/countries';
 
 const Builder = ({
   global = {},
@@ -9,6 +9,7 @@ const Builder = ({
   button = {},
   pagination = {},
   logic = [],
+  formId,
   payment = {},
   pages = {},
   gridOptions = {}
@@ -30,6 +31,7 @@ const Builder = ({
           fields={fields}
           button={button}
           payment={payment}
+          formId={formId}
           pagination={pagination}
           logic={logic}
           pages={pages}
@@ -37,7 +39,7 @@ const Builder = ({
         />
       )}
     </BoomForm>
-  )
-}
+  );
+};
 
-export { Builder, countries }
+export { Builder, countries };
