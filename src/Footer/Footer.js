@@ -27,21 +27,23 @@ const Footer = ({
   return !isPagination || mode === 'section' ? (
     <>
       {captcha !== undefined && <Captcha siteKey={captcha} />}
-      <SubmitButton
-        global={global}
-        button={button}
-        fields={fields}
-        formRef={formRef}
-        payment={payment}
-        logic={logic}
-        logicIds={logicIds}
-        pagination={pagination}
-        setCurrentPage={setCurrentPage}
-        formId={formId}
-        onStorageButtonClick={onStorageButtonClick}
-        localStorageFormData={localStorageFormData}
-        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
-      />
+      {
+        <SubmitButton
+          global={global}
+          button={button}
+          fields={fields}
+          formRef={formRef}
+          payment={payment}
+          logic={logic}
+          logicIds={logicIds}
+          pagination={pagination}
+          setCurrentPage={setCurrentPage}
+          formId={formId}
+          onStorageButtonClick={onStorageButtonClick}
+          localStorageFormData={localStorageFormData}
+          onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+        />
+      }
     </>
   ) : (
     <Pagination

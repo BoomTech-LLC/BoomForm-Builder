@@ -7,7 +7,7 @@ const defaultOptions = {
         label: 'Please Type Your Password',
         placeholder: 'Type ...',
         validation: {
-          HTMLValidate:true,
+          HTMLValidate: true,
           required: {
             msg: 'Password is required'
           },
@@ -15,20 +15,20 @@ const defaultOptions = {
             msg: 'Minimum %S% lowercase',
             value: 5
           },
-          symbol:{
-            msg:'Minimum %S% symbol',
+          symbol: {
+            msg: 'Minimum %S% symbol',
             value: 2
           },
           uppercase: {
             msg: 'Minimum %S% uppercase',
             value: 2
           },
-          number:{
+          number: {
             msg: 'Minimum %S% numbers',
             value: 4
           },
-          regEx:{
-            msg:'Password is required',
+          regEx: {
+            msg: 'Password is required'
           }
         }
       },
@@ -458,9 +458,9 @@ const defaultOptions = {
     },
     logic: [
       {
-        id: 4,
+        id: 10,
         action: 'show',
-        conditions: [{ id: 10, rule: 'is', value: 'aaa' }]
+        conditions: [{ id: 4, rule: 'is', value: 'aaa' }]
       },
       {
         id: 5,
@@ -603,6 +603,6 @@ const defaultOptions = {
       }
     ]
   }
-}
+};
 
-export default defaultOptions
+export default defaultOptions;

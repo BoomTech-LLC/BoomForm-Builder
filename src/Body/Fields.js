@@ -1,22 +1,23 @@
-import React, { memo, Fragment } from 'react'
-import classNames from 'classnames/bind'
-import GridLayout from 'react-grid-layout'
-import Field from './Field'
-import 'react-grid-layout/css/styles.css'
+import React, { memo, Fragment } from 'react';
+import classNames from 'classnames/bind';
+import GridLayout from 'react-grid-layout';
+import Field from './Field';
+import 'react-grid-layout/css/styles.css';
+import SubmitButton from '../Footer/SubmitButton/SubmitButton';
+import { findLastValidField } from '../Helpers/global';
 
 const generatePageItems = (fields, pageFields, payment) => {
   return fields
-    .filter((field) => pageFields.includes(field.id))
-    .map((field) => {
-      const { prefix, postfix, classnameprefix, id } = field
+    .filter(field => pageFields.includes(field.id))
+    .map(field => {
+      const { prefix, postfix, classnameprefix, id } = field;
       return (
         <div
           id={`field-${id}`}
           className={classNames('boomForm_field', {
             [classnameprefix &&
-            classnameprefix
-              .map((value) => `${value}-field__content`)
-              .join(' ')]: classnameprefix && classnameprefix.length
+            classnameprefix.map(value => `${value}-field__content`).join(' ')]:
+              classnameprefix && classnameprefix.length
           })}
           key={field.id}
         >
@@ -36,11 +37,29 @@ const generatePageItems = (fields, pageFields, payment) => {
             />
           )}
         </div>
-      )
-    })
-}
+      );
+    });
+};
 
-const Fields = ({ fields, payment, printableFields, gridOptions }) => {
+const Fields = ({
+  fields,
+  payment,
+  printableFields,
+  gridOptions,
+  pagination,
+  global,
+  button,
+  formRef,
+  logic,
+  logicIds,
+  setCurrentPage,
+  formId,
+  onStorageButtonClick,
+  localStorageFormData,
+  onLocalStorageFormDataChange
+}) => {
+  const { pages } = pagination;
+
   const {
     layout = [],
     isBounded = false,
@@ -51,17 +70,19 @@ const Fields = ({ fields, payment, printableFields, gridOptions }) => {
     rowHeight = 1,
     width = 800,
     cols = 4
-  } = gridOptions
+  } = gridOptions;
+
+  const lastField = findLastValidField(pages, logicIds);
 
   return (
     <>
       {printableFields.map((pageFields, index) => {
-        const layout_ = [] // layout for grid layout
+        const layout_ = []; // layout for grid layout
         if (gridOptions && gridOptions.layout) {
           //this loop needed for passing only rendering fields layouts
-          pageFields.forEach((id) => {
-            layout_.push({ i: `${id}`, ...layout[id] })
-          })
+          pageFields.forEach(id => {
+            layout_.push({ i: `${id}`, ...layout[id] });
+          });
         }
         return (
           <div key={'page' + index} className='boomForm-fields'>
@@ -80,15 +101,62 @@ const Fields = ({ fields, payment, printableFields, gridOptions }) => {
                 layout={layout_}
               >
                 {generatePageItems(fields, pageFields, payment)}
+                {printableFields.map(
+                  item =>
+                    item.includes(lastField) && (
+                      <SubmitButton
+                        global={global}
+                        button={button}
+                        fields={fields}
+                        formRef={formRef}
+                        payment={payment}
+                        logic={logic}
+                        logicIds={logicIds}
+                        pagination={pagination}
+                        setCurrentPage={setCurrentPage}
+                        formId={formId}
+                        onStorageButtonClick={onStorageButtonClick}
+                        localStorageFormData={localStorageFormData}
+                        onLocalStorageFormDataChange={
+                          onLocalStorageFormDataChange
+                        }
+                      />
+                    )
+                )}
               </GridLayout>
             ) : (
-              <>{generatePageItems(fields, pageFields, payment)}</>
+              <>
+                {generatePageItems(fields, pageFields, payment)}
+                {global.isSubmitButtonInLastPage &&
+                  printableFields.map(
+                    item =>
+                      item.includes(lastField) && (
+                        <SubmitButton
+                          global={global}
+                          button={button}
+                          fields={fields}
+                          formRef={formRef}
+                          payment={payment}
+                          logic={logic}
+                          logicIds={logicIds}
+                          pagination={pagination}
+                          setCurrentPage={setCurrentPage}
+                          formId={formId}
+                          onStorageButtonClick={onStorageButtonClick}
+                          localStorageFormData={localStorageFormData}
+                          onLocalStorageFormDataChange={
+                            onLocalStorageFormDataChange
+                          }
+                        />
+                      )
+                  )}
+              </>
             )}
           </div>
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};
 
-export default memo(Fields)
+export default memo(Fields);

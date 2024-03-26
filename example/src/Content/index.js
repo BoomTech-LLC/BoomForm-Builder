@@ -66,7 +66,8 @@ function Content({ example }) {
         <div className='preview'>
           <Builder
             global={{
-              name: name
+              name: name,
+              isSubmitButtonInLastPage:true
             }}
             button={{
               text: 'Submit'
