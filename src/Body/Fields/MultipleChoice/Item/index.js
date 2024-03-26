@@ -5,7 +5,7 @@ import Quantity from '../../Quantity/Quantity'
 import { formatPrice } from './../../../../Helpers/payment'
 
 const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
-  const { key, value, checked, label, price } = option
+  const { key, value, checked, label, price, quantity: optionQuantity } = option
 
   const handleOnChange = (e) => {
     const { handleChange, field, state, value } = e
@@ -48,8 +48,8 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
         }}
       ></span>
       <Quantity
-        {...quantity}
         id={`${id}.${key}`}
+        quantity={optionQuantity || quantity}
         classnameprefix={classnameprefix}
       />
     </label>

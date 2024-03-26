@@ -2,9 +2,9 @@ import React from 'react'
 import classNames from 'classnames/bind'
 import { Input } from 'boomform'
 
-const Quantity = ({ id, label, value, classnameprefix, enabled }) => {
-  if (!enabled) return null
-
+const Quantity = ({ id, classnameprefix, quantity }) => {
+  if (!quantity || !quantity.enabled) return null
+  const { label, value } = quantity
   return (
     <label
       className={classNames('boomForm-quantity__item', {

@@ -8,10 +8,11 @@ const SingleChoice = ({
   id,
   options,
   classnameprefix,
-  quantity,
+  quantity = {},
   payment,
   validation
 }) => {
+  const { isPerOption = false } = quantity
   return (
     <>
       <div
@@ -27,6 +28,7 @@ const SingleChoice = ({
                 key={`${id}.${key}`}
                 id={id}
                 option={option}
+                isPerOption={isPerOption}
                 classnameprefix={classnameprefix}
               />
             )
@@ -37,13 +39,17 @@ const SingleChoice = ({
                 id={id}
                 option={option}
                 payment={payment}
+                quantity={quantity}
+                isPerOption={isPerOption}
                 classnameprefix={classnameprefix}
                 validation={index === 0 ? validation : {}}
               />
             )
         })}
       </div>
-      <Quantity {...quantity} id={id} classnameprefix={classnameprefix} />
+      {!isPerOption && (
+        <Quantity {...quantity} id={id} classnameprefix={classnameprefix} />
+      )}
     </>
   )
 }

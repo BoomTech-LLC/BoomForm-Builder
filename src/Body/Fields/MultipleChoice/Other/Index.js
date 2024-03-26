@@ -5,7 +5,14 @@ import Content from './Content'
 import Quantity from './../../Quantity/Quantity'
 
 const Other = ({ id, options, option, quantity, classnameprefix }) => {
-  const { key, value, placeholder, isNumber, checked } = option
+  const {
+    key,
+    value,
+    placeholder,
+    isNumber,
+    checked,
+    quantity: optionQuantity
+  } = option
 
   const handleOnChange = (e) => {
     const { handleChange, state, value, field } = e
@@ -43,8 +50,8 @@ const Other = ({ id, options, option, quantity, classnameprefix }) => {
         isNumber={isNumber}
       />
       <Quantity
-        {...quantity}
         id={`${id}.${key}`}
+        quantity={optionQuantity || quantity}
         classnameprefix={classnameprefix}
       />
     </label>
