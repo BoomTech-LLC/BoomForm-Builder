@@ -59,14 +59,13 @@ const Form = ({
   const [currentPage, setCurrentPage] = useState(initial);
   const isPagination = Object.keys(pagination).length !== 0;
   const data = useField(updatableFields);
-
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
     fields: storeProgresStoredData,
     formRef
   });
-
+  
   const printableFields = getRendableData(
     storeProgresStoredData,
     logicIds,
@@ -112,6 +111,17 @@ const Form = ({
         payment={payment}
         printableFields={printableFields}
         gridOptions={gridOptions}
+        pagination={pagination}
+        global={global}
+        button={button}
+        formRef={formRef}
+        logic={logic}
+        logicIds={logicIds}
+        setCurrentPage={setCurrentPage}
+        formId={formId}
+        onStorageButtonClick={onStorageButtonClick}
+        localStorageFormData={localStorageFormData}
+        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
       />
       <Footer
         formRef={formRef}

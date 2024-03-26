@@ -63,21 +63,23 @@ const Buttons = ({
           </button>
         )}
 
-        <SubmitButton
-          hide={nextPageIndex}
-          global={global}
-          button={button}
-          fields={fields}
-          formRef={formRef}
-          payment={payment}
-          logic={logic}
-          logicIds={logicIds}
-          pagination={pagination}
-          setCurrentPage={setCurrentPage}
-          formId={formId}
-          onStorageButtonClick={onStorageButtonClick}
-          onLocalStorageFormDataChange={onLocalStorageFormDataChange}
-        />
+        {!global.isSubmitButtonInLastPage && (
+          <SubmitButton
+            hide={nextPageIndex}
+            global={global}
+            button={button}
+            fields={fields}
+            formRef={formRef}
+            payment={payment}
+            logic={logic}
+            logicIds={logicIds}
+            pagination={pagination}
+            setCurrentPage={setCurrentPage}
+            formId={formId}
+            onStorageButtonClick={onStorageButtonClick}
+            onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+          />
+        )}
 
         {nextPageIndex && (
           <button
