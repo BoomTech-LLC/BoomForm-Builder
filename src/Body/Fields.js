@@ -52,6 +52,7 @@ const Fields = ({ fields, payment, printableFields, gridOptions }) => {
     width = 800,
     cols = 4
   } = gridOptions
+
   return (
     <>
       {printableFields.map((pageFields, index) => {

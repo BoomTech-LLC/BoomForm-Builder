@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
-import Counter from './Counter'
-import Buttons from './Buttons/Buttons'
-import Numbers from './Buttons/Numbers'
-import { getShowableData } from '../../Helpers/pagination'
+import React, { Fragment } from 'react';
+import Counter from './Counter';
+import Buttons from './Buttons/Buttons';
+import Numbers from './Buttons/Numbers';
+import { getShowableData } from '../../Helpers/pagination';
 
 const Pagination = ({
   formRef,
@@ -14,15 +14,18 @@ const Pagination = ({
   setCurrentPage,
   payment,
   logic,
-  logicIds
+  logicIds,
+  formId,
+  onLocalStorageFormDataChange,
+  onStorageButtonClick
 }) => {
-  const { pageCounter, buttons, pages } = pagination
-  const { type } = buttons
+  const { pageCounter, buttons, pages } = pagination;
+  const { type } = buttons;
   const { showableCurrentPage, pagesLength } = getShowableData({
     currentPage,
     logicIds,
     pagination
-  })
+  });
   return (
     <>
       {pageCounter && (
@@ -40,6 +43,9 @@ const Pagination = ({
           payment={payment}
           logic={logic}
           logicIds={logicIds}
+          formId={formId}
+          onStorageButtonClick={onStorageButtonClick}
+          onLocalStorageFormDataChange={onLocalStorageFormDataChange}
         />
       ) : (
         <Numbers
@@ -56,7 +62,7 @@ const Pagination = ({
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;
