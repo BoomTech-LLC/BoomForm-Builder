@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, Fragment } from 'react'
 import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
