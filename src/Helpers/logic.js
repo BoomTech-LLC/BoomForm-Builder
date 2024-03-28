@@ -1,6 +1,6 @@
 import { getNestedValue } from '../Helpers/global'
 
-const conditionalLogic = ({ fieldValue, value, rule, field }) => {
+const conditionalLogic = ({ fieldValue, value, rule, field, item, type }) => {
   switch (rule) {
     case 'is': {
       if (fieldValue == value) return true
@@ -89,6 +89,88 @@ const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (fieldValue) return true
       else return false
     }
+    case 'doesNotStart': {
+      if (fieldValue) {
+        if (fieldValue?.startsWith(value)) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    }
+    case 'doesNotEnd': {
+      if (fieldValue) {
+        if (fieldValue?.endsWith(value)) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    }
+    case 'quantityEqual': {
+      const quantities = window.__current_form_state?.values['quantity']
+
+      if (type === 'multipleChoice') {
+        if (item) {
+          const check = fieldValue?.some((element) => {
+            return element.label === item
+              ? Number(quantities[1][element.key]) === value
+              : false
+          })
+        } else {
+          const keys = fieldValue?.map((element) => element.key)
+          const checkedValues = keys?.map((key) => quantities[1][key])
+
+          return checkedValues?.some((element) => Number(element) === value)
+        }
+      } else if (type === 'singleChoice' || type === 'select') {
+        return Number(quantities && quantities['1']) === value
+      }
+    }
+    case 'quantityLess': {
+      const quantities = window.__current_form_state?.values['quantity']
+
+      if (type === 'multipleChoice') {
+        if (item) {
+          const check = fieldValue?.some((element) => {
+            return element.label === item
+              ? Number(quantities[1][element.key]) < value
+              : false
+          })
+        } else {
+          const keys = fieldValue?.map((element) => element.key)
+          const checkedValues = keys?.map((key) => quantities[1][key])
+
+          return checkedValues?.some((element) => Number(element) < value)
+        }
+      } else if (type === 'singleChoice' || type === 'select') {
+        return Number(quantities && quantities['1']) < value
+      }
+    }
+    case 'quantityMore': {
+      const quantities = window.__current_form_state?.values['quantity']
+
+      if (type === 'multipleChoice') {
+        if (item) {
+          const check = fieldValue?.some((element) => {
+            return element.label === item
+              ? Number(quantities[1][element.key]) > value
+              : false
+          })
+        } else {
+          const keys = fieldValue?.map((element) => element.key)
+          const checkedValues = keys?.map((key) => quantities[1][key])
+
+          return checkedValues?.some((element) => Number(element) > value)
+        }
+      } else if (type === 'singleChoice' || type === 'select') {
+        return Number(quantities && quantities['1']) > value
+      }
+    }
     default:
       return null
   }
@@ -104,6 +186,7 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
 
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
+
       const fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
@@ -116,9 +199,10 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
         fieldValue: getFieldValue(type, fieldValue, field, values, item),
         value,
         rule,
-        field
+        field,
+        item,
+        type
       })
-
       if (
         actionHandler(
           id,
@@ -195,6 +279,7 @@ export const getFieldValue = (type, value, field, values, item) => {
             return true
           } else return false
         })
+
         return checkedOptions
       }
     }
@@ -313,18 +398,28 @@ export const actionHandler = (
 
 export const getUpdatableFields = ({ logic }) => {
   const updatableFields = []
+
   if (logic.length > 0) {
-    for (let i = 0; i < logic.length; i++)
-      for (let j = 0; j < logic[i].conditions.length; j++)
-        logic[i].conditions[j].item
-          ? updatableFields.push(
-              `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
-            )
-          : updatableFields.push(logic[i].conditions[j].id)
+    for (let i = 0; i < logic.length; i++) {
+      for (let j = 0; j < logic[i].conditions.length; j++) {
+        const condition = logic[i].conditions[j]
+        if (
+          condition.rule === 'quantityEqual' ||
+          condition.rule === 'quantityLess' ||
+          condition.rule === 'quantityMore'
+        ) {
+          updatableFields.push(condition.id)
+        } else if (condition.item) {
+          updatableFields.push(`${condition.id}.${condition.item}`)
+        } else {
+          updatableFields.push(condition.id)
+        }
+      }
+    }
   }
+
   return updatableFields
 }
-
 export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
   if (Object.keys(pagination).length === 0) return
   const { pages: hiddenPages, fields: hiddenFields } = logicIds

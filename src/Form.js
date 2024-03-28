@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useField } from 'boomform'
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import Body from './Body'
 import StateHandler from './StateHandler'
+import { Context } from 'boomform'
 
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
 import { getRendableData } from './Helpers/global'
@@ -30,6 +31,9 @@ const Form = ({
   const [currentPage, setCurrentPage] = useState(initial)
   const isPagination = Object.keys(pagination).length !== 0
   const data = useField(updatableFields)
+
+  //this is to make Form rerender when the fields update
+  useContext(Context)
 
   const logicIds = getHiddenIds({
     logic,
