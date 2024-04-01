@@ -2,9 +2,9 @@ import React, { memo, Fragment } from 'react';
 import classNames from 'classnames/bind';
 import GridLayout from 'react-grid-layout';
 import Field from './Field';
-import 'react-grid-layout/css/styles.css';
 import SubmitButton from '../Footer/SubmitButton/SubmitButton';
-import { findLastValidField } from '../Helpers/global';
+
+import 'react-grid-layout/css/styles.css';
 
 const generatePageItems = (fields, pageFields, payment) => {
   return fields
@@ -54,6 +54,7 @@ const Fields = ({
   logicIds,
   setCurrentPage,
   formId,
+  isShowSubmitButton,
   onStorageButtonClick,
   localStorageFormData,
   onLocalStorageFormDataChange
@@ -72,8 +73,6 @@ const Fields = ({
     cols = 4
   } = gridOptions;
 
-  const lastField = findLastValidField(pages, logicIds);
-
   return (
     <>
       {printableFields.map((pageFields, index) => {
@@ -87,69 +86,60 @@ const Fields = ({
         return (
           <div key={'page' + index} className='boomForm-fields'>
             {gridOptions && gridOptions.layout ? (
-              <GridLayout
-                className='grid-layout'
-                isDroppable={false}
-                cols={cols}
-                margin={margin}
-                containerPadding={containerPadding}
-                rowHeight={rowHeight}
-                width={width}
-                isBounded={isBounded}
-                isDraggable={isDraggable}
-                isResizable={isResizable}
-                layout={layout_}
-              >
-                {generatePageItems(fields, pageFields, payment)}
-                {printableFields.map(
-                  item =>
-                    item.includes(lastField) && (
-                      <SubmitButton
-                        global={global}
-                        button={button}
-                        fields={fields}
-                        formRef={formRef}
-                        payment={payment}
-                        logic={logic}
-                        logicIds={logicIds}
-                        pagination={pagination}
-                        setCurrentPage={setCurrentPage}
-                        formId={formId}
-                        onStorageButtonClick={onStorageButtonClick}
-                        localStorageFormData={localStorageFormData}
-                        onLocalStorageFormDataChange={
-                          onLocalStorageFormDataChange
-                        }
-                      />
-                    )
+              <>
+                <GridLayout
+                  className='grid-layout'
+                  isDroppable={false}
+                  cols={cols}
+                  margin={margin}
+                  containerPadding={containerPadding}
+                  rowHeight={rowHeight}
+                  width={width}
+                  isBounded={isBounded}
+                  isDraggable={isDraggable}
+                  isResizable={isResizable}
+                  layout={layout_}
+                >
+                  {generatePageItems(fields, pageFields, payment)}
+                </GridLayout>
+                {isShowSubmitButton && (
+                  <SubmitButton
+                    global={global}
+                    button={button}
+                    fields={fields}
+                    formRef={formRef}
+                    payment={payment}
+                    logic={logic}
+                    logicIds={logicIds}
+                    pagination={pagination}
+                    setCurrentPage={setCurrentPage}
+                    formId={formId}
+                    onStorageButtonClick={onStorageButtonClick}
+                    localStorageFormData={localStorageFormData}
+                    onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+                  />
                 )}
-              </GridLayout>
+              </>
             ) : (
               <>
                 {generatePageItems(fields, pageFields, payment)}
-                {global.isSubmitButtonInLastPage &&
-                  printableFields.map(
-                    item =>
-                      item.includes(lastField) && (
-                        <SubmitButton
-                          global={global}
-                          button={button}
-                          fields={fields}
-                          formRef={formRef}
-                          payment={payment}
-                          logic={logic}
-                          logicIds={logicIds}
-                          pagination={pagination}
-                          setCurrentPage={setCurrentPage}
-                          formId={formId}
-                          onStorageButtonClick={onStorageButtonClick}
-                          localStorageFormData={localStorageFormData}
-                          onLocalStorageFormDataChange={
-                            onLocalStorageFormDataChange
-                          }
-                        />
-                      )
-                  )}
+                {isShowSubmitButton && (
+                  <SubmitButton
+                    global={global}
+                    button={button}
+                    fields={fields}
+                    formRef={formRef}
+                    payment={payment}
+                    logic={logic}
+                    logicIds={logicIds}
+                    pagination={pagination}
+                    setCurrentPage={setCurrentPage}
+                    formId={formId}
+                    onStorageButtonClick={onStorageButtonClick}
+                    localStorageFormData={localStorageFormData}
+                    onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+                  />
+                )}
               </>
             )}
           </div>

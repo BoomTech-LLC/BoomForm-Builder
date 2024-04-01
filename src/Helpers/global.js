@@ -94,19 +94,3 @@ export const iphoneCheck = () => {
       (window.opera && opera.toString() === `[object Opera]`)
   );
 };
-
-export const findLastValidField = (pages, logicIds) => {
-  let lastField;
-  let elseExecuted = false;
-
-  for (let i = pages?.length - 1; i >= 0; i--) {
-    const page = pages[i];
-    if (!page?.fields?.some(item => !logicIds.fields.includes(item))) {
-    } else if (!elseExecuted) {
-      [lastField] = page.fields.slice(-1);
-      elseExecuted = true;
-    }
-  }
-
-  return lastField;
-};
