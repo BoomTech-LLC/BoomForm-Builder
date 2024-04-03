@@ -13,7 +13,7 @@ import { getRendableData } from './Helpers/global';
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic';
 import StateHandler from './StateHandler';
 import useLocalStorage from './hooks/useLocalStorage';
-import { storeProgresStore } from './Helpers/storeProgers';
+import { storeProgresSubmitStore } from './Helpers/storeProgers';
 import { getShowableData } from './Helpers/pagination';
 
 const Form = ({
@@ -32,7 +32,7 @@ const Form = ({
     onStateChange = () => {},
     onFirstRender = () => {},
     onDie = () => {},
-    storeProgres = {},
+    storeData = {},
     isSubmitButtonInLastPage
   } = global;
 
@@ -40,19 +40,35 @@ const Form = ({
     `status-${formId}`,
     null
   );
+
+  const [localStorageSubmitFormData, setLocalStorageSubmitFormData] =
+    useLocalStorage(`submit-${formId}`, '');
+
   const [localStorageFormData, setLocalStorageFormData] = useLocalStorage(
     `form-${formId}`,
     ''
   );
 
+  const onLocalStorageFormDataChange = useCallback(data => {
+    setLocalStorageFormData(data);
+  }, []);
+
   const storeProgresStoredData = useMemo(
     () =>
-      formId && storeProgres.enabled
+      formId &&
+      (storeData.submitProgres.enabled || storeData.storeProgress.enabled)
         ? fields.map(field =>
-            storeProgresStore(field, localStorageFormData, localStorageStatus)
+            storeProgresSubmitStore({
+              field,
+              localStorageFormData:
+                (storeData.submitProgres.enabled &&
+                  localStorageSubmitFormData) ||
+                localStorageFormData,
+              localStorageStatus
+            })
           )
         : fields,
-    [fields, localStorageFormData, localStorageStatus]
+    [fields, localStorageSubmitFormData, localStorageStatus]
   );
 
   const updatableFields = getUpdatableFields({ logic });
@@ -79,8 +95,8 @@ const Form = ({
     currentPage
   });
 
-  const onLocalStorageFormDataChange = useCallback(value => {
-    setLocalStorageFormData(value);
+  const onLocalStorageSubmitFormDataChange = useCallback(value => {
+    setLocalStorageSubmitFormData(value);
   }, []);
 
   const onStorageButtonClick = useCallback(value => {
@@ -108,7 +124,7 @@ const Form = ({
         pagination={pagination}
         currentPage={currentPage}
         logicIds={logicIds}
-        storeProgres={storeProgres}
+        submitProgres={storeData.submitProgres}
         localStorageStatus={localStorageStatus}
         onStorageButtonClick={onStorageButtonClick}
       />
@@ -129,8 +145,8 @@ const Form = ({
         setCurrentPage={setCurrentPage}
         formId={formId}
         onStorageButtonClick={onStorageButtonClick}
-        localStorageFormData={localStorageFormData}
-        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+        localStorageSubmitFormData={localStorageSubmitFormData}
+        onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
       />
       <Footer
         formRef={formRef}
@@ -146,11 +162,12 @@ const Form = ({
         logic={logic}
         logicIds={logicIds}
         onStorageButtonClick={onStorageButtonClick}
-        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+        onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
       />
 
       <StateHandler
         onStateChange={onStateChange}
+        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
         formRef={formRef}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}

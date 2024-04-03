@@ -1,21 +1,21 @@
-export const storeProgresStore = (
+export const storeProgresSubmitStore = ({
   field,
   localStorageFormData,
   localStorageStatus
-) => {
+}) => {
   const formData = localStorageFormData[field.id];
   const handleChange = ({ id, value }) =>
     window._handleChange && window._handleChange({ id, value });
-
   if (field && formData && localStorageStatus !== 'reseted')
     switch (field.type) {
       case 'name':
-        ['first', 'middle', 'last'].forEach(part =>
-          handleChange({
-            id: `${field.id}.${part}`,
-            value: formData[part]
-          })
-        );
+        ['first', 'middle', 'last'].forEach(part => {
+          formData[part] &&
+            handleChange({
+              id: `${field.id}.${part}`,
+              value: formData[part]
+            });
+        });
         return {
           ...field,
           formData

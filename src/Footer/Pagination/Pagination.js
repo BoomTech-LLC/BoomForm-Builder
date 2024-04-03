@@ -16,7 +16,7 @@ const Pagination = ({
   logic,
   logicIds,
   formId,
-  onLocalStorageFormDataChange,
+  onLocalStorageSubmitFormDataChange,
   onStorageButtonClick
 }) => {
   const { pageCounter, buttons, pages } = pagination;
@@ -45,7 +45,7 @@ const Pagination = ({
           logicIds={logicIds}
           formId={formId}
           onStorageButtonClick={onStorageButtonClick}
-          onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+          onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
         />
       ) : (
         <Numbers

@@ -6,35 +6,37 @@ const Header = ({
   description,
   isPagination,
   pagination,
-  storeProgres = {},
+  submitProgres = {},
   currentPage,
   logicIds,
   localStorageStatus,
   onStorageButtonClick
 }) => {
   const getStorageButton = () => {
-    if (localStorageStatus === 'active') {
-      return storeProgres.resetButton.HTML || '<span>Reset</span>';
-    } else if (localStorageStatus === 'loaded') {
-      return storeProgres.resetButton.HTML || '<span>Reset</span>';
-    } else if (localStorageStatus === 'reseted') {
-      return storeProgres.loadButton.HTML || '<span>Load</span>';
-    } else {
-      return null;
+    if (submitProgres.enabled) {
+      if (localStorageStatus === 'active') {
+        return submitProgres.resetButton.HTML || '<span>Reset</span>';
+      } else if (localStorageStatus === 'loaded') {
+        return submitProgres.resetButton.HTML || '<span>Reset</span>';
+      } else if (localStorageStatus === 'reseted') {
+        return submitProgres.loadButton.HTML || '<span>Load</span>';
+      } else {
+        return null;
+      }
     }
   };
 
   const getInstructionButton = () => {
     if (
       localStorageStatus === 'active' &&
-      storeProgres.loadButton.instruction &&
-      storeProgres.resetButton.instruction
+      submitProgres.loadButton.instruction &&
+      submitProgres.resetButton.instruction
     ) {
       return (
         <span className='boomForm-field__instruction'>
           {localStorageStatus === 'reseted'
-            ? storeProgres.loadButton.instruction
-            : storeProgres.resetButton.instruction}
+            ? submitProgres.loadButton.instruction
+            : submitProgres.resetButton.instruction}
         </span>
       );
     }
