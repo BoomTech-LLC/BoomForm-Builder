@@ -1,9 +1,9 @@
 export const getNextPageIndex = ({ pagination, logicIds, currentPage }) => {
-  let nextPage = undefined
+  let nextPage = undefined;
   if (pagination) {
-    const { pages, mode = 'page' } = pagination
+    const { pages, mode = 'page' } = pagination;
     if (currentPage === pages.length - 1 || mode !== 'page') {
-      return nextPage
+      return nextPage;
     }
     for (
       let i = currentPage + 1;
@@ -12,55 +12,54 @@ export const getNextPageIndex = ({ pagination, logicIds, currentPage }) => {
     ) {
       if (
         !logicIds.pages.includes(i) &&
-        pages[i].fields.filter((id) => !logicIds.fields.includes(id)).length !==
-          0
+        pages[i].fields.filter(id => !logicIds.fields.includes(id)).length !== 0
       ) {
-        nextPage = String(i)
+        nextPage = String(i);
       }
     }
   }
-  return nextPage
-}
+  return nextPage;
+};
 export const getPrevPageIndex = ({ pagination, logicIds, currentPage }) => {
-  let prevPage = undefined
+  let prevPage = undefined;
   if (currentPage === 0) {
-    return prevPage
+    return prevPage;
   }
   if (pagination) {
-    const { pages } = pagination
+    const { pages } = pagination;
     for (let i = currentPage - 1; i >= 0 && prevPage === undefined; i--) {
       if (
         !logicIds.pages.includes(i) &&
-        pages[i].fields.filter((id) => !logicIds.fields.includes(id)).length !==
-          0
+        pages[i].fields.filter(id => !logicIds.fields.includes(id)).length !== 0
       ) {
-        prevPage = String(i)
+        prevPage = String(i);
       }
     }
   }
-  return prevPage
-}
+  return prevPage;
+};
 
 export const getShowableData = ({ logicIds, pagination, currentPage }) => {
-  if (!pagination) return { currentPage, pagesLength: 0, actualPages: [] }
+  if (!pagination || !pagination?.pages)
+    return { currentPage, pagesLength: 0, actualPages: [] };
   const showableData = {
     showableCurrentPage: 0,
     pagesLength: 0,
     actualPages: []
-  }
+  };
   pagination.pages.forEach((page, index) => {
     if (
       !logicIds.pages.includes(index) &&
-      page.fields.filter((id) => !logicIds.fields.includes(id)).length !== 0
+      page.fields.filter(id => !logicIds.fields.includes(id)).length !== 0
     ) {
-      showableData.pagesLength += 1
-      showableData.actualPages.push(index)
+      showableData.pagesLength += 1;
+      showableData.actualPages.push(index);
 
       if (currentPage === index) {
-        showableData.showableCurrentPage = showableData.pagesLength
+        showableData.showableCurrentPage = showableData.pagesLength;
       }
     }
-  })
+  });
 
-  return showableData
-}
+  return showableData;
+};

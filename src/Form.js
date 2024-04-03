@@ -14,6 +14,7 @@ import { getHiddenIds, getUpdatableFields } from './Helpers/logic';
 import StateHandler from './StateHandler';
 import useLocalStorage from './hooks/useLocalStorage';
 import { storeProgresStore } from './Helpers/storeProgers';
+import { getShowableData } from './Helpers/pagination';
 
 const Form = ({
   global,
@@ -31,7 +32,8 @@ const Form = ({
     onStateChange = () => {},
     onFirstRender = () => {},
     onDie = () => {},
-    storeProgres = {}
+    storeProgres = {},
+    isSubmitButtonInLastPage
   } = global;
 
   const [localStorageStatus, setStatus] = useLocalStorage(
@@ -59,20 +61,23 @@ const Form = ({
   const [currentPage, setCurrentPage] = useState(initial);
   const isPagination = Object.keys(pagination).length !== 0;
   const data = useField(updatableFields);
-
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
     fields: storeProgresStoredData,
     formRef
   });
-
   const printableFields = getRendableData(
     storeProgresStoredData,
     logicIds,
     pagination,
     currentPage
   );
+  const { pagesLength, showableCurrentPage } = getShowableData({
+    logicIds,
+    pagination,
+    currentPage
+  });
 
   const onLocalStorageFormDataChange = useCallback(value => {
     setLocalStorageFormData(value);
@@ -112,6 +117,20 @@ const Form = ({
         payment={payment}
         printableFields={printableFields}
         gridOptions={gridOptions}
+        pagination={pagination}
+        global={global}
+        button={button}
+        formRef={formRef}
+        logic={logic}
+        logicIds={logicIds}
+        isShowSubmitButton={
+          isSubmitButtonInLastPage && pagesLength === showableCurrentPage
+        }
+        setCurrentPage={setCurrentPage}
+        formId={formId}
+        onStorageButtonClick={onStorageButtonClick}
+        localStorageFormData={localStorageFormData}
+        onLocalStorageFormDataChange={onLocalStorageFormDataChange}
       />
       <Footer
         formRef={formRef}
