@@ -18,7 +18,7 @@ const Buttons = ({
   logic,
   logicIds,
   formId,
-  onLocalStorageFormDataChange,
+  onLocalStorageSubmitFormDataChange,
   onStorageButtonClick
 }) => {
   const { buttons, pages } = pagination;
@@ -77,7 +77,7 @@ const Buttons = ({
             setCurrentPage={setCurrentPage}
             formId={formId}
             onStorageButtonClick={onStorageButtonClick}
-            onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+            onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
           />
         )}
 

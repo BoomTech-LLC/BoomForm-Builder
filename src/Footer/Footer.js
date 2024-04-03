@@ -19,7 +19,7 @@ const Footer = ({
   formId,
   onStorageButtonClick,
   localStorageFormData,
-  onLocalStorageFormDataChange
+  onLocalStorageSubmitFormDataChange
 }) => {
   const { captcha } = global;
   const { mode } = pagination;
@@ -41,7 +41,7 @@ const Footer = ({
           formId={formId}
           onStorageButtonClick={onStorageButtonClick}
           localStorageFormData={localStorageFormData}
-          onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+          onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
         />
       }
     </>
@@ -59,7 +59,7 @@ const Footer = ({
       logicIds={logicIds}
       formId={formId}
       onStorageButtonClick={onStorageButtonClick}
-      onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+      onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
     />
   );
 };

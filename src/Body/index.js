@@ -16,8 +16,8 @@ const Body = ({
   formId,
   isShowSubmitButton,
   onStorageButtonClick,
-  localStorageFormData,
-  onLocalStorageFormDataChange
+  localStorageSubmitFormData,
+  onLocalStorageSubmitFormDataChange
 }) => {
   return (
     <Fields
@@ -35,8 +35,8 @@ const Body = ({
       setCurrentPage={setCurrentPage}
       formId={formId}
       onStorageButtonClick={onStorageButtonClick}
-      localStorageFormData={localStorageFormData}
-      onLocalStorageFormDataChange={onLocalStorageFormDataChange}
+      localStorageSubmitFormData={localStorageSubmitFormData}
+      onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
     />
   );
 };
