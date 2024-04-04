@@ -1,6 +1,6 @@
 import { Context } from 'boomform';
 import { useContext } from 'react';
-import { debounce } from '../example/src/Helpers/debounce';
+import { debounce } from './Helpers/debounce';
 
 const StateHandler = ({
   onStateChange,
