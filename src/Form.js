@@ -56,12 +56,12 @@ const Form = ({
   const storeProgresStoredData = useMemo(
     () =>
       formId &&
-      (storeData.submitProgres.enabled || storeData.storeProgress.enabled)
+      (storeData?.submitProgres.enabled || storeData?.storeProgress.enabled)
         ? fields.map(field =>
             storeProgresSubmitStore({
               field,
               localStorageFormData:
-                (storeData.submitProgres.enabled &&
+                (storeData?.submitProgres.enabled &&
                   localStorageSubmitFormData) ||
                 localStorageFormData,
               localStorageStatus
@@ -124,7 +124,7 @@ const Form = ({
         pagination={pagination}
         currentPage={currentPage}
         logicIds={logicIds}
-        submitProgres={storeData.submitProgres}
+        submitProgres={storeData?.submitProgres}
         localStorageStatus={localStorageStatus}
         onStorageButtonClick={onStorageButtonClick}
       />

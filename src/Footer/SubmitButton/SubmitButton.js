@@ -54,7 +54,7 @@ const SubmitButton = ({
         onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'));
     }
 
-    if (global.storeData.submitProgres?.enabled && formId) {
+    if (global.storeData?.submitProgres?.enabled && formId) {
       onLocalStorageSubmitFormDataChange(state.values);
       onStorageButtonClick('active');
     }
