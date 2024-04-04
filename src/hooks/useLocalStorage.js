@@ -1,69 +1,70 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react';
 
 const isLocalStorageSupported = () => {
-  const testKey = '__test__'
+  const testKey = '__test__';
 
   try {
-    localStorage.setItem(testKey, testKey)
-    localStorage.removeItem(testKey)
-    return true
+    localStorage.setItem(testKey, testKey);
+    localStorage.removeItem(testKey);
+    return true;
   } catch (e) {
-    return false
+    return false;
   }
-}
+};
 
 const useLocalStorage = (key, defaultValue) => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       if (isLocalStorageSupported()) {
-        const value = localStorage.getItem(key)
+        const value = localStorage.getItem(key);
         if (value) {
-          return JSON.parse(value)
+          return JSON.parse(value);
         } else {
-          localStorage.setItem(key, JSON.stringify(defaultValue))
-          return defaultValue
+          localStorage.setItem(key, JSON.stringify(defaultValue));
+          return defaultValue;
         }
       } else {
-        console.warn('localStorage is not supported.')
-        return defaultValue
+        console.warn('localStorage is not supported.');
+        return defaultValue;
       }
     } catch (err) {
-      console.error('Error initializing localStorage:', err)
-      return defaultValue
+      console.error('Error initializing localStorage:', err);
+      return defaultValue;
     }
-  })
-
-  const setValue = (newValue) => {
+  });
+  const setValue = newValue => {
     try {
       if (isLocalStorageSupported()) {
-        localStorage.setItem(key, JSON.stringify(newValue))
-        setStoredValue(newValue)
+        localStorage.setItem(key, JSON.stringify(newValue));
+        setStoredValue(newValue);
       } else {
-        console.warn('localStorage is not supported. Value will not be stored.')
+        console.warn(
+          'localStorage is not supported. Value will not be stored.'
+        );
       }
     } catch (err) {
-      console.error('Error updating localStorage:', err)
+      console.error('Error updating localStorage:', err);
     }
-  }
+  };
 
   useEffect(() => {
     try {
       if (isLocalStorageSupported()) {
-        const value = localStorage.getItem(key)
+        const value = localStorage.getItem(key);
         if (value && value !== JSON.stringify(storedValue)) {
-          setStoredValue(JSON.parse(value))
+          setStoredValue(JSON.parse(value));
         }
       } else {
         console.warn(
           'localStorage is not supported. Value will not be updated.'
-        )
+        );
       }
     } catch (err) {
-      console.error('Error reading localStorage:', err)
+      console.error('Error reading localStorage:', err);
     }
-  }, [key, storedValue])
+  }, [key, storedValue]);
 
-  return [storedValue, setValue]
-}
+  return [storedValue, setValue];
+};
 
-export default useLocalStorage
+export default useLocalStorage;

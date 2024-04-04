@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
 import { Context } from 'boomform';
-import Print from './../../Print/Print';
-import { getTotalPrice, formatPrice } from './../../Helpers/payment';
+import React, { useContext, useEffect } from 'react';
 import { formValueCheker } from '../../Helpers/logic';
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { formatPrice, getTotalPrice } from './../../Helpers/payment';
+import Print from './../../Print/Print';
 
 const SubmitButton = ({
   global,

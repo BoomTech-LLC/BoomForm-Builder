@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-
 import SubmitButton from './SubmitButton/SubmitButton';
 import Pagination from './Pagination/Pagination';
 import Captcha from './Captcha';
