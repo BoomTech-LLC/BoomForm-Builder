@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
 import { Context } from 'boomform';
+import { useContext } from 'react';
+import { debounce } from './Helpers/debounce';
 
 const StateHandler = ({
   onStateChange,
@@ -17,7 +18,13 @@ const StateHandler = ({
   );
 
   if (hasNonNullValues) {
-    onLocalStorageFormDataChange(localStorageData);
+    debounce(
+      'update_local_storage',
+      () => {
+        onLocalStorageFormDataChange(localStorageData);
+      },
+      300
+    );
   }
 
   window._handleChange = actions.handleChange;

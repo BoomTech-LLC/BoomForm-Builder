@@ -56,7 +56,6 @@ const Fields = ({
   formId,
   isShowSubmitButton,
   onStorageButtonClick,
-  localStorageSubmitFormData,
   onLocalStorageSubmitFormDataChange
 }) => {
   const { pages } = pagination;
@@ -115,7 +114,6 @@ const Fields = ({
                     setCurrentPage={setCurrentPage}
                     formId={formId}
                     onStorageButtonClick={onStorageButtonClick}
-                    localStorageSubmitFormData={localStorageSubmitFormData}
                     onLocalStorageSubmitFormDataChange={
                       onLocalStorageSubmitFormDataChange
                     }
@@ -138,7 +136,6 @@ const Fields = ({
                     setCurrentPage={setCurrentPage}
                     formId={formId}
                     onStorageButtonClick={onStorageButtonClick}
-                    localStorageSubmitFormData={localStorageSubmitFormData}
                     onLocalStorageSubmitFormDataChange={
                       onLocalStorageSubmitFormDataChange
                     }
