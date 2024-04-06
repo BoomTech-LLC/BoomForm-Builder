@@ -65,11 +65,11 @@ export const useProgress = ({ id, storeProgress, fields }) => {
 
             if (statusState === 'reseted') {
               setInstructionsState(
-                storeProgress?.submitProgress?.resetButton?.instruction
+                storeProgress?.submitProgress?.loadButton?.instruction
               );
             } else if (statusState === 'loaded') {
               setInstructionsState(
-                storeProgress?.submitProgress?.loadButton?.instruction
+                storeProgress?.submitProgress?.resetButton?.instruction
               );
             }
           } else if (storeProgress) {
@@ -104,11 +104,11 @@ export const useProgress = ({ id, storeProgress, fields }) => {
 
           if (statusState === 'reseted') {
             setInstructionsState(
-              storeProgress?.submitProgress?.resetButton?.instruction
+              storeProgress?.submitProgress?.loadButton?.instruction
             );
           } else if (statusState === 'loaded') {
             setInstructionsState(
-              storeProgress?.submitProgress?.loadButton?.instruction
+              storeProgress?.submitProgress?.resetButton?.instruction
             );
           }
         } else if (storeProgress?.storeProgress?.enabled) {
