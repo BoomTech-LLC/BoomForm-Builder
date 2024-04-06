@@ -6,7 +6,6 @@ const Header = ({
   description,
   isPagination,
   pagination,
-  submitProgres = {},
   currentPage,
   logicIds,
   instructionsState,
@@ -20,17 +19,16 @@ const Header = ({
         <div className='boomForm__nameAndReset'>
           <h2 className='boomForm__name'>{name}</h2>
           <div
+            className='boomForm_storeButtons'
             onClick={() => {
               onStorageButtonClick(
                 localStorageStatus === 'reseted' ? 'loaded' : 'reseted'
               );
             }}
-            className='boomForm__reset'
-            dangerouslySetInnerHTML={{
-              __html: localStorageButton
-            }}
-          />
-          {instructionsState}
+          >
+            {localStorageButton}
+            {instructionsState}
+          </div>
         </div>
         <h4 className='boomForm__description'>{description}</h4>
       </div>

@@ -1,16 +1,14 @@
 export const storeProgresSubmitStore = ({
   fields,
   localStorageFormData,
-  localStorageStatus,
-  activeStorages
+  localStorageStatus
 }) => {
   const handleChange = ({ id, value }) =>
     window._handleChange && window._handleChange({ id, value });
-
-  fields.map(field => {
+  fields.forEach(field => {
     const formData = localStorageFormData[field.id];
 
-    if (field && formData && localStorageStatus !== 'reseted')
+    if (field && formData && localStorageStatus !== 'reseted') {
       switch (field.type) {
         case 'name':
           ['first', 'middle', 'last'].forEach(part => {
@@ -20,10 +18,7 @@ export const storeProgresSubmitStore = ({
                 value: formData[part]
               });
           });
-          return {
-            ...field,
-            formData
-          };
+          break;
 
         case 'address':
           ['city', 'country', 'street', 'street2', 'zip'].forEach(part =>
@@ -32,14 +27,7 @@ export const storeProgresSubmitStore = ({
               value: formData[part]
             })
           );
-
-          return {
-            ...field,
-            defaultCountry: formData.country.key,
-            formData: {
-              ...formData
-            }
-          };
+          break;
 
         case 'time':
           handleChange({
@@ -56,43 +44,29 @@ export const storeProgresSubmitStore = ({
             id: `${field.id}.minute`,
             value: formData.minute
           });
+          break;
 
-          return {
-            ...field,
-            formData
-          };
-
-        case 'price ':
-          handleChange({
-            id: `${field.id}.first`,
-            value: formData.first
-          });
-
-          handleChange({
-            id: `${field.id}.last`,
-            value: formData.last
-          });
-
-          return {
-            ...field,
-            formData
-          };
-
+        case 'price':
+          ['first', 'last'].forEach(part =>
+            handleChange({
+              id: `${field.id}.${part}`,
+              value: formData[part]
+            })
+          );
+          break;
         case 'multipleChoice':
-          const multipleChoiceOpitons = field.options.map(option => ({
+          const multipleChoiceOpitons = field.options?.map(option => ({
             ...option,
             checked: formData[option.key]
           }));
 
-          handleChange({
-            id: `${field.id}`,
-            value: formData
-          });
-
-          return {
-            ...field,
-            options: multipleChoiceOpitons
-          };
+          multipleChoiceOpitons.forEach(option =>
+            handleChange({
+              id: `${field.id}.${option.key}`,
+              value: option.checked
+            })
+          );
+          break;
 
         case 'text':
         case 'password':
@@ -108,52 +82,36 @@ export const storeProgresSubmitStore = ({
             id: `${field.id}`,
             value: formData
           });
-          return {
-            ...field,
-            initial: formData
-          };
+          break;
 
         case 'select':
           handleChange({
             id: `${field.id}.size`,
             value: formData.key
           });
-
-          return {
-            ...field,
-            initial: formData.key
-          };
+          break;
 
         case 'singleChoice':
-          const singleChoiceOptions = field.options.map(option => {
-            return {
-              ...option,
-              checked: option.value === formData
-            };
-          });
-
           handleChange({
             id: `${field.id}`,
             value: formData
           });
+          break;
 
-          return { ...field, options: singleChoiceOptions };
+        case 'phone': {
+          handleChange({
+            id: `${field.id}.phone`,
+            value: formData['phone']
+          });
+          handleChange({
+            id: `${field.id}.code`,
+            value: formData['code']
+          });
 
-        case 'phone':
-          ['code', 'phone'].forEach(part =>
-            handleChange({
-              id: `${field.id}.${part}`,
-              value: formData[part]
-            })
-          );
-
-          return {
-            ...field,
-            defaultCountryCode: formData.code,
-            initial: formData.phone
-          };
+          break;
+        }
       }
-    else {
+    } else {
       switch (field.type) {
         case 'name':
           ['first', 'middle', 'last'].forEach(part =>
@@ -162,10 +120,7 @@ export const storeProgresSubmitStore = ({
               value: ''
             })
           );
-
-          return {
-            ...field
-          };
+          break;
 
         case 'address':
           ['city', 'street', 'street2', 'zip'].forEach(part =>
@@ -186,10 +141,7 @@ export const storeProgresSubmitStore = ({
               value: 'United States'
             }
           });
-
-          return {
-            ...field
-          };
+          break;
 
         case 'time':
           ['hour', 'minute'].forEach(part =>
@@ -200,40 +152,47 @@ export const storeProgresSubmitStore = ({
           );
           handleChange({
             id: `${field.id}.format`,
-            value: {}
+            value: null
           });
+          break;
 
-        case 'price ':
+        case 'price':
           ['first', 'last'].forEach(part =>
             handleChange({
               id: `${field.id}.${part}`,
-              value: ''
+              value: null
             })
           );
+          break;
+
         case 'select':
           handleChange({
             id: `${field.id}.size`,
             value: null
           });
-
-          return { ...field };
+          break;
 
         case 'multipleChoice':
-          handleChange({
-            id: `${field.id}`,
-            value: null
-          });
+          const multipleChoiceOpitons = field.options?.map(option => ({
+            ...option,
+            checked: formData[option.key]
+          }));
 
-          return { ...field };
-
-        case 'phone':
-          ['code', 'phone'].forEach(part =>
+          multipleChoiceOpitons.forEach(option =>
             handleChange({
-              id: `${field.id}.${part}`,
-              value: ''
+              id: `${field.id}.${option.key}`,
+              value: false
             })
           );
-          return { ...field };
+
+          break;
+
+        case 'phone':
+          handleChange({
+            id: `${field.id}.phone`,
+            value: ''
+          });
+          break;
 
         case 'text':
         case 'password':
@@ -250,12 +209,8 @@ export const storeProgresSubmitStore = ({
             id: `${field.id}`,
             value: null
           });
-
-          return {
-            ...field
-          };
+          break;
       }
     }
-    return { ...field };
   });
 };

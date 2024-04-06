@@ -6,8 +6,8 @@ import Header from './Header/Header';
 import { getRendableData } from './Helpers/global';
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic';
 import { getShowableData } from './Helpers/pagination';
-import StateHandler from './StateHandler';
 import { useProgress } from './hooks/useProgress';
+import StateHandler from './StateHandler';
 
 const Form = ({
   global,
@@ -87,7 +87,6 @@ const Form = ({
         pagination={pagination}
         currentPage={currentPage}
         logicIds={logicIds}
-        submitProgres={storeData?.submitProgres}
         localStorageStatus={status}
         onStorageButtonClick={onStatusChange}
       />
