@@ -13,7 +13,7 @@ const isLocalStorageSupported = () => {
   }
 };
 
-export const useProgress = ({ id, storeData, fields }) => {
+export const useProgress = ({ id, storeProgress, fields }) => {
   const progressData = useRef({});
   const submitData = useRef({});
   const [statusState, setStatusState] = useState({});
@@ -38,8 +38,8 @@ export const useProgress = ({ id, storeData, fields }) => {
         submitData.current = parsedSubmitProgress;
 
         if (
-          storeData?.storeProgress?.enabled &&
-          storeData?.submitProgress?.enabled
+          storeProgress?.storeProgress?.enabled &&
+          storeProgress?.submitProgress?.enabled
         ) {
           if (submitProgress) {
             storeProgresSubmitStore({
@@ -50,12 +50,12 @@ export const useProgress = ({ id, storeData, fields }) => {
 
             if (statusState === 'active' || statusState === 'loaded') {
               setButtonState(
-                storeData?.submitProgress?.resetButton?.HTML ||
+                storeProgress?.submitProgress?.resetButton?.HTML ||
                   <span>Reset</span>
               );
             } else if (statusState === 'reseted') {
               setButtonState(
-                storeData?.submitProgress?.loadButton?.HTML ||
+                storeProgress?.submitProgress?.loadButton?.HTML ||
                   <span>Load</span>
               );
             } else {
@@ -64,11 +64,11 @@ export const useProgress = ({ id, storeData, fields }) => {
 
             if (statusState === 'reseted') {
               setInstructionsState(
-                storeData?.submitProgress?.resetButton?.instruction
+                storeProgress?.submitProgress?.resetButton?.instruction
               );
             } else if (statusState === 'loaded') {
               setInstructionsState(
-                storeData?.submitProgress?.loadButton?.instruction
+                storeProgress?.submitProgress?.loadButton?.instruction
               );
             }
           } else if (storeProgress) {
@@ -78,7 +78,7 @@ export const useProgress = ({ id, storeData, fields }) => {
               localStorageStatus: statusState
             });
           }
-        } else if (storeData?.submitProgress?.enabled) {
+        } else if (storeProgress?.submitProgress?.enabled) {
           storeProgresSubmitStore({
             fields,
             localStorageFormData: parsedSubmitProgress,
@@ -87,12 +87,12 @@ export const useProgress = ({ id, storeData, fields }) => {
 
           if (statusState === 'active' || statusState === 'loaded') {
             setButtonState(
-              storeData?.submitProgress?.resetButton?.HTML ||
+              storeProgress?.submitProgress?.resetButton?.HTML ||
                 <span>Reset</span>
             );
           } else if (statusState === 'reseted') {
             setButtonState(
-              storeData?.submitProgress?.loadButton?.HTML || <span>Load</span>
+              storeProgress?.submitProgress?.loadButton?.HTML || <span>Load</span>
             );
           } else {
             setButtonState(null);
@@ -100,14 +100,14 @@ export const useProgress = ({ id, storeData, fields }) => {
 
           if (statusState === 'reseted') {
             setInstructionsState(
-              storeData?.submitProgress?.resetButton?.instruction
+              storeProgress?.submitProgress?.resetButton?.instruction
             );
           } else if (statusState === 'loaded') {
             setInstructionsState(
-              storeData?.submitProgress?.loadButton?.instruction
+              storeProgress?.submitProgress?.loadButton?.instruction
             );
           }
-        } else if (storeData?.storeProgress?.enabled) {
+        } else if (storeProgress?.storeProgress?.enabled) {
           storeProgresSubmitStore({
             fields,
             localStorageFormData: parsedStoreProgress,
@@ -122,7 +122,7 @@ export const useProgress = ({ id, storeData, fields }) => {
 
   const onProgressChange = value => {
     if (
-      storeData?.storeProgress?.enabled &&
+      storeProgress?.storeProgress?.enabled &&
       id &&
       isSupported.current &&
       value
@@ -133,7 +133,7 @@ export const useProgress = ({ id, storeData, fields }) => {
 
   const onSubmitChange = value => {
     if (
-      storeData?.submitProgress?.enabled &&
+      storeProgress?.submitProgress?.enabled &&
       id &&
       isSupported.current &&
       value
@@ -144,7 +144,7 @@ export const useProgress = ({ id, storeData, fields }) => {
 
   const onStatusChange = status => {
     if (
-      storeData?.submitProgress?.enabled &&
+      storeProgress?.submitProgress?.enabled &&
       id &&
       isSupported.current &&
       status
