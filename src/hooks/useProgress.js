@@ -39,7 +39,7 @@ export const useProgress = ({ id, storeData, fields }) => {
 
         if (
           storeData?.storeProgress?.enabled &&
-          storeData?.submitProgres?.enabled
+          storeData?.submitProgress?.enabled
         ) {
           if (submitProgress) {
             storeProgresSubmitStore({
@@ -50,13 +50,13 @@ export const useProgress = ({ id, storeData, fields }) => {
 
             if (statusState === 'active' || statusState === 'loaded') {
               setButtonState(
-                storeData?.submitProgres?.resetButton?.HTML ||
-                  '<span>Reset</span>'
+                storeData?.submitProgress?.resetButton?.HTML ||
+                  <span>Reset</span>
               );
             } else if (statusState === 'reseted') {
               setButtonState(
-                storeData?.submitProgres?.loadButton?.HTML ||
-                  '<span>Load</span>'
+                storeData?.submitProgress?.loadButton?.HTML ||
+                  <span>Load</span>
               );
             } else {
               setButtonState(null);
@@ -64,15 +64,11 @@ export const useProgress = ({ id, storeData, fields }) => {
 
             if (statusState === 'reseted') {
               setInstructionsState(
-                <span className='boomForm-field__instruction'>
-                  {storeData?.submitProgres?.resetButton?.instruction}
-                </span>
+                storeData?.submitProgress?.resetButton?.instruction
               );
             } else if (statusState === 'loaded') {
               setInstructionsState(
-                <span className='boomForm-field__instruction'>
-                  {storeData?.submitProgres?.loadButton?.instruction}
-                </span>
+                storeData?.submitProgress?.loadButton?.instruction
               );
             }
           } else if (storeProgress) {
@@ -82,7 +78,7 @@ export const useProgress = ({ id, storeData, fields }) => {
               localStorageStatus: statusState
             });
           }
-        } else if (storeData?.submitProgres?.enabled) {
+        } else if (storeData?.submitProgress?.enabled) {
           storeProgresSubmitStore({
             fields,
             localStorageFormData: parsedSubmitProgress,
@@ -91,12 +87,12 @@ export const useProgress = ({ id, storeData, fields }) => {
 
           if (statusState === 'active' || statusState === 'loaded') {
             setButtonState(
-              storeData?.submitProgres?.resetButton?.HTML ||
-                '<span>Reset</span>'
+              storeData?.submitProgress?.resetButton?.HTML ||
+                <span>Reset</span>
             );
           } else if (statusState === 'reseted') {
             setButtonState(
-              storeData?.submitProgres?.loadButton?.HTML || '<span>Load</span>'
+              storeData?.submitProgress?.loadButton?.HTML || <span>Load</span>
             );
           } else {
             setButtonState(null);
@@ -104,15 +100,11 @@ export const useProgress = ({ id, storeData, fields }) => {
 
           if (statusState === 'reseted') {
             setInstructionsState(
-              <span className='boomForm-field__instruction'>
-                {storeData?.submitProgres?.resetButton?.instruction}
-              </span>
+              storeData?.submitProgress?.resetButton?.instruction
             );
           } else if (statusState === 'loaded') {
             setInstructionsState(
-              <span className='boomForm-field__instruction'>
-                {storeData?.submitProgres?.loadButton?.instruction}
-              </span>
+              storeData?.submitProgress?.loadButton?.instruction
             );
           }
         } else if (storeData?.storeProgress?.enabled) {
@@ -123,7 +115,7 @@ export const useProgress = ({ id, storeData, fields }) => {
           });
         }
       } catch (e) {
-        console.error(e);
+        console.error( "Store progress error" ,e);
       }
     }
   }, [statusState]);
@@ -141,7 +133,7 @@ export const useProgress = ({ id, storeData, fields }) => {
 
   const onSubmitChange = value => {
     if (
-      storeData?.submitProgres?.enabled &&
+      storeData?.submitProgress?.enabled &&
       id &&
       isSupported.current &&
       value
@@ -152,7 +144,7 @@ export const useProgress = ({ id, storeData, fields }) => {
 
   const onStatusChange = status => {
     if (
-      storeData?.submitProgres?.enabled &&
+      storeData?.submitProgress?.enabled &&
       id &&
       isSupported.current &&
       status

@@ -1,19 +1,14 @@
 export const storeProgresSubmitStore = ({
   fields,
   localStorageFormData,
-  localStorageStatus,
-  activeStorages
+  localStorageStatus
 }) => {
-  // console.log('🚀 ~ fields:', fields);
   const handleChange = ({ id, value }) =>
     window._handleChange && window._handleChange({ id, value });
-  console.log('555555555');
   fields.forEach(field => {
     const formData = localStorageFormData[field.id];
-    // console.log('&&&****(((())))', field);
 
     if (field && formData && localStorageStatus !== 'reseted') {
-      console.log('field', field);
       switch (field.type) {
         case 'name':
           ['first', 'middle', 'last'].forEach(part => {
@@ -35,7 +30,6 @@ export const storeProgresSubmitStore = ({
           break;
 
         case 'time':
-          console.log('***************', formData.format);
           handleChange({
             id: `${field.id}.format`,
             value: formData.format
@@ -51,10 +45,8 @@ export const storeProgresSubmitStore = ({
             value: formData.minute
           });
           break;
-          break;
 
         case 'price':
-          console.log('&&&&formData&&&&', formData);
           ['first', 'last'].forEach(part =>
             handleChange({
               id: `${field.id}.${part}`,
@@ -160,7 +152,7 @@ export const storeProgresSubmitStore = ({
           );
           handleChange({
             id: `${field.id}.format`,
-            value: {}
+            value: null
           });
           break;
 
