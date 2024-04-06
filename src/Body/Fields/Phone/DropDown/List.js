@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import classNames from 'classnames/bind'
 
 import countries from '../../../../Helpers/countries'
 
-const List = ({ id, values, selectedKey, handleCodeChange }) => {
+const List = ({
+  id,
+  values,
+  selectedKey,
+  handleCodeChange,
+  selectedItemCallback
+}) => {
   return Object.values(countries)
     .filter((country) => {
       const searchTerm = values[id]?.search
@@ -20,12 +26,20 @@ const List = ({ id, values, selectedKey, handleCodeChange }) => {
     })
     .map((country) => {
       const { key, dial_code, name } = country
+      const isSelected = selectedKey === key
+
+      const itemRefCallback = (node) => {
+        if (isSelected && node) {
+          selectedItemCallback(node)
+        }
+      }
 
       return (
         <div
+          ref={itemRefCallback}
           id={`country_item${id}`}
           className={classNames('country_code_item', {
-            selected: selectedKey === key
+            selected: isSelected
           })}
           onClick={() => handleCodeChange(key)}
           key={key}

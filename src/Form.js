@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useField } from 'boomform'
-import Header from './Header/Header'
-import Footer from './Footer/Footer'
-import Body from './Body'
-import StateHandler from './StateHandler'
-
-import { getHiddenIds, getUpdatableFields } from './Helpers/logic'
-import { getRendableData } from './Helpers/global'
+import { useField } from 'boomform';
+import React, { useEffect, useRef, useState } from 'react';
+import Body from './Body';
+import Footer from './Footer/Footer';
+import Header from './Header/Header';
+import { getRendableData } from './Helpers/global';
+import { getHiddenIds, getUpdatableFields } from './Helpers/logic';
+import { getShowableData } from './Helpers/pagination';
+import { useProgress } from './hooks/useProgress';
+import StateHandler from './StateHandler';
 
 const Form = ({
   global,
@@ -15,6 +16,7 @@ const Form = ({
   payment,
   pagination,
   logic,
+  formId,
   gridOptions
 }) => {
   const {
@@ -22,61 +24,96 @@ const Form = ({
     description,
     onStateChange = () => {},
     onFirstRender = () => {},
-    onDie = () => {}
-  } = global
-  const updatableFields = getUpdatableFields({ logic })
-  const { initial = 0 } = pagination
-  const formRef = useRef(null)
-  const [currentPage, setCurrentPage] = useState(initial)
-  const isPagination = Object.keys(pagination).length !== 0
-  const data = useField(updatableFields)
+    onDie = () => {},
+    storeData = {},
+    isSubmitButtonInLastPage
+  } = global;
 
+  const {
+    status,
+    localStorageButton,
+    instructionsState,
+    onStatusChange,
+    onProgressChange,
+    onSubmitChange
+  } = useProgress({ id: formId, fields, storeData });
+
+  const updatableFields = getUpdatableFields({ logic });
+  const { initial = 0 } = pagination;
+  const formRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(initial);
+  const isPagination = Object.keys(pagination).length !== 0;
+  const data = useField(updatableFields);
   const logicIds = getHiddenIds({
     logic,
     values: data?.neededValues ? data?.neededValues : {},
-    fields,
+    fields: fields,
     formRef
-  })
+  });
 
   const printableFields = getRendableData(
     fields,
     logicIds,
     pagination,
     currentPage
-  )
+  );
+
+  const { pagesLength, showableCurrentPage } = getShowableData({
+    logicIds,
+    pagination,
+    currentPage
+  });
 
   useEffect(() => {
-    setCurrentPage(initial)
-  }, [initial])
+    setCurrentPage(initial);
+  }, [initial]);
 
   useEffect(() => {
-    onFirstRender({ setCurrentPage })
+    onFirstRender({ setCurrentPage });
 
     return () => {
-      onDie({ setCurrentPage })
-    }
-  }, [])
+      onDie({ setCurrentPage });
+    };
+  }, []);
 
   return (
     <form ref={formRef} className='boomForm'>
       <Header
         name={name}
+        localStorageButton={localStorageButton}
+        instructionsState={instructionsState}
         description={description}
         isPagination={isPagination}
         pagination={pagination}
         currentPage={currentPage}
         logicIds={logicIds}
+        localStorageStatus={status}
+        onStorageButtonClick={onStatusChange}
       />
       <Body
         fields={fields}
         payment={payment}
         printableFields={printableFields}
         gridOptions={gridOptions}
+        pagination={pagination}
+        global={global}
+        button={button}
+        formRef={formRef}
+        logic={logic}
+        logicIds={logicIds}
+        isShowSubmitButton={
+          isSubmitButtonInLastPage && pagesLength === showableCurrentPage
+        }
+        setCurrentPage={setCurrentPage}
+        formId={formId}
+        onStorageButtonClick={onStatusChange}
+        onLocalStorageSubmitFormDataChange={onSubmitChange}
       />
       <Footer
         formRef={formRef}
         global={global}
         button={button}
+        formId={formId}
         fields={fields}
         isPagination={isPagination}
         pagination={pagination}
@@ -85,16 +122,19 @@ const Form = ({
         payment={payment}
         logic={logic}
         logicIds={logicIds}
+        onStorageButtonClick={onStatusChange}
+        onLocalStorageSubmitFormDataChange={onSubmitChange}
       />
 
       <StateHandler
         onStateChange={onStateChange}
+        onLocalStorageFormDataChange={onProgressChange}
         formRef={formRef}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
       />
     </form>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;

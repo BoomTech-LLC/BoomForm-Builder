@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react'
 import { Context } from 'boomform'
-import Print from './../../Print/Print'
-import { getTotalPrice, formatPrice } from './../../Helpers/payment'
+import React, { useContext, useEffect } from 'react'
 import { formValueCheker } from '../../Helpers/logic'
+import { formatPrice, getTotalPrice } from './../../Helpers/payment'
+import Print from './../../Print/Print'
 
 const SubmitButton = ({
   global,
@@ -14,7 +14,10 @@ const SubmitButton = ({
   logic,
   logicIds,
   pagination,
-  setCurrentPage
+  setCurrentPage,
+  formId,
+  onStorageButtonClick,
+  onLocalStorageSubmitFormDataChange
 }) => {
   const { state, actions } = useContext(Context)
   const { values } = state
@@ -48,6 +51,10 @@ const SubmitButton = ({
       formRef.current.reportValidity()
       if (onSubmitFailed)
         onSubmitFailed(state, formRef.current.querySelectorAll(':invalid'))
+    }
+    if (global.storeData?.submitProgress?.enabled && formId) {
+      onLocalStorageSubmitFormDataChange(state.values)
+      onStorageButtonClick('active')
     }
   }
 

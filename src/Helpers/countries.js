@@ -61,10 +61,10 @@ const countries = {
   CR: { name: 'Costa Rica', key: 'CR', dial_code: '+506' },
   HR: { name: 'Croatia', key: 'HR', dial_code: '+385' },
   CU: { name: 'Cuba', key: 'CU', dial_code: '+53' },
-  CW: { name: 'CuraÃƒÆ’Ã‚Â§ao', key: 'CW', dial_code: '+599' },
+  CW: { name: 'Curaçao', key: 'CW', dial_code: '+599' },
   CY: { name: 'Cyprus', key: 'CY', dial_code: '+357' },
   CZ: { name: 'Czech Republic', key: 'CZ', dial_code: '+420' },
-  CI: { name: "CÃƒÆ’Ã‚Â´te d'Ivoire", key: 'CI', dial_code: '+225' },
+  CI: { name: "Côte d'Ivoire", key: 'CI', dial_code: '+225' },
   DK: { name: 'Denmark', key: 'DK', dial_code: '+45' },
   DJ: { name: 'Djibouti', key: 'DJ', dial_code: '+253' },
   DM: { name: 'Dominica', key: 'DM', dial_code: '+1767' },
@@ -206,9 +206,9 @@ const countries = {
   RO: { name: 'Romania', key: 'RO', dial_code: '+40' },
   RU: { name: 'Russian Federation', key: 'RU', dial_code: '+7' },
   RW: { name: 'Rwanda', key: 'RW', dial_code: '+250' },
-  RE: { name: 'RÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©union', key: 'RE', dial_code: '+262 ' },
+  RE: { name: 'Réunion Country', key: 'RE', dial_code: '+262' },
   BL: {
-    name: 'Saint BarthÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©lemy',
+    name: 'Saint Barthélemy',
     key: 'BL',
     dial_code: '+590 '
   },
@@ -294,7 +294,7 @@ const countries = {
   YE: { name: 'Yemen', key: 'YE', dial_code: '+967' },
   ZM: { name: 'Zambia', key: 'ZM', dial_code: '+260' },
   ZW: { name: 'Zimbabwe', key: 'ZW', dial_code: '+263' },
-  AX: { name: 'ÃƒÆ’Ã¢â‚¬Â¦land Islands', key: 'AX', dial_code: '+358 ' }
+  AX: { name: 'Åland Islands', key: 'AX', dial_code: '+358 ' }
 }
 
 export default countries

@@ -6,15 +6,14 @@ const Phone = ({
   label,
   classnameprefix,
   id,
-  defaultCountryCode,
+  defaultCountryCode ='AF',
   payment,
   ...props
 }) => {
-  let _defaultCountryCode = 'AF'
-  if (defaultCountryCode) _defaultCountryCode = defaultCountryCode
+
   return (
     <>
-      <DropDown id={id} defaultCountryCode={_defaultCountryCode} />
+      <DropDown id={id} defaultCountryCode={defaultCountryCode} />
       <Input id={`${id}.phone`} type='phone' {...props} />
     </>
   )
