@@ -58,7 +58,6 @@ const Fields = ({
   onStorageButtonClick,
   onLocalStorageSubmitFormDataChange
 }) => {
-  const { pages } = pagination;
 
   const {
     layout = [],

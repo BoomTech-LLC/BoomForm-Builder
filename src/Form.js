@@ -25,7 +25,7 @@ const Form = ({
     onStateChange = () => {},
     onFirstRender = () => {},
     onDie = () => {},
-    storeData = {},
+    storeProgress = {},
     isSubmitButtonInLastPage
   } = global;
 
@@ -36,7 +36,7 @@ const Form = ({
     onStatusChange,
     onProgressChange,
     onSubmitChange
-  } = useProgress({ id: formId, fields, storeData });
+  } = useProgress({ id: formId, fields, storeProgress });
 
   const updatableFields = getUpdatableFields({ logic });
   const { initial = 0 } = pagination;
