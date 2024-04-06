@@ -26,17 +26,16 @@ export const useProgress = ({ id, storeProgress, fields }) => {
 
     if (isSupported.current) {
       try {
-        const storeProgress = localStorage.getItem(`form-${id}`);
+        const storedProgress = localStorage.getItem(`form-${id}`);
         const submitProgress = localStorage.getItem(`submit-${id}`);
         const status = localStorage.getItem(`status-${id}`);
 
-        const parsedStoreProgress = JSON.parse(storeProgress);
+        const parsedStoreProgress = JSON.parse(storedProgress);
         const parsedSubmitProgress = JSON.parse(submitProgress);
 
         setStatusState(status);
         progressData.current = parsedStoreProgress;
         submitData.current = parsedSubmitProgress;
-
         if (
           storeProgress?.storeProgress?.enabled &&
           storeProgress?.submitProgress?.enabled
@@ -50,13 +49,15 @@ export const useProgress = ({ id, storeProgress, fields }) => {
 
             if (statusState === 'active' || statusState === 'loaded') {
               setButtonState(
-                storeProgress?.submitProgress?.resetButton?.HTML ||
+                storeProgress?.submitProgress?.resetButton?.HTML || (
                   <span>Reset</span>
+                )
               );
             } else if (statusState === 'reseted') {
               setButtonState(
-                storeProgress?.submitProgress?.loadButton?.HTML ||
+                storeProgress?.submitProgress?.loadButton?.HTML || (
                   <span>Load</span>
+                )
               );
             } else {
               setButtonState(null);
@@ -87,12 +88,15 @@ export const useProgress = ({ id, storeProgress, fields }) => {
 
           if (statusState === 'active' || statusState === 'loaded') {
             setButtonState(
-              storeProgress?.submitProgress?.resetButton?.HTML ||
+              storeProgress?.submitProgress?.resetButton?.HTML || (
                 <span>Reset</span>
+              )
             );
           } else if (statusState === 'reseted') {
             setButtonState(
-              storeProgress?.submitProgress?.loadButton?.HTML || <span>Load</span>
+              storeProgress?.submitProgress?.loadButton?.HTML || (
+                <span>Load</span>
+              )
             );
           } else {
             setButtonState(null);
@@ -115,7 +119,7 @@ export const useProgress = ({ id, storeProgress, fields }) => {
           });
         }
       } catch (e) {
-        console.error( "Store progress error" ,e);
+        console.error('Store progress error', e);
       }
     }
   }, [statusState]);
