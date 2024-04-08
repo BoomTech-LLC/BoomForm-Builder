@@ -26,7 +26,7 @@ const Footer = ({
   return !isPagination || mode === 'section' ? (
     <>
       {captcha !== undefined && <Captcha siteKey={captcha} />}
-      {
+      {!global.isSubmitButtonInLastPage && (
         <SubmitButton
           global={global}
           button={button}
@@ -40,9 +40,11 @@ const Footer = ({
           formId={formId}
           onStorageButtonClick={onStorageButtonClick}
           localStorageFormData={localStorageFormData}
-          onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
+          onLocalStorageSubmitFormDataChange={
+            onLocalStorageSubmitFormDataChange
+          }
         />
-      }
+      )}
     </>
   ) : (
     <Pagination

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Body from './Body';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
-import { getRendableData } from './Helpers/global';
+import { checkSubmitButtonPageMode, getRendableData } from './Helpers/global';
 import { getHiddenIds, getUpdatableFields } from './Helpers/logic';
 import { getShowableData } from './Helpers/pagination';
 import { useProgress } from './hooks/useProgress';
@@ -64,6 +64,13 @@ const Form = ({
     currentPage
   });
 
+  const isSubmitInLastPage = checkSubmitButtonPageMode({
+    isSubmitButtonInLastPage,
+    pagesLength,
+    pagination,
+    showableCurrentPage
+  });
+
   useEffect(() => {
     setCurrentPage(initial);
   }, [initial]);
@@ -101,9 +108,7 @@ const Form = ({
         formRef={formRef}
         logic={logic}
         logicIds={logicIds}
-        isShowSubmitButton={
-          isSubmitButtonInLastPage && pagesLength === showableCurrentPage
-        }
+        isShowSubmitButton={isSubmitInLastPage}
         setCurrentPage={setCurrentPage}
         formId={formId}
         onStorageButtonClick={onStatusChange}
