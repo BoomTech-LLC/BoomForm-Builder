@@ -64,7 +64,7 @@ const Form = ({
     currentPage
   });
 
-  const isButtonLast = checkSubmitButtonPageMode({
+  const isSubmitInLastPage = checkSubmitButtonPageMode({
     isSubmitButtonInLastPage,
     pagesLength,
     pagination,
@@ -108,7 +108,7 @@ const Form = ({
         formRef={formRef}
         logic={logic}
         logicIds={logicIds}
-        isShowSubmitButton={isButtonLast}
+        isShowSubmitButton={isSubmitInLastPage}
         setCurrentPage={setCurrentPage}
         formId={formId}
         onStorageButtonClick={onStatusChange}
