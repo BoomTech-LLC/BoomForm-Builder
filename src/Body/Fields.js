@@ -58,7 +58,6 @@ const Fields = ({
   onStorageButtonClick,
   onLocalStorageSubmitFormDataChange
 }) => {
-
   const {
     layout = [],
     isBounded = false,
@@ -74,6 +73,15 @@ const Fields = ({
   return (
     <>
       {printableFields.map((pageFields, index) => {
+        let showButton = isShowSubmitButton;
+        if (
+          isShowSubmitButton &&
+          pagination &&
+          pagination?.mode === 'section'
+        ) {
+          showButton = printableFields.length - 1 === index;
+        }
+
         const layout_ = []; // layout for grid layout
         if (gridOptions && gridOptions.layout) {
           //this loop needed for passing only rendering fields layouts
@@ -100,7 +108,7 @@ const Fields = ({
                 >
                   {generatePageItems(fields, pageFields, payment)}
                 </GridLayout>
-                {isShowSubmitButton && (
+                {showButton && (
                   <SubmitButton
                     global={global}
                     button={button}
@@ -122,7 +130,7 @@ const Fields = ({
             ) : (
               <>
                 {generatePageItems(fields, pageFields, payment)}
-                {isShowSubmitButton && (
+                {showButton && (
                   <SubmitButton
                     global={global}
                     button={button}

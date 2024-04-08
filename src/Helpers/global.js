@@ -84,6 +84,21 @@ export const stripHtml = label => {
   return tmp.textContent || tmp.innerText || '';
 };
 
+export const checkSubmitButtonPageMode = ({
+  isSubmitButtonInLastPage,
+  pagination,
+  pagesLength,
+  showableCurrentPage
+}) => {
+  if (isSubmitButtonInLastPage) {
+    if (pagination?.mode === 'page') {
+      return pagesLength === showableCurrentPage;
+    } else {
+      return isSubmitButtonInLastPage;
+    }
+  }
+};
+
 export const iphoneCheck = () => {
   if (typeof window === `undefined` || typeof navigator === `undefined`)
     return false;
