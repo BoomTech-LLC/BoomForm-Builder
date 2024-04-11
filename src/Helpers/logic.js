@@ -112,63 +112,70 @@ const conditionalLogic = ({ fieldValue, value, rule, field, item, type }) => {
       }
     }
     case 'quantityEqual': {
-      const quantities = window.__current_form_state?.values['quantity']
-
       if (type === 'multipleChoice') {
         if (item) {
-          const check = fieldValue?.some((element) => {
-            return element.label === item
-              ? Number(quantities[1][element.key]) === value
-              : false
-          })
+          return String(fieldValue) === String(value)
         } else {
-          const keys = fieldValue?.map((element) => element.key)
-          const checkedValues = keys?.map((key) => quantities[1][key])
-
-          return checkedValues?.some((element) => Number(element) === value)
+          if (fieldValue?.value) {
+            return Object.keys(fieldValue.value).reduce((acc, curr) => {
+              if (
+                fieldValue.value[curr] &&
+                fieldValue?.quantity &&
+                String(fieldValue?.quantity[curr]) === String(value)
+              )
+                return true
+              return acc
+            }, false)
+          }
         }
-      } else if (type === 'singleChoice' || type === 'select') {
-        return Number(quantities && quantities['1']) === value
+      } else {
+        return fieldValue == value
       }
     }
     case 'quantityLess': {
-      const quantities = window.__current_form_state?.values['quantity']
-
       if (type === 'multipleChoice') {
         if (item) {
-          const check = fieldValue?.some((element) => {
-            return element.label === item
-              ? Number(quantities[1][element.key]) < value
-              : false
-          })
+          return fieldValue < value
         } else {
-          const keys = fieldValue?.map((element) => element.key)
-          const checkedValues = keys?.map((key) => quantities[1][key])
-
-          return checkedValues?.some((element) => Number(element) < value)
+          if (fieldValue?.value) {
+            return Object.keys(fieldValue.value).reduce((acc, curr) => {
+              if (
+                fieldValue.value[curr] &&
+                fieldValue?.quantity &&
+                fieldValue?.quantity[curr] < value
+              )
+                return true
+              return acc
+            }, false)
+          }
         }
-      } else if (type === 'singleChoice' || type === 'select') {
-        return Number(quantities && quantities['1']) < value
+      } else {
+        if (fieldValue) {
+          return fieldValue < value
+        } else {
+          return false
+        }
       }
     }
     case 'quantityMore': {
-      const quantities = window.__current_form_state?.values['quantity']
-
       if (type === 'multipleChoice') {
         if (item) {
-          const check = fieldValue?.some((element) => {
-            return element.label === item
-              ? Number(quantities[1][element.key]) > value
-              : false
-          })
+          return fieldValue > value
         } else {
-          const keys = fieldValue?.map((element) => element.key)
-          const checkedValues = keys?.map((key) => quantities[1][key])
-
-          return checkedValues?.some((element) => Number(element) > value)
+          if (fieldValue?.value) {
+            return Object.keys(fieldValue.value).reduce((acc, curr) => {
+              if (
+                fieldValue.value[curr] &&
+                fieldValue?.quantity &&
+                fieldValue?.quantity[curr] > value
+              )
+                return true
+              return acc
+            }, false)
+          }
         }
-      } else if (type === 'singleChoice' || type === 'select') {
-        return Number(quantities && quantities['1']) > value
+      } else {
+        return fieldValue > value
       }
     }
     default:
@@ -187,16 +194,71 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
 
-      const fieldValue = key.toString().includes('.')
+      let fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
       const [field] = fields.filter((field) => field.id === key)
       if (field === undefined) return null
 
       const { type } = field
+      const isQuantity = rule.includes('quantity')
+      if (isQuantity) {
+        if (item) {
+          if (type === 'multipleChoice') {
+            const checkedOptionKeys =
+              values['1'] && typeof values['1'] === 'object'
+                ? Object.keys(values['1']).filter(
+                    (key) => values['1'][key] === true
+                  )
+                : []
+            const foundOption = checkedOptionKeys.includes(String(item))
+            if (foundOption) {
+              fieldValue =
+                values?.[key] &&
+                values?.quantity &&
+                values?.quantity[key] &&
+                values?.quantity[key][item]
+            } else {
+              return false
+            }
+          }
+
+          if (type === 'singleChoice') {
+            const singleOption = fields[0].options.filter((option) => {
+              return (
+                String(option.key) === String(item) &&
+                values[key] === option.value
+              )
+            })
+            if (singleOption.length) {
+              fieldValue =
+                !!values && !!values?.quantity && values?.quantity?.[key]
+            } else {
+              fieldValue = false
+            }
+          }
+          if (type === 'select') {
+            fieldValue =
+              String(values[key]?.key) === String(item) &&
+              values?.quantity &&
+              values?.quantity[key]
+          }
+        } else {
+          if (type === 'multipleChoice') {
+            fieldValue = {
+              value: values[key],
+              quantity: values?.quantity && values?.quantity[key]
+            }
+          } else {
+            fieldValue = values?.quantity && values?.quantity[key]
+          }
+        }
+      }
 
       const isMatch = conditionalLogic({
-        fieldValue: getFieldValue(type, fieldValue, field, values, item),
+        fieldValue: isQuantity
+          ? fieldValue
+          : getFieldValue(type, fieldValue, field, values, item),
         value,
         rule,
         field,
@@ -403,21 +465,19 @@ export const getUpdatableFields = ({ logic }) => {
     for (let i = 0; i < logic.length; i++) {
       for (let j = 0; j < logic[i].conditions.length; j++) {
         const condition = logic[i].conditions[j]
-        if (
-          condition.rule === 'quantityEqual' ||
-          condition.rule === 'quantityLess' ||
-          condition.rule === 'quantityMore'
-        ) {
-          updatableFields.push(condition.id)
-        } else if (condition.item) {
-          updatableFields.push(`${condition.id}.${condition.item}`)
+        if (condition.rule.includes('quantity')) {
+          updatableFields.push(`quantity.${logic[i].conditions[j].id}`)
+          updatableFields.push(`${logic[i].conditions[j].id}`)
         } else {
-          updatableFields.push(condition.id)
+          logic[i].conditions[j].item
+            ? updatableFields.push(
+                `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
+              )
+            : updatableFields.push(logic[i].conditions[j].id)
         }
       }
     }
   }
-
   return updatableFields
 }
 export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
