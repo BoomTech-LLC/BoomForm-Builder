@@ -63,7 +63,7 @@ const Form = ({
     pagination,
     currentPage
   });
-
+  
   const isSubmitInLastPage = checkSubmitButtonPageMode({
     isSubmitButtonInLastPage,
     pagesLength,
@@ -137,6 +137,8 @@ const Form = ({
         formRef={formRef}
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
+        logicIds={logicIds}
+        printableFields={printableFields}
       />
     </form>
   );
