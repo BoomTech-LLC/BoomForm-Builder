@@ -203,55 +203,64 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
       const { type } = field
       const isQuantity = rule.includes('quantity')
       if (isQuantity) {
-        if (item) {
-          if (type === 'multipleChoice') {
-            const checkedOptionKeys =
-              values['1'] && typeof values['1'] === 'object'
-                ? Object.keys(values['1']).filter(
-                    (key) => values['1'][key] === true
-                  )
-                : []
-            const foundOption = checkedOptionKeys.includes(String(item))
-            if (foundOption) {
-              fieldValue =
-                values?.[key] &&
-                values?.quantity &&
-                values?.quantity[key] &&
-                values?.quantity[key][item]
+        switch (type) {
+          case 'multipleChoice':
+            if (item) {
+              const checkedOptionKeys =
+                values['1'] && typeof values['1'] === 'object'
+                  ? Object.keys(values['1']).filter(
+                      (key) => values['1'][key] === true
+                    )
+                  : []
+              const foundOption = checkedOptionKeys.includes(String(item))
+              if (foundOption) {
+                fieldValue =
+                  values?.[key] &&
+                  values?.quantity &&
+                  values?.quantity[key] &&
+                  values?.quantity[key][item]
+              } else {
+                return false
+              }
             } else {
-              return false
+              fieldValue = {
+                value: values[key],
+                quantity: values?.quantity && values?.quantity[key]
+              }
             }
-          }
+            break
 
-          if (type === 'singleChoice') {
-            const singleOption = fields[0].options.filter((option) => {
-              return (
-                String(option.key) === String(item) &&
-                values[key] === option.value
+          case 'singleChoice':
+            if (item) {
+              const singleOption = fields[0].options.filter(
+                (option) =>
+                  String(option.key) === String(item) &&
+                  values[key] === option.value
               )
-            })
-            if (singleOption.length) {
-              fieldValue =
-                !!values && !!values?.quantity && values?.quantity?.[key]
+              if (singleOption.length) {
+                fieldValue =
+                  !!values && !!values?.quantity && values?.quantity?.[key]
+              } else {
+                fieldValue = false
+              }
             } else {
-              fieldValue = false
+              fieldValue = values?.quantity && values?.quantity[key]
             }
-          }
-          if (type === 'select') {
-            fieldValue =
-              String(values[key]?.key) === String(item) &&
-              values?.quantity &&
-              values?.quantity[key]
-          }
-        } else {
-          if (type === 'multipleChoice') {
-            fieldValue = {
-              value: values[key],
-              quantity: values?.quantity && values?.quantity[key]
+            break
+
+          case 'select':
+            if (item) {
+              fieldValue =
+                String(values[key]?.key) === String(item) &&
+                values?.quantity &&
+                values?.quantity[key]
+            } else {
+              fieldValue = values?.quantity && values?.quantity[key]
             }
-          } else {
-            fieldValue = values?.quantity && values?.quantity[key]
-          }
+            break
+
+          default:
+            break
         }
       }
 
