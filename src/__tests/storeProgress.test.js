@@ -12,36 +12,36 @@ describe('storeProgresSubmitStore', () => {
     fields = [
       {
         id: 'nameField',
-        type: 'name',
+        type: 'name'
       },
       {
         id: 'addressField',
-        type: 'address',
+        type: 'address'
       },
       {
         id: 'timeField',
-        type: 'time',
-      },
+        type: 'time'
+      }
     ];
 
     localStorageFormData = {
       nameField: {
         first: 'John',
         middle: 'Doe',
-        last: 'Smith',
+        last: 'Smith'
       },
       addressField: {
         city: 'New York',
         country: 'USA',
         street: '123 Main St',
         street2: 'Apt 101',
-        zip: '10001',
+        zip: '10001'
       },
       timeField: {
         format: '12-hour',
         hour: '10',
-        minute: '30',
-      },
+        minute: '30'
+      }
     };
 
     localStorageStatus = 'some_status';
@@ -57,55 +57,55 @@ describe('storeProgresSubmitStore', () => {
     storeProgresSubmitStore({
       fields,
       localStorageFormData,
-      localStorageStatus,
+      localStorageStatus
     });
 
-    expect(_handleChangeMock).toHaveBeenCalledTimes(11); 
+    expect(_handleChangeMock).toHaveBeenCalledTimes(11);
 
     // Check specific calls with expected arguments
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.first',
-      value: 'John',
+      value: 'John'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.middle',
-      value: 'Doe',
+      value: 'Doe'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.last',
-      value: 'Smith',
+      value: 'Smith'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.city',
-      value: 'New York',
+      value: 'New York'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.country',
-      value: 'USA',
+      value: 'USA'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.street',
-      value: '123 Main St',
+      value: '123 Main St'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.street2',
-      value: 'Apt 101',
+      value: 'Apt 101'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.zip',
-      value: '10001',
+      value: '10001'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.format',
-      value: '12-hour',
+      value: '12-hour'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.hour',
-      value: '10',
+      value: '10'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.minute',
-      value: '30',
+      value: '30'
     });
   });
 
@@ -115,27 +115,27 @@ describe('storeProgresSubmitStore', () => {
     storeProgresSubmitStore({
       fields,
       localStorageFormData,
-      localStorageStatus,
+      localStorageStatus
     });
 
-    expect(_handleChangeMock).toHaveBeenCalledTimes(11); 
+    expect(_handleChangeMock).toHaveBeenCalledTimes(11);
 
     // Check specific calls with expected arguments
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.first',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.middle',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.last',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.city',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.country',
@@ -145,32 +145,32 @@ describe('storeProgresSubmitStore', () => {
         flag: 'https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg',
         key: 229,
         name: 'United States',
-        value: 'United States',
-      },
+        value: 'United States'
+      }
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.street',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.street2',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.zip',
-      value: '',
+      value: ''
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.format',
-      value: null,
+      value: null
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.hour',
-      value: null,
+      value: null
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.minute',
-      value: null,
+      value: null
     });
   });
 });
