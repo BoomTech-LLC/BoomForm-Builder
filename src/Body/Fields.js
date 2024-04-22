@@ -1,16 +1,23 @@
-import React, { memo, Fragment } from 'react';
-import classNames from 'classnames/bind';
-import GridLayout from 'react-grid-layout';
-import Field from './Field';
-import SubmitButton from '../Footer/SubmitButton/SubmitButton';
+import React, { memo, Fragment } from 'react'
+import GridLayout from 'react-grid-layout'
+import classNames from 'classnames/bind'
+import useGrid from '../hooks/useGrid'
+import Field from './Field'
+import SubmitButton from '../Footer/SubmitButton/SubmitButton'
 
-import 'react-grid-layout/css/styles.css';
+import 'react-grid-layout/css/styles.css'
 
-const generatePageItems = (fields, pageFields, payment) => {
+const generatePageItems = (
+  fields,
+  pageFields,
+  payment,
+  gridEnabled,
+  onHeightChange
+) => {
   return fields
     .filter(field => pageFields.includes(field.id))
     .map(field => {
-      const { prefix, postfix, classnameprefix, id } = field;
+      const { prefix, postfix, classnameprefix, id } = field
       return (
         <div
           id={`field-${id}`}
@@ -28,7 +35,13 @@ const generatePageItems = (fields, pageFields, payment) => {
               }}
             />
           )}
-          <Field key={field.id} payment={payment} {...field} />
+          <Field
+            key={field.id}
+            payment={payment}
+            listenHeightChange={gridEnabled}
+            onHeightChange={onHeightChange}
+            {...field}
+          />
           {postfix && (
             <span
               dangerouslySetInnerHTML={{
@@ -37,9 +50,9 @@ const generatePageItems = (fields, pageFields, payment) => {
             />
           )}
         </div>
-      );
-    });
-};
+      )
+    })
+}
 
 const Fields = ({
   fields,
@@ -58,55 +71,39 @@ const Fields = ({
   onStorageButtonClick,
   onLocalStorageSubmitFormDataChange
 }) => {
-  const {
-    layout = [],
-    isBounded = false,
-    isDraggable = false,
-    isResizable = false,
-    margin = [0, 0],
-    containerPadding = [0, 0],
-    rowHeight = 1,
-    width = 800,
-    cols = 4
-  } = gridOptions;
+  const { gridEnabled, gridProperties, layout, onHeightChange } = useGrid({
+    gridOptions,
+    printableFields
+  })
 
   return (
     <>
       {printableFields.map((pageFields, index) => {
-        let showButton = isShowSubmitButton;
+        let showButton = isShowSubmitButton
         if (
           isShowSubmitButton &&
           pagination &&
           pagination?.mode === 'section'
         ) {
-          showButton = printableFields.length - 1 === index;
+          showButton = printableFields.length - 1 === index
         }
-
-        const layout_ = []; // layout for grid layout
-        if (gridOptions && gridOptions.layout) {
-          //this loop needed for passing only rendering fields layouts
-          pageFields.forEach(id => {
-            layout_.push({ i: `${id}`, ...layout[id] });
-          });
-        }
+        const layout_ = layout[index]
         return (
           <div key={'page' + index} className='boomForm-fields'>
-            {gridOptions && gridOptions.layout ? (
+            {gridEnabled ? (
               <>
                 <GridLayout
                   className='grid-layout'
-                  isDroppable={false}
-                  cols={cols}
-                  margin={margin}
-                  containerPadding={containerPadding}
-                  rowHeight={rowHeight}
-                  width={width}
-                  isBounded={isBounded}
-                  isDraggable={isDraggable}
-                  isResizable={isResizable}
+                  {...gridProperties}
                   layout={layout_}
                 >
-                  {generatePageItems(fields, pageFields, payment)}
+                  {generatePageItems(
+                    fields,
+                    pageFields,
+                    payment,
+                    gridEnabled,
+                    onHeightChange
+                  )}
                 </GridLayout>
                 {showButton && (
                   <SubmitButton
@@ -151,10 +148,10 @@ const Fields = ({
               </>
             )}
           </div>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
 
-export default memo(Fields);
+export default memo(Fields)

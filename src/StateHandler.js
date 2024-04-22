@@ -5,9 +5,11 @@ import { debounce } from './Helpers/debounce';
 const StateHandler = ({
   onStateChange,
   formRef,
+  logicIds,
   setCurrentPage,
   currentPage,
-  onLocalStorageFormDataChange
+  onLocalStorageFormDataChange,
+  printableFields,
 }) => {
   const { state, actions } = useContext(Context);
 
@@ -28,7 +30,7 @@ const StateHandler = ({
   }
 
   window._handleChange = actions.handleChange;
-  onStateChange({ state, actions, formRef, setCurrentPage, currentPage });
+  onStateChange({ state, actions, formRef, setCurrentPage, currentPage , printableFields , logicIds});
   return null;
 };
 

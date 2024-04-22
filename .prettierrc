@@ -6,13 +6,5 @@
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
   "arrowParens": "avoid",
-  "tabWidth": 2,
-  "overrides": [
-    {
-      "files": "*.js",
-      "options": {
-        "semi": true
-      }
-    }
-  ]
+  "tabWidth": 2
 }

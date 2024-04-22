@@ -86,15 +86,28 @@ const Field = ({
   instruction,
   prefix,
   postfix,
+  listenHeightChange,
+  onHeightChange,
   ...props
 }) => {
+  if (listenHeightChange) {
+    const field = document
+      .getElementById(`field-${id}`)
+      ?.getElementsByClassName('boomForm-field__content')[0]
+    if (field) {
+      new ResizeObserver(() => {
+        onHeightChange(id, field.offsetHeight)
+      }).observe(field)
+    }
+  }
+
   return (
     <div className='boomForm-field__content'>
       {label !== undefined && (
         <label
           className={classNames('boomForm-field__label', {
             [classnameprefix &&
-            classnameprefix.map((value) => `${value}__label`).join(' ')]:
+            classnameprefix.map(value => `${value}__label`).join(' ')]:
               classnameprefix && classnameprefix.length
           })}
           dangerouslySetInnerHTML={{
@@ -105,7 +118,7 @@ const Field = ({
       <div
         className={classNames(`boomForm-${type}__content`, {
           [classnameprefix &&
-          classnameprefix.map((value) => `${value}__content`).join(' ')]:
+          classnameprefix.map(value => `${value}__content`).join(' ')]:
             classnameprefix && classnameprefix.length
         })}
       >
@@ -122,7 +135,7 @@ const Field = ({
           className={classNames(`boomForm-field__instruction`, {
             [classnameprefix &&
             classnameprefix
-              .map((value) => `${value}-field__instruction`)
+              .map(value => `${value}-field__instruction`)
               .join(' ')]: classnameprefix && classnameprefix.length
           })}
         >
