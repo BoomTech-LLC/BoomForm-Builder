@@ -1,82 +1,82 @@
-import React from 'react';
-import classNames from 'classnames/bind';
+import React from 'react'
+import classNames from 'classnames/bind'
 
-import Name from './Fields/Name/Name';
-import Address from './Fields/Address/Address';
-import MultipleChoice from './Fields/MultipleChoice/MultipleChoice';
-import SingleChoice from './Fields/SingleChoice/SingleChoice';
-import Text from './Fields/Text/Text';
-import Email from './Fields/Email/Email';
-import Url from './Fields/Url/Url';
-import Phone from './Fields/Phone/Phone';
-import Password from './Fields/Password/Password';
-import Number from './Fields/Number/Number';
-import Routine from './Fields/Routine/Routine';
-import Select from './Fields/Select/Select';
-import Price from './Fields/Price/Price';
-import Time from './Fields/Time/Time';
-import StarRating from './Fields/StarRating/StarRating';
-import ScaleRating from './Fields/ScaleRating/ScaleRating';
-import Textarea from './Fields/Textarea/Textarea';
-import Map from './Fields/Map/Map';
-import File from './Fields/File/File';
-import Date from './Fields/Date/Date';
-import Just from './Fields/Just/Just';
-import Terms from './Fields/Terms/Terms';
-import Signature from './Fields/Signature/Signature';
+import Name from './Fields/Name/Name'
+import Address from './Fields/Address/Address'
+import MultipleChoice from './Fields/MultipleChoice/MultipleChoice'
+import SingleChoice from './Fields/SingleChoice/SingleChoice'
+import Text from './Fields/Text/Text'
+import Email from './Fields/Email/Email'
+import Url from './Fields/Url/Url'
+import Phone from './Fields/Phone/Phone'
+import Password from './Fields/Password/Password'
+import Number from './Fields/Number/Number'
+import Routine from './Fields/Routine/Routine'
+import Select from './Fields/Select/Select'
+import Price from './Fields/Price/Price'
+import Time from './Fields/Time/Time'
+import StarRating from './Fields/StarRating/StarRating'
+import ScaleRating from './Fields/ScaleRating/ScaleRating'
+import Textarea from './Fields/Textarea/Textarea'
+import Map from './Fields/Map/Map'
+import File from './Fields/File/File'
+import Date from './Fields/Date/Date'
+import Just from './Fields/Just/Just'
+import Terms from './Fields/Terms/Terms'
+import Signature from './Fields/Signature/Signature'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
     case 'name':
-      return <Name {...props} />;
+      return <Name {...props} />
     case 'address':
-      return <Address {...props} />;
+      return <Address {...props} />
     case 'multipleChoice':
-      return <MultipleChoice {...props} />;
+      return <MultipleChoice {...props} />
     case 'singleChoice':
-      return <SingleChoice {...props} />;
+      return <SingleChoice {...props} />
     case 'text':
-      return <Text {...props} />;
+      return <Text {...props} />
     case 'textarea':
-      return <Textarea {...props} />;
+      return <Textarea {...props} />
     case 'email':
-      return <Email {...props} />;
+      return <Email {...props} />
     case 'url':
-      return <Url {...props} />;
+      return <Url {...props} />
     case 'phone':
-      return <Phone {...props} />;
+      return <Phone {...props} />
     case 'password':
-      return <Password {...props} />;
+      return <Password {...props} />
     case 'number':
-      return <Number {...props} />;
+      return <Number {...props} />
     case 'custom':
-      return <Routine {...props} />;
+      return <Routine {...props} />
     case 'select':
-      return <Select {...props} />;
+      return <Select {...props} />
     case 'price':
-      return <Price {...props} />;
+      return <Price {...props} />
     case 'time':
-      return <Time {...props} />;
+      return <Time {...props} />
     case 'starRating':
-      return <StarRating {...props} />;
+      return <StarRating {...props} />
     case 'scaleRating':
-      return <ScaleRating {...props} />;
+      return <ScaleRating {...props} />
     case 'map':
-      return <Map {...props} />;
+      return <Map {...props} />
     case 'file':
-      return <File {...props} />;
+      return <File {...props} />
     case 'date':
-      return <Date {...props} />;
+      return <Date {...props} />
     case 'terms':
-      return <Terms {...props} />;
+      return <Terms {...props} />
     case 'just':
-      return <Just {...props} />;
+      return <Just {...props} />
     case 'signature':
-      return <Signature {...props} />;
+      return <Signature {...props} />
     default:
-      return null;
+      return null
   }
-};
+}
 
 const Field = ({
   id,
@@ -93,11 +93,11 @@ const Field = ({
   if (listenHeightChange) {
     const field = document
       .getElementById(`field-${id}`)
-      ?.getElementsByClassName('boomForm-field__content')[0];
+      ?.getElementsByClassName('boomForm-field__content')[0]
     if (field) {
       new ResizeObserver(() => {
-        onHeightChange(id, field.offsetHeight);
-      }).observe(field);
+        onHeightChange(id, field.offsetHeight)
+      }).observe(field)
     }
   }
 
@@ -143,7 +143,7 @@ const Field = ({
         </div>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default Field;
+export default Field

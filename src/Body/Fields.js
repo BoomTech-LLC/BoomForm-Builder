@@ -1,11 +1,11 @@
-import React, { memo, Fragment } from 'react';
-import GridLayout from 'react-grid-layout';
-import classNames from 'classnames/bind';
-import useGrid from '../hooks/useGrid';
-import Field from './Field';
-import SubmitButton from '../Footer/SubmitButton/SubmitButton';
+import React, { memo, Fragment } from 'react'
+import GridLayout from 'react-grid-layout'
+import classNames from 'classnames/bind'
+import useGrid from '../hooks/useGrid'
+import Field from './Field'
+import SubmitButton from '../Footer/SubmitButton/SubmitButton'
 
-import 'react-grid-layout/css/styles.css';
+import 'react-grid-layout/css/styles.css'
 
 const generatePageItems = (
   fields,
@@ -17,7 +17,7 @@ const generatePageItems = (
   return fields
     .filter(field => pageFields.includes(field.id))
     .map(field => {
-      const { prefix, postfix, classnameprefix, id } = field;
+      const { prefix, postfix, classnameprefix, id } = field
       return (
         <div
           id={`field-${id}`}
@@ -50,9 +50,9 @@ const generatePageItems = (
             />
           )}
         </div>
-      );
-    });
-};
+      )
+    })
+}
 
 const Fields = ({
   fields,
@@ -74,20 +74,20 @@ const Fields = ({
   const { gridEnabled, gridProperties, layout, onHeightChange } = useGrid({
     gridOptions,
     printableFields
-  });
+  })
 
   return (
     <>
       {printableFields.map((pageFields, index) => {
-        let showButton = isShowSubmitButton;
+        let showButton = isShowSubmitButton
         if (
           isShowSubmitButton &&
           pagination &&
           pagination?.mode === 'section'
         ) {
-          showButton = printableFields.length - 1 === index;
+          showButton = printableFields.length - 1 === index
         }
-        const layout_ = layout[index];
+        const layout_ = layout[index]
         return (
           <div key={'page' + index} className='boomForm-fields'>
             {gridEnabled ? (
@@ -148,10 +148,10 @@ const Fields = ({
               </>
             )}
           </div>
-        );
+        )
       })}
     </>
-  );
-};
+  )
+}
 
-export default memo(Fields);
+export default memo(Fields)

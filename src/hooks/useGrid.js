@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 const useGrid = ({ gridOptions, printableFields }) => {
   const gridProperties = useRef({
@@ -12,19 +12,19 @@ const useGrid = ({ gridOptions, printableFields }) => {
     width: 800,
     cols: 4,
     ...gridOptions
-  });
+  })
 
-  const [gridEnabled, setGridEnabled] = useState(false);
+  const [gridEnabled, setGridEnabled] = useState(false)
 
   useEffect(() => {
     if (gridOptions && gridOptions.layout) {
-      setGridEnabled(true);
+      setGridEnabled(true)
     }
-  }, [gridOptions]);
+  }, [gridOptions])
 
   const onHeightChange = (id, newHeight) => {
-    if (!newHeight || !id) return;
-    const height = newHeight + 16;
+    if (!newHeight || !id) return
+    const height = newHeight + 16
 
     if (
       gridOptions.layout &&
@@ -40,33 +40,33 @@ const useGrid = ({ gridOptions, printableFields }) => {
           minH: height,
           maxH: height
         }
-      };
+      }
       gridProperties.current = {
         ...gridProperties.current,
         layout: updatedLayout
-      };
+      }
     }
-  };
+  }
 
   const layout = useMemo(() => {
-    const data = {};
+    const data = {}
     if (printableFields) {
       printableFields.forEach((pageFields, index) => {
         data[index] = pageFields.map(id => ({
           i: `${id}`,
           ...gridProperties.current.layout[id]
-        }));
-      });
+        }))
+      })
     }
-    return data;
-  }, [printableFields, gridProperties.current]);
+    return data
+  }, [printableFields, gridProperties.current])
 
   return {
     gridEnabled,
     gridProperties: gridProperties.current,
     layout,
     onHeightChange
-  };
-};
+  }
+}
 
-export default useGrid;
+export default useGrid
