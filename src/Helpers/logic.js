@@ -1,6 +1,6 @@
 import { getNestedValue } from '../Helpers/global'
 
-const conditionalLogic = ({ fieldValue, value, rule, field }) => {
+export const conditionalLogic = ({ fieldValue, value, rule, field }) => {
   switch (rule) {
     case 'is': {
       if (fieldValue == value) return true
@@ -264,6 +264,7 @@ export const actionHandler = (
 ) => {
   if (action === 'show') hiddenFields.fields.push(id)
   if (action === 'show_page') hiddenFields.pages.push(id)
+
   if (isMatch) {
     switch (action) {
       case 'show':
@@ -275,6 +276,7 @@ export const actionHandler = (
         } else {
           const index = hiddenFields.fields.indexOf(id)
           hiddenFields.fields.splice(index, 1)
+          return hiddenFields
         }
         break
       case 'hide_page':
@@ -284,6 +286,7 @@ export const actionHandler = (
         hiddenFields.pages = hiddenFields.pages.filter(
           (_hiddenId) => _hiddenId !== id
         )
+        return hiddenFields
         break
       case 'callback':
         if (handlers) {
