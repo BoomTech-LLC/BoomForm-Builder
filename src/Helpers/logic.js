@@ -1,6 +1,13 @@
 import { getNestedValue } from '../Helpers/global'
 
-const conditionalLogic = ({ fieldValue, value, rule, field, item, type }) => {
+export const conditionalLogic = ({
+  fieldValue,
+  value,
+  rule,
+  field,
+  item,
+  type
+}) => {
   switch (rule) {
     case 'is': {
       if (fieldValue == value) return true
@@ -54,7 +61,7 @@ const conditionalLogic = ({ fieldValue, value, rule, field, item, type }) => {
     case 'doNotChecked': {
       if (!field || !field.options) return false
       for (let i in fieldValue) {
-        const [option] = field.options.filter((option) => option.key == i)
+        const [option] = field.options.filter(option => option.key == i)
         if (option && !fieldValue[i] && option.value === value) return true
       }
       return false
@@ -188,7 +195,7 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
     fields: [],
     pages: []
   }
-  logic.map((option) => {
+  logic.map(option => {
     const { action, conditions, operator = 'and', id, handlers } = option
 
     for (let i = 0; i < conditions.length; i++) {
@@ -197,7 +204,7 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
       let fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
-      const [field] = fields.filter((field) => field.id === key)
+      const [field] = fields.filter(field => field.id === key)
       if (field === undefined) return null
 
       const { type } = field
@@ -209,7 +216,7 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
               const checkedOptionKeys =
                 values['1'] && typeof values['1'] === 'object'
                   ? Object.keys(values['1']).filter(
-                      (key) => values['1'][key] === true
+                      key => values['1'][key] === true
                     )
                   : []
               const foundOption = checkedOptionKeys.includes(String(item))
@@ -233,7 +240,7 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
           case 'singleChoice':
             if (item) {
               const singleOption = fields[0].options.filter(
-                (option) =>
+                option =>
                   String(option.key) === String(item) &&
                   values[key] === option.value
               )
@@ -315,7 +322,7 @@ export const getFieldValue = (type, value, field, values, item) => {
     }
     case 'singleChoice': {
       if (!field || !field.options) return ''
-      const options = field.options.filter((option) => option.value == value)
+      const options = field.options.filter(option => option.value == value)
       return options[0]?.label
     }
     case 'name':
@@ -345,7 +352,7 @@ export const getFieldValue = (type, value, field, values, item) => {
     case 'multipleChoice': {
       if (!field && !field.options) return ''
       if (value && values) {
-        const checkedOptions = field.options.filter((option) => {
+        const checkedOptions = field.options.filter(option => {
           if (value[option.key]) {
             return true
           } else return false
@@ -420,17 +427,17 @@ export const actionHandler = (
 ) => {
   if (action === 'show') hiddenFields.fields.push(id)
   if (action === 'show_page') hiddenFields.pages.push(id)
+
   if (isMatch) {
     switch (action) {
       case 'show':
         if (operator === 'or') {
-          hiddenFields.fields = hiddenFields.fields.filter(
-            (item) => item !== id
-          )
+          hiddenFields.fields = hiddenFields.fields.filter(item => item !== id)
           return true
         } else {
           const index = hiddenFields.fields.indexOf(id)
           hiddenFields.fields.splice(index, 1)
+          return hiddenFields
         }
         break
       case 'hide_page':
@@ -438,8 +445,9 @@ export const actionHandler = (
         break
       case 'show_page':
         hiddenFields.pages = hiddenFields.pages.filter(
-          (_hiddenId) => _hiddenId !== id
+          _hiddenId => _hiddenId !== id
         )
+        return hiddenFields
         break
       case 'callback':
         if (handlers) {
@@ -455,7 +463,7 @@ export const actionHandler = (
     }
   } else {
     if (operator === 'and' && action === 'hide') {
-      hiddenFields.fields = hiddenFields.fields.filter((item) => item !== id)
+      hiddenFields.fields = hiddenFields.fields.filter(item => item !== id)
       return true
     }
     if (action === 'callback') {
@@ -495,15 +503,15 @@ export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
   const filtredPages = pagination.pages.filter(
     (page, index) =>
       !hiddenPages.includes(index) &&
-      page.fields.filter((id) => !hiddenFields.includes(id)).length !== 0
+      page.fields.filter(id => !hiddenFields.includes(id)).length !== 0
   )
   const requiredFields = fields.filter(
-    (field) => field.required && !hiddenFields.includes(field.id)
+    field => field.required && !hiddenFields.includes(field.id)
   )
   const { values: stateValues } = window.__current_form_state
   let reddirectPage = undefined
 
-  const getPageIndex = (fieldId) => {
+  const getPageIndex = fieldId => {
     for (let i = 0; i < filtredPages.length; i++) {
       if (filtredPages[i].fields.includes(fieldId)) {
         reddirectPage = String(i)

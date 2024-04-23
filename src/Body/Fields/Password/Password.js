@@ -20,7 +20,7 @@ const Password = ({
         type={showPassword ? 'text' : 'password'}
       />
       <span
-        onClick={() => setShowPassword((value) => !value)}
+        onClick={() => setShowPassword(value => !value)}
         className={classNames('password-icon', { active: showPassword })}
       ></span>
     </>

@@ -1,7 +1,10 @@
-import React, { Fragment } from 'react'
-import SubmitButton from './../../SubmitButton/SubmitButton'
-import Captcha from './../../Captcha'
-import { getNextPageIndex, getPrevPageIndex } from '../../../Helpers/pagination'
+import React, { Fragment } from 'react';
+import SubmitButton from './../../SubmitButton/SubmitButton';
+import Captcha from './../../Captcha';
+import {
+  getNextPageIndex,
+  getPrevPageIndex
+} from '../../../Helpers/pagination';
 
 const Buttons = ({
   formRef,
@@ -13,33 +16,36 @@ const Buttons = ({
   setCurrentPage,
   payment,
   logic,
-  logicIds
+  logicIds,
+  formId,
+  onLocalStorageSubmitFormDataChange,
+  onStorageButtonClick
 }) => {
-  const { buttons, pages } = pagination
-  const { prev = 'Prev', next = 'Next' } = buttons
-  const { captcha, onPageChange } = global
+  const { buttons, pages } = pagination;
+  const { prev = 'Prev', next = 'Next' } = buttons;
+  const { captcha, onPageChange } = global;
   const prevPageIndex = getPrevPageIndex({
     pagination,
     currentPage,
     logicIds
-  })
+  });
   const nextPageIndex = getNextPageIndex({
     pagination,
     currentPage,
     logicIds
-  })
+  });
 
   const handleNext = () => {
     if (formRef.current.checkValidity()) {
-      setCurrentPage(+nextPageIndex)
-      if (onPageChange) onPageChange()
-    } else formRef.current.reportValidity()
-  }
+      setCurrentPage(+nextPageIndex);
+      if (onPageChange) onPageChange();
+    } else formRef.current.reportValidity();
+  };
 
   const handlePrev = () => {
-    setCurrentPage(+prevPageIndex)
-    if (onPageChange) onPageChange()
-  }
+    setCurrentPage(+prevPageIndex);
+    if (onPageChange) onPageChange();
+  };
 
   return (
     <>
@@ -57,18 +63,23 @@ const Buttons = ({
           </button>
         )}
 
-        <SubmitButton
-          hide={nextPageIndex}
-          global={global}
-          button={button}
-          fields={fields}
-          formRef={formRef}
-          payment={payment}
-          logic={logic}
-          logicIds={logicIds}
-          pagination={pagination}
-          setCurrentPage={setCurrentPage}
-        />
+        {!global.isSubmitButtonInLastPage && (
+          <SubmitButton
+            hide={nextPageIndex}
+            global={global}
+            button={button}
+            fields={fields}
+            formRef={formRef}
+            payment={payment}
+            logic={logic}
+            logicIds={logicIds}
+            pagination={pagination}
+            setCurrentPage={setCurrentPage}
+            formId={formId}
+            onStorageButtonClick={onStorageButtonClick}
+            onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
+          />
+        )}
 
         {nextPageIndex && (
           <button
@@ -81,7 +92,7 @@ const Buttons = ({
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Buttons
+export default Buttons;

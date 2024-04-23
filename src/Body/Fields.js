@@ -1,22 +1,30 @@
 import React, { memo, Fragment } from 'react'
-import classNames from 'classnames/bind'
 import GridLayout from 'react-grid-layout'
+import classNames from 'classnames/bind'
+import useGrid from '../hooks/useGrid'
 import Field from './Field'
+import SubmitButton from '../Footer/SubmitButton/SubmitButton'
+
 import 'react-grid-layout/css/styles.css'
 
-const generatePageItems = (fields, pageFields, payment) => {
+const generatePageItems = (
+  fields,
+  pageFields,
+  payment,
+  gridEnabled,
+  onHeightChange
+) => {
   return fields
-    .filter((field) => pageFields.includes(field.id))
-    .map((field) => {
+    .filter(field => pageFields.includes(field.id))
+    .map(field => {
       const { prefix, postfix, classnameprefix, id } = field
       return (
         <div
           id={`field-${id}`}
           className={classNames('boomForm_field', {
             [classnameprefix &&
-            classnameprefix
-              .map((value) => `${value}-field__content`)
-              .join(' ')]: classnameprefix && classnameprefix.length
+            classnameprefix.map(value => `${value}-field__content`).join(' ')]:
+              classnameprefix && classnameprefix.length
           })}
           key={field.id}
         >
@@ -27,7 +35,13 @@ const generatePageItems = (fields, pageFields, payment) => {
               }}
             />
           )}
-          <Field key={field.id} payment={payment} {...field} />
+          <Field
+            key={field.id}
+            payment={payment}
+            listenHeightChange={gridEnabled}
+            onHeightChange={onHeightChange}
+            {...field}
+          />
           {postfix && (
             <span
               dangerouslySetInnerHTML={{
@@ -40,48 +54,98 @@ const generatePageItems = (fields, pageFields, payment) => {
     })
 }
 
-const Fields = ({ fields, payment, printableFields, gridOptions }) => {
-  const {
-    layout = [],
-    isBounded = false,
-    isDraggable = false,
-    isResizable = false,
-    margin = [0, 0],
-    containerPadding = [0, 0],
-    rowHeight = 1,
-    width = 800,
-    cols = 4
-  } = gridOptions
+const Fields = ({
+  fields,
+  payment,
+  printableFields,
+  gridOptions,
+  pagination,
+  global,
+  button,
+  formRef,
+  logic,
+  logicIds,
+  setCurrentPage,
+  formId,
+  isShowSubmitButton,
+  onStorageButtonClick,
+  onLocalStorageSubmitFormDataChange
+}) => {
+  const { gridEnabled, gridProperties, layout, onHeightChange } = useGrid({
+    gridOptions,
+    printableFields
+  })
+
   return (
     <>
       {printableFields.map((pageFields, index) => {
-        const layout_ = [] // layout for grid layout
-        if (gridOptions && gridOptions.layout) {
-          //this loop needed for passing only rendering fields layouts
-          pageFields.forEach((id) => {
-            layout_.push({ i: `${id}`, ...layout[id] })
-          })
+        let showButton = isShowSubmitButton
+        if (
+          isShowSubmitButton &&
+          pagination &&
+          pagination?.mode === 'section'
+        ) {
+          showButton = printableFields.length - 1 === index
         }
+        const layout_ = layout[index]
         return (
           <div key={'page' + index} className='boomForm-fields'>
-            {gridOptions && gridOptions.layout ? (
-              <GridLayout
-                className='grid-layout'
-                isDroppable={false}
-                cols={cols}
-                margin={margin}
-                containerPadding={containerPadding}
-                rowHeight={rowHeight}
-                width={width}
-                isBounded={isBounded}
-                isDraggable={isDraggable}
-                isResizable={isResizable}
-                layout={layout_}
-              >
-                {generatePageItems(fields, pageFields, payment)}
-              </GridLayout>
+            {gridEnabled ? (
+              <>
+                <GridLayout
+                  className='grid-layout'
+                  {...gridProperties}
+                  layout={layout_}
+                >
+                  {generatePageItems(
+                    fields,
+                    pageFields,
+                    payment,
+                    gridEnabled,
+                    onHeightChange
+                  )}
+                </GridLayout>
+                {showButton && (
+                  <SubmitButton
+                    global={global}
+                    button={button}
+                    fields={fields}
+                    formRef={formRef}
+                    payment={payment}
+                    logic={logic}
+                    logicIds={logicIds}
+                    pagination={pagination}
+                    setCurrentPage={setCurrentPage}
+                    formId={formId}
+                    onStorageButtonClick={onStorageButtonClick}
+                    onLocalStorageSubmitFormDataChange={
+                      onLocalStorageSubmitFormDataChange
+                    }
+                  />
+                )}
+              </>
             ) : (
-              <>{generatePageItems(fields, pageFields, payment)}</>
+              <>
+                {generatePageItems(fields, pageFields, payment)}
+                {showButton && (
+                  <SubmitButton
+                    global={global}
+                    button={button}
+                    fields={fields}
+                    formRef={formRef}
+                    payment={payment}
+                    logic={logic}
+                    logicIds={logicIds}
+                    pagination={pagination}
+                    setCurrentPage={setCurrentPage}
+                    formId={formId}
+                    onStorageButtonClick={onStorageButtonClick}
+                    onLocalStorageSubmitFormDataChange={
+                      onLocalStorageSubmitFormDataChange
+                    }
+                  />
+                )}
+              </>
             )}
           </div>
         )

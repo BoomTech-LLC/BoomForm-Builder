@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import Pagination from './Pagination/Pagination'
+import React, { Fragment } from 'react';
+import Pagination from './Pagination/Pagination';
 
 const Header = ({
   name,
@@ -7,12 +7,29 @@ const Header = ({
   isPagination,
   pagination,
   currentPage,
-  logicIds
+  logicIds,
+  instructionsState,
+  localStorageButton,
+  localStorageStatus,
+  onStorageButtonClick
 }) => {
   return (
     <>
       <div className='boomForm__header'>
-        <h2 className='boomForm__name'>{name}</h2>
+        <div className='boomForm__nameAndReset'>
+          <h2 className='boomForm__name'>{name}</h2>
+          <div
+            className='boomForm_storeButtons'
+            onClick={() => {
+              onStorageButtonClick(
+                localStorageStatus === 'reseted' ? 'loaded' : 'reseted'
+              );
+            }}
+          >
+            {localStorageButton}
+            {instructionsState}
+          </div>
+        </div>
         <h4 className='boomForm__description'>{description}</h4>
       </div>
       <Pagination
@@ -22,7 +39,7 @@ const Header = ({
         logicIds={logicIds}
       />
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
