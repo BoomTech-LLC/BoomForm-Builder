@@ -239,9 +239,9 @@ describe('getFieldValue', () => {
 
   // Test case for 'name' and 'address'
   it('should return correct value for type "name" or "address"', () => {
-    const value = { firstName: 'John', lastName: 'Doe' };
+    const value = { firstName: 'testName', lastName: 'testLastName' };
     const result = getFieldValue('name', value, null, null, 'firstName');
-    expect(result).toBe('John');
+    expect(result).toBe('testName');
   });
 
   // Test case for 'price'

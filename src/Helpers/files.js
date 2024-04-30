@@ -61,7 +61,7 @@ export const uploadHandler = async ({
   }
 }
 
-export const customUpload = async ({
+const customUpload = async ({
   file,
   upLoadData,
   handleLoading,
