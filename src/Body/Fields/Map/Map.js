@@ -31,7 +31,7 @@ const Map = ({
         const map = new google.maps.Map(mapRef.current, {
           center: { lat, lng },
           zoom: zoom,
-          mapId: apiKey
+          mapId: `${Math.floor(Math.random() * 1000000)}`
         })
         markers.map(item => {
           const { position, description } = item
