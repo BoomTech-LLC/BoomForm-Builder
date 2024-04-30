@@ -17,7 +17,6 @@ const Map = ({
       apiKey,
       version: 'weekly'
     })
-
     loader
       .load()
       .then(async () => {
@@ -32,10 +31,9 @@ const Map = ({
         const map = new google.maps.Map(mapRef.current, {
           center: { lat, lng },
           zoom: zoom,
-          mapId:  Math.floor(Math.random() * 1000000)
-
+          mapId: apiKey
         })
-        markers.map((item) => {
+        markers.map(item => {
           const { position, description } = item
           const marker = new AdvancedMarkerElement({
             position,
