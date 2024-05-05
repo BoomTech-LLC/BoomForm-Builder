@@ -1,7 +1,7 @@
 import axios from 'axios'
 export const ABORT_REQUEST_CONTROLLERS = new Map()
 
-const addAdditionalParams = (file, i) => {
+export const addAdditionalParams = (file, i) => {
   const extension = file.name.split('.').pop()
   const originalName = file.name.split('.').slice(0, -1).join('.')
   const random = Math.random().toString(36).substr(2, 4)
