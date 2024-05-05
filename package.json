@@ -22,15 +22,9 @@
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "npm run jest && gh-pages -d example/build",
     "test": "jest --testPathPattern=__tests  --env=jsdom",
-    "test:time": "jest --findRelatedTests src/__tests/time.test.js",
-    "test:storeProgres": "jest --findRelatedTests src/__tests/storeProgres.test.js",
-    "test:scaleRating": "jest --findRelatedTests src/__tests/scaleRating.test.js",
-    "test:payment": "jest --findRelatedTests src/__tests/payment.test.js",
-    "test:password": "jest --findRelatedTests src/__tests/password.test.js",
-    "test:pagination": "jest --findRelatedTests src/__tests/pagination.test.js",
-    "test:logic": "jest --findRelatedTests src/__tests/logic.test.js",
-    "test:global": "jest --findRelatedTests src/__tests/global.test.js --env=jsdom",
-    "test:files": "jest --findRelatedTests src/__tests/files.test.js"
+    "patch": "npm run test && npm version patch",
+    "minor": "npm run test && npm version minor",
+    "major": "npm run test && npm version minor"
   },
   "peerDependencies": {
     "react": ">=16.0.0"
