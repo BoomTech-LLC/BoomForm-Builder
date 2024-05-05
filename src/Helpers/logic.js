@@ -1,6 +1,13 @@
 import { getNestedValue } from '../Helpers/global'
 
-export const conditionalLogic = ({ fieldValue, value, rule, field }) => {
+export const conditionalLogic = ({
+  fieldValue,
+  value,
+  rule,
+  field,
+  item,
+  type
+}) => {
   switch (rule) {
     case 'is': {
       if (fieldValue == value) return true
@@ -54,7 +61,7 @@ export const conditionalLogic = ({ fieldValue, value, rule, field }) => {
     case 'doNotChecked': {
       if (!field || !field.options) return false
       for (let i in fieldValue) {
-        const [option] = field.options.filter((option) => option.key == i)
+        const [option] = field.options.filter(option => option.key == i)
         if (option && !fieldValue[i] && option.value === value) return true
       }
       return false
@@ -89,6 +96,95 @@ export const conditionalLogic = ({ fieldValue, value, rule, field }) => {
       if (fieldValue) return true
       else return false
     }
+    case 'doesNotStart': {
+      if (fieldValue) {
+        if (fieldValue?.startsWith(value)) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    }
+    case 'doesNotEnd': {
+      if (fieldValue) {
+        if (fieldValue?.endsWith(value)) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        return false
+      }
+    }
+    case 'quantityEqual': {
+      if (type === 'multipleChoice') {
+        if (item) {
+          return String(fieldValue) === String(value)
+        } else {
+          if (fieldValue?.value) {
+            return Object.keys(fieldValue.value).reduce((acc, curr) => {
+              if (
+                fieldValue.value[curr] &&
+                fieldValue?.quantity &&
+                String(fieldValue?.quantity[curr]) === String(value)
+              )
+                return true
+              return acc
+            }, false)
+          }
+        }
+      } else {
+        return fieldValue == value
+      }
+    }
+    case 'quantityLess': {
+      if (type === 'multipleChoice') {
+        if (item) {
+          return fieldValue < value
+        } else {
+          if (fieldValue?.value) {
+            return Object.keys(fieldValue.value).reduce((acc, curr) => {
+              if (
+                fieldValue.value[curr] &&
+                fieldValue?.quantity &&
+                fieldValue?.quantity[curr] < value
+              )
+                return true
+              return acc
+            }, false)
+          }
+        }
+      } else {
+        if (fieldValue) {
+          return fieldValue < value
+        } else {
+          return false
+        }
+      }
+    }
+    case 'quantityMore': {
+      if (type === 'multipleChoice') {
+        if (item) {
+          return fieldValue > value
+        } else {
+          if (fieldValue?.value) {
+            return Object.keys(fieldValue.value).reduce((acc, curr) => {
+              if (
+                fieldValue.value[curr] &&
+                fieldValue?.quantity &&
+                fieldValue?.quantity[curr] > value
+              )
+                return true
+              return acc
+            }, false)
+          }
+        }
+      } else {
+        return fieldValue > value
+      }
+    }
     default:
       return null
   }
@@ -99,26 +195,92 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
     fields: [],
     pages: []
   }
-  logic.map((option) => {
+  logic.map(option => {
     const { action, conditions, operator = 'and', id, handlers } = option
 
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
-      const fieldValue = key.toString().includes('.')
+
+      let fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
         : values[key]
-      const [field] = fields.filter((field) => field.id === key)
+      const [field] = fields.filter(field => field.id === key)
       if (field === undefined) return null
 
       const { type } = field
+      const isQuantity = rule.includes('quantity')
+      if (isQuantity) {
+        switch (type) {
+          case 'multipleChoice':
+            if (item) {
+              const checkedOptionKeys =
+                values['1'] && typeof values['1'] === 'object'
+                  ? Object.keys(values['1']).filter(
+                      key => values['1'][key] === true
+                    )
+                  : []
+              const foundOption = checkedOptionKeys.includes(String(item))
+              if (foundOption) {
+                fieldValue =
+                  values?.[key] &&
+                  values?.quantity &&
+                  values?.quantity[key] &&
+                  values?.quantity[key][item]
+              } else {
+                return false
+              }
+            } else {
+              fieldValue = {
+                value: values[key],
+                quantity: values?.quantity && values?.quantity[key]
+              }
+            }
+            break
+
+          case 'singleChoice':
+            if (item) {
+              const singleOption = fields[0].options.filter(
+                option =>
+                  String(option.key) === String(item) &&
+                  values[key] === option.value
+              )
+              if (singleOption.length) {
+                fieldValue =
+                  !!values && !!values?.quantity && values?.quantity?.[key]
+              } else {
+                fieldValue = false
+              }
+            } else {
+              fieldValue = values?.quantity && values?.quantity[key]
+            }
+            break
+
+          case 'select':
+            if (item) {
+              fieldValue =
+                String(values[key]?.key) === String(item) &&
+                values?.quantity &&
+                values?.quantity[key]
+            } else {
+              fieldValue = values?.quantity && values?.quantity[key]
+            }
+            break
+
+          default:
+            break
+        }
+      }
 
       const isMatch = conditionalLogic({
-        fieldValue: getFieldValue(type, fieldValue, field, values, item),
+        fieldValue: isQuantity
+          ? fieldValue
+          : getFieldValue(type, fieldValue, field, values, item),
         value,
         rule,
-        field
+        field,
+        item,
+        type
       })
-
       if (
         actionHandler(
           id,
@@ -160,7 +322,7 @@ export const getFieldValue = (type, value, field, values, item) => {
     }
     case 'singleChoice': {
       if (!field || !field.options) return ''
-      const options = field.options.filter((option) => option.value == value)
+      const options = field.options.filter(option => option.value == value)
       return options[0]?.label
     }
     case 'name':
@@ -190,11 +352,12 @@ export const getFieldValue = (type, value, field, values, item) => {
     case 'multipleChoice': {
       if (!field && !field.options) return ''
       if (value && values) {
-        const checkedOptions = field.options.filter((option) => {
+        const checkedOptions = field.options.filter(option => {
           if (value[option.key]) {
             return true
           } else return false
         })
+
         return checkedOptions
       }
     }
@@ -269,9 +432,7 @@ export const actionHandler = (
     switch (action) {
       case 'show':
         if (operator === 'or') {
-          hiddenFields.fields = hiddenFields.fields.filter(
-            (item) => item !== id
-          )
+          hiddenFields.fields = hiddenFields.fields.filter(item => item !== id)
           return true
         } else {
           const index = hiddenFields.fields.indexOf(id)
@@ -284,7 +445,7 @@ export const actionHandler = (
         break
       case 'show_page':
         hiddenFields.pages = hiddenFields.pages.filter(
-          (_hiddenId) => _hiddenId !== id
+          _hiddenId => _hiddenId !== id
         )
         return hiddenFields
         break
@@ -302,7 +463,7 @@ export const actionHandler = (
     }
   } else {
     if (operator === 'and' && action === 'hide') {
-      hiddenFields.fields = hiddenFields.fields.filter((item) => item !== id)
+      hiddenFields.fields = hiddenFields.fields.filter(item => item !== id)
       return true
     }
     if (action === 'callback') {
@@ -316,33 +477,41 @@ export const actionHandler = (
 
 export const getUpdatableFields = ({ logic }) => {
   const updatableFields = []
+
   if (logic.length > 0) {
-    for (let i = 0; i < logic.length; i++)
-      for (let j = 0; j < logic[i].conditions.length; j++)
-        logic[i].conditions[j].item
-          ? updatableFields.push(
-              `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
-            )
-          : updatableFields.push(logic[i].conditions[j].id)
+    for (let i = 0; i < logic.length; i++) {
+      for (let j = 0; j < logic[i].conditions.length; j++) {
+        const condition = logic[i].conditions[j]
+        if (condition.rule.includes('quantity')) {
+          updatableFields.push(`quantity.${logic[i].conditions[j].id}`)
+          updatableFields.push(`${logic[i].conditions[j].id}`)
+        } else {
+          logic[i].conditions[j].item
+            ? updatableFields.push(
+                `${logic[i].conditions[j].id}.${logic[i].conditions[j].item}`
+              )
+            : updatableFields.push(logic[i].conditions[j].id)
+        }
+      }
+    }
   }
   return updatableFields
 }
-
 export const formValueCheker = ({ logicIds, pagination = {}, fields }) => {
   if (Object.keys(pagination).length === 0) return
   const { pages: hiddenPages, fields: hiddenFields } = logicIds
   const filtredPages = pagination.pages.filter(
     (page, index) =>
       !hiddenPages.includes(index) &&
-      page.fields.filter((id) => !hiddenFields.includes(id)).length !== 0
+      page.fields.filter(id => !hiddenFields.includes(id)).length !== 0
   )
   const requiredFields = fields.filter(
-    (field) => field.required && !hiddenFields.includes(field.id)
+    field => field.required && !hiddenFields.includes(field.id)
   )
   const { values: stateValues } = window.__current_form_state
   let reddirectPage = undefined
 
-  const getPageIndex = (fieldId) => {
+  const getPageIndex = fieldId => {
     for (let i = 0; i < filtredPages.length; i++) {
       if (filtredPages[i].fields.includes(fieldId)) {
         reddirectPage = String(i)
