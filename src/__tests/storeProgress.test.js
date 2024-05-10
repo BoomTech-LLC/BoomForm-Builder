@@ -26,16 +26,16 @@ describe('storeProgresSubmitStore', () => {
 
     localStorageFormData = {
       nameField: {
-        first: 'John',
-        middle: 'Doe',
-        last: 'Smith'
+        first: 'testName',
+        middle: 'testMiddleName',
+        last: 'testLastName'
       },
       addressField: {
-        city: 'New York',
-        country: 'USA',
-        street: '123 Main St',
-        street2: 'Apt 101',
-        zip: '10001'
+        city: 'testCity',
+        country: 'testCountry',
+        street: 'testStreet',
+        street2: 'testStreet2',
+        zip: 'testZip'
       },
       timeField: {
         format: '12-hour',
@@ -65,35 +65,35 @@ describe('storeProgresSubmitStore', () => {
     // Check specific calls with expected arguments
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.first',
-      value: 'John'
+      value: 'testName'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.middle',
-      value: 'Doe'
+      value: 'testMiddleName'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'nameField.last',
-      value: 'Smith'
+      value: 'testLastName'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.city',
-      value: 'New York'
+      value: 'testCity'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.country',
-      value: 'USA'
+      value: 'testCountry'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.street',
-      value: '123 Main St'
+      value: 'testStreet'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.street2',
-      value: 'Apt 101'
+      value: 'testStreet2'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'addressField.zip',
-      value: '10001'
+      value: 'testZip'
     });
     expect(_handleChangeMock).toHaveBeenCalledWith({
       id: 'timeField.format',
