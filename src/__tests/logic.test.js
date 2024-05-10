@@ -1119,3 +1119,145 @@ describe('getUpdatableFields', () => {
     ])
   })
 })
+describe('conditionalLogic', () => {
+  it('should correctly handle the "quantityLess" rule when fieldValue and value are strings', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: false
+        },
+        quantity: {
+          option1: '5',
+          option2: '10'
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when no quantities are less than the given value as string', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: false
+        },
+        quantity: {
+          option1: '8',
+          option2: '10'
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(false)
+  })
+
+  it('should handle non-numeric string quantities gracefully', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true
+        },
+        quantity: {
+          option1: 'five'
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should correctly handle the "quantityMore" rule when fieldValue and value are strings and the quantity is more', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: false
+        },
+        quantity: {
+          option1: '7',
+          option2: '10'
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when no quantities are more than the given value as string', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: false
+        },
+        quantity: {
+          option1: '3',
+          option2: '5'
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(false)
+  })
+
+  it('should handle non-numeric string quantities gracefully under "quantityMore" rule', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true
+        },
+        quantity: {
+          option1: 'ten'
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(false)
+  })
+})
