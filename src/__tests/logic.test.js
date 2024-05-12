@@ -249,10 +249,10 @@ describe('getFieldValue', () => {
 
   // Test case for 'name' and 'address'
   it('should return correct value for type "name" or "address"', () => {
-    const value = { firstName: 'testName', lastName: 'testLastName' };
-    const result = getFieldValue('name', value, null, null, 'firstName');
-    expect(result).toBe('testName');
-  });
+    const value = { firstName: 'testName', lastName: 'testLastName' }
+    const result = getFieldValue('name', value, null, null, 'firstName')
+    expect(result).toBe('testName')
+  })
 
   // Test case for 'price'
   it('should return formatted price for type "price"', () => {
@@ -1256,6 +1256,406 @@ describe('conditionalLogic', () => {
     const result = conditionalLogic({
       ...context,
       rule: 'quantityMore'
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should correctly handle the "quantityMore" rule when fieldValue quantity is a string and value is a number', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: '5',
+          option2: '8'
+        }
+      },
+      value: 6,
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when all string quantities are less than or equal to the given numeric value', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: '4',
+          option2: '6'
+        }
+      },
+      value: 6,
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should correctly handle the "quantityMore" rule when fieldValue quantity is a number and value is a string', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: 7,
+          option2: 10
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when all numeric quantities are less than or equal to the given string value', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: 3,
+          option2: 5
+        }
+      },
+      value: '6',
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityMore'
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should correctly handle the "quantityLess" rule when fieldValue quantity is a string and value is a number', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: '3',
+          option2: '1'
+        }
+      },
+      value: 5,
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when all string quantities are greater than or equal to the given numeric value', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: '6',
+          option2: '8'
+        }
+      },
+      value: 5,
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should correctly handle the "quantityLess" rule when fieldValue quantity is a string and value is a number', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: '3',
+          option2: '1'
+        }
+      },
+      value: 5,
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when all string quantities are greater than or equal to the given numeric value', () => {
+    const context = {
+      fieldValue: {
+        value: {
+          option1: true,
+          option2: true
+        },
+        quantity: {
+          option1: '6',
+          option2: '8'
+        }
+      },
+      value: 5,
+      type: 'multipleChoice'
+    }
+
+    const result = conditionalLogic({
+      ...context,
+      rule: 'quantityLess'
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should return true when the quantity of a select field is less than the given numeric value', () => {
+    const selectField = {
+      id: 1,
+      type: 'select',
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: '1'
+      }
+    }
+    const value = 2
+    const rule = 'quantityLess'
+
+    const result = conditionalLogic({
+      fieldValue: selectField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when the quantity of a select field is not less than the given numeric value', () => {
+    const selectField = {
+      id: 1,
+      type: 'select',
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: '3'
+      }
+    }
+    const value = 2
+    const rule = 'quantityLess'
+
+    const result = conditionalLogic({
+      fieldValue: selectField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should return true when the numeric quantity of a select field is less than the given string value', () => {
+    const selectField = {
+      id: 1,
+      type: 'select',
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: 3
+      }
+    }
+    const value = '5'
+    const rule = 'quantityLess'
+
+    const result = conditionalLogic({
+      fieldValue: selectField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when the numeric quantity of a select field is not less than the given string value', () => {
+    const selectField = {
+      id: 1,
+      type: 'select',
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: 10
+      }
+    }
+    const value = '5'
+    const rule = 'quantityLess'
+
+    const result = conditionalLogic({
+      fieldValue: selectField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should return true when the string quantity of a singleChoice field is more than the given numeric value', () => {
+    const singleChoiceField = {
+      id: 1,
+      type: 'singleChoice',
+      options: [
+        { key: 1, value: 's', label: 'S' },
+        { key: 2, value: 'm', label: 'M', checked: true },
+        { key: 3, value: 'l', label: 'L' },
+        { key: 'other', value: 'Other' }
+      ],
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: '5'
+      }
+    }
+    const value = 3
+    const rule = 'quantityMore'
+
+    const result = conditionalLogic({
+      fieldValue: singleChoiceField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when the string quantity of a singleChoice field is not more than the given numeric value', () => {
+    const singleChoiceField = {
+      id: 1,
+      type: 'singleChoice',
+      options: [
+        { key: 1, value: 's', label: 'S' },
+        { key: 2, value: 'm', label: 'M', checked: true },
+        { key: 3, value: 'l', label: 'L' },
+        { key: 'other', value: 'Other' }
+      ],
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: '2'
+      }
+    }
+    const value = 3
+    const rule = 'quantityMore'
+
+    const result = conditionalLogic({
+      fieldValue: singleChoiceField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(false)
+  })
+})
+describe('conditionalLogic', () => {
+  it('should return true when the numeric quantity of a singleChoice field is more than the given string value', () => {
+    const singleChoiceField = {
+      id: 1,
+      type: 'singleChoice',
+      options: [
+        { key: 1, value: 's', label: 'S' },
+        { key: 2, value: 'm', label: 'M', checked: true },
+        { key: 3, value: 'l', label: 'L' },
+        { key: 'other', value: 'Other' }
+      ],
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: 5
+      }
+    }
+    const value = '3'
+    const rule = 'quantityMore'
+
+    const result = conditionalLogic({
+      fieldValue: singleChoiceField.quantity.value,
+      value: value,
+      rule: rule
+    })
+
+    expect(result).toBe(true)
+  })
+
+  it('should return false when the numeric quantity of a singleChoice field is not more than the given string value', () => {
+    const singleChoiceField = {
+      id: 1,
+      type: 'singleChoice',
+      options: [
+        { key: 1, value: 's', label: 'S' },
+        { key: 2, value: 'm', label: 'M', checked: true },
+        { key: 3, value: 'l', label: 'L' },
+        { key: 'other', value: 'Other' }
+      ],
+      quantity: {
+        enabled: true,
+        label: 'Quantity',
+        value: 2
+      }
+    }
+    const value = '3'
+    const rule = 'quantityMore'
+
+    const result = conditionalLogic({
+      fieldValue: singleChoiceField.quantity.value,
+      value: value,
+      rule: rule
     })
 
     expect(result).toBe(false)
