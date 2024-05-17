@@ -121,44 +121,46 @@ export const conditionalLogic = ({
     case 'quantityEqual': {
       if (type === 'multipleChoice') {
         if (item) {
-          return String(fieldValue) === String(value)
+          return Number(fieldValue) === Number(value)
         } else {
           if (fieldValue?.value) {
             return Object.keys(fieldValue.value).reduce((acc, curr) => {
               if (
                 fieldValue.value[curr] &&
                 fieldValue?.quantity &&
-                String(fieldValue?.quantity[curr]) === String(value)
-              )
+                Number(fieldValue?.quantity[curr]) === Number(value)
+              ) {
                 return true
+              }
               return acc
             }, false)
           }
         }
       } else {
-        return fieldValue == value
+        return Number(fieldValue) === Number(value)
       }
     }
     case 'quantityLess': {
       if (type === 'multipleChoice') {
         if (item) {
-          return fieldValue < value
+          return Number(fieldValue) < Number(value)
         } else {
           if (fieldValue?.value) {
             return Object.keys(fieldValue.value).reduce((acc, curr) => {
               if (
                 fieldValue.value[curr] &&
                 fieldValue?.quantity &&
-                fieldValue?.quantity[curr] < value
-              )
+                Number(fieldValue?.quantity[curr]) < Number(value)
+              ) {
                 return true
+              }
               return acc
             }, false)
           }
         }
       } else {
         if (fieldValue) {
-          return fieldValue < value
+          return Number(fieldValue) < Number(value)
         } else {
           return false
         }
@@ -167,22 +169,23 @@ export const conditionalLogic = ({
     case 'quantityMore': {
       if (type === 'multipleChoice') {
         if (item) {
-          return fieldValue > value
+          return Number(fieldValue) > Number(value)
         } else {
           if (fieldValue?.value) {
             return Object.keys(fieldValue.value).reduce((acc, curr) => {
               if (
                 fieldValue.value[curr] &&
                 fieldValue?.quantity &&
-                fieldValue?.quantity[curr] > value
+                Number(fieldValue?.quantity[curr]) > Number(value)
               )
                 return true
+
               return acc
             }, false)
           }
         }
       } else {
-        return fieldValue > value
+        return Number(fieldValue) > Number(value)
       }
     }
     default:
