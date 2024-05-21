@@ -28,7 +28,7 @@ const Form = ({
     storeProgress = {},
     isSubmitButtonInLastPage
   } = global;
-
+    console.log("TEST")
   const {
     status,
     localStorageButton,
