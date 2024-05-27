@@ -201,8 +201,8 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
   logic.map(option => {
     const { action, conditions, operator = 'and', id, handlers } = option
 
-    for (let i = 0; i < conditions.length; i++) {
-      const { id: key, value, rule, item } = conditions[i]
+    const isMatch = conditions.reduce((acc, curr) => {
+      const { id: key, value, rule, item } = curr
 
       let fieldValue = key.toString().includes('.')
         ? getNestedValue(values, key)
@@ -273,8 +273,8 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
             break
         }
       }
-
-      const isMatch = conditionalLogic({
+      if (operator === 'and' && !acc) return
+      const matched = conditionalLogic({
         fieldValue: isQuantity
           ? fieldValue
           : getFieldValue(type, fieldValue, field, values, item),
@@ -284,19 +284,21 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
         item,
         type
       })
-      if (
-        actionHandler(
-          id,
-          action,
-          operator,
-          isMatch,
-          hiddenFields,
-          handlers,
-          formRef
-        )
-      )
-        break
-    }
+      if (operator === 'or' && (matched || acc === 'pass')) {
+        return 'pass'
+      }
+      return matched
+    }, true)
+
+    actionHandler(
+      id,
+      action,
+      operator,
+      isMatch,
+      hiddenFields,
+      handlers,
+      formRef
+    )
   })
 
   return hiddenFields
@@ -369,56 +371,6 @@ export const getFieldValue = (type, value, field, values, item) => {
   }
 }
 
-// const getFieldValue = (type, fieldValue, item) => {
-//   switch (type) {
-//     case 'phone':
-//       let phone = ''
-//       if (fieldValue) phone = `${fieldValue.code}${fieldValue.phone}`
-//       return phone
-//     case 'date':
-//       let date = ''
-//       if (fieldValue)
-//         date = `${fieldValue.split('-')[2]}-${fieldValue.split('-')[1]}-${
-//           fieldValue.split('-')[0]
-//         }`
-//       return date
-//     case 'time':
-//       let time = ''
-//       if (fieldValue) {
-//         if (fieldValue.hour && fieldValue.minute && fieldValue.format) {
-//           time = timeConversion(
-//             `${fieldValue.hour}:${fieldValue.minute}${fieldValue.format.value}`
-//           )
-//           if (!time) return ''
-//         } else {
-//           if (fieldValue.hour && fieldValue.minute)
-//             time = `${fieldValue.hour}:${fieldValue.minute}`
-//         }
-//       }
-//       return time
-//     case 'scaleRating':
-//       let scaleRating = ''
-//       if (fieldValue)
-//         for (let i in fieldValue) {
-//           const { checked, value } = fieldValue[i]
-//           if (checked) scaleRating = value
-//         }
-//       return scaleRating
-//     case 'price':
-//       let price = ''
-//       if (fieldValue) price = `${fieldValue.first || 0}.${fieldValue.last || 0}`
-//       return price
-//     case 'address':
-//     case 'name':
-//       let address = ''
-//       if (fieldValue && item)
-//         address = fieldValue[item]?.value || fieldValue[item]
-//       return address
-//     default:
-//       return fieldValue?.value || fieldValue
-//   }
-// }
-
 export const actionHandler = (
   id,
   action,
@@ -428,8 +380,11 @@ export const actionHandler = (
   handlers,
   formRef
 ) => {
-  if (action === 'show') hiddenFields.fields.push(id)
-  if (action === 'show_page') hiddenFields.pages.push(id)
+  if (action === 'show' && !hiddenFields.fields.includes(id))
+    hiddenFields.fields.push(id)
+
+  if (action === 'show_page' && !hiddenFields.pages.includes(id))
+    hiddenFields.pages.push(id)
 
   if (isMatch) {
     switch (action) {
