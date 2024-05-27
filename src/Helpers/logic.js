@@ -201,6 +201,28 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
   logic.map(option => {
     const { action, conditions, operator = 'and', id, handlers } = option
 
+    // if (operator === 'and' && conditions.length > 0) {
+    //   const isAllMatch = conditions.reduce((acc, current) => {
+    //     if (!acc) return false
+    //     const { id: key, value, rule, item } = current
+    //     const [field] = fields.filter(field => field.id === key)
+    //     let fieldValue = key.toString().includes('.')
+    //       ? getNestedValue(values, key)
+    //       : values[key]
+
+    //     return conditionalLogic({
+    //       fieldValue: isQuantity
+    //         ? fieldValue
+    //         : getFieldValue(type, fieldValue, field, values, item),
+    //       value,
+    //       rule,
+    //       field,
+    //       item,
+    //       type
+    //     })
+    //   }, true)
+    // }
+
     for (let i = 0; i < conditions.length; i++) {
       const { id: key, value, rule, item } = conditions[i]
 
@@ -274,28 +296,75 @@ export const getHiddenIds = ({ logic, values, fields, formRef }) => {
         }
       }
 
-      const isMatch = conditionalLogic({
-        fieldValue: isQuantity
-          ? fieldValue
-          : getFieldValue(type, fieldValue, field, values, item),
-        value,
-        rule,
-        field,
-        item,
-        type
-      })
-      if (
+      if (operator === 'and') {
+        const isAllMatch = conditions.reduce((acc, current) => {
+          if (!acc) return false
+          const { id: key, value, rule, item } = current
+          const [field] = fields.filter(field => field.id === key)
+
+          let fieldValue = key.toString().includes('.')
+            ? getNestedValue(values, key)
+            : values[key]
+
+          console.log('coindLogic props', {
+            fieldValue: isQuantity
+              ? fieldValue
+              : getFieldValue(type, fieldValue, field, values, item),
+            value,
+            rule,
+            field,
+            item,
+            type
+          })
+          return conditionalLogic({
+            fieldValue: isQuantity
+              ? fieldValue
+              : getFieldValue(type, fieldValue, field, values, item),
+            value,
+            rule,
+            field,
+            item,
+            type
+          })
+        }, true)
+        console.log('isAllMatch', isAllMatch)
+
         actionHandler(
           id,
           action,
           operator,
-          isMatch,
+          isAllMatch,
           hiddenFields,
           handlers,
           formRef
         )
-      )
         break
+      } else {
+        const isMatch = conditionalLogic({
+          fieldValue: isQuantity
+            ? fieldValue
+            : getFieldValue(type, fieldValue, field, values, item),
+          value,
+          rule,
+          field,
+          item,
+          type
+        })
+
+        console.log('isMatchisMatch', isMatch)
+        if (
+          actionHandler(
+            id,
+            action,
+            operator,
+            isMatch,
+            hiddenFields,
+            handlers,
+            formRef
+          )
+        )
+          break
+      }
     }
   })
 
