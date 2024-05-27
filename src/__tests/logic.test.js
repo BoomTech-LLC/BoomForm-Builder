@@ -106,7 +106,7 @@ describe('actionHandler', () => {
     const id = 'field1'
     hiddenFields.fields.push(id)
     actionHandler(id, 'show', '', true, hiddenFields, null, null)
-    expect(hiddenFields.fields).toEqual([id])
+    expect(hiddenFields.fields).toEqual([])
   })
 
   it('should add id to hiddenFields.pages array when isMatch is true and action is "hide_page"', () => {
