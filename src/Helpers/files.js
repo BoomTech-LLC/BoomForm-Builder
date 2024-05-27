@@ -15,7 +15,7 @@ export const addAdditionalParams = (file, i) => {
   return newFile
 }
 
-export const uploadHandler = async ({
+const uploadHandler = async ({
   file,
   callback,
   handleLoading,
@@ -27,7 +27,7 @@ export const uploadHandler = async ({
   if (requestsArray && requestsArray.length > 0) {
     let isUploadSuccess = false
     for (let i = 0; i < requestsArray.length && !isUploadSuccess; i++) {
-      const onRequestSuccess = (response) => {
+      const onRequestSuccess = response => {
         isUploadSuccess = true
         const { status } = response
         if (status === 200) callback(file.id, 200, response?.data, allFiles)
@@ -99,7 +99,7 @@ const customUpload = async ({
         headers: {
           ...headers
         },
-        onUploadProgress: (event) => {
+        onUploadProgress: event => {
           handleLoading(file.id, Math.round((100 * event.loaded) / event.total))
         }
       })
@@ -112,7 +112,7 @@ const customUpload = async ({
   }
 }
 
-export const correctFiles = (files) => {
+export const correctFiles = files => {
   let newFiles = []
   for (let i = 0; i < files.length; i++)
     newFiles.push(addAdditionalParams(files[i], i))

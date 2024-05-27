@@ -7,14 +7,14 @@ import Quantity from './../../Quantity/Quantity'
 const Other = ({ id, options, option, quantity, classnameprefix }) => {
   const { key, value, placeholder, isNumber, checked } = option
 
-  const handleOnChange = (e) => {
+  const handleOnChange = e => {
     const { handleChange, state, value, field } = e
 
     const { values } = state
     let isAnyChecked = false
     if (field.id === `${id}.other` && value) isAnyChecked = true
     else if (values[id])
-      options.map((option) => {
+      options.map(option => {
         if (values[id][option.key] && option.key !== 'other')
           isAnyChecked = true
       })
