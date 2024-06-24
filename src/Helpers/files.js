@@ -96,6 +96,7 @@ const customUpload = async ({
         url: requestURL,
         method: method || 'POST',
         data: requestData,
+        signal,
         headers: {
           ...headers
         },
