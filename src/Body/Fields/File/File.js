@@ -14,7 +14,7 @@ const File = ({
   isMultiple = false,
   inputContent,
   autoUpload = true,
-  getErrors = (error) => {
+  getErrors = error => {
     // console.log(error)
   },
   validation,
@@ -29,7 +29,7 @@ const File = ({
   const [loadingState, setLoadingState] = useState({})
   const { accept } = props
 
-  const checkFileValidity = (files) => {
+  const checkFileValidity = files => {
     if (accept && accept.trim()) {
       let isValid = true
       for (let element of files) {
@@ -53,7 +53,7 @@ const File = ({
   }
   const fileSubmitValidation = {
     HTMLValidate: true,
-    custom: (value) => {
+    custom: value => {
       if (value === 'Loading') {
         return 'Upload in progress, please wait'
       } else {
@@ -66,16 +66,23 @@ const File = ({
     <div>
       <Custom id={id} validation={validation} {...props}>
         {({ handleChange, value }) => {
+          if (String(allFiles.current) !== String(value)) {
+            if (value === null) {
+              allFiles.current = []
+            } else {
+              allFiles.current = value
+            }
+          }
           const handleCallback = (fileId, status, responce, newValues) => {
             if (status === 200) {
               loading.current = 'Done'
-              setFileList((prev) => {
-                return prev.filter((file) => {
+              setFileList(prev => {
+                return prev.filter(file => {
                   return file.id !== fileId && !file.responce
                 })
               })
               handleChange({ id: `${id}error`, value: 'Done' })
-              let newFiles = newValues.map((file) => {
+              let newFiles = newValues.map(file => {
                 if (file.id === fileId) {
                   file.responce = responce
                 }
@@ -88,7 +95,7 @@ const File = ({
               handleChange({ id: `${id}error`, value: 'Canceled' })
               console.log(`You have canceled ${newValues?.name} file upload`)
             } else if (status === 0) {
-              const incorrectFile = fileList.find((item) => item.id === fileId)
+              const incorrectFile = fileList.find(item => item.id === fileId)
               console.log(
                 `We are unable to upload your file named ${incorrectFile?.name}. Please if it’s possible try to rename it, otherwise contact us.`
               )
@@ -101,14 +108,14 @@ const File = ({
               handleChange({ id: `${id}error`, value: 'Loading' })
             }
 
-            setLoadingState((prev) => ({ ...prev, [fileId]: percentage }))
+            setLoadingState(prev => ({ ...prev, [fileId]: percentage }))
           }
 
-          const acceptFiles = (files) => {
+          const acceptFiles = files => {
             const newFiles = correctFiles(files)
             allFiles.current.push(...newFiles)
             loading.current = 'Start'
-            setFileList((prev) => [...prev, ...newFiles])
+            setFileList(prev => [...prev, ...newFiles])
             handleChange({ id: `${id}error`, value: 'Loading' })
             uploadFiles(
               newFiles,
@@ -119,30 +126,30 @@ const File = ({
             )
           }
 
-          const handleRemove = (fileId) => {
-            setFileList((prev) => {
-              return prev.filter((file) => {
+          const handleRemove = fileId => {
+            setFileList(prev => {
+              return prev.filter(file => {
                 return file.id !== fileId
               })
             })
             allFiles.current =
               allFiles.current &&
-              allFiles.current.filter((file) => file.id !== fileId)
-            const _value = value?.filter((file) => file.id !== fileId)
+              allFiles.current.filter(file => file.id !== fileId)
+            const _value = value?.filter(file => file.id !== fileId)
             if (_value && _value.length)
               handleChange({ id, value: [..._value] })
             else handleChange({ id, value: null })
             ABORT_REQUEST_CONTROLLERS.get(fileId)?.abort()
           }
 
-          const handleFileDrop = (e) => {
+          const handleFileDrop = e => {
             e.preventDefault()
             const files = e.dataTransfer.files
             if (checkFileValidity(files)) return
             acceptFiles(files)
           }
 
-          const handleFileUpload = (e) => {
+          const handleFileUpload = e => {
             const files = e.target.files
             if (checkFileValidity(files)) return
             acceptFiles(files)
@@ -176,9 +183,9 @@ const File = ({
                   {isMultiple || (!isMultiple && (!value || !value.length)) ? (
                     <div
                       className='boomFileUpload-drop__content'
-                      onDragOver={(e) => e.preventDefault()}
-                      onDragEnter={(e) => e.preventDefault()}
-                      onDragLeave={(e) => e.preventDefault()}
+                      onDragOver={e => e.preventDefault()}
+                      onDragEnter={e => e.preventDefault()}
+                      onDragLeave={e => e.preventDefault()}
                       onDrop={handleFileDrop}
                       onClick={() => fileInputRef.current.click()}
                     >
@@ -193,7 +200,7 @@ const File = ({
                         {...props}
                         multiple={isMultiple}
                         type='file'
-                        onClick={(e) => {
+                        onClick={e => {
                           e.stopPropagation()
                         }}
                         onChange={handleFileUpload}
