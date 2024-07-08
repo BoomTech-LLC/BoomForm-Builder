@@ -76,7 +76,7 @@ const Signature = (props) => {
               penColor='#000'
               canvasProps={{
                 width: canvasWidth,
-                height: '100px',
+                height: '200px',
                 className: 'signatureCanvas'
               }}
               onEnd={() => handleTrim(handleChange)}
