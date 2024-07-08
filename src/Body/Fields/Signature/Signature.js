@@ -1,11 +1,27 @@
-import React, { useState, useEffect, useCallback, Fragment } from 'react'
+import React, { useState, useEffect, useCallback, Fragment, useRef } from 'react'
 import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
 const Signature = (props) => {
   const { id, initial, validation, clearBtnContent = 'Clear' } = props
-
   const [sigPadRef, setSigPadRef] = useState(null)
+  const canvasContainerRef = useRef(null)
+  const [canvasWidth, setCanvasWidth] = useState(0)
+
+  const getParentWidth = () => {
+    if (canvasContainerRef.current) {
+      const parentWidth = canvasContainerRef.current.offsetWidth
+      setCanvasWidth(parentWidth)
+    }
+  }
+
+  useEffect(() => {
+    getParentWidth()
+    window.addEventListener('resize', getParentWidth)
+    return () => {
+      window.removeEventListener('resize', getParentWidth)
+    }
+  }, [])
 
   useEffect(() => {
     if (initial && sigPadRef) sigPadRef.fromData(initial.data)
@@ -54,12 +70,13 @@ const Signature = (props) => {
           sigPadRef?.clear()
         }
         return (
-          <div onClick={() => handleOnBlur(handleBlur)}>
+          <div ref={canvasContainerRef} onClick={() => handleOnBlur(handleBlur)}>
             <SignatureCanvas
               ref={onRefSet}
               penColor='#000'
               canvasProps={{
-                height: '200px',
+                width: canvasWidth,
+                height: '100px',
                 className: 'signatureCanvas'
               }}
               onEnd={() => handleTrim(handleChange)}
