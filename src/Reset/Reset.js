@@ -7,13 +7,15 @@ const Reset = ({ text, reset }) => {
   }
 
   return (
-    <div className={'boomFomr-reset-button'}>
+    <div className={'boomForm-resetButton__content'}>
       <button
         onClick={e => {
           handleClick(e)
         }}
       >
-        {text}
+        {text.length > 10 ? 
+          text.substring(0,10) + "..."  
+        : text}
       </button>
     </div>
   )
