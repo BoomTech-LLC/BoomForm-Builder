@@ -24,7 +24,7 @@ const SubmitButton = ({
   const { values } = state
   const { text, prefix, suffix } = button || { text: 'Submit' }
   const { name, description, isPrint, onSubmit, onSubmitFailed, resetButton } = global
-  const { resetText , resetEnabled} = resetButton
+  const { resetText , resetEnabled, onReset} = resetButton
   const { fee, total, setTotal, getTotalValue } = payment
 
   const formatedTotal = formatPrice({ payment, price: total })
@@ -71,7 +71,7 @@ const SubmitButton = ({
       </button>
       {prefix}
       {resetEnabled && (
-        <Reset text={resetText} reset={actions.handleReset}/>
+        <Reset text={resetText} onReset={onReset} reset={actions.handleReset}/>
       )}
       {isPrint && (
         <Print fields={fields} name={name} description={description} />

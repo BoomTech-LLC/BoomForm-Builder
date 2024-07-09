@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Reset = ({ text, reset }) => {
+const Reset = ({ text, onReset, reset }) => {
   const handleClick = e => {
     e.preventDefault()
-    reset()
+    if(onReset) onReset(reset);
   }
 
   return (
@@ -12,11 +12,8 @@ const Reset = ({ text, reset }) => {
         onClick={e => {
           handleClick(e)
         }}
-      >
-        {text.length > 10 ? 
-          text.substring(0,10) + "..."  
-        : text}
-      </button>
+        dangerouslySetInnerHTML={{ __html: text.length > 10 ? text.substring(0, 15) + "..." : text }}
+      />        
     </div>
   )
 }
