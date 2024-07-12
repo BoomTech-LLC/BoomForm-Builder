@@ -12,7 +12,7 @@ const Reset = ({ text, onReset, reset }) => {
         onClick={e => {
           handleClick(e)
         }}
-        dangerouslySetInnerHTML={{ __html: text.length > 10 ? text.substring(0, 15) + "..." : text }}
+        dangerouslySetInnerHTML={text}
       />        
     </div>
   )
