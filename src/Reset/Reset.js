@@ -4,6 +4,7 @@ const Reset = ({ text = 'Reset', onReset, reset }) => {
   const handleClick = e => {
     e.preventDefault()
     if (onReset) onReset(reset)
+    else reset()
   }
 
   return (
