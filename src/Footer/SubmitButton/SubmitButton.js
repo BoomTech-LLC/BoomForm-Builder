@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { formValueCheker } from '../../Helpers/logic'
 import { formatPrice, getTotalPrice } from './../../Helpers/payment'
 import Print from './../../Print/Print'
+import Reset from '../../Reset/Reset'
 
 const SubmitButton = ({
   global,
@@ -22,7 +23,8 @@ const SubmitButton = ({
   const { state, actions } = useContext(Context)
   const { values } = state
   const { text, prefix, suffix } = button || { text: 'Submit' }
-  const { name, description, isPrint, onSubmit, onSubmitFailed } = global
+  const { name, description, isPrint, onSubmit, onSubmitFailed, resetButton = {}} = global
+  const { content , enabled, onReset} = resetButton
   const { fee, total, setTotal, getTotalValue } = payment
 
   const formatedTotal = formatPrice({ payment, price: total })
@@ -68,6 +70,9 @@ const SubmitButton = ({
         </span>
       </button>
       {prefix}
+      {enabled && (
+        <Reset text={content} onReset={onReset} reset={actions.handleReset}/>
+      )}
       {isPrint && (
         <Print fields={fields} name={name} description={description} />
       )}
