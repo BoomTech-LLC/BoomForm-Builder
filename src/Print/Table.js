@@ -75,18 +75,9 @@ const Table = ({ fields }) => {
           const file = values[id][value]?.responce?.data
 
           if (file) {
-            console.log(file, 'file_builder')
             if (isImage(file.name && file.name)) {
               fileElements.push(
-                <div
-                  key={`img-${index++}`}
-                  style={{
-                    width: '50%',
-                    height: 'auto',
-                    marginRight: '5px',
-                    marginBottom: '10px'
-                  }}
-                >
+                <div key={`img-${index++}`}>
                   <img
                     style={{
                       width: '50%',
@@ -102,13 +93,7 @@ const Table = ({ fields }) => {
             } else {
               fileElements.push(
                 <div key={`link-${index++}`}>
-                  <a
-                    href={file?.path}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    {file?.name || file?.path}
-                  </a>
+                  <a href={file?.path}>{file?.name || file?.path}</a>
                 </div>
               )
             }
