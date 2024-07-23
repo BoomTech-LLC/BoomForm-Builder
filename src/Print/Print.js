@@ -9,7 +9,9 @@ const Print = ({ fields, name, description }) => {
     pri.document.write(content.innerHTML)
     pri.document.close()
     pri.focus()
-    pri.print()
+    setTimeout(() => {
+      pri.print()
+    }, 200)
   }
 
   return (
