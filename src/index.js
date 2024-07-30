@@ -2,6 +2,7 @@ import React from 'react';
 import { BoomForm } from 'boomform';
 import Form from './Form';
 import countries from './Helpers/countries';
+import months from './Helpers/months';
 
 const Builder = ({
   global = {},
@@ -42,4 +43,4 @@ const Builder = ({
   );
 };
 
-export { Builder, countries };
+export { Builder, countries, months };
