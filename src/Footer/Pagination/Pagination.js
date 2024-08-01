@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import Counter from './Counter';
-import Buttons from './Buttons/Buttons';
-import Numbers from './Buttons/Numbers';
-import { getShowableData } from '../../Helpers/pagination';
+import React, { Fragment } from 'react'
+import Counter from './Counter'
+import Buttons from './Buttons/Buttons'
+import Numbers from './Buttons/Numbers'
+import { getShowableData } from '../../Helpers/pagination'
 
 const Pagination = ({
   formRef,
@@ -17,15 +17,16 @@ const Pagination = ({
   logicIds,
   formId,
   onLocalStorageSubmitFormDataChange,
-  onStorageButtonClick
+  onStorageButtonClick,
+  RomanNumerals
 }) => {
-  const { pageCounter, buttons, pages } = pagination;
-  const { type } = buttons;
+  const { pageCounter, buttons, pages } = pagination
+  const { type } = buttons
   const { showableCurrentPage, pagesLength } = getShowableData({
     currentPage,
     logicIds,
     pagination
-  });
+  })
   return (
     <>
       {pageCounter && (
@@ -45,7 +46,9 @@ const Pagination = ({
           logicIds={logicIds}
           formId={formId}
           onStorageButtonClick={onStorageButtonClick}
-          onLocalStorageSubmitFormDataChange={onLocalStorageSubmitFormDataChange}
+          onLocalStorageSubmitFormDataChange={
+            onLocalStorageSubmitFormDataChange
+          }
         />
       ) : (
         <Numbers
@@ -59,10 +62,11 @@ const Pagination = ({
           payment={payment}
           logic={logic}
           logicIds={logicIds}
+          RomanNumerals={RomanNumerals}
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination
