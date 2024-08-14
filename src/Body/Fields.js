@@ -54,6 +54,15 @@ const generatePageItems = (
     })
 }
 
+const safeLayout = layout =>
+  layout.map(item => ({
+    i: item.i || 'default',
+    x: typeof item.x === 'number' ? item.x : 0,
+    y: typeof item.y === 'number' ? item.y : 0,
+    w: typeof item.w === 'number' ? item.w : 1,
+    h: typeof item.h === 'number' ? item.h : 1
+  }))
+
 const Fields = ({
   fields,
   payment,
@@ -76,6 +85,10 @@ const Fields = ({
     printableFields
   })
 
+  const processedLayouts = printableFields.map((_, index) =>
+    safeLayout(layout[index] || [])
+  )
+
   return (
     <>
       {printableFields.map((pageFields, index) => {
@@ -87,7 +100,8 @@ const Fields = ({
         ) {
           showButton = printableFields.length - 1 === index
         }
-        const layout_ = layout[index]
+        const layout_ = processedLayouts[index] || []
+
         return (
           <div key={'page' + index} className='boomForm-fields'>
             {gridEnabled ? (

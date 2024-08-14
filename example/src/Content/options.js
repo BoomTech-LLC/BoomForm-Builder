@@ -141,48 +141,48 @@ const defaultOptions = {
       isBounded: false,
       isDraggable: false,
       isResizable: false,
-      containerPadding: [0, 0],
-      layout: {
-        1: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 2,
-          x: 0,
-          y: 0
-        },
-        2: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 2,
-          x: 2,
-          y: 0
-        },
-        3: {
-          h: 110,
-          maxH: 110,
-          maxW: 4,
-          minH: 110,
-          minW: 2,
-          w: 4,
-          x: 0,
-          y: 238
-        },
-        4: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 3,
-          x: 0,
-          y: 0
-        }
+      containerPadding: [0, 0]
+    },
+    layout: {
+      1: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 2,
+        x: 0,
+        y: 0
+      },
+      2: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 2,
+        x: 2,
+        y: 0
+      },
+      3: {
+        h: 110,
+        maxH: 110,
+        maxW: 4,
+        minH: 110,
+        minW: 2,
+        w: 4,
+        x: 0,
+        y: 238
+      },
+      4: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 3,
+        x: 0,
+        y: 0
       }
     }
   },
@@ -234,48 +234,48 @@ const defaultOptions = {
       isBounded: false,
       isDraggable: false,
       isResizable: false,
-      containerPadding: [0, 0],
-      layout: {
-        1: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 2,
-          x: 0,
-          y: 0
-        },
-        2: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 2,
-          x: 2,
-          y: 0
-        },
-        3: {
-          h: 110,
-          maxH: 110,
-          maxW: 4,
-          minH: 110,
-          minW: 2,
-          w: 4,
-          x: 0,
-          y: 238
-        },
-        4: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 3,
-          x: 0,
-          y: 0
-        }
+      containerPadding: [0, 0]
+    },
+    layout: {
+      1: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 2,
+        x: 0,
+        y: 0
+      },
+      2: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 2,
+        x: 2,
+        y: 0
+      },
+      3: {
+        h: 110,
+        maxH: 110,
+        maxW: 4,
+        minH: 110,
+        minW: 2,
+        w: 4,
+        x: 0,
+        y: 238
+      },
+      4: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 3,
+        x: 0,
+        y: 0
       }
     }
   },
@@ -315,48 +315,48 @@ const defaultOptions = {
       isBounded: false,
       isDraggable: false,
       isResizable: false,
-      containerPadding: [0, 0],
-      layout: {
-        1: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 2,
-          x: 0,
-          y: 0
-        },
-        2: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 2,
-          x: 2,
-          y: 0
-        },
-        3: {
-          h: 110,
-          maxH: 110,
-          maxW: 4,
-          minH: 110,
-          minW: 2,
-          w: 4,
-          x: 0,
-          y: 238
-        },
-        4: {
-          h: 119,
-          maxH: 119,
-          maxW: 4,
-          minH: 119,
-          minW: 1,
-          w: 3,
-          x: 0,
-          y: 0
-        }
+      containerPadding: [0, 0]
+    },
+    layout: {
+      1: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 2,
+        x: 0,
+        y: 0
+      },
+      2: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 2,
+        x: 2,
+        y: 0
+      },
+      3: {
+        h: 110,
+        maxH: 110,
+        maxW: 4,
+        minH: 110,
+        minW: 2,
+        w: 4,
+        x: 0,
+        y: 238
+      },
+      4: {
+        h: 119,
+        maxH: 119,
+        maxW: 4,
+        minH: 119,
+        minW: 1,
+        w: 3,
+        x: 0,
+        y: 0
       }
     },
     pagination: {
@@ -603,6 +603,6 @@ const defaultOptions = {
       }
     ]
   }
-};
+}
 
-export default defaultOptions;
+export default defaultOptions
