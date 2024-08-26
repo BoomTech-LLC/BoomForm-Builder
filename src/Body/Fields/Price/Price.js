@@ -20,7 +20,7 @@ const Price = ({
 }) => {
   return (
     <>
-      <span>{currency}</span>
+      <span className='currency__symbol'>{currency}</span>
       <span className='price__first'>
         <Input
           {...props}
@@ -33,7 +33,7 @@ const Price = ({
       </span>
       {isDecimal && (
         <>
-          <span>{separator}</span>
+          <span className='price__separator'>{separator}</span>
           <span className='price__last'>
             <Input
               {...props}
