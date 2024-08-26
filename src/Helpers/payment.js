@@ -23,7 +23,7 @@ export const currencys = {
 }
 
 export const formatPrice = ({ payment, price }) => {
-  const { showPrices, currency, format } = payment
+  const { showPrices, currency, format, numberFormat } = payment
 
   if (
     showPrices &&
@@ -31,12 +31,45 @@ export const formatPrice = ({ payment, price }) => {
     price !== null &&
     Number(price) !== NaN &&
     price > 0
-  )
+  ) {
+    let formattedPrice
+
+    switch (numberFormat) {
+      case '10 000':
+        formattedPrice = price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+        break
+      case '10,000':
+        formattedPrice = price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        break
+      case '10.000':
+        formattedPrice = price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        break
+      case '10000':
+        formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '')
+        break
+      case '10,000.00':
+        formattedPrice = price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        break
+      case '10,000.0':
+        formattedPrice = price.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        break
+      case '10K':
+        formattedPrice = (price / 1000).toFixed(0) + 'K'
+        break
+      case '10k':
+        formattedPrice = (price / 1000).toFixed(0) + 'k'
+        break
+      default:
+        formattedPrice = price.toString()
+    }
+
     return (
       ' ' +
-      format.toString().replace('100', price).replace('$', currencys[currency])
+      format.replace('100', formattedPrice).replace('$', currencys[currency])
     )
-  else return ''
+  } else {
+    return ''
+  }
 }
 
 export const getTotalPrice = ({
