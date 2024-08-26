@@ -23,7 +23,7 @@ export const currencys = {
 }
 
 export const formatPrice = ({ payment, price }) => {
-  const { showPrices, currency, format, largeNumbersFormat } = payment
+  const { showPrices, currency, format, numberFormat } = payment
 
   if (
     showPrices &&
@@ -34,7 +34,7 @@ export const formatPrice = ({ payment, price }) => {
   ) {
     let formattedPrice
 
-    switch (largeNumbersFormat) {
+    switch (numberFormat) {
       case '10 000':
         formattedPrice = price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
         break
