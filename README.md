@@ -14,7 +14,7 @@
 <br />
 <p align="center">
   <a href="https://form.boomform.com/">
-    <img src="https://cdn.boomte.ch/images/boomtechdeveloper/Boomform-builder-logo.svg" alt="Logo" width="260" height="120">
+    <img src="https://general.boomte.ch/images/npm/Boomform-builder-logo.svg" alt="Logo" width="260" height="120">
   </a>
 
   <p align="center">
@@ -74,9 +74,9 @@ export default App
 
 ## Made in BoomTech 
 
-<img src="https://cdn.boomte.ch/images/boomtechdeveloper/logo.svg" height="100">
+<img src="https://general.boomte.ch/images/npm/builder-logo.svg" height="100">
 
-![This is an image](https://cdn.boomte.ch/images/TikoN.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/TikoP.png?x=1) | ![This is an image](https://cdn.boomte.ch/images/SahakS.png?x=2) | ![This is an image](https://cdn.boomte.ch/images/HrachB.jpeg) | ![This is an image](https://cdn.boomte.ch/images/TigranV.jpeg) 
+![This is an image](https://general.boomte.ch/images/npm/Tikon.png) | ![This is an image](https://general.boomte.ch/images/npm/Tikop.png) | ![This is an image](https://general.boomte.ch/images/npm/Sahaks.png) | ![This is an image](https://general.boomte.ch/images/npm/Hrachb.png) | ![This is an image](https://general.boomte.ch/images/npm/Tikov.png)
 -- | -- | -- | -- | -- 
 Tigran Nazaryan | Tigran Paployan | Sahak Sahakyan | Hrach Bekejyan | Tigran Vardanyan
 
