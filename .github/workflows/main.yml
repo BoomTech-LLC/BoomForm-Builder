@@ -1,4 +1,4 @@
-name: Main
+name: Update Boomform Builder Version(Publish in NPM)
 
 on:
     pull_request:
