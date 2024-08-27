@@ -1,8 +1,8 @@
 name: Update Boomform Builder Version(Publish in NPM)
 
 on:
-    pull_request:
-        branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   build:
