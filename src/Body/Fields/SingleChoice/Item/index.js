@@ -20,7 +20,8 @@ const Item = ({ id, option, payment, classnameprefix, validation }) => {
             label +
             formatPrice({
               payment,
-              price
+              price,
+              hasOptions: true
             })
         }}
       ></span>
