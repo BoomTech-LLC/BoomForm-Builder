@@ -22,9 +22,9 @@ export const currencys = {
   NZD: 'NZ$'
 }
 
-export const formatPrice = ({ payment, price, hasOptions }) => {
+export const formatPrice = ({ payment, price, shouldFormat }) => {
   const { showPrices, currency, format, numberFormat } = payment
-  if (hasOptions) {
+  if (shouldFormat) {
     if (
       showPrices &&
       price !== '' &&

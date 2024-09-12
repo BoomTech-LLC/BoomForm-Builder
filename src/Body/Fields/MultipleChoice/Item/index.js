@@ -44,7 +44,7 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
             formatPrice({
               payment,
               price,
-              hasOptions: true
+              shouldFormat: true
             })
         }}
       ></span>

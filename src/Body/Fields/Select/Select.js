@@ -24,7 +24,7 @@ const DropDown = ({
         if (option.label)
           option.label =
             option.label +
-            formatPrice({ payment, price: option.price, hasOptions: true })
+            formatPrice({ payment, price: option.price, shouldFormat: true })
       })
 
     set_Options(newOptions)
