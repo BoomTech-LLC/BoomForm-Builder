@@ -47,7 +47,7 @@ const List = ({
           <div
             className='country_code_item_img'
             style={{
-              backgroundImage: `url(https://cdn.boomte.ch/images/flags/${key.toLowerCase()}.svg)`,
+              backgroundImage: `url(https://form.boomte.ch/images/flags/${key.toLowerCase()}.svg)`,
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
             }}

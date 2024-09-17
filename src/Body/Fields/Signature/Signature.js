@@ -2,8 +2,14 @@ import React, { useState, useEffect, useCallback, Fragment, useRef } from 'react
 import SignatureCanvas from 'react-signature-canvas'
 import { Custom, Input } from 'boomform'
 
-const Signature = (props) => {
-  const { id, initial, validation, clearBtnContent = 'Clear' } = props
+const Signature = props => {
+  const {
+    id,
+    initial,
+    validation,
+    clearBtnContent = 'Clear',
+    classnameprefix
+  } = props
   const [sigPadRef, setSigPadRef] = useState(null)
   const canvasContainerRef = useRef(null)
   const [canvasWidth, setCanvasWidth] = useState(0)
@@ -21,7 +27,7 @@ const Signature = (props) => {
     return () => {
       window.removeEventListener('resize', getParentWidth)
     }
-  }, [])
+  }, [classnameprefix])
 
   useEffect(() => {
     if (initial && sigPadRef) sigPadRef.fromData(initial.data)
