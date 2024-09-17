@@ -23,7 +23,8 @@ const DropDown = ({
       newOptions.map((option) => {
         if (option.label)
           option.label =
-            option.label + formatPrice({ payment, price: option.price })
+            option.label +
+            formatPrice({ payment, price: option.price, shouldFormat: true })
       })
 
     set_Options(newOptions)
