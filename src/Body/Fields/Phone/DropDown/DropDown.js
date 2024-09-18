@@ -64,7 +64,7 @@ const DropDown = ({ id, defaultCountryCode }) => {
                 <div
                   className='country_code_image'
                   style={{
-                    backgroundImage: `url(https://cdn.boomte.ch/images/flags/${value.toLowerCase()}.svg)`,
+                    backgroundImage: `url(https://form.boomte.ch/images/flags/${value.toLowerCase()}.svg)`,
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                   }}
