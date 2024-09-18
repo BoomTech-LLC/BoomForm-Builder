@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment } from 'react'
 import { Input, Select } from 'boomform'
 import { getTimeFields } from './../../../Helpers/time'
 import { getInitial, getValidation } from './../../../Helpers/global'
@@ -15,10 +15,6 @@ const Time = ({
   payment,
   ...props
 }) => {
-  const [amPm, setAmPm] = useState(placeholders.format)
-  useEffect(() => {
-    setAmPm(placeholders.format)
-  }, [placeholders.format])
   return (
     <>
       {getTimeFields(format, placeholders).map(item => {
@@ -45,10 +41,10 @@ const Time = ({
               <Select
                 {...props}
                 id={`${id}.${key}`}
-                initial={initials?.format || 1}
+                initial={initials?.format === 'PM' ? 2 : 1}
                 options={[
-                  { key: 1, value: amPm },
-                  { key: 2, value: amPm === 'AM' ? 'PM' : 'AM' }
+                  { key: 1, value: 'AM' },
+                  { key: 2, value: 'PM' }
                 ]}
               />
             )}
