@@ -17,7 +17,7 @@ const Time = ({
 }) => {
   return (
     <>
-      {getTimeFields(format, placeholders).map((item) => {
+      {getTimeFields(format, placeholders).map(item => {
         const { key, placeholder } = item
         return (
           <Fragment key={`${id}.${key}`}>
@@ -41,7 +41,7 @@ const Time = ({
               <Select
                 {...props}
                 id={`${id}.${key}`}
-                initial={initials?.format || 1}
+                initial={initials?.format === 'PM' ? 2 : 1}
                 options={[
                   { key: 1, value: 'AM' },
                   { key: 2, value: 'PM' }
