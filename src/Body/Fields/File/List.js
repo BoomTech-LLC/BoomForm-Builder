@@ -16,6 +16,7 @@ const List = ({ value, handleRemove, loadingState, listType }) => {
               handleRemove={handleRemove}
               type={type}
               size={size}
+              completedContent={completedContent}
               listType={listType}
             />
           )
@@ -35,6 +36,7 @@ const List = ({ value, handleRemove, loadingState, listType }) => {
             handleRemove={handleRemove}
             type={type}
             size={size}
+            completedContent={completedContent}
             listType={listType}
           />
         )

@@ -8,6 +8,7 @@ const Preview = ({
   handleRemove,
   type,
   size,
+  completedContent,
   listType
 }) => {
   const onRemove = () => handleRemove(id)
@@ -48,7 +49,7 @@ const Preview = ({
     <div className='boomFileUpload__preview'>
       {preview}
       <div className='boomFileUpload__info'>
-        <span className='boomFileUpload-file__name'>{name}</span>
+        <span className='boomFileUpload-file__name'>{name} {completedContent && makeSize(size)}</span>
         <span className='boomFileUpload-fileRemove__btn' onClick={onRemove}>
           x
         </span>
