@@ -5,10 +5,12 @@ import {
   ABORT_REQUEST_CONTROLLERS
 } from './../../../Helpers/files'
 import List from './List'
+import Cloud from './Cloud'
 import { Custom, Input } from 'boomform'
 
 const File = ({
   id,
+  icon,
   initial,
   classnameprefix,
   isMultiple = false,
@@ -189,6 +191,7 @@ const File = ({
                       onDrop={handleFileDrop}
                       onClick={() => fileInputRef.current.click()}
                     >
+                      {icon.enabled ? <Cloud icon={icon} /> : null}
                       <div className='boomFileUpload-input__content'>
                         {inputContent ||
                           `Drag File${
