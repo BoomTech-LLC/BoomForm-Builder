@@ -66,7 +66,7 @@ const SubmitButton = ({
       <button onClick={handleClick}>
         <span>
           {text}
-          {formatedTotal}
+          {payment.showTotal ? formatedTotal : null}
         </span>
       </button>
       {prefix}
