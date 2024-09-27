@@ -9,15 +9,18 @@ const MultipleChoice = ({
   classnameprefix,
   quantity,
   validation,
-  payment
+  payment,
+  limit: limitState
 }) => {
-  const [hasInitial] = options.filter((option) => option.checked)
+  const [hasInitial] = options.filter(option => option.checked)
 
   return (
     <>
-      {options.map((option) => {
-        const { key } = option
-
+      {options.map(option => {
+        const { key, count = 0, limit: optionLimit = 0 } = option
+        if (limitState && optionLimit > 0 && count === optionLimit) {
+          return null
+        }
         if (key === 'other')
           return (
             <Other
