@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import Preview from './Preview'
-const List = ({ value, handleRemove, loadingState, listType }) => {
+const List = ({ value, handleRemove, loadingState, listType, completedContent = "" }) => {
   switch (listType) {
     case 'loaded': {
       return value.map((file) => {

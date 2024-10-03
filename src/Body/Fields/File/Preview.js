@@ -54,8 +54,12 @@ const Preview = ({
           x
         </span>
         <progress value={percentage} max='100'></progress>
-        <span className='boomFileUpload-file__size'>
-          {makeSize((size * percentage) / 100)}{percentage!=100 && ` of ${makeSize(size)}`}
+        <span className="boomFileUpload-file__size"> 
+          {listType === "loaded"
+            ? completedContent
+            : `${makeSize((size * percentage) / 100)}${
+                percentage !== 100 ? ` of ${makeSize(size)}` : ""
+              }`}
         </span>
         <span className='boomFileUpload-file_progress'>{percentage}%</span>
       </div>
