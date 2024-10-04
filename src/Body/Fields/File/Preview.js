@@ -13,7 +13,7 @@ const Preview = ({
 }) => {
   const onRemove = () => handleRemove(id)
 
-  const makeSize = (bytes) => {
+  const makeSize = bytes => {
     if (bytes >= 1073741824) {
       bytes = (bytes / 1073741824).toFixed(2) + ' GB'
     } else if (bytes >= 1048576) {
@@ -49,16 +49,18 @@ const Preview = ({
     <div className='boomFileUpload__preview'>
       {preview}
       <div className='boomFileUpload__info'>
-        <span className='boomFileUpload-file__name'>{name} {completedContent && makeSize(size)}</span>
+        <span className='boomFileUpload-file__name'>
+          {name} {completedContent && makeSize(size)}
+        </span>
         <span className='boomFileUpload-fileRemove__btn' onClick={onRemove}>
           x
         </span>
         <progress value={percentage} max='100'></progress>
-        <span className="boomFileUpload-file__size"> 
-          {listType === "loaded" && completedContent
+        <span className='boomFileUpload-file__size'>
+          {listType === 'loaded'
             ? completedContent
             : `${makeSize((size * percentage) / 100)}${
-                percentage !== 100 ? ` of ${makeSize(size)}` : ""
+                percentage !== 100 ? ` of ${makeSize(size)}` : ''
               }`}
         </span>
         <span className='boomFileUpload-file_progress'>{percentage}%</span>
