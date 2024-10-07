@@ -1,9 +1,15 @@
 import React, { memo } from 'react'
 import Preview from './Preview'
-const List = ({ value, handleRemove, loadingState, listType }) => {
+const List = ({
+  value,
+  handleRemove,
+  loadingState,
+  listType,
+  completedContent = ''
+}) => {
   switch (listType) {
     case 'loaded': {
-      return value.map((file) => {
+      return value.map(file => {
         const { id, type, size, originalName } = file
         if (file.responce) {
           return (
@@ -16,6 +22,7 @@ const List = ({ value, handleRemove, loadingState, listType }) => {
               handleRemove={handleRemove}
               type={type}
               size={size}
+              completedContent={completedContent}
               listType={listType}
             />
           )
@@ -23,7 +30,7 @@ const List = ({ value, handleRemove, loadingState, listType }) => {
       })
     }
     case 'loading': {
-      return value.map((file) => {
+      return value.map(file => {
         const { id, type, size, originalName } = file
         return (
           <Preview
@@ -35,6 +42,7 @@ const List = ({ value, handleRemove, loadingState, listType }) => {
             handleRemove={handleRemove}
             type={type}
             size={size}
+            completedContent={completedContent}
             listType={listType}
           />
         )
