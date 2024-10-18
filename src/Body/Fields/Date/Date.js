@@ -6,23 +6,19 @@ import moment from 'moment'
 const Date = ({ validation = {}, payment, ...props }) => {
   const { min, max, hideDays, disableDates, hiddenCustomDays, isCustom } =
     validation
-
-  if (min || max || (hideDays && disableDates)) {
+  if (min || max || disableDates) {
     validation = {
       ...validation,
-      custom: (value) => {
+      custom: value => {
         if (value) {
-          // const dayName = getDayName(value)
           const dayName = moment(value).format('dddd')
           const customDay = moment(value).format('MMM D, YYYY')
           if (min?.value > value) return min?.msg
           if (max?.value < value) return max?.msg
-          // if (hideDays?.monday && value == '2024-10-21')
-          //   return 'pick nomrallll date'
-          if (hideDays[dayName] && !isCustom) {
+          if (disableDates && hideDays[dayName] && !isCustom) {
             return `${dayName}s are disabled. Please pick another date. `
           }
-          if (hiddenCustomDays.includes(value) && isCustom) {
+          if (disableDates && hiddenCustomDays.includes(value) && isCustom) {
             return `${customDay} is disabled. Please pick another date.`
           }
         }
