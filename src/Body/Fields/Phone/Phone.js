@@ -14,7 +14,13 @@ const Phone = ({
   return (
     <>
       <DropDown id={id} defaultCountryCode={defaultCountryCode} />
-      <Input id={`${id}.phone`} type='phone' {...props} />
+      <Input
+        id={`${id}.phone`}
+        {...props}
+        type="phone"
+        name="phone"
+        autocomplete="tel"
+      />
     </>
   )
 }
