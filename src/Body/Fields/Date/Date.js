@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input } from 'boomform'
 import { iphoneCheck } from '../../../Helpers/global'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 const Date = ({ validation = {}, payment, ...props }) => {
   const { min, max, hideDays, disableDates, hiddenCustomDays, isCustom } =
@@ -11,8 +11,8 @@ const Date = ({ validation = {}, payment, ...props }) => {
       ...validation,
       custom: value => {
         if (value) {
-          const dayName = moment(value).format('dddd')
-          const customDay = moment(value).format('MMM D, YYYY')
+          const dayName = dayjs(value).format('dddd')
+          const customDay = dayjs(value).format('MMM D, YYYY')
           if (min?.value > value) return min?.msg
           if (max?.value < value) return max?.msg
           if (disableDates && hideDays[dayName] && !isCustom) {
