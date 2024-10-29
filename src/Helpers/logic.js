@@ -349,10 +349,10 @@ export const getFieldValue = (type, value, field, values, item) => {
     }
     case 'file': {
       let files = ''
-      for (let i = 0; i < value.length; i++) {
-        files += value[i].name + ' , '
+      for (let i = 0; i < value?.length; i++) {
+        files += value[i]?.name + ' , '
       }
-      return files.slice(0, -2)
+      return files?.slice(0, -2)
     }
     case 'multipleChoice': {
       if (!field && !field.options) return ''
