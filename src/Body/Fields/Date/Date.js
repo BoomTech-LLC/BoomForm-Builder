@@ -1,12 +1,12 @@
 import React from 'react'
+import dayjs from 'dayjs'
 import { Input } from 'boomform'
 import { iphoneCheck } from '../../../Helpers/global'
-import dayjs from 'dayjs'
 
 const Date = ({ validation = {}, payment, ...props }) => {
-  const { min, max, hideDays, disableDates, hiddenCustomDays, isCustom } =
-    validation
+  const { min, max, disableDates } = validation
   if (min || max || disableDates) {
+    const { hideDays, hiddenCustomDays = [], isCustom } = validation
     validation = {
       ...validation,
       custom: value => {
@@ -15,16 +15,20 @@ const Date = ({ validation = {}, payment, ...props }) => {
           const customDay = dayjs(value).format('MMM D, YYYY')
           if (min?.value > value) return min?.msg
           if (max?.value < value) return max?.msg
-          if (disableDates && hideDays[dayName] && !isCustom) {
+          if (disableDates && !isCustom && hideDays[dayName]) {
             return `${dayName}s are disabled. Please pick another date. `
           }
-          if (disableDates && hiddenCustomDays.includes(value) && isCustom) {
+          if (disableDates && isCustom && hiddenCustomDays.includes(value)) {
             return `${customDay} is disabled. Please pick another date.`
           }
         }
         return false
       }
     }
+    delete validation.hideDays
+    delete validation.disableDates
+    delete validation.hiddenCustomDays
+    delete validation.isCustom
   }
 
   const handleChange = ({ event }) => {

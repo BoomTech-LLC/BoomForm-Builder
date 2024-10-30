@@ -6,20 +6,19 @@ const Phone = ({
   label,
   classnameprefix,
   id,
-  defaultCountryCode ='AF',
+  defaultCountryCode = 'AF',
   payment,
   ...props
 }) => {
-
   return (
     <>
       <DropDown id={id} defaultCountryCode={defaultCountryCode} />
       <Input
         id={`${id}.phone`}
         {...props}
-        type="phone"
-        name="phone"
-        autocomplete="tel"
+        type='phone'
+        name='phone'
+        autoComplete='tel'
       />
     </>
   )
