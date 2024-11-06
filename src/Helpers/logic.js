@@ -49,8 +49,10 @@ export const conditionalLogic = ({
             )
               return true
           } else if (
-            Object.keys(fieldValue[i]).includes('value') &&
-            fieldValue[i].value == value
+            (fieldValue[i].hasOwnProperty('value') &&
+              fieldValue[i].value == value) ||
+            (fieldValue[i].hasOwnProperty('label') &&
+              fieldValue[i].label == value)
           ) {
             return true
           }
