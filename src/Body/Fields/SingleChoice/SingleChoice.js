@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import classNames from 'classnames/bind'
+import { getQuantityValidations } from '../../../Helpers/quantity'
 import Quantity from './../Quantity/Quantity'
 import Item from './Item'
 import Other from './Other'
@@ -12,6 +13,7 @@ const SingleChoice = ({
   payment,
   validation
 }) => {
+  const quantityValidations = getQuantityValidations('radio', options, id)
   return (
     <>
       <div
@@ -43,7 +45,12 @@ const SingleChoice = ({
             )
         })}
       </div>
-      <Quantity {...quantity} id={id} classnameprefix={classnameprefix} />
+      <Quantity
+        {...quantity}
+        id={id}
+        classnameprefix={classnameprefix}
+        validation={quantityValidations}
+      />
     </>
   )
 }
