@@ -37,14 +37,15 @@ const Password = ({
         })}
       ></span>
 
-      {matchPassword && (
+      {matchPassword?.enabled && (
         <>
           <Input
             {...props}
             id={`${props.id}_confirm`}
             validation={newValidation}
             type={passwordVisible.showConfirmPassword ? 'text' : 'password'}
-            placeholder='Confirm Password'
+            placeholder={matchPassword?.placeholder}
+            matchPassword={matchPassword}
           />
           <span
             onClick={() =>
