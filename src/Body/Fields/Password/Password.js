@@ -17,6 +17,10 @@ const Password = ({
   })
   const newValidation = stockedValidation(validation)
 
+  const preventPaste = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <>
       <Input
@@ -46,6 +50,7 @@ const Password = ({
             type={passwordVisible.showConfirmPassword ? 'text' : 'password'}
             placeholder={matchPassword?.placeholder}
             matchPassword={matchPassword}
+            onPaste={preventPaste}
           />
           <span
             onClick={() =>
