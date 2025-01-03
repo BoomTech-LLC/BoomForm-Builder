@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react'
+import React, { Fragment, useMemo } from "react"
 
 const Preview = ({
   id,
@@ -9,61 +9,69 @@ const Preview = ({
   type,
   size,
   completedContent,
-  listType
+  listType,
 }) => {
   const onRemove = () => handleRemove(id)
 
-  const makeSize = bytes => {
+  const makeSize = (bytes) => {
     if (bytes >= 1073741824) {
-      bytes = (bytes / 1073741824).toFixed(2) + ' GB'
+      bytes = (bytes / 1073741824).toFixed(2) + " GB"
     } else if (bytes >= 1048576) {
-      bytes = (bytes / 1048576).toFixed(2) + ' MB'
+      bytes = (bytes / 1048576).toFixed(2) + " MB"
     } else if (bytes >= 1024) {
-      bytes = (bytes / 1024).toFixed(2) + ' KB'
+      bytes = (bytes / 1024).toFixed(2) + " KB"
     } else if (bytes > 1) {
-      bytes = bytes + ' bytes'
+      bytes = bytes + " bytes"
     } else if (bytes == 1) {
-      bytes = bytes + ' byte'
+      bytes = bytes + " byte"
     } else {
-      bytes = '0 bytes'
+      bytes = "0 bytes"
     }
     return bytes
   }
 
   const getPreview = () => {
-    if (type.startsWith('image/')) return <img src={url} />
 
-    if (type.startsWith('video/'))
+    if (type.startsWith("image/")) return <img src={url} />
+
+    if (type.startsWith("video/"))
       return (
         <video>
           <source src={url} type={type} />
         </video>
       )
 
-    return <div className='boomFile_upload-no-preview'></div>
+    const fileExtensionFromName = name.split(".").pop().toUpperCase()
+    const fileExtension = type.startsWith("application/vnd.openxmlformats")
+      ? fileExtensionFromName
+      : type.split("/")[1].toUpperCase()
+
+    return (
+      <span className="boomFile_upload-file-extension">{fileExtension}</span>
+    )
   }
 
   const preview = useMemo(() => getPreview(), [id])
 
   return (
-    <div className='boomFileUpload__preview'>
+    <div className="boomFileUpload__preview">
       {preview}
-      <div className='boomFileUpload__info'>
-        <span className='boomFileUpload-file__name'>
+      <div className="boomFileUpload__info">
+        <span className="boomFileUpload-file__name">
           {name} {completedContent && makeSize(size)}
         </span>
-        <span className='boomFileUpload-fileRemove__btn' onClick={onRemove}>
+        <span className="boomFileUpload-fileRemove__btn" onClick={onRemove}>
           x
         </span>
-        <progress value={percentage} max='100'></progress>
-        <span className='boomFileUpload-file__size'>
-          {listType === 'loaded'
+        <progress value={percentage} max="100"></progress>
+        <span className="boomFileUpload-file__size">
+          {listType === "loaded"
             ? completedContent
             : `${makeSize((size * percentage) / 100)}${
-                percentage !== 100 ? ` of ${makeSize(size)}` : ''
+                percentage !== 100 ? ` of ${makeSize(size)}` : ""
               }`}
         </span>
-        <span className='boomFileUpload-file_progress'>{percentage}%</span>
+        <span className="boomFileUpload-file_progress">{percentage}%</span>
       </div>
     </div>
   )
