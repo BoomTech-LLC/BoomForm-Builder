@@ -52,7 +52,6 @@ const Password = ({
             match={{
               id: props.id,
               msg: matchPassword.msg,
-              placeholder: matchPassword.placeholder
             }}
             onPaste={preventPaste}
           />
