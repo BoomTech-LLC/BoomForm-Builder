@@ -6,23 +6,68 @@ import { stockedValidation } from '../../../Helpers/password'
 const Password = ({
   label,
   classnameprefix,
+  matchPassword,
   payment,
   validation,
   ...props
 }) => {
-  const [showPassword, setShowPassword] = useState(false)
+  const [passwordVisible, setPasswordVisible] = useState({
+    showPassword: false,
+    showConfirmPassword: false
+  })
   const newValidation = stockedValidation(validation)
+
+  const preventPaste = e => {
+    e.preventDefault()
+  }
+
   return (
     <>
       <Input
         {...props}
         validation={newValidation}
-        type={showPassword ? 'text' : 'password'}
+        type={passwordVisible.showPassword ? 'text' : 'password'}
+        placeholder={label}
       />
       <span
-        onClick={() => setShowPassword(value => !value)}
-        className={classNames('password-icon', { active: showPassword })}
+        onClick={() =>
+          setPasswordVisible(prev => ({
+            ...prev,
+            showPassword: !prev.showPassword
+          }))
+        }
+        className={classNames('password-icon', {
+          active: passwordVisible.showPassword
+        })}
       ></span>
+
+      {matchPassword?.enabled && (
+        <>
+          <Input
+            {...props}
+            id={`${props.id}_confirm`}
+            validation={newValidation}
+            type={passwordVisible.showConfirmPassword ? 'text' : 'password'}
+            placeholder={matchPassword?.placeholder}
+            match={{
+              id: props.id,
+              msg: matchPassword.msg,
+            }}
+            onPaste={preventPaste}
+          />
+          <span
+            onClick={() =>
+              setPasswordVisible(prev => ({
+                ...prev,
+                showConfirmPassword: !prev.showConfirmPassword
+              }))
+            }
+            className={classNames('confirm-password-icon', {
+              active: passwordVisible.showConfirmPassword
+            })}
+          ></span>
+        </>
+      )}
     </>
   )
 }
