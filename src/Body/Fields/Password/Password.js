@@ -49,7 +49,7 @@ const Password = ({
             validation={newValidation}
             type={passwordVisible.showConfirmPassword ? 'text' : 'password'}
             placeholder={matchPassword?.placeholder}
-            matchInput={{
+            match={{
               id: props.id,
               msg: matchPassword.msg,
               placeholder: matchPassword.placeholder
