@@ -17,8 +17,8 @@ const Password = ({
   })
   const newValidation = stockedValidation(validation)
 
-  const preventPaste = (e) => {
-    e.preventDefault();
+  const preventPaste = e => {
+    e.preventDefault()
   }
 
   return (
@@ -49,7 +49,11 @@ const Password = ({
             validation={newValidation}
             type={passwordVisible.showConfirmPassword ? 'text' : 'password'}
             placeholder={matchPassword?.placeholder}
-            matchInput={matchPassword}
+            matchInput={{
+              id: props.id,
+              msg: matchPassword.msg,
+              placeholder: matchPassword.placeholder
+            }}
             onPaste={preventPaste}
           />
           <span
