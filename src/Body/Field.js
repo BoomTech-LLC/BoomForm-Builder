@@ -95,8 +95,13 @@ const Field = ({
       .getElementById(`field-${id}`)
       ?.getElementsByClassName('boomForm-field__content')[0]
     if (field) {
+      let previousHeight = field.offsetHeight
       new ResizeObserver(() => {
-        onHeightChange(id, field.offsetHeight)
+        const currentHeight = field.offsetHeight
+        if (currentHeight !== previousHeight) {
+          previousHeight = currentHeight
+          onHeightChange(id, field.offsetHeight)
+        }
       }).observe(field)
     }
   }
