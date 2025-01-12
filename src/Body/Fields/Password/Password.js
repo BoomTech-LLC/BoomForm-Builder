@@ -46,7 +46,7 @@ const Password = ({
           <Input
             {...props}
             id={`${props.id}_confirm`}
-            validation={newValidation}
+            validation={{HTMLValidate:true}}
             type={passwordVisible.showConfirmPassword ? 'text' : 'password'}
             placeholder={matchPassword?.placeholder}
             match={{
