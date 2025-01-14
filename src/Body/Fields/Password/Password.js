@@ -27,7 +27,6 @@ const Password = ({
         {...props}
         validation={newValidation}
         type={passwordVisible.showPassword ? 'text' : 'password'}
-        placeholder={label}
       />
       <span
         onClick={() =>
