@@ -31,11 +31,11 @@ export const conditionalLogic = ({
       else return false
     }
     case 'greater': {
-      if (fieldValue > value) return true
+      if (Number(fieldValue) > Number(value)) return true
       else return false
     }
     case 'less': {
-      if (fieldValue < value) return true
+      if (Number(fieldValue) < Number(value)) return true
       else return false
     }
     case 'checked': {
@@ -340,8 +340,14 @@ export const getFieldValue = (type, value, field, values, item) => {
     }
 
     case 'price': {
-      let name = value['first'] + '.' + value['last']
-      return name
+      let price = ''
+      if (value && value['first']) {
+        price = value['first']
+      }
+      if (value && value['last']) {
+        price += '.' + value['last']
+      }
+      return price
     }
     case 'terms': {
       let terms = ''
