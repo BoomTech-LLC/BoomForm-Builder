@@ -340,14 +340,14 @@ export const getFieldValue = (type, value, field, values, item) => {
     }
 
     case 'price': {
-      let name = ''
+      let price = ''
       if (value && value['first']) {
-        name = value['first']
+        price = value['first']
       }
       if (value && value['last']) {
-        name += '.' + value['last']
+        price += '.' + value['last']
       }
-      return name
+      return price
     }
     case 'terms': {
       let terms = ''
