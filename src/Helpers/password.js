@@ -47,6 +47,5 @@ export const stockedValidation = validation => {
     }
   })
 
-  console.log('validation', validation)
   return validation
 }
