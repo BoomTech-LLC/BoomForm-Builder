@@ -1,13 +1,27 @@
-import React, { useState } from 'react'
-import Sidebar from './Sidebar'
-import Content from './Content'
+import React from 'react'
+import { Builder } from 'boomform-builder'
 
 const App = () => {
-  const [example, setExample] = useState({ name: 'Logic', option: 'logic' })
   return (
     <>
-      <Sidebar example={example} setExample={setExample} />
-      <Content example={example} />
+      <Builder
+        global={{
+          name: 'Color Collector'
+        }}
+        fields={[
+          {
+            id: 'color',
+            type: 'text',
+            label: 'Please Type Your Favorit Color',
+            placeholder: 'Type ...',
+            validation: { required: { msg: 'Text is required' } },
+            initial: 'Red'
+          }
+        ]}
+        button={{
+          text: 'Submit'
+        }}
+      />
     </>
   )
 }
