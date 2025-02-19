@@ -38,15 +38,17 @@ const Time = ({
             {key === 'hour' && <span>:</span>}
 
             {key === 'format' && (
-              <Select
-                {...props}
-                id={`${id}.${key}`}
-                initial={initials?.format === 'PM' ? 2 : 1}
-                options={[
-                  { key: 1, value: 'AM' },
-                  { key: 2, value: 'PM' }
-                ]}
-              />
+              <span className='time_format_dropdown'>
+                <Select
+                  {...props}
+                  id={`${id}.${key}`}
+                  initial={initials?.format === 'PM' ? 2 : 1}
+                  options={[
+                    { key: 1, value: 'AM' },
+                    { key: 2, value: 'PM' }
+                  ]}
+                />
+              </span>
             )}
           </Fragment>
         )
