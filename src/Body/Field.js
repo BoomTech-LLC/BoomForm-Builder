@@ -88,6 +88,7 @@ const Field = ({
   postfix,
   listenHeightChange,
   onHeightChange,
+  customClassName,
   ...props
 }) => {
   if (listenHeightChange) {
@@ -102,7 +103,7 @@ const Field = ({
   }
 
   return (
-    <div className='boomForm-field__content'>
+    <div className={classNames('boomForm-field__content', customClassName)}>
       {label !== undefined && (
         <label
           className={classNames('boomForm-field__label', {
