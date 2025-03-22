@@ -2,7 +2,14 @@ import React from 'react'
 import classNames from 'classnames/bind'
 import { Input } from 'boomform'
 
-const Quantity = ({ id, label, value, classnameprefix, enabled }) => {
+const Quantity = ({
+  id,
+  label,
+  value,
+  classnameprefix,
+  enabled,
+  validation
+}) => {
   if (!enabled) return null
 
   return (
@@ -13,7 +20,13 @@ const Quantity = ({ id, label, value, classnameprefix, enabled }) => {
     >
       {label}
       {label && <span>:</span>}
-      <Input id={`quantity.${id}`} type='number' initial={value} min={1} />
+      <Input
+        id={`quantity.${id}`}
+        type='number'
+        initial={value}
+        validation={validation}
+        min={1}
+      />
     </label>
   )
 }

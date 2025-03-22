@@ -25,7 +25,7 @@ describe('stockedValidation(validation) { lowercase, uppercase, symbol, number }
           msg: 'Digits 1-3'
         },
         {
-          value: `(?:.*[A-Z]){3,}`,
+          value: `^$|(?=(.*[A-Z]){3,})`,
           msg: 'You have to write minimum 3 uppercase letters'
         }
       ]
@@ -54,7 +54,7 @@ describe('stockedValidation(validation) { lowercase, uppercase, symbol, number }
           msg: 'Digits 1-3'
         },
         {
-          value: `(?:.*[A-Z]){3,}`,
+          value: `^$|(?=(.*[A-Z]){3,})`,
           msg: 'You have to write minimum 3 uppercase letters'
         }
       ]
@@ -90,7 +90,7 @@ describe('stockedValidation(validation) { lowercase, uppercase, symbol, number }
           msg: 'Digits 1-3'
         },
         {
-          value: `(?:.*[A-Z]){3,}`,
+          value: `^$|(?=(.*[A-Z]){3,})`,
           msg: 'You have to write minimum 3 uppercase letters'
         }
       ]
@@ -122,7 +122,7 @@ describe('stockedValidation(validation) { lowercase, uppercase, symbol, number }
           msg: 'Digits 1-3'
         },
         {
-          value: `(?:.*[A-Z]){3,}`,
+          value: `^$|(?=(.*[A-Z]){3,})`,
           msg: 'You have to write minimum 3 uppercase letters'
         }
       ]
@@ -154,7 +154,7 @@ describe('stockedValidation(validation) { lowercase, uppercase, symbol, number }
           msg: 'Digits 1-3'
         },
         {
-          value: `(?:.*[A-Z]){3,}`,
+          value: `^$|(?=(.*[A-Z]){3,})`,
           msg: 'You have to write minimum 3 uppercase letters'
         }
       ]

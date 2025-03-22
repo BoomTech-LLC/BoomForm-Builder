@@ -12,7 +12,8 @@ const generatePageItems = (
   pageFields,
   payment,
   gridEnabled,
-  onHeightChange
+  onHeightChange,
+  customClassName
 ) => {
   return fields
     .filter(field => pageFields.includes(field.id))
@@ -40,6 +41,7 @@ const generatePageItems = (
             payment={payment}
             listenHeightChange={gridEnabled}
             onHeightChange={onHeightChange}
+            customClassName={customClassName}
             {...field}
           />
           {postfix && (
@@ -69,7 +71,8 @@ const Fields = ({
   formId,
   isShowSubmitButton,
   onStorageButtonClick,
-  onLocalStorageSubmitFormDataChange
+  onLocalStorageSubmitFormDataChange,
+  customClassName
 }) => {
   const { gridEnabled, gridProperties, layout, onHeightChange } = useGrid({
     gridOptions,
@@ -102,7 +105,8 @@ const Fields = ({
                     pageFields,
                     payment,
                     gridEnabled,
-                    onHeightChange
+                    onHeightChange,
+                    customClassName
                   )}
                 </GridLayout>
                 {showButton && (
