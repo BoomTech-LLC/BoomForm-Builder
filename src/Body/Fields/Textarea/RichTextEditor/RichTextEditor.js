@@ -15,7 +15,9 @@ const RichTextEditor = (props) => {
         return (
           <>
             <div
-              onBlur={(e) => {
+              /* 
+                commented for Quill onblur bug, unable to use buttons for reichtext
+                onBlur={(e) => {
                 if (validation.HTMLValidate === true) {
                   const validationInput = validationField.current.firstChild
                   validationInput.focus()
@@ -23,7 +25,7 @@ const RichTextEditor = (props) => {
                 }
 
                 handleBlur({ id })
-              }}
+              }} */
             >
               <ReactQuill
                 placeholder={placeholder}
