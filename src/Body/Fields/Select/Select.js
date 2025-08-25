@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useMemo } from 'react'
+import React, { useEffect, useState, Fragment, useMemo, useRef } from 'react'
 import Quantity from './../Quantity/Quantity'
 import { Select as PrimarySelect } from 'boomform'
 import Other from './Other'
@@ -29,8 +29,55 @@ const DropDown = ({
     return limitLeft > 0 ? limitLeft : null
   }
 
-  const initiallySelected = useMemo(() => options?.find(o => o.checked), [options])
-  const [max, setMax] = useState(() => (initiallySelected ? computeLimitLeft(initiallySelected) : null))
+  const initiallySelected = useMemo(
+    () => options?.find(o => o.checked),
+    [options]
+  )
+  const [max, setMax] = useState(() =>
+    initiallySelected ? computeLimitLeft(initiallySelected) : null
+  )
+
+  const lastValueRef = useRef(null)
+
+  useEffect(() => {
+    const checkFieldValue = () => {
+      try {
+        const state = window.__current_form_state
+
+        if (state?.values && state.values[id]) {
+          const selectedValue = state.values[id]
+
+          const selectedKey =
+            selectedValue?.key || selectedValue?.value || selectedValue
+
+          if (selectedKey !== lastValueRef.current) {
+            lastValueRef.current = selectedKey
+
+            const selectedOption = options?.find(
+              option =>
+                option.key === selectedKey || option.value === selectedKey
+            )
+
+            if (selectedOption) {
+              const newMax = computeLimitLeft(selectedOption)
+              setMax(newMax)
+            }
+          }
+        } else if (lastValueRef.current !== null) {
+          lastValueRef.current = null
+          setMax(null)
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    checkFieldValue()
+
+    const interval = setInterval(checkFieldValue, 1000)
+
+    return () => clearInterval(interval)
+  }, [id, options])
 
   useEffect(() => {
     const newOptions = [...options]
@@ -48,19 +95,16 @@ const DropDown = ({
 
   useEffect(() => {
     setMax(initiallySelected ? computeLimitLeft(initiallySelected) : null)
+    if (initiallySelected) {
+      lastValueRef.current = initiallySelected.value || initiallySelected.key
+    }
   }, [initiallySelected])
 
   if (!_options) return null
 
-  const handleOnChange = e => {
-    const selectedKey = e?.value
-    const selectedOption = options?.find(opt => opt?.key === selectedKey)
-    setMax(computeLimitLeft(selectedOption))
-  }
-
   return (
     <>
-      <PrimarySelect id={id} options={_options} onChange={handleOnChange} {...props} />
+      <PrimarySelect id={id} options={_options} {...props} />
       <Other id={id} />
       <Quantity
         {...quantity}

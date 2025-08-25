@@ -3,17 +3,8 @@ import { Radio } from 'boomform'
 import classNames from 'classnames'
 import { formatPrice } from './../../../../Helpers/payment'
 
-const Item = ({ id, option, payment, classnameprefix, validation, onSelect }) => {
+const Item = ({ id, option, payment, classnameprefix, validation }) => {
   const { key, label, value, checked, price } = option
-
-  const handleOnChange = e => {
-    console.log(e);
-    
-    const { value: isSelected } = e
-    if (isSelected && typeof onSelect === 'function') {
-      onSelect(option)
-    }
-  }
 
   return (
     <label
@@ -22,7 +13,13 @@ const Item = ({ id, option, payment, classnameprefix, validation, onSelect }) =>
       })}
       key={`${id}.${key}`}
     >
-      <Radio id={id} value={value} initial={checked} validation={validation} onChange={handleOnChange} />
+      <Radio
+        id={id}
+        name={id}
+        value={value}
+        initial={checked}
+        validation={validation}
+      />
       <span
         dangerouslySetInnerHTML={{
           __html:
