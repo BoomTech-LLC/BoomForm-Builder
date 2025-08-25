@@ -1,13 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Checkbox } from 'boomform'
 import classNames from 'classnames'
 import Quantity from '../../Quantity/Quantity'
-import { getQuantityValidations } from '../../../../Helpers/quantity'
 import { formatPrice } from './../../../../Helpers/payment'
 
 const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
   const { key, value, checked, label, price } = option
-  const quantityValidations = getQuantityValidations('checkbox', options, id)
+
+  const computeLimitLeft = currentOption => {
+    if (!currentOption || !('limit' in currentOption) || typeof currentOption.limit !== 'number' || currentOption.limit <= 0) {return null}
+    const limitLeft = currentOption.limit - (currentOption.count || 0)
+    return limitLeft > 0 ? limitLeft : null
+  }
+
+  const [max, setMax] = useState(() => (checked ? computeLimitLeft(option) : null))
+
+  useEffect(() => {
+    setMax(checked ? computeLimitLeft(option) : null)
+  }, [checked, option])
+
   const handleOnChange = e => {
     const { handleChange, field, state, value } = e
     const { values } = state
@@ -24,13 +35,8 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
       setTimeout(() => handleChange({ id: `${id}.error`, value: 'Checked' }))
     else setTimeout(() => handleChange({ id: `${id}.error`, value: '' }))
 
-    const quantityFieldId = `quantity.${id}.${key}`
-    setTimeout(() => {
-      handleChange({
-        id: quantityFieldId,
-        value: state.values[quantityFieldId] || ''
-      })
-    }, 100)
+    if (value) setMax(computeLimitLeft(option))
+    else setMax(null)
   }
 
   return (
@@ -61,7 +67,7 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
         {...quantity}
         id={`${id}.${key}`}
         classnameprefix={classnameprefix}
-        validation={quantityValidations}
+        max={max}
         option={option}
       />
     </label>
