@@ -8,9 +8,26 @@ const Quantity = ({
   value,
   classnameprefix,
   enabled,
-  validation
+  validation,
+  option
 }) => {
   if (!enabled) return null
+
+  let maxValue = null
+
+  if (option) {
+    if (
+      option?.checked &&
+      'limit' in option &&
+      typeof option.limit === 'number' &&
+      option.limit > 0
+    ) {
+      maxValue = option.limit - (option.count || 0)
+      if (maxValue <= 0) {
+        maxValue = null
+      }
+    }
+  }
 
   return (
     <label
@@ -26,6 +43,7 @@ const Quantity = ({
         initial={value}
         validation={validation}
         min={1}
+        max={maxValue}
       />
     </label>
   )

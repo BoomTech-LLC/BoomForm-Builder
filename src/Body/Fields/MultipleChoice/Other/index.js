@@ -46,6 +46,7 @@ const Other = ({ id, options, option, quantity, classnameprefix }) => {
         {...quantity}
         id={`${id}.${key}`}
         classnameprefix={classnameprefix}
+        option={option}
       />
     </label>
   )

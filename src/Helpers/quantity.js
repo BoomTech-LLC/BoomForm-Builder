@@ -1,9 +1,21 @@
 export const getQuantityValidations = (choiceType, options, id) => {
   const validateQuantity = (value, selectedOption) => {
+    if (
+      !selectedOption ||
+      !('limit' in selectedOption) ||
+      typeof selectedOption.limit !== 'number' ||
+      selectedOption.limit <= 0
+    ) {
+      return ''
+    }
 
-    const limitLeft =
-      (selectedOption?.limit ?? 0) - (selectedOption?.count ?? 0)
-    return selectedOption && parseInt(value) > parseInt(limitLeft)
+    const limitLeft = selectedOption.limit - (selectedOption.count ?? 0)
+
+    if (limitLeft <= 0) {
+      return ''
+    }
+
+    return parseInt(value) > parseInt(limitLeft)
       ? `Value should be less or equal to ${limitLeft}`
       : ''
   }
@@ -30,13 +42,40 @@ export const getQuantityValidations = (choiceType, options, id) => {
         HTMLValidate: true,
         custom: value => {
           const state = window.__current_form_state
-          const selectedOptions =
-            options?.filter(option => state.values[id][option.key]) || []
-
-          for (const selectedOption of selectedOptions) {
-            const result = validateQuantity(value, selectedOption)
-            if (result) return result
+          if (!state?.values || typeof state.values[id] !== 'object') {
+            return ''
           }
+
+          const selectedOptions =
+            options?.filter(option => state?.values[id][option.key]) || []
+
+          if (selectedOptions.length === 0) {
+            return ''
+          }
+
+          let hasValidValidation = false
+          for (const selectedOption of selectedOptions) {
+            if (
+              selectedOption &&
+              'limit' in selectedOption &&
+              typeof selectedOption.limit === 'number' &&
+              selectedOption.limit > 0
+            ) {
+              const limitLeft =
+                selectedOption.limit - (selectedOption.count || 0)
+
+              if (limitLeft > 0) {
+                hasValidValidation = true
+                const result = validateQuantity(value, selectedOption)
+                if (result) return result
+              }
+            }
+          }
+
+          if (!hasValidValidation) {
+            return ''
+          }
+
           return ''
         }
       }

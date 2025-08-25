@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Checkbox } from 'boomform'
 import classNames from 'classnames'
 import Quantity from '../../Quantity/Quantity'
@@ -23,6 +23,14 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
     if (isAnyChecked)
       setTimeout(() => handleChange({ id: `${id}.error`, value: 'Checked' }))
     else setTimeout(() => handleChange({ id: `${id}.error`, value: '' }))
+
+    const quantityFieldId = `quantity.${id}.${key}`
+    setTimeout(() => {
+      handleChange({
+        id: quantityFieldId,
+        value: state.values[quantityFieldId] || ''
+      })
+    }, 100)
   }
 
   return (
@@ -54,6 +62,7 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
         id={`${id}.${key}`}
         classnameprefix={classnameprefix}
         validation={quantityValidations}
+        option={option}
       />
     </label>
   )
