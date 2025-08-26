@@ -18,7 +18,7 @@ const DropDown = ({
   const { showPrices } = payment
 
   const initiallySelected = useMemo(
-    () => options?.find((_, i) => i === props.initial),
+    () => options?.find(o => o.key === props.initial),
     [options]
   )
 
