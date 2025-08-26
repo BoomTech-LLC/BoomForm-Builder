@@ -8,12 +8,21 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
   const { key, value, checked, label, price } = option
 
   const computeLimitLeft = currentOption => {
-    if (!currentOption || !('limit' in currentOption) || typeof currentOption.limit !== 'number' || currentOption.limit <= 0) {return null}
+    if (
+      !currentOption ||
+      !('limit' in currentOption) ||
+      typeof currentOption.limit !== 'number' ||
+      currentOption.limit <= 0
+    ) {
+      return null
+    }
     const limitLeft = currentOption.limit - (currentOption.count || 0)
     return limitLeft > 0 ? limitLeft : null
   }
 
-  const [max, setMax] = useState(() => (checked ? computeLimitLeft(option) : null))
+  const [max, setMax] = useState(() =>
+    checked ? computeLimitLeft(option) : null
+  )
 
   useEffect(() => {
     setMax(checked ? computeLimitLeft(option) : null)
@@ -32,11 +41,21 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
       })
 
     if (isAnyChecked)
-      setTimeout(() => handleChange({ id: `${id}.error`, value: 'Checked' }))
-    else setTimeout(() => handleChange({ id: `${id}.error`, value: '' }))
+      setTimeout(() =>
+        handleChange({
+          id: `${id}.error`,
+          value: 'Checked'
+        })
+      )
+    else
+      setTimeout(() =>
+        handleChange({
+          id: `${id}.error`,
+          value: ''
+        })
+      )
 
-    if (value) setMax(computeLimitLeft(option))
-    else setMax(null)
+    setMax(value ? computeLimitLeft(option) : null)
   }
 
   return (
