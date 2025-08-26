@@ -3,29 +3,15 @@ import { Checkbox } from 'boomform'
 import classNames from 'classnames'
 import Quantity from '../../Quantity/Quantity'
 import { formatPrice } from './../../../../Helpers/payment'
+import { limitLeft } from '../../../../Helpers/quantity.js'
 
 const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
   const { key, value, checked, label, price } = option
 
-  const computeLimitLeft = currentOption => {
-    if (
-      !currentOption ||
-      !('limit' in currentOption) ||
-      typeof currentOption.limit !== 'number' ||
-      currentOption.limit <= 0
-    ) {
-      return null
-    }
-    const limitLeft = currentOption.limit - (currentOption.count || 0)
-    return limitLeft > 0 ? limitLeft : null
-  }
-
-  const [max, setMax] = useState(() =>
-    checked ? computeLimitLeft(option) : null
-  )
+  const [max, setMax] = useState(() => (checked ? limitLeft(option) : null))
 
   useEffect(() => {
-    setMax(checked ? computeLimitLeft(option) : null)
+    setMax(checked ? limitLeft(option) : null)
   }, [checked, option])
 
   const handleOnChange = e => {
@@ -55,7 +41,7 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
         })
       )
 
-    setMax(value ? computeLimitLeft(option) : null)
+    setMax(value ? limitLeft(option) : null)
   }
 
   return (

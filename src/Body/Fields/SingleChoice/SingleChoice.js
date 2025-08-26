@@ -3,6 +3,7 @@ import classNames from 'classnames/bind'
 import Quantity from './../Quantity/Quantity'
 import Item from './Item'
 import Other from './Other'
+import { limitLeft } from '../../../Helpers/quantity.js'
 
 const SingleChoice = ({
   id,
@@ -12,25 +13,12 @@ const SingleChoice = ({
   payment,
   validation
 }) => {
-  const computeLimitLeft = currentOption => {
-    if (
-      !currentOption ||
-      !('limit' in currentOption) ||
-      typeof currentOption.limit !== 'number' ||
-      currentOption.limit <= 0
-    ) {
-      return null
-    }
-    const limitLeft = currentOption.limit - (currentOption.count || 0)
-    return limitLeft > 0 ? limitLeft : null
-  }
-
   const initiallyChecked = useMemo(
     () => options?.find(o => o.checked),
     [options]
   )
   const [max, setMax] = useState(() =>
-    initiallyChecked ? computeLimitLeft(initiallyChecked) : null
+    initiallyChecked ? limitLeft(initiallyChecked) : null
   )
 
   const lastValueRef = useRef(null)
@@ -51,7 +39,7 @@ const SingleChoice = ({
             )
 
             if (selectedOption) {
-              const newMax = computeLimitLeft(selectedOption)
+              const newMax = limitLeft(selectedOption)
               setMax(newMax)
             }
           }
@@ -72,7 +60,7 @@ const SingleChoice = ({
   }, [id, options])
 
   useEffect(() => {
-    setMax(initiallyChecked ? computeLimitLeft(initiallyChecked) : null)
+    setMax(initiallyChecked ? limitLeft(initiallyChecked) : null)
     if (initiallyChecked) {
       lastValueRef.current = initiallyChecked.value || initiallyChecked.key
     }

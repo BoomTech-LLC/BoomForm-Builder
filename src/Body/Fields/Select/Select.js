@@ -3,6 +3,7 @@ import Quantity from './../Quantity/Quantity'
 import { Select as PrimarySelect } from 'boomform'
 import Other from './Other'
 import { formatPrice } from './../../../Helpers/payment'
+import { limitLeft } from '../../../Helpers/quantity.js'
 
 const DropDown = ({
   id,
@@ -16,25 +17,12 @@ const DropDown = ({
   const [_options, set_Options] = useState(null)
   const { showPrices } = payment
 
-  const computeLimitLeft = currentOption => {
-    if (
-      !currentOption ||
-      !('limit' in currentOption) ||
-      typeof currentOption.limit !== 'number' ||
-      currentOption.limit <= 0
-    ) {
-      return null
-    }
-    const limitLeft = currentOption.limit - (currentOption.count || 0)
-    return limitLeft > 0 ? limitLeft : null
-  }
-
   const initiallySelected = useMemo(
     () => options?.find(o => o.checked),
     [options]
   )
   const [max, setMax] = useState(() =>
-    initiallySelected ? computeLimitLeft(initiallySelected) : null
+    initiallySelected ? limitLeft(initiallySelected) : null
   )
 
   const lastValueRef = useRef(null)
@@ -59,7 +47,7 @@ const DropDown = ({
             )
 
             if (selectedOption) {
-              const newMax = computeLimitLeft(selectedOption)
+              const newMax = limitLeft(selectedOption)
               setMax(newMax)
             }
           }
@@ -94,7 +82,7 @@ const DropDown = ({
   }, [options, showPrices])
 
   useEffect(() => {
-    setMax(initiallySelected ? computeLimitLeft(initiallySelected) : null)
+    setMax(initiallySelected ? limitLeft(initiallySelected) : null)
     if (initiallySelected) {
       lastValueRef.current = initiallySelected.value || initiallySelected.key
     }
