@@ -18,23 +18,20 @@ const DropDown = ({
   const { showPrices } = payment
 
   const initiallySelected = useMemo(
-    () => options?.find(o => o.checked),
+    () => options?.find((_, i) => i === props.initial),
     [options]
   )
-  const [max, setMax] = useState(() =>
-    initiallySelected ? limitLeft(initiallySelected) : null
-  )
 
-  const lastValueRef = useRef(null)
+  const [max, setMax] = useState(() => limitLeft(initiallySelected))
+
   const handleOnChange = e => {
-    console.log(e)
-
-    setMax(e.value ? limitLeft(e.value) : null)
+    if (e && e.value) {
+      setMax(e.value)
+    }
   }
 
   useEffect(() => {
     const newOptions = [...options]
-
     if (showPrices)
       newOptions.map(option => {
         if (option.label)

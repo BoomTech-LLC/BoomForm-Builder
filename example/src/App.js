@@ -24,7 +24,7 @@ const App = () => {
             value: 'sdgsdg2',
             label: 'Item 3',
             price: 3,
-            checked: false,
+            checked: true,
             limit: 400,
             count: 80
           }
@@ -40,12 +40,12 @@ const App = () => {
       {
         id: 'size',
         type: 'select',
-        initial: 1,
+        initial: 2,
         options: [
           { key: 'placeholder', value: ' -- placeholder -- ' },
-          { key: 1, value: 'S', limit: 400, count: 200 },
-          { key: 2, value: 'M', limit: 400, count: 100 },
-          { key: 3, value: 'L', limit: 400, count: 300 },
+          { key: 1, value: 'M', limit: 400, count: 200 },
+          { key: 2, value: 's', limit: 400, count: 100 },
+          { key: 3, value: 'L' },
           { key: 'other', value: 'other' }
         ],
         quantity: {

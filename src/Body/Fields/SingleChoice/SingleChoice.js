@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useMemo, useState, useRef } from 'react'
+import React, { Fragment, useMemo, useState } from 'react'
 import classNames from 'classnames/bind'
 import Quantity from './../Quantity/Quantity'
 import Item from './Item'
 import Other from './Other'
-import { limitLeft } from '../../../Helpers/quantity.js'
+import { limitLeft } from '../../../Helpers/quantity'
 
 const SingleChoice = ({
   id,
@@ -14,57 +14,24 @@ const SingleChoice = ({
   validation
 }) => {
   const initiallyChecked = useMemo(
-    () => options?.find(o => o.checked),
+    () => options?.find(opt => opt.checked),
     [options]
   )
-  const [max, setMax] = useState(() =>
-    initiallyChecked ? limitLeft(initiallyChecked) : null
-  )
 
-  const lastValueRef = useRef(null)
+  const [max, setMax] = useState(() => limitLeft(initiallyChecked))
 
-  useEffect(() => {
-    const checkFieldValue = () => {
-      try {
-        const state = window.__current_form_state
-        if (state?.values && state.values[id]) {
-          const selectedValue = state.values[id]
+  const handleChange = e => {
+    if (!e) return
+    const { value } = e
 
-          if (selectedValue !== lastValueRef.current) {
-            lastValueRef.current = selectedValue
+    const selectedOption = options?.find(
+      option => option.value === value || option.key === value
+    )
 
-            const selectedOption = options?.find(
-              option =>
-                option.key === selectedValue || option.value === selectedValue
-            )
-
-            if (selectedOption) {
-              const newMax = limitLeft(selectedOption)
-              setMax(newMax)
-            }
-          }
-        } else if (lastValueRef.current !== null) {
-          lastValueRef.current = null
-          setMax(null)
-        }
-      } catch (e) {
-        console.error(e)
-      }
+    if (selectedOption) {
+      setMax(limitLeft(selectedOption))
     }
-
-    checkFieldValue()
-
-    const interval = setInterval(checkFieldValue, 1000)
-
-    return () => clearInterval(interval)
-  }, [id, options])
-
-  useEffect(() => {
-    setMax(initiallyChecked ? limitLeft(initiallyChecked) : null)
-    if (initiallyChecked) {
-      lastValueRef.current = initiallyChecked.value || initiallyChecked.key
-    }
-  }, [initiallyChecked])
+  }
 
   return (
     <>
@@ -93,6 +60,7 @@ const SingleChoice = ({
                 payment={payment}
                 classnameprefix={classnameprefix}
                 validation={index === 0 ? validation : {}}
+                onChange={handleChange}
               />
             )
         })}
