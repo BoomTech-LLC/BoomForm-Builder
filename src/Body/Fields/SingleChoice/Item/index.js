@@ -22,7 +22,6 @@ const Item = ({
     >
       <Radio
         id={id}
-        name={id}
         value={value}
         initial={checked}
         validation={validation}
