@@ -26,7 +26,7 @@ const DropDown = ({
 
   const handleOnChange = e => {
     if (e && e.value) {
-      setMax(e.value)
+      setMax(limitLeft(e.value))
     }
   }
 
