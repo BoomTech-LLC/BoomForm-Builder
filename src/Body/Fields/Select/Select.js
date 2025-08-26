@@ -1,9 +1,9 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment, useMemo, useRef } from 'react'
 import Quantity from './../Quantity/Quantity'
-import { getQuantityValidations } from '../../../Helpers/quantity'
 import { Select as PrimarySelect } from 'boomform'
 import Other from './Other'
 import { formatPrice } from './../../../Helpers/payment'
+import { limitLeft } from '../../../Helpers/quantity.js'
 
 const DropDown = ({
   id,
@@ -16,11 +16,22 @@ const DropDown = ({
 }) => {
   const [_options, set_Options] = useState(null)
   const { showPrices } = payment
-  const quantityValidations = getQuantityValidations('select', options, id)
+
+  const initiallySelected = useMemo(
+    () => options?.find(o => o.key === props.initial),
+    [options]
+  )
+
+  const [max, setMax] = useState(() => limitLeft(initiallySelected))
+
+  const handleOnChange = e => {
+    if (e && e.value) {
+      setMax(e.value)
+    }
+  }
 
   useEffect(() => {
     const newOptions = [...options]
-
     if (showPrices)
       newOptions.map(option => {
         if (option.label)
@@ -36,13 +47,18 @@ const DropDown = ({
 
   return (
     <>
-      <PrimarySelect id={id} options={_options} {...props} />
+      <PrimarySelect
+        id={id}
+        options={_options}
+        {...props}
+        onChange={handleOnChange}
+      />
       <Other id={id} />
       <Quantity
         {...quantity}
         id={id}
         classnameprefix={classnameprefix}
-        validation={quantityValidations}
+        max={max}
       />
     </>
   )

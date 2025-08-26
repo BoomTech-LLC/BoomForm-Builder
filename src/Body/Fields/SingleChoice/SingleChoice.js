@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useMemo, useState } from 'react'
 import classNames from 'classnames/bind'
-import { getQuantityValidations } from '../../../Helpers/quantity'
 import Quantity from './../Quantity/Quantity'
 import Item from './Item'
 import Other from './Other'
+import { limitLeft } from '../../../Helpers/quantity'
 
 const SingleChoice = ({
   id,
@@ -13,7 +13,26 @@ const SingleChoice = ({
   payment,
   validation
 }) => {
-  const quantityValidations = getQuantityValidations('radio', options, id)
+  const initiallyChecked = useMemo(
+    () => options?.find(opt => opt.checked),
+    [options]
+  )
+
+  const [max, setMax] = useState(() => limitLeft(initiallyChecked))
+
+  const handleChange = e => {
+    if (!e) return
+    const { value } = e
+
+    const selectedOption = options?.find(
+      option => option.value === value || option.key === value
+    )
+
+    if (selectedOption) {
+      setMax(limitLeft(selectedOption))
+    }
+  }
+
   return (
     <>
       <div
@@ -41,6 +60,7 @@ const SingleChoice = ({
                 payment={payment}
                 classnameprefix={classnameprefix}
                 validation={index === 0 ? validation : {}}
+                onChange={handleChange}
               />
             )
         })}
@@ -49,7 +69,7 @@ const SingleChoice = ({
         {...quantity}
         id={id}
         classnameprefix={classnameprefix}
-        validation={quantityValidations}
+        max={max}
       />
     </>
   )

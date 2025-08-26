@@ -1,62 +1,12 @@
-export const getQuantityValidations = (choiceType, options, id) => {
-  const validateQuantity = (value, selectedOption) => {
-
-    const limitLeft =
-      (selectedOption?.limit ?? 0) - (selectedOption?.count ?? 0)
-    return selectedOption && parseInt(value) > parseInt(limitLeft)
-      ? `Value should be less or equal to ${limitLeft}`
-      : ''
+export const limitLeft = currentOption => {
+  if (
+    !currentOption ||
+    !('limit' in currentOption) ||
+    typeof currentOption.limit !== 'number' ||
+    currentOption.limit <= 0
+  ) {
+    return null
   }
-
-  switch (choiceType) {
-    case 'radio':
-      return {
-        HTMLValidate: true,
-        custom: value => {
-          const state = window.__current_form_state
-          const selectedOptionKey = isNaN(parseInt(state.values[id]))
-            ? state.values[id]
-            : parseInt(state.values[id])
-
-          const selectedOption = options?.find(
-            option => option.key === selectedOptionKey
-          )
-          return validateQuantity(value, selectedOption)
-        }
-      }
-
-    case 'checkbox':
-      return {
-        HTMLValidate: true,
-        custom: value => {
-          const state = window.__current_form_state
-          const selectedOptions =
-            options?.filter(option => state.values[id][option.key]) || []
-
-          for (const selectedOption of selectedOptions) {
-            const result = validateQuantity(value, selectedOption)
-            if (result) return result
-          }
-          return ''
-        }
-      }
-
-    case 'select':
-      return {
-        HTMLValidate: true,
-        custom: value => {
-          const state = window.__current_form_state
-          const selectedOptionKey = isNaN(parseInt(state.values[id]))
-            ? state.values[id]
-            : parseInt(state.values[id])
-          const selectedOption = options?.find(
-            option => option.key === selectedOptionKey
-          )
-          return validateQuantity(value, selectedOption)
-        }
-      }
-
-    default:
-      return { HTMLValidate: true, custom: () => '' }
-  }
+  const limitLeft = currentOption.limit - (currentOption.count || 0)
+  return limitLeft > 0 ? limitLeft : null
 }

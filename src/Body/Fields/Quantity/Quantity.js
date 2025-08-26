@@ -8,7 +8,7 @@ const Quantity = ({
   value,
   classnameprefix,
   enabled,
-  validation
+  max,
 }) => {
   if (!enabled) return null
 
@@ -24,8 +24,8 @@ const Quantity = ({
         id={`quantity.${id}`}
         type='number'
         initial={value}
-        validation={validation}
         min={1}
+        max={max}
       />
     </label>
   )

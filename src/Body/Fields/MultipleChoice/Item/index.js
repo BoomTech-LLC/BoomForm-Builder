@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Checkbox } from 'boomform'
 import classNames from 'classnames'
 import Quantity from '../../Quantity/Quantity'
-import { getQuantityValidations } from '../../../../Helpers/quantity'
 import { formatPrice } from './../../../../Helpers/payment'
+import { limitLeft } from '../../../../Helpers/quantity.js'
 
 const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
   const { key, value, checked, label, price } = option
-  const quantityValidations = getQuantityValidations('checkbox', options, id)
+
+  const [max, setMax] = useState(() => (checked ? limitLeft(option) : null))
+
+  useEffect(() => {
+    setMax(checked ? limitLeft(option) : null)
+  }, [checked, option])
+
   const handleOnChange = e => {
     const { handleChange, field, state, value } = e
     const { values } = state
@@ -21,8 +27,21 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
       })
 
     if (isAnyChecked)
-      setTimeout(() => handleChange({ id: `${id}.error`, value: 'Checked' }))
-    else setTimeout(() => handleChange({ id: `${id}.error`, value: '' }))
+      setTimeout(() =>
+        handleChange({
+          id: `${id}.error`,
+          value: 'Checked'
+        })
+      )
+    else
+      setTimeout(() =>
+        handleChange({
+          id: `${id}.error`,
+          value: ''
+        })
+      )
+
+    setMax(value ? limitLeft(option) : null)
   }
 
   return (
@@ -53,7 +72,7 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
         {...quantity}
         id={`${id}.${key}`}
         classnameprefix={classnameprefix}
-        validation={quantityValidations}
+        max={max}
       />
     </label>
   )
