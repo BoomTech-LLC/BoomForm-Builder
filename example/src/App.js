@@ -12,7 +12,7 @@ const App = () => {
         options: [
           {
             key: 1,
-            value: '1',
+            value: 'dsgdsg1',
             label: 'Item 2',
             price: 2,
             checked: false,
@@ -21,7 +21,7 @@ const App = () => {
           },
           {
             key: 2,
-            value: '2',
+            value: 'sdgsdg2',
             label: 'Item 3',
             price: 3,
             checked: false,
@@ -36,10 +36,26 @@ const App = () => {
         label: "Select Items <span class='boomForm-field__label-star'>*</span>",
         quantity: { enabled: true, label: 'Quantity', value: 1 }
       },
-      
+
+      {
+        id: 'size',
+        type: 'select',
+        initial: 1,
+        options: [
+          { key: 'placeholder', value: ' -- placeholder -- ' },
+          { key: 1, value: 'S', limit: 400, count: 200 },
+          { key: 2, value: 'M', limit: 400, count: 100 },
+          { key: 3, value: 'L', limit: 400, count: 300 },
+          { key: 'other', value: 'other' }
+        ],
+        quantity: {
+          enabled: true,
+          label: 'Quantity',
+          value: 1
+        }
+      }
     ]
   }
-
 
   return (
     <>

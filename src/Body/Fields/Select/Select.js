@@ -26,46 +26,11 @@ const DropDown = ({
   )
 
   const lastValueRef = useRef(null)
+  const handleOnChange = e => {
+    console.log(e)
 
-  useEffect(() => {
-    const checkFieldValue = () => {
-      try {
-        const state = window.__current_form_state
-
-        if (state?.values && state.values[id]) {
-          const selectedValue = state.values[id]
-
-          const selectedKey =
-            selectedValue?.key || selectedValue?.value || selectedValue
-
-          if (selectedKey !== lastValueRef.current) {
-            lastValueRef.current = selectedKey
-
-            const selectedOption = options?.find(
-              option =>
-                option.key === selectedKey || option.value === selectedKey
-            )
-
-            if (selectedOption) {
-              const newMax = limitLeft(selectedOption)
-              setMax(newMax)
-            }
-          }
-        } else if (lastValueRef.current !== null) {
-          lastValueRef.current = null
-          setMax(null)
-        }
-      } catch (e) {
-        console.error(e)
-      }
-    }
-
-    checkFieldValue()
-
-    const interval = setInterval(checkFieldValue, 1000)
-
-    return () => clearInterval(interval)
-  }, [id, options])
+    setMax(e.value ? limitLeft(e.value) : null)
+  }
 
   useEffect(() => {
     const newOptions = [...options]
@@ -81,18 +46,16 @@ const DropDown = ({
     set_Options(newOptions)
   }, [options, showPrices])
 
-  useEffect(() => {
-    setMax(initiallySelected ? limitLeft(initiallySelected) : null)
-    if (initiallySelected) {
-      lastValueRef.current = initiallySelected.value || initiallySelected.key
-    }
-  }, [initiallySelected])
-
   if (!_options) return null
 
   return (
     <>
-      <PrimarySelect id={id} options={_options} {...props} />
+      <PrimarySelect
+        id={id}
+        options={_options}
+        {...props}
+        onChange={handleOnChange}
+      />
       <Other id={id} />
       <Quantity
         {...quantity}
