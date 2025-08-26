@@ -9,10 +9,8 @@ const Quantity = ({
   classnameprefix,
   enabled,
   max,
-  option
 }) => {
   if (!enabled) return null
-
 
   return (
     <label

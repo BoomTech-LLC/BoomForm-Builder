@@ -68,7 +68,6 @@ const Item = ({ id, options, option, quantity, payment, classnameprefix }) => {
         id={`${id}.${key}`}
         classnameprefix={classnameprefix}
         max={max}
-        option={option}
       />
     </label>
   )
