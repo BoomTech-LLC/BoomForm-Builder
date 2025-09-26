@@ -33,6 +33,9 @@ const Map = ({
           zoom: zoom,
           mapId: `${Math.floor(Math.random() * 1000000)}`
         })
+
+        const bounds = new google.maps.LatLngBounds()
+
         markers.map(item => {
           const { position, description } = item
           const marker = new AdvancedMarkerElement({
@@ -49,9 +52,13 @@ const Map = ({
               shouldFocus: false
             })
           })
+
+          bounds.extend(position)
         })
+
+        map.fitBounds(bounds)
       })
-  }, [zoom])
+  }, [zoom, markers])
   return <div style={{ height }} ref={mapRef} />
 }
 
