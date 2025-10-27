@@ -24,9 +24,12 @@ import Date from './Fields/Date/Date'
 import Just from './Fields/Just/Just'
 import Terms from './Fields/Terms/Terms'
 import Signature from './Fields/Signature/Signature'
+import InputTable from './Fields/InputTable/InputTable'
 
 const FieldByType = ({ type, ...props }) => {
   switch (type) {
+    case 'inputTable':
+      return <InputTable {...props} />
     case 'name':
       return <Name {...props} />
     case 'address':

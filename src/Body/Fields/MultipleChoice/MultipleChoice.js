@@ -11,11 +11,11 @@ const MultipleChoice = ({
   validation,
   payment
 }) => {
-  const [hasInitial] = options.filter((option) => option.checked)
+  const [hasInitial] = options.filter(option => option.checked)
 
   return (
     <>
-      {options.map((option) => {
+      {options.map(option => {
         const { key } = option
 
         if (key === 'other')
@@ -39,6 +39,7 @@ const MultipleChoice = ({
               quantity={quantity}
               payment={payment}
               classnameprefix={classnameprefix}
+              validation={validation}
             />
           )
       })}
