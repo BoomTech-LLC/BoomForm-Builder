@@ -61,12 +61,18 @@ export const conditionalLogic = ({
       return false
     }
     case 'doNotChecked': {
-      if (!field || !field.options) return false
-      for (let i in fieldValue) {
-        const [option] = field.options.filter(option => option.key == i)
-        if (option && !fieldValue[i] && option.value === value) return true
-      }
-      return false
+        if (!field || !field.options) return false
+        if (!Array.isArray(fieldValue)) return false
+        for (let i = 0; i < fieldValue.length; i++) {
+            const o = fieldValue[i]
+            if (
+                o.value == value ||
+                o.label == value
+            ) {
+                return false
+            }
+        }
+        return true
     }
     case 'checkedMore': {
       let count = 0
