@@ -576,7 +576,7 @@ describe('conditionalLogic', () => {
 
   // Test case for 'doNotChecked'
   it('should return true if fieldValue is not checked with value', () => {
-    const fieldValue = { option2: false, option3: false }
+    const fieldValue = [{ option2: false, option3: false }]
     const result = conditionalLogic({
       fieldValue,
       value: 'Value1',

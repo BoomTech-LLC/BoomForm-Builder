@@ -383,7 +383,7 @@ describe('getRendableData(fields, hiddenFieldIds = {}, pagination = {}, currentP
     };
     expect(() =>
       getRendableData(fields, undefined, customPagination, undefined)
-    ).toThrow(new TypeError("Cannot read property 'includes' of undefined"));
+    ).toThrow(new TypeError("Cannot read properties of undefined (reading 'includes')"));
   });
 
   it('uses only default values for multiple pages (unavailable variant)', () => {
