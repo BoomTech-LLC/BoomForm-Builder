@@ -57,7 +57,7 @@ export const storeProgresSubmitStore = ({
           case 'multipleChoice':
             const multipleChoiceOpitons = field.options?.map(option => ({
               ...option,
-              checked: formData[option.key]
+              checked: formData[option.key] ?? false
             }));
 
             multipleChoiceOpitons.forEach(option =>
