@@ -1,0 +1,34 @@
+name: Auto PR staging to main
+
+on:
+  push:
+    branches: ["staging"]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create PR if not exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if an open PR from staging -> main already exists
+          EXISTING_PR=$(gh pr list --base main --head staging --state open --json number --jq '.[0].number')
+
+          if [ -z "$EXISTING_PR" ]; then
+            echo "No existing PR found. Creating one..."
+            gh pr create \
+              --base main \
+              --head staging \
+              --title "Merge staging into main" \
+              --body "Automated PR created from staging branch."
+          else
+            echo "PR #$EXISTING_PR already exists. Skipping."
+          fi
