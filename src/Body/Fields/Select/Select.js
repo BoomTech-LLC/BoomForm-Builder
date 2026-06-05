@@ -31,14 +31,17 @@ const DropDown = ({
   }
 
   useEffect(() => {
-    const newOptions = [...options]
-    if (showPrices)
-      newOptions.map(option => {
-        if (option.label)
-          option.label =
+    const newOptions = options.map(option => {
+      if (showPrices && option.label) {
+        return {
+          ...option,
+          label:
             option.label +
             formatPrice({ payment, price: option.price, shouldFormat: true })
-      })
+        }
+      }
+      return option
+    })
 
     set_Options(newOptions)
   }, [options, showPrices])

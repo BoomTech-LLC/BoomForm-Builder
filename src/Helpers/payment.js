@@ -6,7 +6,7 @@ export const currencys = {
   EUR: '€',
   HUF: 'Ft',
   CHF: 'CHF',
-  CZK: 'Kc',
+  CZK: 'Kč',
   SEK: 'kr',
   MXN: '$',
   GBP: '£',
@@ -102,8 +102,8 @@ export const getTotalPrice = ({
     values,
     fields
   })
-  if(getTotalValue){
-    return getTotalValue({values , fields , fee  , logicIds })
+  if (getTotalValue) {
+    return getTotalValue({ values, fields, fee, logicIds })
   }
   fields.map((field) => {
     let { type, id } = field
